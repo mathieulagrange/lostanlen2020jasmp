@@ -1,0 +1,202 @@
+* {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+@font-face {
+    font-family: Fontin;
+    src: url(images/Fontin-Regular.ttf);
+}
+
+html {
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    min-width: 700px;
+    min-height: 500px;
+    margin: 0px;
+    padding: 0px;
+    font-family: Fontin;
+    height: 100%;
+    width: 100%;
+}
+
+div#helpButton {
+    position: fixed;
+    top: 3px;
+    right: 3px;
+    background:url(images/help.png);
+    width: 32px;
+    height: 32px;
+    z-index: 10;
+    cursor: pointer;
+}
+
+div#loadProgress {
+    position: fixed;
+    top: 3px;
+    left: 3px;
+    padding: 3px;
+    background-color: white;
+    border: 1px solid red;
+    color: red;
+    z-index: 10;
+}
+
+div#playField {
+    position: absolute;
+    border: 1px solid grey;
+    background-color: #eee;
+}
+
+.point {
+    position: absolute;
+    cursor: crosshair;
+    z-index: 5;
+    border: 1px solid darkgray;
+}
+
+.selectedPoint {
+    border: 1px solid black;
+}
+
+.pointSelectHighlight {
+    position: absolute;
+    background:url(images/select.png);
+    background-size: contain;
+}
+
+div#selectRectangle {
+    z-index: 2;
+    border: 1px solid blue;
+    background-color: #ccf;
+    position: absolute;
+}
+
+div#overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background: rgba(255, 255, 255, .7);
+}
+
+div#fatalOverlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background: white;
+}
+
+div.modalBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    border: 1px solid grey;
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    overflow: hidden;
+    height: auto;
+}
+
+div.emailPrompt {
+    width: 500px;
+}
+
+div.emailPrompt input[type=text] {
+    width: 300px;
+}
+
+div.modalBox.emailPrompt p {
+    margin-bottom: 15px;
+}
+
+div.modalBox.emailPrompt input {
+    margin-top: 25px;
+}
+
+div#secondEmail {
+    width: 500px;
+}
+
+div#helpBox {
+    width: 700px;
+}
+
+div#wait {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -16px;
+    margin-left: -16px;
+    background:url(images/wait.gif);
+}
+
+div.modalBox p {
+    margin: 5px;
+    padding: 0px;
+}
+
+div.modalBox li {
+    margin: 5px;
+}
+
+div#palette {
+    position: absolute;
+    width: 160px;
+    height: 128px;
+    border: 1px solid black;
+    z-index: 20;
+    background-color: #eee;
+    padding: 4px;
+    border-radius: 3px;
+}
+
+div#palette div {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    margin: 5px;
+    float: left;
+    cursor: pointer;
+}
+
+input {
+    border-width: 1px;
+}
+
+input.invalid {
+    border: 1px solid red;
+    background-color: #ecd;
+}
+
+div.panel {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    border: 1px solid grey;
+    padding: 10px;
+}
+
+div.horizontalPanel{
+    padding-top: 5px;
+}
+
+div.horizontalPanel td {
+    font-size: 14px;
+}
+
+a {
+    text-decoration: none;
+}

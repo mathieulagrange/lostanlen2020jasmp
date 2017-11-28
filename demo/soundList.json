@@ -1,0 +1,551 @@
+{
+    "version" : 0.3,
+    "sounds"  : [
+	{
+	    "instrument": "Harp",
+	    "mode": "xylophonic",
+	    "hasC4": true,
+	    "hasMf": false,
+	    "file": "Hp-xyl-C4-p"
+	},
+	{
+	    "instrument": "Alto-Sax",
+	    "mode": "key-click",
+	    "hasC4": true,
+	    "hasMf": false,
+	    "file": "ASax-key-cl-C4-p"
+	},
+	{
+	    "instrument": "Alto-Sax",
+	    "mode": "slap-pitched",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "ASax-slap-C4-mf"
+	},
+	{
+	    "instrument": "Guitar",
+	    "mode": "ordinario-high-register",
+	    "hasC4": false,
+	    "hasMf": false,
+	    "file": "Gtr-ord-hi-reg-E5-mf-3c"
+	},
+	{
+	    "instrument": "Guitar",
+	    "mode": "pizzicato",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Gtr-pizz-C4-mf-2c"
+	},
+	{
+	    "instrument": "Harp",
+	    "mode": "harmonic-fingering",
+	    "hasC4": true,
+	    "hasMf": false,
+	    "file": "Hp-harm-fngr-C4-f"
+	},
+	{
+	    "instrument": "Harp",
+	    "mode": "ordinario",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Hp-ord-C4-mf"
+	},
+	{
+	    "instrument": "Harp",
+	    "mode": "pizzicato-bartok",
+	    "hasC4": true,
+	    "hasMf": false,
+	    "file": "Hp-pizz-bartok-C4-ff"
+	},
+	{
+	    "instrument": "Horn",
+	    "mode": "ordinario",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Hn-ord-C4-mf"
+	},
+	{
+	    "instrument": "Horn",
+	    "mode": "slap-pitched",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Hn-slap-C4-mf"
+	},
+	{
+	    "instrument": "Oboe",
+	    "mode": "key-click",
+	    "hasC4": true,
+	    "hasMf": false,
+	    "file": "Ob-key-cl-C4-pp"
+	},
+	{
+	    "instrument": "Tenor-Trombone",
+	    "mode": "cup-ordinario",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "TTbn+C-ord-C4-mf"
+	},
+	{
+	    "instrument": "Tenor-Trombone",
+	    "mode": "harmon-ordinario",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "TTbn+H-ord-C4-mf"
+	},
+	{
+	    "instrument": "Tenor-Trombone",
+	    "mode": "straight-ordinario",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "TTbn+S-ord-C4-mf"
+	},
+	{
+	    "instrument": "Tenor-Trombone",
+	    "mode": "wah-ordinario-closed",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "TTbn+W-ord-closed-C4-mf"
+	},
+	{
+	    "instrument": "Tenor-Trombone",
+	    "mode": "wah-ordinario-open",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "TTbn+W-ord-open-C4-mf"
+	},
+	{
+	    "instrument": "Tenor-Trombone",
+	    "mode": "ordinario",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "TTbn-ord-C4-mf"
+	},
+	{
+	    "instrument": "Trumpet-C",
+	    "mode": "cup-ordinario",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "TpC+C-ord-C4-mf"
+	},
+	{
+	    "instrument": "Trumpet-C",
+	    "mode": "harmon-ordinario",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "TpC+H-ord-C4-mf"
+	},
+	{
+	    "instrument": "Trumpet-C",
+	    "mode": "straight-ordinario",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "TpC+S-ord-C4-mf"
+	},
+	{
+	    "instrument": "Trumpet-C",
+	    "mode": "wah-ordinario-closed",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "TpC+W-ord-closed-C4-mf"
+	},
+	{
+	    "instrument": "Trumpet-C",
+	    "mode": "wah-ordinario-open",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "TpC+W-ord-open-C4-mf"
+	},
+	{
+	    "instrument": "Trumpet-C",
+	    "mode": "ordinario",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "TpC-ord-C4-mf"
+	},
+	{
+	    "instrument": "Trumpet-C",
+	    "mode": "pedal-tone",
+	    "hasC4": false,
+	    "hasMf": true,
+	    "file": "TpC-pdl-tone-F3-mf"
+	},
+	{
+	    "instrument": "Trumpet-C",
+	    "mode": "slap-pitched",
+	    "hasC4": true,
+	    "hasMf": false,
+	    "file": "TpC-slap-C4-p"
+	},
+	{
+	    "instrument": "Viola",
+	    "mode": "sordina-ordinario",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Va+S-ord-C4-mf-3c"
+	},
+	{
+	    "instrument": "Viola",
+	    "mode": "piombo-ordinario",
+	    "hasC4": false,
+	    "hasMf": true,
+	    "file": "Va+SP-ord-D4-mf-2c"
+	},
+	{
+	    "instrument": "Viola",
+	    "mode": "artificial-harmonic",
+	    "hasC4": false,
+	    "hasMf": true,
+	    "file": "Va-art-harm-C5-mf-4c"
+	},
+	{
+	    "instrument": "Viola",
+	    "mode": "col-legno-battuto",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Va-legno-batt-C4-mf-3c"
+	},
+	{
+	    "instrument": "Viola",
+	    "mode": "ordinario",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Va-ord-C4-mf-3c"
+	},
+	{
+	    "instrument": "Viola",
+	    "mode": "pizzicato-bartok",
+	    "hasC4": true,
+	    "hasMf": false,
+	    "file": "Va-pizz-bartok-C4-ff-3c"
+	},
+	{
+	    "instrument": "Viola",
+	    "mode": "pizzicato-l-vib",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Va-pizz-lv-C4-mf-3c"
+	},
+	{
+	    "instrument": "Viola",
+	    "mode": "pizzicato-secco",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Va-pizz-sec-C4-mf-3c"
+	},
+	{
+	    "instrument": "Viola",
+	    "mode": "sul-ponticello",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Va-pont-C4-mf-3c"
+	},
+	{
+	    "instrument": "Violin",
+	    "mode": "sordina-ordinario",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Vn+S-ord-C4-mf-4c"
+	},
+	{
+	    "instrument": "Violin",
+	    "mode": "piombo-ordinario",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Vn+SP-ord-C4-mf-4c"
+	},
+	{
+	    "instrument": "Violin",
+	    "mode": "artificial-harmonic",
+	    "hasC4": false,
+	    "hasMf": true,
+	    "file": "Vn-art-harm-G5-mf-4c"
+	},
+	{
+	    "instrument": "Violin",
+	    "mode": "col-legno-battuto",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Vn-legno-batt-C4-mf-4c"
+	},
+	{
+	    "instrument": "Violin",
+	    "mode": "ordinario",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Vn-ord-C4-mf-4c"
+	},
+	{
+	    "instrument": "Violin",
+	    "mode": "pizzicato-bartok",
+	    "hasC4": true,
+	    "hasMf": false,
+	    "file": "Vn-pizz-bartok-C4-ff-4c"
+	},
+	{
+	    "instrument": "Violin",
+	    "mode": "pizzicato-l-vib",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Vn-pizz-lv-C4-mf-4c"
+	},
+	{
+	    "instrument": "Violin",
+	    "mode": "pizzicato-secco",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Vn-pizz-sec-C4-mf-4c"
+	},
+	{
+	    "instrument": "Violin",
+	    "mode": "sul-ponticello",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Vn-pont-C4-mf-4c"
+	},
+	{
+	    "instrument": "Violoncello",
+	    "mode": "sordina-ordinario",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Vc+S-ord-C4-mf-1c"
+	},
+	{
+	    "instrument": "Violoncello",
+	    "mode": "piombo-ordinario",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Vc+SP-ord-C4-mf-1c"
+	},
+	{
+	    "instrument": "Violoncello",
+	    "mode": "artificial-harmonic",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Vc-art-harm-C4-mf-4c"
+	},
+	{
+	    "instrument": "Violoncello",
+	    "mode": "col-legno-battuto",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Vc-legno-batt-C4-mf-1c"
+	},
+	{
+	    "instrument": "Violoncello",
+	    "mode": "ordinario",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Vc-ord-C4-mf-1c"
+	},
+	{
+	    "instrument": "Violoncello",
+	    "mode": "pizzicato-bartok",
+	    "hasC4": true,
+	    "hasMf": false,
+	    "file": "Vc-pizz-bartok-C4-ff-1c"
+	},
+	{
+	    "instrument": "Violoncello",
+	    "mode": "pizzicato-l-vib",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Vc-pizz-lv-C4-mf-1c"
+	},
+	{
+	    "instrument": "Violoncello",
+	    "mode": "pizzicato-secco",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Vc-pizz-sec-C4-mf-1c"
+	},
+	{
+	    "instrument": "Violoncello",
+	    "mode": "sul-ponticello",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Vc-pont-C4-mf-2c"
+	},
+	{
+	    "instrument": "Alto-Sax",
+	    "mode": "ordinario",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "ASax-ord-C4-mf"
+	},
+	{
+	    "instrument": "Alto-Sax",
+	    "mode": "ordinario-high-register",
+	    "hasC4": false,
+	    "hasMf": false,
+	    "file": "ASax-ord-hi-reg-C6-mf"
+	},
+	{
+	    "instrument": "Alto-Sax",
+	    "mode": "slap-unpitched",
+	    "hasC4": true,
+	    "hasMf": false,
+	    "file": "ASax-slap-unp-C4-p"
+	},
+	{
+	    "instrument": "Bass-Tuba",
+	    "mode": "exploding-slap-pitched",
+	    "hasC4": false,
+	    "hasMf": true,
+	    "file": "BBTb-explo-slap-C#1-mf"
+	},
+	{
+	    "instrument": "Bass-Tuba",
+	    "mode": "pedal-tone",
+	    "hasC4": false,
+	    "hasMf": true,
+	    "file": "BBTb-pdl-tone-F1-mf"
+	},
+	{
+	    "instrument": "Bass-Tuba",
+	    "mode": "slap-pitched",
+	    "hasC4": false,
+	    "hasMf": true,
+	    "file": "BBTb-slap-F1-mf"
+	},
+	{
+	    "instrument": "Bass-Tuba",
+	    "mode": "slap-unpitched",
+	    "hasC4": false,
+	    "hasMf": true,
+	    "file": "BBTb-slap-unp-mf-1"
+	},
+	{
+	    "instrument": "Bassoon",
+	    "mode": "key-click",
+	    "hasC4": false,
+	    "hasMf": true,
+	    "file": "Bn-key-cl-C3-mf"
+	},
+	{
+	    "instrument": "Bassoon",
+	    "mode": "ordinario",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Bn-ord-C4-mf"
+	},
+	{
+	    "instrument": "Clarinet-Bb",
+	    "mode": "key-click",
+	    "hasC4": true,
+	    "hasMf": false,
+	    "file": "BbCl-key-cl-C4-pp"
+	},
+	{
+	    "instrument": "Clarinet-Bb",
+	    "mode": "ordinario-high-register",
+	    "hasC4": false,
+	    "hasMf": false,
+	    "file": "BbCl-ord-hi-reg-A6-ff"
+	},
+	{
+	    "instrument": "Contrabass",
+	    "mode": "pizzicato-bartok",
+	    "hasC4": true,
+	    "hasMf": false,
+	    "file": "Cb-pizz-bartok-C4-ff-1c"
+	},
+	{
+	    "instrument": "Contrabass",
+	    "mode": "pizzicato-l-vib",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Cb-pizz-lv-C4-mf-1c"
+	},
+	{
+	    "instrument": "Contrabass",
+	    "mode": "pizzicato-secco",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Cb-pizz-sec-C4-mf-1c"
+	},
+	{
+	    "instrument": "Contrabass",
+	    "mode": "sul-ponticello",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Cb-pont-C4-mf-1c"
+	},
+	{
+	    "instrument": "Flute",
+	    "mode": "key-click",
+	    "hasC4": true,
+	    "hasMf": false,
+	    "file": "Fl-key-cl-C4-f"
+	},
+	{
+	    "instrument": "Flute",
+	    "mode": "ordinario",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Fl-ord-C4-mf"
+	},
+	{
+	    "instrument": "Flute",
+	    "mode": "tongue-ram",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Fl-tng-ram-C4-mf"
+	},
+	{
+	    "instrument": "Guitar",
+	    "mode": "ordinario",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Gtr-ord-C4-mf-2c"
+	},
+	{
+	    "instrument": "Guitar",
+	    "mode": "pizzicato-bartok",
+	    "hasC4": true,
+	    "hasMf": false,
+	    "file": "Gtr-pizz-bartok-C4-ff-2c"
+	},
+	{
+	    "instrument": "Oboe",
+	    "mode": "blow-without-reed",
+	    "hasC4": true,
+	    "hasMf": false,
+	    "file": "Ob-blow-no-reed-C4"
+	},
+	{
+	    "instrument": "Oboe",
+	    "mode": "ordinario",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Ob-ord-C4-mf"
+	},
+	{
+	    "instrument": "Violin",
+	    "mode": "non-vibrato",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Vn-nonvib-C4-mf-4c"
+	},
+	{
+	    "instrument": "Violoncello",
+	    "mode": "col-legno-tratto",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Vc-legno-tratto-C4-mf-1c"
+	},
+	{
+	    "instrument": "Violoncello",
+	    "mode": "non-vibrato",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Vc-nonvib-C4-mf-1c"
+	},
+	{
+	    "instrument": "Violoncello",
+	    "mode": "sul-tasto",
+	    "hasC4": true,
+	    "hasMf": true,
+	    "file": "Vc-tasto-C4-mf-1c"
+	}
+    ]
+}

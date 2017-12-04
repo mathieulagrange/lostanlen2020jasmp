@@ -11,14 +11,14 @@
 % -----------------------------------------------
 
 \documentclass{article}
-\usepackage{ismir,amsmath,cite,url}
+\usepackage{amsmath,cite,url}
 \usepackage{graphicx}
 \usepackage{color}
 
 
 % Title.
 % ------
-\title{Spontaneous Similarity Judgments of Musical Tones with various Playing Techniques}
+\title{Spontaneous Similarity Judgments of Musical Tones played with various Playing Techniques}
 
 % Note: Please do NOT use \thanks or a \footnote in any of the author markup
 
@@ -41,10 +41,7 @@
 
 % Three addresses
 % --------------
-\threeauthors
-  {Mathieu Lagrange} {Affiliation1 \\ {\tt author1@ismir.edu}}
-  {Mathias Rossignol} {\bf Retain these fake authors in\\\bf submission to preserve the formatting}
-  {Grégoire Lafay} {Affiliation3 \\ {\tt author3@ismir.edu}}
+\author{Mathieu Lagrange, Christian EL-Hajj, Mathias Rossignol, Grégoire Lafay}
 
 %% To make customize author list in Creative Common license, uncomment and customize the next line
 %  \def\authorname{First Author, Second Author, Third Author}
@@ -65,19 +62,68 @@
 \sloppy % please retain sloppy command for improved formatting
 
 \begin{document}
-
 %
 \maketitle
 %
 \begin{abstract}
-The abstract should be placed at the top left column and should contain about 150-200 words.
+
+Musical timbre is a multi-faceted notion that have been extensively studied, mostly focusing on its spectral aspect. By studying the spontaneous judgments of similarity between several instruments played with a diverse set of playing techniques, we aim in this paper at better understanding the influence of the change of the playing technique on the perception of timbre.
+
+A first experiment is conducted by music experts to identify which couple of instrument and playing technique in a given dataset is worth comparing to other couples of instrument / playing technique. In a second experiment, spontaneous similarity judgments among the retained couples are collected using a canonic free sorting task experiment design.
+
+
+To further study the outcomes of this experiment, we assume a two-step computational model of human perception, where the acoustic signal is fed to a statically designed processing unit that accounts for frequency and temporal modulations. The resulting features are then projected using a supervised technique which considers as input the perceptual similarity judgments gathered in the second experiment. Numerical experiments show that the induced perceptual space is able to approximate perceptual data with satisfying accuracy.
+
 \end{abstract}
 %
 \section{Introduction}\label{sec:introduction}
 
-\section{}\label{sec:}
+Spontaneous similarity judgments
+
+The contributions of the paper are as follows: 1) provide perceptual data that account for the perception of musical tones played with various playing techniques, 2), demonstrate for the gathered data, the type of playing technique plays an important role for the organization of the data, and 3) propose a perceptually motivated computational of timbre perception that account well for the gathered human judgments.
+
+\section{Dimensions of Timbre}\label{sec:}
+
+\section{Data}\label{sec:}
+
+\section{Experiment 1}\label{sec:}
+
+Problématique
+
+Dans le cadre du projet TICEL, nous allons construire un algorithme permettant de mesurer les similarités entre différents modes de jeu. Par mode de jeu, nous entendons ici un couple "instrument + mode de jeu".
+
+Afin de mesurer les performances de l'algorithme, nous avons besoins d'établir une vérité de terrain, en l’occurrence les similarités entre modes de jeu données par des humains.
+
+Or il n'est actuellement pas envisageable de monter une expérience permettant d'établir cette vérité terrain. Le nombre de modes de jeu à comparer est trop important.
+
+C'est pourquoi nous proposons une expérience intermédiaire ayant pour but de réduire le nombre de modes de jeu.
+
+Objectif
+
+Pour chaque mode de jeu, vous répondrez à la question suivante : Est il intéressant de comparer ce mode de jeu à un/pls autre(s) mode(s) d'un autre instrument
+
+Procédure
+
+Nous vous demandons de noter chaque mode de jeu avec un nombre d’étoiles. Plus le nombre d'étoiles est important, plus le mode de jeu est susceptible d'être associé de manière "analogique" à un autre mode de jeu d'un autre instrument. Pour exemple :
+
+Une étoile : ce mode de jeu est singulier, il n’est pas utile de le comparer avec un autre mode de jeu d'un autre instrument.
+Quatre étoiles : il y a bien une proximité sur un aspect du son entre ce mode de jeu et un autre mode d'un autre instrument, mais cette dernière n'est ni décisive ni évidente.
+Sept étoiles : il a une grande proximité entre ce mode de jeu et un autre mode d'un autre instrument, il est donc intéressant de le conserver.
+Déroulement
+
+Vous pouvez réaliser l'expérience en plusieurs fois, mais veillez à noter l'ensemble des modes de jeu pour tous les instruments.
+
+Usage
+
+Votre notation doit prendre en compte l'ensemble des modes de jeu présents dans la base, bien que par souci de clarté, les modes de jeu soient présentés par instruments
+Les modes de jeu déjà notés apparaîtront en vert
+Pour chaque mode de jeu, vous pouvez écouter plusieurs enregistrements à différentes hauteurs et nuances
 
 
+
+\section{Experiment 2}\label{sec:}
+
+\section{Modeling}\label{sec:}
 
 
 % For bibtex users:

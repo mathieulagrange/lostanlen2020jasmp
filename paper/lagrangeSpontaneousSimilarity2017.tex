@@ -84,33 +84,50 @@ A popular view of the kind of stimuli we consider is that they can be described 
 
 A great deal of litterature focuses on the instaneous spectrum, \textit{i.e.} the timbre can be defined without considering evolution of the energy distribution trough time. Other studies demonstrated the importance of the onset in the recognition of some musical instruments. Those studies on a rather short term model where the waveform is observed in a range that do not exceed 100 ms.
 
-Interestingly, modern physiological models of the primary mamalian auditory system  .  Dau's model acount for frequency and rate of modulation. Shamma's model account for frequency, rate and bandwidth to fully describes the physiological evidence gathered by studying the auditory system of the ferret. Though, most of the numerical experiments done using this model did not fully demonstrated the usefullness of this third dimension.
+Interestingly, modern physiological models of the primary mamalian auditory system also considers the evolution of the energy distribution at longer time scales, \textit{i.e.} how the energy modulates through time for given frequencies.  Dau's model acount for frequency and rate of modulation. Shamma's model account for frequency, rate and bandwidth to fully describes the physiological evidence gathered by studying the auditory system of the ferret. Though, most of the numerical experiments done using this model did not fully demonstrated the usefullness of this third dimension.
 
 Thus, by taking a signal processing view of the matter, one could consider that a first stage of the auditory system proceeds to a rather fixed set of convolutions across time and frequency, projecting the signal into a large set of descriptive features organized across frequency and rate of modulations.
 
+What the higher level of the auditory cortex does remains largely unkown, but we can assume that the level of plasticity is very high, as any living entity has to adapt their percepts to a wide diversity of tasks.  Considering the lack of information about this stage, we will assume in this paper that this second step is rather opportunistic, in the sense that, from this large set of features, it aims at multiplexing in some way the ones that are the most relevant for the task at hand.
 
-Thus the second step would be rather opportunistic, in the sense that, from this large set of features, one can pick the ones that are the most relevant for the task at hand.
-
-Considering not only the type of musical instrument but also the playing technique is interesting in that matter, as it invite us to consider a notion of dissimilarity and not the
-
-
-Following .
-
-Spontaneous similarity judgments
+Considering not only the type of musical instrument but also the playing technique is interesting in that matter, as it invite us to consider the relation between the rate of modulation and timbre percepts. A notion that have not been extensively studied in the litterature. It also permits to consider the notion of timbral similarity at finer grain of detail.
 
 The contributions of the paper are as follows: 1) provide perceptual data that account for the perception of musical tones played with various playing techniques, 2), demonstrate that, for the gathered data, the type of playing technique plays an important role for the organization of the data, and 3) propose a perceptually motivated computational model of timbre perception that account well for the human judgments studied in this paper.
 
-\section{Dimensions of Timbre}\label{sec:}
 
-\section{Data}\label{sec:}
 
 \section{Experiment 1}\label{sec:}
+
+
+The dataset considered in this study has audio recording of 16 different  musical instruments () played with different playing techniques, which leads to 143 different couple of instrument / playing technique. For each couple, the pitch and intonation is varied leading to 25444 samples. The way the dataset is segmented is explained in more details in Appendix \ref{sec:dataset}.
+
+Studies about perceptual similarity are plagued with a dimensional problem. When considering $n$ items, a complete exploration of the similarity space requires the filling of a $n^2$ matrix. Assuming a symmetric similarity (the similarity of A to B is equl to the similarity of B to A) reduces the number but not by much.
+
+In an attempt to reduce the number of items, we decided to perform a selection experiment where the subject is asked to give his opinion on which \ipt is relevant to study. An \ipt is said to be relevant to study if it is likely to be associated to another \ipt. Interest is rated on a 7 ticks scale.
+
+Examples are given :
+\begin{itemize}
+  \item One star: this \ipt is singular, it is not useful to compare it with another \ipt.
+  \item Four stars: there is a proximity on one aspect of the sound between this \ipt and of an \ipt of another instrument, but this one is neither decisive nor obvious.
+  \item Seven stars: there is a large similarity between this \ipt and an \ipn of another instrument, it is interesting to keep it.
+\end{itemize}
+
+
+Select which couple (instrument, playing technique) are interesting to consider.
+Question: Is it interesting to compare this couple to another couple of a different instrument ?
+The question is asked for each couple ()
+The subject can listen to all the recordings of each couple
+
+
+Two musical composition professors of the CNSMDP, a renowned French school of music did the test. All the couples with a grade higher than three are selected, bringing 78 couples to study.
+
+The aim of experiment 1
 
 Problématique
 
 Dans le cadre du projet TICEL, nous allons construire un algorithme permettant de mesurer les similarités entre différents modes de jeu. Par mode de jeu, nous entendons ici un couple "instrument + mode de jeu".
 
-Afin de mesurer les performances de l'algorithme, nous avons besoins d'établir une vérité de terrain, en l’occurrence les similarités entre modes de jeu données par des humains.
+Afin de mesurer les performances de l'algorithme, nous avons besoin d'établir une vérité de terrain, en l’occurrence les similarités entre modes de jeu données par des humains.
 
 Or il n'est actuellement pas envisageable de monter une expérience permettant d'établir cette vérité terrain. Le nombre de modes de jeu à comparer est trop important.
 
@@ -141,11 +158,24 @@ Pour chaque mode de jeu, vous pouvez écouter plusieurs enregistrements à diff�
 
 \section{Experiment 2}\label{sec:}
 
-\section{Modeling}\label{sec:}
+\section{Analysis}\label{sec:}
+
+\section{Model}\label{sec:}
+
+\section{Results}\label{sec:}
+
+\section{Discussion}\label{sec:}
+
+
 
 
 % For bibtex users:
 \bibliography{bib}
+
+\Appendix
+
+\section{Dataset}
+
 
 % For non bibtex users:
 %\begin{thebibliography}{citations}

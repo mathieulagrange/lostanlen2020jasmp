@@ -119,9 +119,11 @@ Two musical composition professors of the CNSMDP, a renowned French school of mu
 
 \section{Experiment 2}\label{sec:}
 
-The second experiment aims at gathering spontaneous judgment of similarity. We chose a canonical free sorting task  for several reasons. First, it gives the ability to the subject to listen to the whole set of \ipt before performing the task. Second, it gives more freedom to the subject thus potentially more interest to perform the task than a lengthy series of triplet dissimilarity ratings.
+The second experiment aims at gathering spontaneous judgment of similarity. To do so, we chose a canonical free sorting task  for several reasons. First, it gives the ability to the subject to listen to the whole set of \ipt before performing the task. Second, it gives more freedom to the subject thus potentially more interest to perform the task than a lengthy series of triplet dissimilarity ratings.
 
-The subjects are thus asked to organize the 78 \ipt displayed as grey dots on a two dimensional plane into groups by assigning colors to each dots according to their acoustic similarity. The \ml{consigne} is deliberately vague in order to allow the subject to \ml{use its own representation of similarity}. The experiment is over when the sujbect assigned a color to all the dots. The initial location of the dots on the plane is randomized for each subject and can be changed during the experiment by the subject for convenience. Eventhough the location of the dots is recorded, this data is not considered during the analysis.
+The subjects are thus asked to organize the 78 \ipt displayed as grey dots on a two dimensional plane into groups by assigning colors to each dots according to their "acoustic similarity". The textual instructions provided to introduce the experiment was chosen to be deliberately vague in order to allow the subject to \ml{use its own representation of similarity}.
+
+The \ipt can be listened to by hovering the mouse on the corresponding dot. The experiment is over when the sujbect assigned a color to all the dots. The initial location of the dots on the plane is randomized for each subject and can be changed during the experiment by the subject for convenience. Eventhough the location of the dots is recorded, this data is not considered during the analysis.
 
 The experiment was available online for two months and requests to perform the test have been sent to internal mailing lists of the CNSMDP and international research mailing with a focus on audio and music processing. The experiment have been performed on a volountary basis without gratification.
 
@@ -136,8 +138,9 @@ The experiment was available online for two months and requests to perform the t
 
 31 subjects completed the experiment. An example of resulting organisation of \ipt is given on Figure \ref{fig:xp2display}.  The resulting organisation for each subject are available for reader's inspection using the full feature interface provided to the subjects for performing the experiment\footnote{https://mathieulagrange.github.io/paperSpontaneousSimilarity/demo}.
 
+As discussed in the previous section, only the grouping given by the subjects using the color labels is considered to predict the spontaneous judgments of similarity among \ipt. The spatial organisation of the dots representing the \ipt could provide information about the similarity, but this would implicitely force the fact that the similarity space is two dimensional.
 
-As discussed in the previous section, only the grouping done using the colors is considered. The spatial organisation could provide information about the notion of similarity, but implicitely force the fact that the similarity space is two dimensional. We therefore now study the properties of the groupings performed by the subject prior converting them into an overall similarity matrix.
+We therefore now only study the properties of the groupings performed by the subject prior converting them into an overall similarity matrix.
 
 Among the 20 colors available, the subjects used on average \ml{fill}. The distribution of the number of groups can be seen on Figure \ref{fig:xp2nbGroup}. The size of the groups is on average \ml{fill}. The distribution of the size of groups can be seen on Figure \ref{fig:xp2sizeGroup}.
 
@@ -155,18 +158,24 @@ Among the 20 colors available, the subjects used on average \ml{fill}. The distr
 \label{fig:xp2sizeGroup}
 \end{figure}
 
+A grouping can be considered as a binary similarity measure, with $s(a, b) = 1$ if $a$ and $b$ belong to the same group, and $0$ otherwise. The Figure \ref{fig:xp2bsim} show the binary similarity matrix that correponds to the grouping displayed on Figure \ref{fig:xp2display}. By averaging the 31 binary similarity matrix, an overall floating point matrix is obtained that correponds to our measure of the spontaneous similarity between \ipt.
+
+A cluster analysis is next performed using an agglomerative hierarchical clustering using the weighted average algorithm for computing distance between clusters. The resulting dendrogram is displayed on Figure \ref{fig:xp2sizeGroup}.
+
+A partition of $n$ clusters can be constructed from the agglomerative hierarchical cluster tree by finding the smallest height at which a horizontal cut through the tree leaves $n$ clusters. In order to
+
 \begin{figure}
 \center
 \includegraphics[width = \textwidth]{figures/allSim.png}
 \caption{Binary similarity matrix corresponding to the grouping of subject 1.}
-\label{fig:xp2sizeGroup}
+\label{fig:xp2bsim}
 \end{figure}
 
 \begin{figure}
 \center
 \includegraphics[width = \textwidth]{figures/allSim.png}
 \caption{Average similarity matrix corresponding to the grouping of the complete cohort.}
-\label{fig:xp2sizeGroup}
+\label{fig:xp2asim}
 \end{figure}
 
 \begin{figure}
@@ -186,14 +195,14 @@ Among the 20 colors available, the subjects used on average \ml{fill}. The distr
 \begin{figure}
 \center
 \includegraphics[width = \textwidth]{figures/groupModes.png}
-\caption{Clustering \ipt using average perceptual similarity into 5 clusters (a) and playing technique labels (b). The colors of clusters displayed on top corresponds to the playing technique label that is dominant in this cluster.}
+\caption{Clustering \ipt using average perceptual similarity into 5 clusters (a) and playing technique labels (b). The colors of clusters displayed on top corresponds to the playing technique that is dominant in this cluster.}
 \label{fig:xp2sizeGroup}
 \end{figure}
 
 \begin{figure}
 \center
 \includegraphics[width = \textwidth]{figures/groupInstruments.png}
-\caption{Clustering \ipt using average perceptual similarity into 8 clusters (a) and instrument reference labels (b). The colors of clusters displayed on top corresponds to the playing technique label that is dominant in this cluster.}
+\caption{Clustering \ipt using average perceptual similarity into 8 clusters (a) and instrument reference labels (b). The colors of clusters displayed on top corresponds to the intrument that is dominant in this cluster.}
 \label{fig:xp2sizeGroup}
 \end{figure}
 
@@ -210,6 +219,13 @@ Among the 20 colors available, the subjects used on average \ml{fill}. The distr
 \bibliography{bib}
 
 \section{Dataset}
+
+distribution of instruments and modes
+
+\subsection{Naming}
+
+abbreviations 4 instruments and modes.
+
 
 
 % For non bibtex users:

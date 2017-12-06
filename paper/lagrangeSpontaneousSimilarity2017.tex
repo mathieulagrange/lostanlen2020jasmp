@@ -15,6 +15,9 @@
 \usepackage{graphicx}
 \usepackage{color}
 
+\newcommand{\ipt}{IPT}
+
+\newcommand{\ml}[1]{\textcolor{blue}{ML : #1}}
 
 % Title.
 % ------
@@ -103,62 +106,96 @@ The dataset considered in this study has audio recording of 16 different  musica
 
 Studies about perceptual similarity are plagued with a dimensional problem. When considering $n$ items, a complete exploration of the similarity space requires the filling of a $n^2$ matrix. Assuming a symmetric similarity (the similarity of A to B is equl to the similarity of B to A) reduces the number but not by much.
 
-In an attempt to reduce the number of items, we decided to perform a selection experiment where the subject is asked to give his opinion on which \ipt is relevant to study. An \ipt is said to be relevant to study if it is likely to be associated to another \ipt. Interest is rated on a 7 ticks scale.
+In an attempt to reduce the number of items, we decided to perform a selection experiment where the subject is asked to give his opinion on which \ipt is relevant to study. An \ipt is said to be relevant to study if it is likely to be associated to another \ipt. Interest is rated on a 7 ticks scale. The subject can listen to all the different nuance and pitch samples of each \ipt. The experiment is over when all the \ipt have been rated.
 
-Examples are given :
+Rating examples are given :
 \begin{itemize}
   \item One star: this \ipt is singular, it is not useful to compare it with another \ipt.
   \item Four stars: there is a proximity on one aspect of the sound between this \ipt and of an \ipt of another instrument, but this one is neither decisive nor obvious.
-  \item Seven stars: there is a large similarity between this \ipt and an \ipn of another instrument, it is interesting to keep it.
+  \item Seven stars: there is a large similarity between this \ipt and an \ipt of another instrument, it is interesting to keep it.
 \end{itemize}
 
-
-Select which couple (instrument, playing technique) are interesting to consider.
-Question: Is it interesting to compare this couple to another couple of a different instrument ?
-The question is asked for each couple ()
-The subject can listen to all the recordings of each couple
-
-
-Two musical composition professors of the CNSMDP, a renowned French school of music did the test. All the couples with a grade higher than three are selected, bringing 78 couples to study.
-
-The aim of experiment 1
-
-Problématique
-
-Dans le cadre du projet TICEL, nous allons construire un algorithme permettant de mesurer les similarités entre différents modes de jeu. Par mode de jeu, nous entendons ici un couple "instrument + mode de jeu".
-
-Afin de mesurer les performances de l'algorithme, nous avons besoin d'établir une vérité de terrain, en l’occurrence les similarités entre modes de jeu données par des humains.
-
-Or il n'est actuellement pas envisageable de monter une expérience permettant d'établir cette vérité terrain. Le nombre de modes de jeu à comparer est trop important.
-
-C'est pourquoi nous proposons une expérience intermédiaire ayant pour but de réduire le nombre de modes de jeu.
-
-Objectif
-
-Pour chaque mode de jeu, vous répondrez à la question suivante : Est il intéressant de comparer ce mode de jeu à un/pls autre(s) mode(s) d'un autre instrument
-
-Procédure
-
-Nous vous demandons de noter chaque mode de jeu avec un nombre d’étoiles. Plus le nombre d'étoiles est important, plus le mode de jeu est susceptible d'être associé de manière "analogique" à un autre mode de jeu d'un autre instrument. Pour exemple :
-
-Une étoile : ce mode de jeu est singulier, il n’est pas utile de le comparer avec un autre mode de jeu d'un autre instrument.
-Quatre étoiles : il y a bien une proximité sur un aspect du son entre ce mode de jeu et un autre mode d'un autre instrument, mais cette dernière n'est ni décisive ni évidente.
-Sept étoiles : il a une grande proximité entre ce mode de jeu et un autre mode d'un autre instrument, il est donc intéressant de le conserver.
-Déroulement
-
-Vous pouvez réaliser l'expérience en plusieurs fois, mais veillez à noter l'ensemble des modes de jeu pour tous les instruments.
-
-Usage
-
-Votre notation doit prendre en compte l'ensemble des modes de jeu présents dans la base, bien que par souci de clarté, les modes de jeu soient présentés par instruments
-Les modes de jeu déjà notés apparaîtront en vert
-Pour chaque mode de jeu, vous pouvez écouter plusieurs enregistrements à différentes hauteurs et nuances
-
-
+Two musical composition professors of the CNSMDP, a renowned French school of music performed the test. All the couples with a grade higher than three are selected, bringing 78 \ipt to study.
 
 \section{Experiment 2}\label{sec:}
 
+The second experiment aims at gathering spontaneous judgment of similarity. We chose a canonical free sorting task  for several reasons. First, it gives the ability to the subject to listen to the whole set of \ipt before performing the task. Second, it gives more freedom to the subject thus potentially more interest to perform the task than a lengthy series of triplet dissimilarity ratings.
+
+The subjects are thus asked to organize the 78 \ipt displayed as grey dots on a two dimensional plane into groups by assigning colors to each dots according to their acoustic similarity. The \ml{consigne} is deliberately vague in order to allow the subject to \ml{use its own representation of similarity}. The experiment is over when the sujbect assigned a color to all the dots. The initial location of the dots on the plane is randomized for each subject and can be changed during the experiment by the subject for convenience. Eventhough the location of the dots is recorded, this data is not considered during the analysis.
+
+The experiment was available online for two months and requests to perform the test have been sent to internal mailing lists of the CNSMDP and international research mailing with a focus on audio and music processing. The experiment have been performed on a volountary basis without gratification.
+
 \section{Analysis}\label{sec:}
+
+\begin{figure}
+\center
+\includegraphics[width = \textwidth]{figures/xp2example.png}
+\caption{Spatial and group organization provided by subject 1.}
+\label{fig:xp2display}
+\end{figure}
+
+31 subjects completed the experiment. An example of resulting organisation of \ipt is given on Figure \ref{fig:xp2display}.  The resulting organisation for each subject are available for reader's inspection using the full feature interface provided to the subjects for performing the experiment\footnote{https://mathieulagrange.github.io/paperSpontaneousSimilarity/demo}.
+
+
+As discussed in the previous section, only the grouping done using the colors is considered. The spatial organisation could provide information about the notion of similarity, but implicitely force the fact that the similarity space is two dimensional. We therefore now study the properties of the groupings performed by the subject prior converting them into an overall similarity matrix.
+
+Among the 20 colors available, the subjects used on average \ml{fill}. The distribution of the number of groups can be seen on Figure \ref{fig:xp2nbGroup}. The size of the groups is on average \ml{fill}. The distribution of the size of groups can be seen on Figure \ref{fig:xp2sizeGroup}.
+
+\begin{figure}
+\center
+\includegraphics[width = \textwidth]{figures/xp2example.png}
+\caption{Histogram of the number of groups.}
+\label{fig:xp2nbGroup}
+\end{figure}
+
+\begin{figure}
+\center
+\includegraphics[width = \textwidth]{figures/xp2example.png}
+\caption{Histogram of the size of groups.}
+\label{fig:xp2sizeGroup}
+\end{figure}
+
+\begin{figure}
+\center
+\includegraphics[width = \textwidth]{figures/allSim.png}
+\caption{Binary similarity matrix corresponding to the grouping of subject 1.}
+\label{fig:xp2sizeGroup}
+\end{figure}
+
+\begin{figure}
+\center
+\includegraphics[width = \textwidth]{figures/allSim.png}
+\caption{Average similarity matrix corresponding to the grouping of the complete cohort.}
+\label{fig:xp2sizeGroup}
+\end{figure}
+
+\begin{figure}
+\center
+\includegraphics[width = \textwidth]{figures/allLinkage.png}
+\caption{Dendrogram computed using the average similarity matrix.}
+\label{fig:xp2sizeGroup}
+\end{figure}
+
+\begin{figure}
+\center
+\includegraphics[width = \textwidth]{figures/clusterAnalysis.png}
+\caption{Dendrogram computed using the average similarity matrix.}
+\label{fig:xp2sizeGroup}
+\end{figure}
+
+\begin{figure}
+\center
+\includegraphics[width = \textwidth]{figures/groupModes.png}
+\caption{Clustering \ipt using average perceptual similarity into 5 clusters (a) and playing technique labels (b). The colors of clusters displayed on top corresponds to the playing technique label that is dominant in this cluster.}
+\label{fig:xp2sizeGroup}
+\end{figure}
+
+\begin{figure}
+\center
+\includegraphics[width = \textwidth]{figures/groupInstruments.png}
+\caption{Clustering \ipt using average perceptual similarity into 8 clusters (a) and instrument reference labels (b). The colors of clusters displayed on top corresponds to the playing technique label that is dominant in this cluster.}
+\label{fig:xp2sizeGroup}
+\end{figure}
 
 \section{Model}\label{sec:}
 
@@ -171,8 +208,6 @@ Pour chaque mode de jeu, vous pouvez écouter plusieurs enregistrements à diff�
 
 % For bibtex users:
 \bibliography{bib}
-
-\Appendix
 
 \section{Dataset}
 

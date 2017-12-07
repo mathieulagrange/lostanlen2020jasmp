@@ -3,7 +3,7 @@ function ticelSimilarity(source)
 if ~exist('source', 'var'), source = 'All'; end
 
 if iscell(source)
-    for k=1:length(source), 
+    for k=1:length(source)
         ticelSimilarity(source{k}); 
     end
     return
@@ -11,9 +11,9 @@ end
 
 addpath('jsonlab');
 
-dataPath = './data/';
-dataPath = ['../xps/xp2/data' source '/'];
+dataPath = '../data/';
 
+[status,msg] = mkdir('figures');
 
 colorCode = { ...
 '#f0a3ff ', ...
@@ -84,15 +84,17 @@ for k=1:size(x, 1)
   dc(k, :) = pdist(ci(k, :)', 'jaccard');
 end
 
+save('judgments.mat', 'ci')
+
 for k=1:size(x, 1)
     dat.names = names;
     dat.x = x(k, :);
     dat.y = y(k, :);
     dat.color = ci(k, :);   
-    savejson('', dat, ['dataVis/'  num2str(k) '.json']);
+    savejson('', dat, ['figures/'  num2str(k) '.json']);
     scatter(x(k, :), y(k, :), 100, ci(k, :), 'filled');
     axis off
-    saveas(gcf, ['figures/results/' num2str(k)], 'png')
+    saveas(gcf, ['figures/' num2str(k)], 'png')
 end
 
 
@@ -100,7 +102,7 @@ for k=1:size(x, 1)
     imagesc(squareform(dc(k, :)))
     colormap gray
     axis off
-    saveas(gcf, ['figures/similarity/' num2str(k) 'Sim'], 'png')
+    saveas(gcf, ['figures/' num2str(k) 'Sim'], 'png')
 end
 
 
@@ -125,7 +127,7 @@ dat.names = names;
 dat.x = pm(:, 1);
 dat.y = pm(:, 2);
 dat.color =  ones(1, size(pm, 1));
-savejson('', dat, 'dataVis/all.json');
+savejson('', dat, 'figures/all.json');
 
 [iNames, ~, ii] = unique(instruments);
 [mNames, ~, im] = unique(modes);
@@ -134,15 +136,15 @@ l = linkage(dc, 'weighted');
 
 m = cluster(l, 'maxclust', 5);
 dat.color = m;
-savejson('', dat, 'dataVis/allModes.json');
+savejson('', dat, 'figures/allModes.json');
 dat.color = im;
-savejson('', dat, 'dataVis/allModesRef.json');
+savejson('', dat, 'figures/allModesRef.json');
 
 i = cluster(l, 'maxclust', 8);
 dat.color = i;
-savejson('', dat, 'dataVis/allInstruments.json');
+savejson('', dat, 'figures/allInstruments.json');
 dat.color = ii;
-savejson('', dat, 'dataVis/allInstrumentsRef.json');
+savejson('', dat, 'figures/allInstrumentsRef.json');
 
 function pm = displayData(ds, type, instruments, modes, source, nb)
 

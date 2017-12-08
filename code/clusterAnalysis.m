@@ -1,6 +1,4 @@
 %function clusterAnalysis()
-
-
 modes = 0;
 load simAll
 addpath('evaluation')

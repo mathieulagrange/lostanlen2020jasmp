@@ -159,48 +159,40 @@ A grouping can be considered as a binary similarity measure, with $s(a, b) = 1$ 
 
 A cluster analysis is next performed using an agglomerative hierarchical clustering using the weighted average algorithm for computing distance between clusters. The resulting dendrogram is displayed on Figure \ref{fig:xp2sizeGroup}.
 
-A partition of $n$ clusters can be constructed from the agglomerative hierarchical cluster tree by finding the smallest height at which a horizontal cut through the tree leaves $n$ clusters. In order to
+A partition of $n$ clusters can be constructed from the agglomerative hierarchical cluster tree by finding the smallest height at which a horizontal cut through the tree leaves $n$ clusters. In order to have a better understanding of the nature of the similarity space induced by the judgments of the subjects, a cluster analysis is now performed.
 
-\begin{figure}
-\center
-\includegraphics[width = \textwidth]{figures/allSim.png}
-\caption{Binary similarity matrix corresponding to the grouping of subject 1.}
-\label{fig:xp2bsim}
-\end{figure}
+One question that arises is whether the similarity is influenced primarily by the instrument or by the playing technique. To answer this question, each partition provided by cutting the dendrogram at successive levels is compared to two reference partitions. One is the partition of the \ipt when labeled with the instrument used (I) and the other if the partition of the \ipt when labeled with the playing technique used (Pt).
 
-\begin{figure}
-\center
-\includegraphics[width = \textwidth]{figures/allSim.png}
-\caption{Average similarity matrix corresponding to the grouping of the complete cohort.}
-\label{fig:xp2asim}
-\end{figure}
+There are many metrics to compare two partitions by evaluating their degree of correspondance. The normalized mutual information (NMI) is interesting as it do not require alignement of the groups labels between the two partitions prior correspondance analysis and the two partition are not required to have the same number of groups. Figure \ref{fig:clusters} shows the evolution of the NMI when comparing the partitions provided by the cluster analysis of the dendrogram produced using the human judgment of similarity and respectively the instrument partition ($j/I$) or the playing technique partition ($j/Pt$).
 
-\begin{figure}
-\center
-\includegraphics[width = \textwidth]{figures/allLinkage.png}
-\caption{Dendrogram computed using the average similarity matrix.}
-\label{fig:xp2sizeGroup}
-\end{figure}
+There is a clear gain of NMI when considering the playing technique which means that the subjects primarily used cues corresponding to the playing technique to organize the \ipt. Also, for both curves, a global trend of increase NMI with respect to the number of clusters in the $j$ partition can be observed. This is a well documented fact, which simply put, means that it is easier to match a given partition with more clusters at hand. To compensate this bias, one can consider the NMI that would be achieved by comparing several random partitions of increasing number of clusters to the reference one, be it the instrument partition ($nullI$) or the playing technique partition ($nullPt$). The resulting averaged NMI for 100 random partitions are plotted on Figure \ref{fig:clusters}. Those curves are useful for normalizing $j/I$ and $j/Pt$ by simply substracting the null NMIs:
+\begin{equnarray}
+  nj/I &=& j/I - nullI  \\
+  nj/Pt &=& j/Pt - nullPt  \\
+\end{equnarray}
+This normalization is useful for identifying more easily the number of clusters for which the comparison is most profitable. As can be seen on Figure \ref{fig:clusters}, the number of clusters that leads to the highest NMI is 5 for the playing technique reference and 8 for the instrument reference. For the latter, a smaller number down to 6 do not decrease the NMI by much, a fact that will be latter discussed in more details.
+
+\ml{change legend}
 
 \begin{figure}
 \center
 \includegraphics[width = \textwidth]{figures/clusterAnalysis.png}
-\caption{Dendrogram computed using the average similarity matrix.}
-\label{fig:xp2sizeGroup}
+\caption{Cluster analysis of the similarity judgments. $j/I$ and $j/Pt$ compare the partition obtained using the similarity judgments clustered using a growing number of clusters versus respectively the instrument partition and the playing technique partition. Normalizing factors $nullI$ and $nullPt$ are used to obtain normalized measures: $nj/I$ and $nj/Pt$.}
+\label{fig:clusters}
 \end{figure}
 
 \begin{figure}
 \center
 \includegraphics[width = \textwidth]{figures/groupModes.png}
-\caption{Clustering \ipt using average perceptual similarity into 5 clusters (a) and playing technique labels (b). The colors of clusters displayed on top corresponds to the playing technique that is dominant in this cluster.}
-\label{fig:xp2sizeGroup}
+\caption{Clustering \ipt using average perceptual similarity into 5 clusters (a) and playing technique labels (b). The color chosen to display the groups (on top) corresponds to the playing technique that is dominant in this cluster.}
+\label{fig:gm}
 \end{figure}
 
 \begin{figure}
 \center
 \includegraphics[width = \textwidth]{figures/groupInstruments.png}
-\caption{Clustering \ipt using average perceptual similarity into 8 clusters (a) and instrument reference labels (b). The colors of clusters displayed on top corresponds to the intrument that is dominant in this cluster.}
-\label{fig:xp2sizeGroup}
+\caption{Clustering \ipt using average perceptual similarity into 8 clusters (a) and instrument reference labels (b). The color chosen to display the groups (on top) corresponds  to the instrument that is dominant in this group.}
+\label{fig:gi}
 \end{figure}
 
 \section{Model}\label{sec:model}

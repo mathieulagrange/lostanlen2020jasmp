@@ -8,8 +8,9 @@ addpath('evaluation')
 l = linkage(dc, 'weighted');
 
 dendrogram(l, 78,'Orientation','right', 'Labels', names)
-set(gca, 'xtick', [])
-saveas(gcf, ['figures/allLinkage'], 'png')
+set(gca, 'xtick', [], 'fontSize', 15)
+axis tight
+saveas(gcf, '../paper/figures/allLinkage', 'png')
 
 
 for k=2:15

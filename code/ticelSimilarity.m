@@ -101,7 +101,9 @@ end
 for k=1:size(x, 1)
     imagesc(squareform(dc(k, :)))
     colormap gray
-    axis off
+    set(gca, 'xtick', 0)
+set(gca, 'ytick', 1:length(names))
+set(gca, 'yticklabel', names)
     saveas(gcf, ['figures/' num2str(k) 'Sim'], 'png')
 end
 

@@ -93,14 +93,11 @@ Thus, by taking a signal processing view of the matter, one could consider that 
 
 What the higher level of the auditory cortex does remains largely unkown, but we can assume that the level of plasticity is very high, as any living entity has to adapt their percepts to a wide diversity of tasks.  Considering the lack of information about this stage, we will assume in this paper that this second step is rather opportunistic, in the sense that, from this large set of features, it aims at multiplexing in some way the ones that are the most relevant for the task at hand.
 
-Considering not only the type of musical instrument but also the playing technique is interesting in that matter, as it invite us to consider the relation between the rate of modulation and timbre percepts. A notion that have not been extensively studied in the litterature. It also permits to consider the notion of timbral similarity at finer grain of detail.
+Considering not only the type of musical instrument but also the playing technique is interesting in that matter, as it invite us to consider the relation between the rate of modulation and timbre percepts. A notion that have not been extensively studied in the litterature. Compared to instrument class, the reference that is usually taken in timbre studies, it also permits to consider the notion of timbral similarity at finer grain of detail.
 
-The contributions of the paper are as follows: 1) provide perceptual data that account for the perception of musical tones played with various playing techniques, 2), demonstrate that, for the gathered data, the type of playing technique plays an important role for the organization of the data, and 3) propose a perceptually motivated computational model of timbre perception that account well for the human judgments studied in this paper.
+The contributions of the paper are as follows: 1) provide perceptual data that account for the perception of musical tones played with various playing techniques, 2), demonstrate that, for the gathered data, the type of playing technique plays an important role in the spontaneous judgments of similarity, and 3) propose a perceptually motivated computational model of timbre perception that account well for the human judgments studied in this paper.
 
-
-
-\section{Experiment 1}\label{sec:}
-
+\section{Experiment 1}\label{sec:xp1}
 
 The dataset considered in this study has audio recording of 16 different  musical instruments () played with different playing techniques, which leads to 143 different couple of instrument / playing technique. For each couple, the pitch and intonation is varied leading to 25444 samples. The way the dataset is segmented is explained in more details in Appendix \ref{sec:dataset}.
 
@@ -117,7 +114,7 @@ Rating examples are given :
 
 Two musical composition professors of the CNSMDP, a renowned French school of music performed the test. All the couples with a grade higher than three are selected, bringing 78 \ipt to study.
 
-\section{Experiment 2}\label{sec:}
+\section{Experiment 2}\label{sec:xp2}
 
 The second experiment aims at gathering spontaneous judgment of similarity. To do so, we chose a canonical free sorting task  for several reasons. First, it gives the ability to the subject to listen to the whole set of \ipt before performing the task. Second, it gives more freedom to the subject thus potentially more interest to perform the task than a lengthy series of triplet dissimilarity ratings.
 
@@ -127,7 +124,7 @@ The \ipt can be listened to by hovering the mouse on the corresponding dot. The 
 
 The experiment was available online for two months and requests to perform the test have been sent to internal mailing lists of the CNSMDP and international research mailing with a focus on audio and music processing. The experiment have been performed on a volountary basis without gratification.
 
-\section{Analysis}\label{sec:}
+\section{Analysis}\label{sec:analysis}
 
 \begin{figure}
 \center
@@ -140,20 +137,20 @@ The experiment was available online for two months and requests to perform the t
 
 As discussed in the previous section, only the grouping given by the subjects using the color labels is considered to predict the spontaneous judgments of similarity among \ipt. The spatial organisation of the dots representing the \ipt could provide information about the similarity, but this would implicitely force the fact that the similarity space is two dimensional.
 
-We therefore now only study the properties of the groupings performed by the subject prior converting them into an overall similarity matrix.
+We therefore now only study the properties of the groupings performed by the subject prior to converting them into an overall similarity matrix.
 
-Among the 20 colors available, the subjects used on average \ml{fill}. The distribution of the number of groups can be seen on Figure \ref{fig:xp2nbGroup}. The size of the groups is on average \ml{fill}. The distribution of the size of groups can be seen on Figure \ref{fig:xp2sizeGroup}.
+Among the 20 colors available, the subjects used on average $10.2 \pm  4.1$ different colors to group \ipt. The distribution of the number of groups can be seen on Figure \ref{fig:xp2nbGroup}. The size of the groups is on average $7.7 \pm   7.2$. The distribution of the size of groups can be seen on Figure \ref{fig:xp2sizeGroup}. The large number of small groups indicates that many subjects considered that a few of the \ipt were very different from all the remaining \ipt.
 
 \begin{figure}
 \center
-\includegraphics[width = \textwidth]{figures/xp2example.png}
+\includegraphics[width = \textwidth]{figures/nbc.png}
 \caption{Histogram of the number of groups.}
 \label{fig:xp2nbGroup}
 \end{figure}
 
 \begin{figure}
 \center
-\includegraphics[width = \textwidth]{figures/xp2example.png}
+\includegraphics[width = \textwidth]{figures/sbc.png}
 \caption{Histogram of the size of groups.}
 \label{fig:xp2sizeGroup}
 \end{figure}
@@ -206,11 +203,11 @@ A partition of $n$ clusters can be constructed from the agglomerative hierarchic
 \label{fig:xp2sizeGroup}
 \end{figure}
 
-\section{Model}\label{sec:}
+\section{Model}\label{sec:model}
 
-\section{Results}\label{sec:}
+\section{Results}\label{sec:results}
 
-\section{Discussion}\label{sec:}
+\section{Discussion}\label{sec:discussion}
 
 
 

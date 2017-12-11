@@ -205,9 +205,37 @@ To conclude this section, the process of gathering data about the perceptual sim
 
 \section{Model}\label{sec:model}
 
-Once the perceptual data is gathered and controled, our aim is to evaluate the ability of the proposed perceptual model that is now introcued in details.
+Once the perceptual data is gathered and controled, our aim is to evaluate the ability of the proposed perceptual model that is now introduced in more details. The model is composed of two processing stages, respectively called the primary and the secondary stage, see Figure \ref{fig:model}. The primary stage is designed to rely on very few meta parameters set arbitrarily by the experimenter to mimic the early stages of the mamalian auditory system. On contrary, the secondary stage rely largely on the data it has to model and in this respect mimic the high plasticity of the later stages of the mamalian auditory system.
+
+\begin{figure}
+\center
+\includegraphics[width = \textwidth]{figures/groupInstruments.png}
+\caption{Computational model \ml{TODO}}
+\label{fig:model}
+\end{figure}
+
+\subsection{Primary stage}
+
+In order to model the ealry stages of the mamalian auditory system, the time scattering transform, obtained by applying a one dimensional
+wavelet transform in time to a time-frequency wavelet scalogram. This transform thus encodes well modulations over time of energy distributed over frequency, dimensions that are shown to be perceptually important.
+
+This model is chosen over more complex alternatives for the sake of simplicity. Deep convolutional networks could have been considered, but the learning stage inherent in this kind of methods did not seem relevant for this study. On contrary, the scattering transform can be conveniently parametrized to match the perceptual capabilities of the auditory system that do not change significantly among subjects. Also, more complex versions of the scattering like the joint time-frequency scattering and the spiral scattering are not considered in order to achieve a projection of reasonable dimensionality and for lack of evidence that those dimensions are useful to model the primary stage of the auditory system \cite{dau}.
+
+
+
+
+
+\subsection{Secondary stage}
+
+
 
 \section{Validation}\label{sec:validation}
+
+\subsection{Methods}
+
+\subsection{Data}
+
+\subsection{Results}
 
 \section{Discussion}\label{sec:discussion}
 

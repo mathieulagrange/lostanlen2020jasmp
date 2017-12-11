@@ -163,28 +163,36 @@ A partition of $n$ clusters can be constructed from the agglomerative hierarchic
 
 One question that arises is whether the similarity is influenced primarily by the instrument or by the playing technique. To answer this question, each partition provided by cutting the dendrogram at successive levels is compared to two reference partitions. One is the partition of the \ipt when labeled with the instrument used (I) and the other if the partition of the \ipt when labeled with the playing technique used (Pt).
 
-There are many metrics to compare two partitions by evaluating their degree of correspondance. The normalized mutual information (NMI) is interesting as it do not require alignement of the groups labels between the two partitions prior correspondance analysis and the two partition are not required to have the same number of groups. Figure \ref{fig:clusters} shows the evolution of the NMI when comparing the partitions provided by the cluster analysis of the dendrogram produced using the human judgment of similarity and respectively the instrument partition ($j/I$) or the playing technique partition ($j/Pt$).
+There are many metrics to compare two partitions by evaluating their degree of correspondance. The normalized mutual information (NMI) is interesting as it do not require alignement of the groups labels between the two partitions prior correspondance analysis and the two partition are not required to have the same number of groups. It also by design bounded between 0 and 1, 1 meaning perfect match. Figure \ref{fig:clusters} shows the evolution of the NMI when comparing the partitions provided by the cluster analysis of the dendrogram produced using the human judgment of similarity and respectively the instrument partition ($j/I$) or the playing technique partition ($j/Pt$).
 
-There is a clear gain of NMI when considering the playing technique which means that the subjects primarily used cues corresponding to the playing technique to organize the \ipt. Also, for both curves, a global trend of increase NMI with respect to the number of clusters in the $j$ partition can be observed. This is a well documented fact, which simply put, means that it is easier to match a given partition with more clusters at hand. To compensate this bias, one can consider the NMI that would be achieved by comparing several random partitions of increasing number of clusters to the reference one, be it the instrument partition ($nullI$) or the playing technique partition ($nullPt$). The resulting averaged NMI for 100 random partitions are plotted on Figure \ref{fig:clusters}. Those curves are useful for normalizing $j/I$ and $j/Pt$ by simply substracting the null NMIs:
+There is a clear gain of NMI when considering the playing technique which means that the subjects primarily used cues corresponding to the playing technique to organize the \ipt. Also, for both curves, a global trend of increase NMI with respect to the number of clusters in the $j$ partition can be observed. This is a well documented fact, which simply put, means that it is easier to match a given partition with more clusters at hand. To compensate for this bias, one can consider the NMI that would be achieved by comparing several random partitions of increasing number of clusters to the reference one, be it the instrument partition ($nullI$) or the playing technique partition ($nullPt$). The resulting averaged NMI for 100 randomly generated partitions are displayed on Figure \ref{fig:clusters}. Those curves are useful for normalizing $j/I$ and $j/Pt$ by simply substracting the so)called null NMIs:
 \begin{equnarray}
   nj/I &=& j/I - nullI  \\
   nj/Pt &=& j/Pt - nullPt  \\
 \end{equnarray}
-This normalization is useful for identifying more easily the number of clusters for which the comparison is most profitable. As can be seen on Figure \ref{fig:clusters}, the number of clusters that leads to the highest NMI is 5 for the playing technique reference and 8 for the instrument reference. For the latter, a smaller number down to 6 do not decrease the NMI by much, a fact that will be latter discussed in more details.
+This normalization is useful for identifying more easily the number of clusters for which the comparison is most relevant. As can be seen on Figure \ref{fig:clusters}, the number of clusters that leads to the highest NMI is 5 for the playing technique reference and 8 for the instrument reference, leading respectively to an NMI of $0.46$ and $0.21$. For the latter, a smaller number down to 6 do not decrease the NMI by much, a fact that will be latter discussed in more details. Even by considering the null normalization, the matching level is much higher for the playing technique refereence.
 
-\ml{change legend}
+\ml{need the dendrogram}
+
+Once the number of clusters that lead to a partition that optimally match the reference, be it the instrument or playing technique labels are set, we can now study in more detailes the correspondance between those partitions and the reference ones. For this purpose, Figure \ref{fig:gi} displays two partitions. At the bottom is the partition that corresponds to the instruments labels, whose color code is given by the color bar on the right. The abbreviations used for the instruments are detailed in Section \ref{sec:dataset}. The ordering of \ipt on the horizontal axis is the one given by the cluster analysis, see the dendrogram on Figure \ref{fig:dendrogram}. The partition on top is the result of the clustering with 8 clusters. For visualization purposes, we arbitrarily set colors to clusters of this partition to the color code of the instrument label that is most often encountered in this cluster. If some some occurs equally often, the instrument of the first \ipt of the cluster is chosen. The emerging instrument classes are: Saxophone, Clarinet, Trumpet, Flute and Cello.
+
+Though, even with an optimal number of clusters, we see that the clusters have  a low purity, \textit{i.e.} a very diverse set of instruments labels for the \ipt they belong to. Also, some clusters could be merged without stong changes in the overall organisation. This probably explains the small changes of NMI when reducing the number of clusters, see Figure \ref{fig:clusters}.
+
+As can be seen on Figure \ref{fig:gm}, the correspondance between the playing technique reference and the resulting partition with 5 clusters is much higher. Most clusters have a high level of purity and for groups emerge : pizzicato, slap, ordinario, and ponticello.
+
+To conclude this section, the process of gathering data about the perceptual similarity of \ipt is found to be successful. The main organizationtal factor is found to be the playing technique.
 
 \begin{figure}
 \center
 \includegraphics[width = \textwidth]{figures/clusterAnalysis.png}
-\caption{Cluster analysis of the similarity judgments. $j/I$ and $j/Pt$ compare the partition obtained using the similarity judgments clustered using a growing number of clusters versus respectively the instrument partition and the playing technique partition. Normalizing factors $nullI$ and $nullPt$ are used to obtain normalized measures: $nj/I$ and $nj/Pt$.}
+\caption{Cluster analysis of the similarity judgments. $j/I$ and $j/Pt$ compare the partition obtained using the similarity judgments clustered using a growing number of clusters versus respectively the instrument partition and the playing technique partition. Normalizing factors $nullI$ and $nullPt$ are used to obtain normalized measures: $nj/I$ and $nj/Pt$. \ml{change legend}}
 \label{fig:clusters}
 \end{figure}
 
 \begin{figure}
 \center
 \includegraphics[width = \textwidth]{figures/groupModes.png}
-\caption{Clustering \ipt using average perceptual similarity into 5 clusters (a) and playing technique labels (b). The color chosen to display the groups (on top) corresponds to the playing technique that is dominant in this cluster.}
+\caption{Clustering \ipt using average perceptual similarity into 5 clusters (top) and playing technique labels (top). The color chosen to display each clusters on top corresponds to the playing technique that is dominant in this cluster.\ml{change colormap}}
 \label{fig:gm}
 \end{figure}
 
@@ -197,7 +205,9 @@ This normalization is useful for identifying more easily the number of clusters 
 
 \section{Model}\label{sec:model}
 
-\section{Results}\label{sec:results}
+Once the perceptual data is gathered and controled, our aim is to evaluate the ability of the proposed perceptual model that is now introcued in details.
+
+\section{Validation}\label{sec:validation}
 
 \section{Discussion}\label{sec:discussion}
 

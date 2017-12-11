@@ -1,14 +1,3 @@
-% -----------------------------------------------
-% Template for ISMIR Papers
-% 2017 version, based on previous ISMIR templates
-
-% Requirements :
-% * 6+n page length maximum
-% * 4MB maximum file size
-% * Copyright note must appear in the bottom left corner of first page
-% * Clearer statement about citing own work in anonymized submission
-% (see conference website for additional details)
-% -----------------------------------------------
 
 \documentclass{article}
 \usepackage{amsmath,cite,url}
@@ -23,44 +12,7 @@
 % ------
 \title{Spontaneous Similarity Judgments of Musical Tones played with various Playing Techniques}
 
-% Note: Please do NOT use \thanks or a \footnote in any of the author markup
-
-% Single address
-% To use with only one author or several with the same address
-% ---------------
-%\oneauthor
-% {Names should be omitted for double-blind reviewing}
-% {Affiliations should be omitted for double-blind reviewing}
-
-% Two addresses
-% --------------
-%\twoauthors
-%  {First author} {School \\ Department}
-%  {Second author} {Company \\ Address}
-
-%% To make customize author list in Creative Common license, uncomment and customize the next line
-%  \def\authorname{First Author, Second Author}
-
-
-% Three addresses
-% --------------
-\author{Mathieu Lagrange, Christian EL-Hajj, Mathias Rossignol, Grégoire Lafay}
-
-%% To make customize author list in Creative Common license, uncomment and customize the next line
-%  \def\authorname{First Author, Second Author, Third Author}
-
-% Four or more addresses
-% OR alternative format for large number of co-authors
-% ------------
-%\multauthor
-%{First author$^1$ \hspace{1cm} Second author$^1$ \hspace{1cm} Third author$^2$} { \bfseries{Fourth author$^3$ \hspace{1cm} Fifth author$^2$ \hspace{1cm} Sixth author$^1$}\\
-%  $^1$ Department of Computer Science, University , Country\\
-%$^2$ International Laboratories, City, Country\\
-%$^3$  Company, Address\\
-%{\tt\small CorrespondenceAuthor@ismir.edu, PossibleOtherAuthor@ismir.edu}
-%}
-%\def\authorname{First author, Second author, Third author, Fourth author, Fifth author, Sixth author}
-
+\author{Christian El-Hajj, Mathias Rossignol, Grégoire Lafay, Mathieu Lagrange}
 
 \sloppy % please retain sloppy command for improved formatting
 
@@ -95,7 +47,7 @@ What the higher level of the auditory cortex does remains largely unkown, but we
 
 Considering not only the type of musical instrument but also the playing technique is interesting in that matter, as it invite us to consider the relation between the rate of modulation and timbre percepts. A notion that have not been extensively studied in the litterature. Compared to instrument class, the reference that is usually taken in timbre studies, it also permits to consider the notion of timbral similarity at finer grain of detail.
 
-The contributions of the paper are as follows: 1) provide perceptual data that account for the perception of musical tones played with various playing techniques, 2), demonstrate that, for the gathered data, the type of playing technique plays an important role in the spontaneous judgments of similarity, and 3) propose a perceptually motivated computational model of timbre perception that account well for the human judgments studied in this paper.
+The contributions of the paper are as follows: 1) provide perceptual data that account for the perception of musical tones played with various playing techniques, 2), demonstrate that, for the gathered data, the type of playing technique plays an important role in the spontaneous judgments of similarity, 3) propose a perceptually motivated computational model of timbre perception that account well for the human judgments studied in this paper and 4) discusses the use of this computational model to \ipt similarity search in the usage scenario of \ipt database browsing.
 
 \section{Experiment 1}\label{sec:xp1}
 
@@ -219,13 +171,13 @@ Once the perceptual data is gathered and controled, our aim is to evaluate the a
 In order to model the ealry stages of the mamalian auditory system, the time scattering transform, obtained by applying a one dimensional
 wavelet transform in time to a time-frequency wavelet scalogram. This transform thus encodes well modulations over time of energy distributed over frequency, dimensions that are shown to be perceptually important.
 
-This model is chosen over more complex alternatives for the sake of simplicity. Deep convolutional networks could have been considered, but the learning stage inherent in this kind of methods did not seem relevant for this study. On contrary, the scattering transform can be conveniently parametrized to match the perceptual capabilities of the auditory system that do not change significantly among subjects. Also, more complex versions of the scattering like the joint time-frequency scattering \cite{waspaa} and the spiral scattering are not considered in order to achieve a projection of reasonable dimensionality and for lack of evidence that those dimensions are useful to model the primary stage of the auditory system \cite{dau}.
-
-
-
-
+This model is chosen over more complex alternatives for the sake of simplicity. Deep convolutional networks could have been considered, but the learning stage inherent in this kind of methods did not seem relevant for this study. On contrary, the scattering transform can be conveniently parametrized to match the perceptual capabilities of the auditory system. Those parameters do not change significantly among subjects. Also, more complex versions of the scattering like the joint time-frequency scattering \cite{waspaa} and the spiral scattering are not considered in order to achieve a projection of reasonable dimensionality and for lack of evidence that those dimensions are mandatory to model the primary stage of the auditory system \cite{dau}.
 
 \subsection{Secondary stage}
+
+The secondary stage aims at providing a metric space that closely match the one resulting from the data gathering by experiment 2. For the reason, it involves a learning based process block that weight the features outputed by the primary stage.
+
+Indeed, if the properties of the first processing stages of the human auditory system can reasonably be considered as similar for every subjects despite potential hearing losses for some, the later ones is expected to vary more drastically due to his education, tastes and experiences with stimuli similar to the \ipt that are considered in this study.
 
 
 
@@ -237,10 +189,15 @@ This model is chosen over more complex alternatives for the sake of simplicity. 
 
 \subsection{Results}
 
+For the sake of reproducibility, the code of the proposed method and the experimental protocol is available\footnote{https://github.com/mathieulagrange/paperSpontaneousSimilarity}. For convenience, the features (scattering and mfccs) are alos provided, but the software can be used to process from scratch the SOL database.
+
 \section{Discussion}\label{sec:discussion}
 
+Thanks to the digitization capabilities available, gathering large amount of audio recordings of \ipt is achievable and several databases are now available on the market. Browsing of such databases can be achieved by keyword based search. It requires that 1) the database is fully annotated with a precise ontology of instruments and playing techniques, 2) that the user has a precise understanding of this ontology, and 3) that the user a precise idea of the kind of timbre he is looking to find the \ipt he is searching for.
 
+An interesting alternative type of search is the similarity content based search. Being solely based on sound, this kind of search can be used when querying by example. The user provides an example of the target sound to find \ipt that match the timbre description of the query, be it an onomatepea, a tone from another instrument or any kind of environmental sound.
 
+The computational model proposed in this paper is well suited for this kind of search, as it can model complex perceptual timbre spaces and can scale to large databases. Once the features and the projection matrix are computed, the similarity computation is quite effective and can be further enhanced by considering fast similarity search scheme such as locally sensitive least square hashing \cite{lsh}. The secondary stage being learnt, it can easily adapt to user tastes and usage history by reweighting the scattering features for improved search relevance.
 
 % For bibtex users:
 \bibliography{bib}

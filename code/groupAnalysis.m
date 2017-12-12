@@ -31,7 +31,8 @@ clusterNames{end} = [clusterNames{end} 'art'];
 clusterNames{2} = [clusterNames{2} 'key'];
 
 figure(1)
-colormap jet
+colormap(lines)
+% colormap jet
 image([smcl; im(icl)']); %scl/max(scl)*15
 l1 = line([0 79], [1.5 1.5]); l1.Color = 'k';
 for k=2:ncl   
@@ -81,7 +82,7 @@ pty(1:2:end) = pty(1:2:end)+.05;
 % clusterNames{2} = [clusterNames{2} 'key'];
 
 figure(2)
-colormap parula
+colormap lines
 image([smcl; ii(icl)']);
 for k=2:ncl   
     l1 = line([1 1]*ptl(k)+.5, [.5 1.5]); l1.Color = 'k';

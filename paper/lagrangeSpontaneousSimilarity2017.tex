@@ -39,44 +39,42 @@ The focus of this paper is to study the influence of the playing technique on th
 
 A popular view of the kind of stimuli we consider is that they can be described by a spread of energy that evolve through time and across frequency. By following this trend, most researchers translate the exclusion definition of timbre \cite{marozeau2003dependency} into a more specified definition. The exclusion definition states that timbre is "the fourth component of sound quality, the first three being pitch, loudness and duration". In an attempt to specify more this notion of timbre, we will loosely consider in this paper that musical timbre is the influence on the human auditory system of the distribution of intensity across the time / frequency plane.
 
-A great deal of litterature focuses on the instantaneous spectrum \cite{grey1978perceptual}. Other studies also demonstrated the importance of the onset in the recognition of some musical instruments. All those studies generally assume a rather short term model where the waveform is observed in a range that do not exceed 100 ms, a common porcessing scenario that is very commonly used in computational recognition models \cite{tzanetakis2002musical}.
+A great deal of litterature focuses on the instantaneous spectrum \cite{grey1978perceptual}. Other studies also demonstrated the importance of the onset in the recognition of some musical instruments. All those studies generally assume a rather short term model where the waveform is observed in a range that do not exceed 100 ms, a common porcessing scenario that is very commonly used in computational recognition models of timbre \cite{tzanetakis2002musical}.
 
-Agus \& al effectively showed that a great deal of instrument recognition can be achieved with very little listening time \cite{agus2012fast}. Though, instrument recognition is only part of musical timbre perception. We propose in this paper to study the influence of the playing technique on musical timbre percept. Evidently, the influence of the playing technique can be measured in terms of energy distribution along the frequency axis but also with respect to time on long time scales.
+Agus \& al effectively showed that a great deal of instrument recognition can be achieved with very little listening time \cite{agus2012fast}. Though, instrument recognition is only part of musical timbre perception. We propose in this paper to study the influence of the playing technique on musical timbre percept. Evidently, the influence of the playing technique can be measured in terms of energy distribution along the frequency axis but also with respect to time on longer time scales than usually considered.
 
-Interestingly, modern physiological models of the primary mamalian auditory system also considers the evolution of the energy distribution at longer time scales, \textit{i.e.} how the energy modulates through time for given frequencies.  Dau's model acounts for  rate of modulation over frequency bands of fixed bandwidth on a logarithmic frequency scale\cite{dau1997modeling}. Shamma's model accounts for rate  of modulations over several bandwidth to fully describes the physiological evidence gathered by studying the auditory system of the ferret \cite{yang1992auditory}. Though, some numerical applications of this model did not demonstrated the usefullness of the bandwidth dimension \cite{mesgarani2006discrimination}.
+Interestingly, modern physiological models of the primary mamalian auditory system also finds that the evolution of the energy distribution at longer time scales matters, \textit{i.e.} how the energy modulates through time for given frequencies.  Dau's model acounts for  rate of modulation over frequency bands of fixed bandwidth on a logarithmic frequency scale\cite{dau1997modeling}. Shamma's model accounts for rate  of modulations over several bandwidth to fully describes the physiological evidence gathered by studying the auditory system of the ferret \cite{yang1992auditory}. Though, the use of numerical implementations of this model did not fully demonstrated the usefullness of the bandwidth dimension \cite{mesgarani2006discrimination}.
 
 Thus, by taking a signal processing view of the matter, one could consider that a first stage of the auditory system proceeds to a rather fixed set of convolutions across time and frequency, projecting the signal into a large set of descriptive features organized across frequency and rate of modulations \cite{anden2014deep}.
 
 What the higher levels of the auditory cortex does remains largely unkown, but we can assume that the degree of freedom of the underlying model is very large contrary to the early stages.  We will assume in this paper that this second step is rather opportunistic. From the large set of features it recieves, this second stage aims at multiplexing in some way the ones that are the most relevant for the task at hand. Related work includes the use of the auditory model proposed by Prof. Shamma for studying musical timbre \cite{patil2012music}.
 
-Considering not only the type of musical instrument but also the playing technique is interesting in that matter, as it invite us to consider the relation between the rate of modulation and timbre percepts. A notion that have not been extensively studied in the litterature \cite{burred2010dynamic}. Compared the reference that is usually taken in timbre studies \textit{i.e.} the instrument class, considering the playing technique allows us to consider the notion of timbral similarity at finer grain of detail.
+Considering not only the type of musical instrument but also the playing technique is interesting in that matter, as it invite us to consider the relation between the rate of modulation and timbre percepts. A notion that have not been extensively studied in the litterature \cite{burred2010dynamic}. Compared the reference that is usually taken in timbre studies \textit{i.e.} the instrument class, taking into account also the playing technique allows us to consider the notion of timbral similarity at finer grain of detail.
 
 The contributions of the paper are as follows: 1) provide perceptual data that account for the perception of musical tones played with various playing techniques, 2), demonstrate that, for the gathered data, the type of playing technique plays an important role in the spontaneous judgments of similarity, 3) propose a perceptually motivated computational model of timbre perception that account well for the human judgments studied in this paper and 4) discusses the use of this computational model to \ipt similarity search in the usage scenario of \ipt database browsing.
 
-
-
 \section{Experiment 1}\label{sec:xp1}
 
-The dataset considered in this study has audio recording of 16 different musical instruments played with different playing techniques, which leads to 143 different couple of instrument / playing technique. For each couple, the pitch and intonation is varied leading to 25444 samples. The way the dataset is segmented is explained in more details in Appendix \ref{sec:dataset}.
+The dataset considered in this study is taken from the studio-on-line music library  \cite{peeters2000instrument}. It has audio recordings of 16 different musical instruments played with different playing techniques, which leads to 143 different couple of instrument / playing technique. For each couple, the pitch and intonation is varied leading to 25444 samples. The way the dataset is segmented is explained in more details in Appendix \ref{sec:dataset}.
 
 Studies about perceptual similarity are plagued with a dimensional problem. When considering $n$ items, a complete exploration of the similarity space requires the filling of a $n^2$ matrix. Assuming a symmetric similarity (the similarity of A to B is equl to the similarity of B to A) reduces the number but not by much.
 
 In an attempt to reduce the number of items, we decided to perform a selection experiment where the subject is asked to give his opinion on which \ipt is relevant to study. An \ipt is said to be relevant to study if it is likely to be associated to another \ipt. Interest is rated on a 7 ticks scale. The subject can listen to all the different nuance and pitch samples of each \ipt. The experiment is over when all the \ipt have been rated.
 
-Rating examples are given :
+Rating guidelines are provided :
 \begin{itemize}
   \item One star: this \ipt is singular, it is not useful to compare it with another \ipt.
   \item Four stars: there is a proximity on one aspect of the sound between this \ipt and of an \ipt of another instrument, but this one is neither decisive nor obvious.
   \item Seven stars: there is a large similarity between this \ipt and an \ipt of another instrument, it is interesting to keep it.
 \end{itemize}
 
-Two musical composition professors of the CNSMDP, a renowned French school of music performed the test. All the couples with a grade higher than three are selected, bringing 78 \ipt to study.
+Two music composition professors of the CNSMDP, a renowned French school of music, performed the test. All the couples with a grade higher than three are selected, bringing 78 \ipt to study.
 
 \section{Experiment 2}\label{sec:xp2}
 
-The second experiment aims at gathering spontaneous judgment of similarity. To do so, we chose a canonical free sorting task  for several reasons. First, it gives the ability to the subject to listen to the whole set of \ipt before performing the task. Second, it gives more freedom to the subject thus potentially more interest to perform the task than a lengthy series of triplet dissimilarity ratings.
+The second experiment aims at gathering spontaneous judgment of similarity for the 78 \ipt selected in the previous experiment. To do so, we chose a canonical free sorting task for two main reasons. First, this kind of task gives the ability to the subject to listen to the whole set of \ipt before performing the task. Second, it gives more freedom to the subject, thus potentially more interest to perform the task than a lengthy series of triplet dissimilarity ratings.
 
-The subjects are thus asked to organize the 78 \ipt displayed as grey dots on a two dimensional plane into groups by assigning colors to each dots according to their "acoustic similarity". The textual instructions provided to introduce the experiment was chosen to be deliberately vague in order to allow the subject to \ml{use its own representation of similarity}.
+The subjects are thus asked to organize the 78 \ipt displayed as grey dots on a two dimensional plane into groups by assigning colors to each dots according to their "acoustic similarity". The textual instructions provided to introduce the experiment was chosen to be deliberately vague in order to allow the subject to follow its own judgment.
 
 The \ipt can be listened to by hovering the mouse on the corresponding dot. The experiment is over when the sujbect assigned a color to all the dots. The initial location of the dots on the plane is randomized for each subject and can be changed during the experiment by the subject for convenience. Eventhough the location of the dots is recorded, this data is not considered during the analysis.
 
@@ -91,9 +89,9 @@ The experiment was available online for two months and requests to perform the t
 \label{fig:xp2display}
 \end{figure}
 
-31 subjects completed the experiment. An example of resulting organisation of \ipt is given on Figure \ref{fig:xp2display}.  The resulting organisation for each subject are available for reader's inspection using the full feature interface provided to the subjects for performing the experiment\footnote{https://mathieulagrange.github.io/paperSpontaneousSimilarity/demo}.
+31 subjects completed the experiment. An example of resulting organisation of \ipt is given on Figure \ref{fig:xp2display}. The resulting organisation for each subject are available for reader's inspection using the full feature interface provided to the subjects for performing the experiment\footnote{https://mathieulagrange.github.io/paperSpontaneousSimilarity/demo}.
 
-As discussed in the previous section, only the grouping given by the subjects using the color labels is considered to predict the spontaneous judgments of similarity among \ipt. The spatial organisation of the dots representing the \ipt could provide information about the similarity, but this would implicitely force the fact that the similarity space is two dimensional.
+As discussed in the previous section, only the grouping given by the subjects using the color labels is considered to estimate the spontaneous judgments of similarity among \ipt. The spatial organisation of the dots representing the \ipt could provide information about the similarity, but this would implicitely force the fact that the timbral similarity space is two dimensional.
 
 We therefore now only study the properties of the groupings performed by the subject prior to converting them into an overall similarity matrix.
 
@@ -113,32 +111,13 @@ Among the 20 colors available, the subjects used on average $10.2 \pm  4.1$ diff
 \label{fig:xp2sizeGroup}
 \end{figure}
 
-A grouping can be considered as a binary similarity measure, with $s(a, b) = 1$ if $a$ and $b$ belong to the same group, and $0$ otherwise. The Figure \ref{fig:xp2bsim} show the binary similarity matrix that correponds to the grouping displayed on Figure \ref{fig:xp2display}. By averaging the 31 binary similarity matrix, an overall floating point matrix is obtained that correponds to our measure of the spontaneous similarity between \ipt.
+A grouping can be considered as a binary similarity measure, with $s(a, b) = 1$ if $a$ and $b$ belong to the same group, and $0$ otherwise. By averaging the 31 binary similarity matrix, an overall floating point matrix is obtained that correponds to our measure of the spontaneous perceptual similarity between \ipt.
 
-A cluster analysis is next performed using an agglomerative hierarchical clustering using the weighted average algorithm for computing distance between clusters. The resulting dendrogram is displayed on Figure \ref{fig:xp2sizeGroup}.
+In order to gather information about the properties of the data, a cluster analysis is next performed using an agglomerative hierarchical clustering \cite{gordon1987review} using the weighted average algorithm for computing distance between clusters. The resulting dendrogram is displayed on Figure \ref{fig:dendrogram}. A partition of $n$ clusters can be constructed from the agglomerative hierarchical cluster tree by finding the smallest height at which a horizontal cut through the tree leaves $n$ clusters.
 
-A partition of $n$ clusters can be constructed from the agglomerative hierarchical cluster tree by finding the smallest height at which a horizontal cut through the tree leaves $n$ clusters. In order to have a better understanding of the nature of the similarity space induced by the judgments of the subjects, a cluster analysis is now performed.
+One question that arises is whether the similarity is influenced primarily by the instrument or by the playing technique. To answer this question, each partition provided by cutting the dendrogram at successive levels is compared to two reference partitions. One reference is the partition of the \ipt when labeled with the instrument used (I) and the other if the partition of the \ipt when labeled with the playing technique used (Pt).
 
-One question that arises is whether the similarity is influenced primarily by the instrument or by the playing technique. To answer this question, each partition provided by cutting the dendrogram at successive levels is compared to two reference partitions. One is the partition of the \ipt when labeled with the instrument used (I) and the other if the partition of the \ipt when labeled with the playing technique used (Pt).
-
-There are many metrics to compare two partitions by evaluating their degree of correspondance. The normalized mutual information (NMI) is interesting as it do not require alignement of the groups labels between the two partitions prior correspondance analysis and the two partition are not required to have the same number of groups. It also by design bounded between 0 and 1, 1 meaning perfect match. Figure \ref{fig:clusters} shows the evolution of the NMI when comparing the partitions provided by the cluster analysis of the dendrogram produced using the human judgment of similarity and respectively the instrument partition ($j/I$) or the playing technique partition ($j/Pt$).
-
-There is a clear gain of NMI when considering the playing technique which means that the subjects primarily used cues corresponding to the playing technique to organize the \ipt. Also, for both curves, a global trend of increase NMI with respect to the number of clusters in the $j$ partition can be observed. This is a well documented fact, which simply put, means that it is easier to match a given partition with more clusters at hand. To compensate for this bias, one can consider the NMI that would be achieved by comparing several random partitions of increasing number of clusters to the reference one, be it the instrument partition ($nullI$) or the playing technique partition ($nullPt$). The resulting averaged NMI for 100 randomly generated partitions are displayed on Figure \ref{fig:clusters}. Those curves are useful for normalizing $j/I$ and $j/Pt$ by simply substracting the so)called null NMIs:
-\begin{eqnarray}
-  nj/I &=& j/I - nullI  \\
-  nj/Pt &=& j/Pt - nullPt  \\
-\end{eqnarray}
-This normalization is useful for identifying more easily the number of clusters for which the comparison is most relevant. As can be seen on Figure \ref{fig:clusters}, the number of clusters that leads to the highest NMI is 5 for the playing technique reference and 8 for the instrument reference, leading respectively to an NMI of $0.46$ and $0.21$. For the latter, a smaller number down to 6 do not decrease the NMI by much, a fact that will be latter discussed in more details. Even by considering the null normalization, the matching level is much higher for the playing technique refereence.
-
-\ml{need the dendrogram}
-
-Once the number of clusters that lead to a partition that optimally match the reference, be it the instrument or playing technique labels are set, we can now study in more detailes the correspondance between those partitions and the reference ones. For this purpose, Figure \ref{fig:gi} displays two partitions. At the bottom is the partition that corresponds to the instruments labels, whose color code is given by the color bar on the right. The abbreviations used for the instruments are detailed in Section \ref{sec:dataset}. The ordering of \ipt on the horizontal axis is the one given by the cluster analysis, see the dendrogram on Figure \ref{fig:dendrogram}. The partition on top is the result of the clustering with 8 clusters. For visualization purposes, we arbitrarily set colors to clusters of this partition to the color code of the instrument label that is most often encountered in this cluster. If some some occurs equally often, the instrument of the first \ipt of the cluster is chosen. The emerging instrument classes are: Saxophone, Clarinet, Trumpet, Flute and Cello.
-
-Though, even with an optimal number of clusters, we see that the clusters have  a low purity, \textit{i.e.} a very diverse set of instruments labels for the \ipt they belong to. Also, some clusters could be merged without stong changes in the overall organisation. This probably explains the small changes of NMI when reducing the number of clusters, see Figure \ref{fig:clusters}.
-
-As can be seen on Figure \ref{fig:gm}, the correspondance between the playing technique reference and the resulting partition with 5 clusters is much higher. Most clusters have a high level of purity and for groups emerge : pizzicato, slap, ordinario, and ponticello.
-
-To conclude this section, the process of gathering data about the perceptual similarity of \ipt is found to be successful. The main organizationtal factor is found to be the playing technique.
+There are many metrics to compare two partitions by evaluating their degree of correspondance \cite{wagner2007comparing}. The normalized mutual information (NMI) is interesting as it do not require alignement of the groups labels between the two partitions prior correspondance analysis and the two partition are not required to have the same number of groups. It also by design bounded between 0 and 1, 1 meaning perfect match. We consider the normalization proposed in \cite{strehl2002cluster}. Figure \ref{fig:clusters} shows the evolution of the NMI when comparing the partitions provided by the cluster analysis of the dendrogram produced using the human judgment of similarity and respectively the instrument partition ($j/I$) or the playing technique partition ($j/Pt$).
 
 \begin{figure}
 \center
@@ -146,6 +125,22 @@ To conclude this section, the process of gathering data about the perceptual sim
 \caption{Cluster analysis of the similarity judgments. $j/I$ and $j/Pt$ compare the partition obtained using the similarity judgments clustered using a growing number of clusters versus respectively the instrument partition and the playing technique partition. Normalizing factors $nullI$ and $nullPt$ are used to obtain normalized measures: $nj/I$ and $nj/Pt$. \ml{change legend}}
 \label{fig:clusters}
 \end{figure}
+
+There is a clear gain of NMI when considering the playing technique which means that the subjects primarily used cues corresponding to the playing technique to organize the \ipt. Also, for both curves, a global trend of increase with respect to the number of clusters in the $j$ partition can be observed. This is a well documented fact, which simply put, means that it is easier to match any given partition with more clusters at hand \cite{tibshirani2001estimating}. To compensate for this bias, one can consider the NMI that would be achieved by comparing several random partitions of increasing number of clusters to the reference one, be it the instrument partition ($nullI$) or the playing technique partition ($nullPt$). The resulting averaged NMI for 100 randomly generated partitions are displayed on Figure \ref{fig:clusters}. Those curves are useful for normalizing $j/I$ and $j/Pt$ by simply substracting the so-called null NMIs:
+\begin{eqnarray}
+  nj/I &=& j/I - nullI  \\
+  nj/Pt &=& j/Pt - nullPt  \\
+\end{eqnarray}
+This normalization is useful for identifying more easily the number of clusters for which the comparison is most relevant. As can be seen on Figure \ref{fig:clusters}, the number of clusters that leads to the highest NMI is 5 for the playing technique reference and 8 for the instrument reference, leading respectively to an NMI of $0.46$ and $0.21$. For the latter, reducing the number of clusters down to 6 do not decrease the NMI by much, a fact that will be latter discussed in more details. Even by considering the null normalization, the matching level is much higher for the playing technique reference.
+
+The correspondances between those partitions and the reference ones are now studied. For this purpose, Figure \ref{fig:gi} displays two partitions. At the bottom is the partition that corresponds to the instruments labels, whose color code is given by the color bar on the right. The abbreviations used for the instruments are detailed in Section \ref{sec:dataset}. The ordering of \ipt on the horizontal axis is the one given by the cluster analysis, see the dendrogram on Figure \ref{fig:dendrogram}. The partition on top is the result of the clustering with 8 clusters. For visualization purposes, we arbitrarily set colors to clusters of this partition to the color code of the instrument label that is most often encountered in this cluster. If some labels occur equally often, the instrument of the first \ipt of the cluster is chosen. The emerging instrument classes are: Saxophone, Clarinet, Trumpet, Flute and Cello.
+
+Though, even with an optimal number of clusters, we see that the clusters have  a low purity, \textit{i.e.} a very diverse set of instruments labels for the \ipt they belong to. Also, some clusters could be merged without stong changes in the overall organisation. This probably explains the small changes of NMI when reducing the number of clusters, see Figure \ref{fig:clusters}.
+
+As can be seen on Figure \ref{fig:gm}, the correspondance between the playing technique reference and the resulting partition with 5 clusters is much higher. Most clusters have a high level of purity and for groups emerge : Pizzicato, Slap, Ordinario, and Ponticello.
+
+To conclude this section, the process of gathering data about the perceptual similarity of \ipt is found to be successful as the subjects used their degree of freedom in a consistent manner and no inconsistency in the data has been detected during the analysis process. The main result is that the playing technique is an important factor when modeling the spontaneous judgment of similarity gathered in the second experiment.
+
 
 \begin{figure}
 \center
@@ -174,10 +169,10 @@ Once the perceptual data is gathered and controled, our aim is to evaluate the a
 
 \subsection{Primary stage}
 
-In order to model the ealry stages of the mamalian auditory system, the time scattering transform, obtained by applying a one dimensional
-wavelet transform in time to a time-frequency wavelet scalogram. This transform thus encodes well modulations over time of energy distributed over frequency, dimensions that are shown to be perceptually important.
+In order to model the early stages of the mamalian auditory system, the time scattering transform \cite{anden2014deep}, obtained by applying a one dimensional
+wavelet transform in time to a time-frequency wavelet scalogram. This transform thus encodes well modulations over time of energy distributed over frequency, dimensions that are shown to be perceptually important \cite{dau1997modeling}.
 
-This model is chosen over more complex alternatives for the sake of simplicity. Deep convolutional networks could have been considered, but the learning stage inherent in this kind of methods did not seem relevant for this study. On contrary, the scattering transform can be conveniently parametrized to match the perceptual capabilities of the auditory system. Those parameters do not change significantly among subjects. Also, more complex versions of the scattering like the joint time-frequency scattering \cite{waspaa} and the spiral scattering are not considered in order to achieve a projection of reasonable dimensionality and for lack of evidence that those dimensions are mandatory to model the primary stage of the auditory system \cite{dau}.
+This model is chosen over more complex alternatives for the sake of simplicity. Deep convolutional networks could have been considered \cite{lee2009unsupervised}, but the learning stage inherent in this kind of methods did not seem relevant for this study. On contrary, the scattering transform can be conveniently parametrized to match the perceptual capabilities of the auditory system as those parameters are not expected to change significantly among subjects. Also, more complex versions of the scattering like the joint time-frequency scattering \cite{anden2015joint} and the spiral scattering \cite{lostanlen2016wavelet} are not considered in order to achieve a projection of reasonable dimensionality and for lack of evidence that those dimensions are mandatory to model the primary stage of the auditory system.
 
 \subsection{Secondary stage}
 
@@ -203,16 +198,18 @@ Thanks to the digitization capabilities available, gathering large amount of aud
 
 An interesting alternative type of search is the similarity content based search. Being solely based on sound, this kind of search can be used when querying by example. The user provides an example of the target sound to find \ipt that match the timbre description of the query, be it an onomatepea, a tone from another instrument or any kind of environmental sound.
 
-The computational model proposed in this paper is well suited for this kind of search, as it can model complex perceptual timbre spaces and can scale to large databases. Once the features and the projection matrix are computed, the similarity computation is quite effective and can be further enhanced by considering fast similarity search scheme such as locally sensitive least square hashing \cite{lsh}. The secondary stage being learnt, it can easily adapt to user tastes and usage history by reweighting the scattering features for improved search relevance.
+The computational model proposed in this paper is well suited for this kind of search, as it can model complex perceptual timbre spaces and can scale to large databases. Once the features and the projection matrix are computed, the similarity computation is quite effective and can be further enhanced by considering fast similarity search scheme such as locally sensitive least square hashing \cite{pauleve2010locality}. The secondary stage being learnt, it can easily adapt to user tastes and usage history by reweighting the scattering features for improved search relevance.
 
-% For bibtex users:
+\bibliographystyle{alpha}
 \bibliography{bib}
 
 \section{Dataset} \label{sec:dataset}
 
 The dataset considered in this paper as been recorded at Ircam and is composed of audio recording of 16 different musical instruments played with different playing techniques, which leads to 143 different couple of instrument / playing technique. For each couple, the pitch and intonation is varied leading to 25444 audio samples.
 
-The recorded instruments belongs to the wind and string classes. For winds, the instruments are: accordion (Acc), alto, tuba (Tb), bassoon, clarinet (Cl), flute (Ft), horn (Hn), oboe (Ob), trombone, and trumpet (Tp). For the string class, the instruments are: guitar (Gt), harp, viola (Va), violin (Vn), violoncello (Vc), and contrabass (Cb).
+The recorded instruments belongs to the wind and string classes. For winds, the instruments are: accordion (Acc), saxophone alto (aSax), tuba (Tb), bassoon (Bn), clarinet (Cl), flute (Ft), horn (Hn), oboe (Ob), trombone, and trumpet (Tp). For the string class, the instruments are: guitar (Gt), harp (Hp), viola (Va), violin (Vn), violoncello (Vc), and contrabass (Cb).
+
+Some instruments can be complemented with sordina (S), wha (W). The addition of this kind of device modifying the shape of the instrument, a saxophone alto and saxophone alto with sordina
 
 Those instruments are recorded for different nuance and pitch if the latter is relevant, but more importantly, several playing technique are considered.
 
@@ -221,8 +218,8 @@ Those instruments are recorded for different nuance and pitch if the latter is r
 
 \begin{figure}
 \center
-\includegraphics[width = \textwidth]{figures/dendrogram.pdf}
-\caption{Dendrogram achiebed using the agglomerative clustering algorithm.}
+%\includegraphics[width = \textwidth]{figures/dendrogram.pdf}
+\caption{Dendrogram obtained after processing the similarity judgment matrix using the agglomerative clustering algorithm.}
 \label{fig:dendrogram}
 \end{figure}
 

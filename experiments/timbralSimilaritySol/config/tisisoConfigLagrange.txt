@@ -1,0 +1,147 @@
+%% USER
+
+% email address used to acknowledge when processing is started or over server side (leave empty for no mailing service), can be a cell array of email addresses
+emailAddress  = mathieu.lagrange@cnrs.fr
+% complete name of user
+completeName  = Mathieu Lagrange
+
+%% PROJECT
+
+% probe tools (1), paths (2), and hosts (3), or all (0)
+probe  = 0
+% regenerate root file of the experiment (use of newer versions of the expLanes lib may reguired it)
+generateRootFile  = 0
+% add a factor to the experiment. Format of the request: {'name', 'modalities', 'steps', 'selector', defaultModalityId, rankInFactorFile}
+addFactor  = 
+% remove a factor from the experiment. Format of the request: {rankInFactorFile, defaultModalityId}
+removeFactor  = 
+% add a step to the experiment. Format of the request: 'name' (last step rank) or {'name', rank}
+addStep  = 
+% remove a given step from the experiment. Format of the request: rank
+removeStep  = 
+% fill the README.txt file with information about replication of the experiment
+readMe  = 0
+
+%% HOSTNAMES AND PATHS
+% several paths contains a diamond operator <> do not replace unless you do not want expLanes to replace this token automatically
+
+% names of the machines as a cell array of 1) string or 2) cell array of strings
+machineNames  = {{ 'pc-lagrange', 'dodo', 'pc-adtsi-sunda.irccyn.ec-nantes.fr'}, {'pc-adtsi-optimed.irccyn.ec-nantes.fr'}}
+% path to input data (usually accessed read only)
+inputPath  = {'/data/databases/instruments/SOL', '/data/lagrange/sunda/databases/instruments/SOL'}
+% path to the code repository of the experiment (diamond operator <> do not replace unless you do not want expLanes to fill this field automatically)
+codePath  = {'/home/lagrange/experiments/lmnn4sol/experiments/timbralSimilaritySol', '/home/lagrange/experiments/timbralSimilaritySol'}
+% path to the data repository of the experiment (structured with one directory per step)
+dataPath  = {'/data/experiments/timbralSimilaritySol', '/data/lagrange/sunda/experiments/timbralSimilaritySol'}
+% path to the data repository of the experiment for observation data (same as dataPath if left blank)
+obsPath  = 
+% path to store backups of data
+backupPath  = /tmp/expLanesBackup/timbralSimilaritySol
+% path to export the experiment
+exportPath  = /tmp/timbralSimilaritySol
+% path to the directory of the Matlab binary
+matlabPath  = 
+% path to Unix tools (pdflatex, rsync, ssh, screen), can be a string, a cell array of strings
+toolPath  = 
+
+%% CODE
+
+% code dependencies to load and send server side as a cell array of strings with paths to the dependencies
+dependencies  = { '/home/lagrange/tools/expLanes/lib'}
+% dependencies (including expLanes) can be part of the experiment in a dependencies directory: 0 do not use local versions, 1 use local versions, 2 update local versions
+localDependencies  = 0
+% version tag of the code of the experiment
+codeVersion  = 0.1
+
+%% COMPUTING
+
+% processing steps to execute: -1 none, 0 all, >0 processing step by numeric id
+do  = -1
+% do not perform computation if data and obs files with runID>resume are already there
+resume  = 0
+% use parallel processing, if |parallel|>1 specify the number of cores, if array set at step level, if >0 parallelize settings, if <0 parallelize within each setting (the code of the step shall use parfor or the like), can be a numeric value for all processing steps or an array of numeric value, one per step
+parallel  = 0
+% factor mask: cell array defining the modalities to be set for the factors (0 do all, 1 first modality, [1 3] first and third modality), can be a cell array of cell array
+mask  = {}
+% cell array of couples of string and array, if the string is parsed in a mask definition it gets replaced by the specified array maskPatch = {} use a canonical experimental design: assume cell array of {[factors as numericIds], number of values per factor (0 complete set of values), type of plan as string 'f' (factorial) or 'o' (one factor at a time), [ optionally a seed as a vector of index of factor]}. Shortcuts: numerid id (equivalent to {[], <numericId>}, 'f'), or 'one' design (equivalent to {[], 2, 'o'}), or 'star' design (equivalent to {[], 0, 'o'})
+design  = 
+% dummy mode: allow for short computations to dry run the experiment. Set as a numeric value. 0: no dummy mode, >1 generate stored data and observations flagged with the numeric value
+dummy  = 0
+% set the random seed at init for replicability purposes, 0 do not set, >0 set to value.
+setRandomSeed  = 0
+
+% host index to run the experiment: 0: seek by hostName, >0: server mode, <0: local mode, 2.1 means the first host of the second compound (cell array)
+host  = 0
+% log level (set to 0 for no log)
+log  = 1
+% show processing progress 0: none, 1: garphical bar if on local mode, 2: verbose output, 3: terse output
+progress  = 1
+% exit matlab at the end of the computation
+exitMatlab  = 0
+% show timing observations
+recordTiming  = 1
+
+%% DATA
+
+% encoding type of mat files (doc save for specs)
+encodingVersion  = 7.3
+% attempt to perform computation to be stored: (1, 0) load data of previous step, (-1, 0) load data result of the current step
+store  = 1
+% attempt to retrieve needed data server side: -1 no retrieval, 0 global scan of every hosts, >0 hostId
+retrieve  = -1
+% naming convention for data files: long (complete naming, may lead to too long file names), short (abbreviated naming, may also lead to too long file names), hash (hash based naming, compact but may lead to naming clashes)
+namingConventionForFiles  = hash
+% export elements of the experiment designated as a string with tokens separated by white spaces (addition of a 'z' token outputs a zip file): 'c' (code), 'd' (dependencies), 'i' (input), 1 (output data of step 1), 1d (stored data of step 1 only), 1o (observations of step 1 only)
+export  = 
+% sync data across machines specified as a cell array with: elements (as in export), optional host as numeric id (1.2 means the second host of the first group of machines, default to 2), direction 'd' (download from server to local host, default), 'u' (upload from host to server). Provided with the elements as string, the command default to server 2 in download mode.
+sync  = {}
+% clean explanes directories and project data repositories. As string id : t (expLanes temporary directory), b (experiment backup directory), k (all steps directories while keeping reachable settings), 1 (output data of step 1), 1d (remove stored data of step 1 only), 1o (observations of step 1 only). As numeric id (clean the corresponding step directory, 0 means all directories)
+clean  = 
+% specify at which step the fork (if any) is effective (default 0)
+forkStep  = 0
+
+
+%% EXPOSITION
+
+% step for which to display observations: -1 none, 0 last processed step if any, >0 specific step
+display  = 0
+% specify default display of observations (>: prompt, t: table, p:plot)
+expose  = >
+% mantissa precision for the display of observations
+tableDigitPrecision  = 2
+% font size for the display of observations in figures
+displayFontSize  = 16
+
+
+
+%% REPORT
+
+% generate report: combination of r (run report), h (generate HTML output), c (LaTeX compilation), d (debug LaTeX output) and v (open report)
+report  = 
+% name of report to compile: empty (default), if containing the word <slides> or <Slides>,  beamer presentation mode is used
+reportName  = 
+% style of LaTeX document (warning: this parameter is taken into account only at the creation of the LaTeX report file)
+latexDocumentClass  = tufte-handout
+% path to the pdf viewer (if left empty, expLanes try to locate it automatically)
+pdfViewer  = 
+% threshold for statistical significance testing
+significanceThreshold  = 0.05
+% show the factors graph in the report: 0, no display, 1 compact display, 2 also show stored data, 3 also show observations, 4 also show stored data and observations (if negative only generate the figure for later inclusion)
+showFactorsInReport  = 4
+% style of the factor graph: 0 no propagation of factors, 1 propagation of factors, 2 propagation of factors with an "all steps" node
+factorDisplayStyle  = 0
+% path where saved figures are copied outside the expLanes project
+figureCopyPath  = 
+% path where saved tables are copied outside the expLanes project
+tableCopyPath  = 
+
+%% MISCELLANEOUS
+
+% usage of default expcode smtp. If set to 0 assume availability of local stmp server with complete credentials
+useExpCodeSmtp  = 1
+% send email: -2, server mode, email at start and end, -1 server mode, email at end only, 0, no email ever, 1 one email at end, 2 email at start and end
+sendMail  = -2
+
+experimentName = timbralSimilaritySol
+shortExperimentName = tisiso
+userName = lagrange

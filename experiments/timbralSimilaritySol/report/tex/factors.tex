@@ -1,0 +1,61 @@
+\documentclass{minimal}
+\usepackage[a4paper,margin=1cm,landscape]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes,shadows,arrows}
+\usepackage{verbatim}
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+\setlength\PreviewBorder{5pt}%
+\begin{document}
+\tikzstyle{stepBlock}=[draw, rounded corners,
+         anchor=north, align=center, rectangle split part align={center, left}, rectangle split, rectangle split parts=3]
+\tikzstyle{all}=[draw, rounded corners, text=gray,
+         anchor=north, align=center, rectangle split part align={center, left}, rectangle split, rectangle split parts=3]         
+\tikzstyle{stepArrow}=[->, -diamond, thick,double]
+\tikzstyle{obsArrow}=[->, thick,double]
+        
+\begin{center}
+\begin{tikzpicture}[node distance=3cm]
+\node (1) [stepBlock]                                                                                                                                                                                            
+{\textbf{features}                                                                                                                                                                                               
+\nodepart{two}\tabular{@{}l}                                                                                                                                                                                     
+\texttt{features} \\                                                                                                                                                                                             
+\texttt{sct} \\                                                                                                                                                                                                  
+\endtabular                                                                                                                                                                                                      
+                                                                                                                                                                                                                 
+\nodepart{three}\tabular{@{}l}                                                                                                                                                                                   
+\endtabular};                                                                                                                                                                                                    
+\draw[obsArrow]   (1.south) -- (1.south) node[midway,text width=3cm,text centered,below] {\textit{clFamily\\clInstrument\\clMode\\clmodeFamily\\failed\\nbFamily\\nbFiles\\nbInstrument\\nbMode\\nbmodeFamily}} ;
+\node (2) [stepBlock, right=of 1]                                                                                                                                                                                
+{\textbf{project}                                                                                                                                                                                                
+\nodepart{two}\tabular{@{}l}                                                                                                                                                                                     
+\texttt{projection} \\                                                                                                                                                                                           
+\texttt{split} \\                                                                                                                                                                                                
+\texttt{test} \\                                                                                                                                                                                                 
+\texttt{reference} \\                                                                                                                                                                                            
+\texttt{randomize} \\                                                                                                                                                                                            
+\texttt{expand} \\                                                                                                                                                                                               
+\texttt{cut} \\                                                                                                                                                                                                  
+\texttt{median} \\                                                                                                                                                                                               
+\texttt{compress} \\                                                                                                                                                                                             
+\texttt{standardize} \\                                                                                                                                                                                          
+\texttt{averageJudgment} \\                                                                                                                                                                                      
+\endtabular                                                                                                                                                                                                      
+                                                                                                                                                                                                                 
+\nodepart{three}\tabular{@{}l}                                                                                                                                                                                   
+\texttt{neighbors} = 5\\                                                                                                                                                                                         
+\endtabular};                                                                                                                                                                                                    
+\node (3) [stepBlock, right=of 2]                                                                                                                                                                                
+{\textbf{performance}                                                                                                                                                                                            
+\nodepart{two}\tabular{@{}l}                                                                                                                                                                                     
+\texttt{separateJudgment} \\                                                                                                                                                                                     
+\endtabular                                                                                                                                                                                                      
+                                                                                                                                                                                                                 
+\nodepart{three}\tabular{@{}l}                                                                                                                                                                                   
+\endtabular};                                                                                                                                                                                                    
+\draw[obsArrow]   (3.south) -- (3.south) node[midway,text width=3cm,text centered,below] {\textit{p}} ;                                                                                                          
+\draw[stepArrow]   (1.east) -- (2.west) node[midway,text width=3cm,text centered,below] {\textbf{family\\features\\file\\instrument\\mode\\modeFamily}} ;                                                        
+\draw[stepArrow]   (2.east) -- (3.west) node[midway,text width=3cm,text centered,below] {\textbf{projection}} ;                                                                                                  
+\end{tikzpicture}                                                                                                                                                                                                
+\end{center}                                                                                                                                                                                                     
+\end{document}]                                                                                                                                                                                                  

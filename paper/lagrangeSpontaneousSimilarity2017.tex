@@ -180,13 +180,18 @@ This model is chosen over more complex alternatives for the sake of simplicity. 
 
 \subsection{Secondary stage}
 
-The secondary stage aims at providing a metric space that closely match the one resulting from the data gathering by experiment 2. For the reason, it involves a learning based process block that weight the features outputed by the primary stage.
+The secondary stage involves a learning based process block that will weight the features outputed by the primary stage.
 
-Indeed, if the properties of the first processing stages of the human auditory system can reasonably be considered as similar for every subjects despite potential hearing losses for some, the later ones is expected to vary more drastically due to their respective education, tastes and experiences with stimuli similar to the \ipt that are considered in this study. We therefore consider a supervised setting in order to optimize the representational space provided by the scattering transform.
+Indeed, if the properties of the first processing stages of the human auditory system can reasonably be considered as similar for every subjects despite potential hearing losses for some, the later ones is expected to vary more drastically due to their respective education, tastes and experiences with stimuli similar to the \ipt that are considered in this study. We therefore consider a supervised setting in order to optimize the representational space provided by the scattering transform. To do so, we will consider as our reference the clusterings provided by the subjects of experiment 2. Therefore, the goal of the secondary stage is to provide a metric space that closely match the one resulting from the data gathering by experiment 2.
 
-To do so, several 
+To do so, one can first consider the linear discriminant analysis (LDA) \cite{duda2000pattern} to project the data into a representational space of $C-1$ dimensions with $C$ being the number of classes of the reference. The projection computed using this method is such that the ratio of the between-class distance
+to the within-class distance is maximized, thus achieving maximum discrimination between elements of different class.
 
+Another solution is to compute a projection matrix that maximizes the fact that neighbors in the representational space belong to the same class in the reference clustering while items from different classes are separated by a large margin. To do so, the large margin nearest neighbor (LMNN) metric learning algorithm \cite{weinberger2006distance, weinberger2009distance} is considered. One advantage of the latter is that the resulting representational space is of the same dimensionality as the input one whereas the LDA output dimentionality is contrained by the number of classes in the reference grouping.
 
+Those methods are designed for considering only one reference grouping. Though, in our case, there is one reference grouping per subject. One approach is find consensus grouping that maximally represent the 31 reference groupings.
+
+Another approach is to combine the projection matrices issued from the processing of the projection algorithm over the 31 reference groupings. As the number of classes can vary between reference groupings, this method is not feasible using the LDA method.
 
 \section{Validation}\label{sec:validation}
 

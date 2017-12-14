@@ -30,28 +30,35 @@ ptx(1)=[];
 clusterNames{end} = [clusterNames{end} 'art'];
 clusterNames{2} = [clusterNames{2} 'key'];
 
+vec = [smcl; im(icl)'];
+
 figure(1)
-colormap(lines)
+% cm = colormap(parula);
+cm = jet(max(vec(:)));
+cm = cm(randperm(length(cm)), :);
+colormap(cm);
+
 % colormap jet
-image([smcl; im(icl)']); %scl/max(scl)*15
+image(vec); %scl/max(scl)*15
 l1 = line([0 79], [1.5 1.5]); l1.Color = 'k';
 for k=2:ncl   
     l1 = line([1 1]*ptl(k)+.5, [.5 1.5]); l1.Color = 'k';
 end
 colorbar('Ticks', (1:length(modeClasses))+.5, 'TickLabels', modeClasses, 'TickLength', 0)
+[clusterNames{:}]
 %text(ptx, ones(1, ncl), clusterNames, 'fontSize', 12);
 % axis off
    set(gca, 'xtick', 0)
-set(gcf, 'WindowButtonDownFcn', @getMousePositionOnImage);
-dat.names = names(icl);
-dat.ap = audioplayer(0, 44100);
-guidata(gcf, dat);
+% set(gcf, 'WindowButtonDownFcn', @getMousePositionOnImage);
+% dat.names = names(icl);
+% dat.ap = audioplayer(0, 44100);
+% guidata(gcf, dat);
 % title('Modes')
 set(gca, 'ytick', 1:2)
 set(gca, 'yticklabel', {'Judg.', 'Ref.'});
 % ytickangle(90)
-saveas(gcf, 'figures/groupModes', 'png')
-savefig(gcf, 'figures/groupModes')
+saveas(gcf, '../paper/figures/groupModes', 'png')
+savefig(gcf, '../paper/figures/groupModes')
 
 %% instruments
 
@@ -74,7 +81,7 @@ for k=1:ncl
    clusterNames{k} = instrumentClasses(mi);
     smcl(scl==k) = mi;
 end
-smcl
+% smcl
 ptx(1)=[];
 pty = ones(1, ncl)-.025;
 pty(1:2:end) = pty(1:2:end)+.05;
@@ -82,24 +89,28 @@ pty(1:2:end) = pty(1:2:end)+.05;
 % clusterNames{2} = [clusterNames{2} 'key'];
 
 figure(2)
-colormap lines
-image([smcl; ii(icl)']);
+vec = [smcl; ii(icl)'];
+cm = jet(max(vec(:)));
+cm = cm(randperm(length(cm)), :);
+colormap(cm);
+image(vec);
 for k=2:ncl   
     l1 = line([1 1]*ptl(k)+.5, [.5 1.5]); l1.Color = 'k';
 end
 
 instrumentClasses = unique(instruments);
 colorbar('Ticks',(1:length(instrumentClasses))+.5, 'TickLabels',instrumentClasses, 'TickLength', 0)
+[clusterNames{:}]
 % text(ptx, pty, clusterNames, 'fontSize', 12);
   set(gca, 'xtick', 0);
   l1 = line([0 79], [1.5 1.5]); l1.Color = 'k';
-set(gcf, 'WindowButtonDownFcn', @getMousePositionOnImage);
-dat.names = names(icl);
-dat.ap = audioplayer(0, 44100);
-guidata(gcf, dat);
+% set(gcf, 'WindowButtonDownFcn', @getMousePositionOnImage);
+% dat.names = names(icl);
+% dat.ap = audioplayer(0, 44100);
+% guidata(gcf, dat);
 set(gca, 'ytick', 1:2)
 set(gca, 'yticklabel', {'Judg.', 'Ref.'});
 % ytickangle(90)
 % title('Instruments')
-saveas(gcf, 'figures/groupInstruments', 'png')
-savefig(gcf, 'figures/groupInstruments')
+saveas(gcf, '../paper/figures/groupInstruments', 'png')
+savefig(gcf, '../paper/figures/groupInstruments')

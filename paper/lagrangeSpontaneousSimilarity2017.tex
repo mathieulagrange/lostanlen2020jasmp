@@ -189,15 +189,33 @@ to the within-class distance is maximized, thus achieving maximum discrimination
 
 Another solution is to compute a projection matrix that maximizes the fact that neighbors in the representational space belong to the same class in the reference clustering while items from different classes are separated by a large margin. To do so, the large margin nearest neighbor (LMNN) metric learning algorithm \cite{weinberger2006distance, weinberger2009distance} is considered. One advantage of the latter is that the resulting representational space is of the same dimensionality as the input one whereas the LDA output dimentionality is contrained by the number of classes in the reference grouping.
 
-Those methods are designed for considering only one reference grouping. Though, in our case, there is one reference grouping per subject. One approach is find consensus grouping that maximally represent the 31 reference groupings.
+Those methods are designed for considering only one reference grouping. Though, in our case, there is one reference grouping per subject. One approach is to find one consensus grouping that maximally represent the 31 reference groupings. In this paper, the chosen consensus grouping is taken from 3 solutions issued from 3 different algorithmic approach. This consensus is chosen as the one that has the best averaged NMI when compared to the 31 reference groupings \cite{strehl2002cluster}.
 
-Another approach is to combine the projection matrices issued from the processing of the projection algorithm over the 31 reference groupings. As the number of classes can vary between reference groupings, this method is not feasible using the LDA method.
+Another approach is to combine the projection matrices issued from the processing of the projection algorithm over the 31 reference groupings. As the number of classes can vary between reference groupings, the combination is not feasible using the LDA method. On contrary, the LMNN method can outputs a projection matrix per reference grouping. Those projection matrices being of the same dimensionality they can safely be averaged to estimate an consensus projection.
+
+
 
 \section{Validation}\label{sec:validation}
 
-\subsection{Methods}
+As it will be discussed in the next Section, the main application scenario that is considered in this paper is the the recommandation of sounds based on examplar. This involves the definition of a similarity measure that behave similarly to the human perception, at least, that conform to the data we gathered in experiment 2.
+
+Our problem is thus casted into a ranking problem, where from several candidates, the algorithm is asked to provide a ranking list of those candidates, sorted by similarity.
 
 \subsection{Data}
+
+As explained in the first section, gathering perceptual similarity data is plagued is plagued with a size problem. In order to provide enough data for the numerical analysis described in this section, we complement the data gathered during the second experiment as follows: for each \ipt, instead of one sound examplar we consider the whole range of nuance and pitch that is available. This leads to a dataset of 9346 sound recordings. It is thus assumed that the perceptual similarity is invariant with respect to pitch and nuance which is not necessarily true, but is taken here as a reasonable assumption.
+
+\subsection{Metric}
+
+The performance of the different methods are evaluated in a ranking setting. The well known precision at rank $k$ is thus considered, with $k=5$.
+
+\subsection{Methods}
+
+To evaluate the performance of the proposed approach, several baselines are considered for comparison purposes. For the first stage, the well known Mel-Frequency Cepstral Coefficients (MFCC)s are considered \cite{rabiner1993fundamentals}. The MFCCs are computed from frame of 25ms, the number of mel bands is 40 and all the DCT coefficients are kept. The resulting features have a dimensionality of 40. The MFCCs are then standardized by removing the mean and dividing by the standard deviation computed over the dataset.
+
+The time scattering is computed over a range frame sizes, from 25 ms to 1 second. The Q factor is set to 8 in order to obtain a frequency decomposition that is equivalent to the mel scale. As the frame increase, the dimensionality increases. The resulting scattering features are then logarithmically compressed and normalized using the median computed over the dataset.
+
+The LDA method do not requires any setting of parameters and the LMNN method is set to optimize for a neigbors size of 5.
 
 \subsection{Results}
 

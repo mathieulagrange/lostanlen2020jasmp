@@ -224,30 +224,64 @@ The LDA method do not requires any setting of parameters and the LMNN method is 
 In order to validate the proposed model, some experiments are performed using the above described methods. 3 experimental factors with 2 or 3 modalities are considered:
 \begin{itemize}
   \item type of features: MFCCs or TST
-  \item type of projection: LDA, LMNN or no projection
-  \item type of reference for the optimization of the projection if any: consensus (single consensus grouping) or reference (the 31 reference groupings)
+  \item type of projection: LDA, LMNN
+  \item type of reference for the optimization of the projection if any: consensus (single consensus grouping) or multiple (the 31 reference groupings)
 \end{itemize}
+The results are shown on Table \ref{tab:res1}. Considering the TST over the MFCCs to implement the primary stage do not improve by much (2 \%) if no secondary stage is used. When the best setting of the secondary stage is considered, the gain is higher (7 \%). this potentially mean that the extra capabilities of description of the TST over the MFCCs need to be targeted to the task at hand in some way in order to gain the full benefits from its use.
+
+In terms of projection method to implement the secondary stage, the LMNN approach is favored over the LDA, probably due to the fact that the dimensionality reduction induced by the low number of classes relatively to the number of dimensions of the input space strongly degrades the description capabilities of the resulting projection. The lower performance of the LDA with respect to no projection is probably partly due to that and the fact that the metric is not computed on the consensus grouping use for computing the LDA.
+
+In this experiment, the consensus approach is favored for TST but not for MFCCs. This approach has the considerable advantage of being more computationaly efficicient as with only one reference to optimize from the LMMN training is much faster. Though, it is very likely that for a larger number of reference groupings, the multiple LMNN would be useful to better model the diversity of the references.
+
 
 \begin{table}
-\begin{tabular}{lcc}
-  MFCCs & - & - &   85.07 \pm 6.19 \\
-  MFCCs & LDA &  consensus  &   81.50 \pm 7.65 \\
-MFCCs & LMNN & consensus &   86.22 \pm 5.92 \\
-MFCCs & LMNN & reference & 86.31 \pm 5.91 \\
-% MFCCs & LMNN & reference &   86.18 \pm 6.05 \\
-TST & - & - &   87.01 \pm 5.81 \\
-TST & LDA & consensus &   80.95 \pm 10.37 \\
-TST & LMNN  & reference  &   93.31 \pm 3.92 \\
-TST & LMNN & consensus &   94.80 \pm 3.26 \\
-% TST & LMNN & reference &   98.09 \pm 1.28 \\
+  \caption{Precision achieved by the different settings. Numbers in bold face indicate best performance.}
+  \label{tab:res1}
+  \begin{center}
+\begin{tabular}{lllc}
+features & projection & reference & precision (\%) \\
+  \hline
+  MFCCs & - & - &   85.07 $\pm$ 6.19 \\
+  MFCCs & LDA &  consensus  &   81.50 $\pm$ 7.65 \\
+MFCCs & LMNN & multiple & 86.31 $\pm$ 5.91 \\
+MFCCs & LMNN & consensus &   86.22 $\pm$ 5.92 \\
+% MFCCs & LMNN & reference &   86.18 $\pm$ 6.05 \\
+TST & - & - &   87.01 $\pm$ 5.81 \\
+TST & LDA & consensus &   80.95 $\pm$ 10.37 \\
+TST & LMNN  & multiple  &   93.31 $\pm$ 3.92 \\
+TST & LMNN & consensus &   \textbf{94.80 $\pm$ 3.26} \\
+% TST & LMNN & reference &   98.09 $\pm$ 1.28 \\
 \end{tabular}
+\end{center}
 \end{table}
 
+We now investigate the influence of the frame size, as it is likely that the more observation time is available, the better the description will be as several playing techniques involve strong modulations over long periods of time. We therefore consider a frame size for the 2 sets of features ranging from 25 ms. to 1s. The evolution of the precision with respect to the frame size is shown on Figure \ref{fig:frame}. Even by enlarging the frame size, the performance of the MFCCs do not increase due to the lack of modulation's modeling. On contrary, the TST is able to use the larger frame size to achieve better precision.
+
+\begin{figure}
+\center
+\includegraphics[width = \textwidth]{figures/frame.png}
+\caption{Spatial and group organization provided by subject 1.}
+\label{fig:frame}
+\end{figure}
+
+An interesting phenomenon appears, the gain of performance due to the larger frame size better improves for the TST if the secondary stage is considered. Again, it seems that enriching the description is most useful if the description is optimized with a purpose.
+
+We investigated the capabilities of the proposed system to model a perceptual space averaged over several subjects. For application purposes that will be discussed in the next Section, it can be useful to consider the reference grouping of only one user and see if the system perform well with this kind of reference. To do so, the evaluation protocol is slightly modified. First the secondary stage is optimized for the 31 reference groupings independantly and for each resulting projection the precision is computed. The 31 precision measures are then averaged and shown in Table \ref{tab:res2}. The excellent results of the TST optimized using LMNN demonstrates the usefullness of the proposed approach to model complex similarity space such as the percpetual ones gathered in Experiment 2.
 
 
+\begin{table}
+  \caption{Precision achieved when considered subject based reference groupings. Numbers in bold face indicate best performance.}
+  \label{tab:res2}
+  \begin{center}
+\begin{tabular}{llc}
+features & projection & precision (\%) \\
+  \hline
+MFCCs & LMNN & 86.18 $\pm$ 6.05 \\
+TST & LMNN & 98.09 $\pm$ 1.28 \\
+\end{tabular}
+\end{center}
+\end{table}
 
-
-separate judgments another table
 
 For the sake of reproducibility, the code of the proposed method and the experimental protocol is available\footnote{https://github.com/mathieulagrange/paperSpontaneousSimilarity}. For convenience, the features (scattering and mfccs) are also provided, but the software can be used to process audio data.
 
@@ -255,9 +289,18 @@ For the sake of reproducibility, the code of the proposed method and the experim
 
 Thanks to the digitization capabilities available, gathering large amount of audio recordings of \ipt is achievable and several databases are now available on the market. Browsing of such databases can be achieved by keyword based search. It requires that 1) the database is fully annotated with a precise ontology of instruments and playing techniques, 2) that the user has a precise understanding of this ontology, and 3) that the user a precise idea of the kind of timbre he is looking to find the \ipt he is searching for.
 
-An interesting alternative type of search is the similarity content based search. Being solely based on sound, this kind of search can be used when querying by example. The user provides an example of the target sound to find \ipt that match the timbre description of the query, be it an onomatepea, a tone from another instrument or any kind of environmental sound.
+An interesting alternative type of search is the similarity content based search. Being solely based on sound, this kind of search can be used when querying by example. The user provides an example of the target sound to find \ipt that match the timbre description of the query, be it an onomatepea, a tone from another instrument or any kind of sound.
 
-The computational model proposed in this paper is well suited for this kind of search, as it can model complex perceptual timbre spaces and can scale to large databases. Once the features and the projection matrix are computed, the similarity computation is quite effective and can be further enhanced by considering fast similarity search scheme such as locally sensitive least square hashing \cite{pauleve2010locality}. The secondary stage being learnt, it can easily adapt to user tastes and usage history by reweighting the scattering features for improved search relevance.
+The computational model proposed in this paper is well suited for this kind of search, as it can model complex perceptual timbre spaces and can scale to large databases. Once the features and the projection matrix are computed, the similarity computation is quite effective and can be further enhanced by considering fast similarity search scheme such as locally sensitive least square hashing \cite{pauleve2010locality}. The secondary stage being learnt, it can easily adapt to user tastes and usage history by reweighting the features for improved search relevance.
+
+\section{Conclusion}
+
+The modeling of the spontaneous perceptual similarity have been studied. Experimental data have been collected using two perceptual tests whose outomes have been analysed to produce reference data. This data is then modeled computationaly using a two step model.
+
+...
+
+Computational experiments showed an interesting phenomenon that high dimsensional features spaces such as the achieved using the TST are most useful if another computation step is considered, if this second step is able to incorporate some sort of prior knowledge regarding the task at hand. It would be interesting to verify if this phenomenon can be observed for other types of targeted tasks, using larger datasets and with a higher level of control regarding the learning procedure to study the impact of potential overfiting or learning biases.
+
 
 \bibliographystyle{alpha}
 \bibliography{bib}

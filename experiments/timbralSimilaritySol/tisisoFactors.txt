@@ -12,4 +12,4 @@ compress =2:=1/3= [0, 1] % use log compression for scattering features
 standardize =2:== [0, 1] % standardize features at the end
 neighbors =2:== 5 % number of neighbors used for  lmnn learning and performance computation
 averageJudgment =2:=6/5= [0, 1] % use cluster ensemble techniques http://strehl.com/soft.html to obtain one clustering
-separateJudgment =3=3/2= [0, 1] % evaluate each projection and average performance
+separateJudgment =3== [0, 1] % evaluate each projection and average performance

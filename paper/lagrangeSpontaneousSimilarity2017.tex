@@ -6,6 +6,7 @@
 \usepackage{xspace}
 
 \newcommand{\ipt}{IPT\xspace}
+\newcommand{\ipts}{IPTs\xspace}
 
 \newcommand{\ml}[1]{\textcolor{blue}{ML : #1}}
 
@@ -49,34 +50,34 @@ What the higher levels of the auditory cortex does remains largely unkown, but w
 
 Considering not only the type of musical instrument but also the playing technique is interesting in that matter, as it invite us to consider the relation between the rate of modulation and timbre percepts. A notion that have not been extensively studied in the litterature \cite{burred2010dynamic}. Compared to the reference that is usually taken in timbre studies \textit{i.e.} the instrument class, taking into account also the playing technique allows us to consider the notion of timbral similarity at a complementary finer grain of detail.
 
-The contributions of the paper are as follows: 1) provide perceptual data that account for the perception of musical tones played with various playing techniques, 2), demonstrate that, for the gathered data, the type of playing technique plays an important role in the spontaneous judgments of similarity, 3) propose a perceptually motivated computational model of timbre perception that account well for the human judgments studied in this paper and 4) discusses the use of this computational model to instrument / playing technique (\ipt) similarity search in the usage scenario of \ipt database browsing.
+The contributions of the paper are as follows: 1) provide perceptual data that account for the perception of musical tones played with various playing techniques, 2), demonstrate that, for the gathered data, the type of playing technique plays an important role in the spontaneous judgments of timbral similarity, 3) propose a perceptually motivated computational model of timbre perception that account well for the human judgments studied in this paper and 4) discusses the use of this computational model to define a numerical similarity that can be considered in the usage scenario of browsing databases of intrument / playing technique couples (\ipts).
 
 \section{Experiment 1}\label{sec:xp1}
 
-The dataset considered in this study is taken from the studio-on-line music library  \cite{peeters2000instrument}. It has audio recordings of 16 different musical instruments played with different playing techniques, which leads to 143 different couple of instrument / playing technique. For each couple, the pitch and intonation is varied leading to 25444 samples. The way the dataset is segmented is explained in more details in Appendix \ref{sec:dataset}.
+The dataset considered in this study is taken from the studio-on-line (SOL) music library  \cite{peeters2000instrument}. It has audio recordings of 16 different musical instruments played with different playing techniques, which leads to 143 different couple of instrument / playing technique. For each couple, the pitch and intonation is varied leading to 25444 samples. The way the dataset is structured is explained in more details in Appendix \ref{sec:dataset}.
 
-Studies about perceptual similarity are plagued with a dimensional problem. When considering $n$ items, a complete exploration of the similarity space requires the filling of a $n^2$ matrix. Assuming a symmetric similarity (the similarity of A to B is equl to the similarity of B to A) reduces the number but not by much.
+Studies about perceptual similarity are plagued with a dimensional problem. When considering $n$ items, a complete exploration of the similarity space requires the filling of a $n^2$ matrix. Assuming a symmetric similarity, \textit{i.e.} the similarity of A to B is equal to the similarity of B to A, reduces the number but not by much.
 
-In an attempt to reduce the number of items, we decided to perform a selection experiment where the subject is asked to give his opinion on which \ipt is relevant to study. An \ipt is said to be relevant to study if it is likely to be associated to another \ipt. Interest is rated on a 7 ticks scale. The subject can listen to all the different nuance and pitch samples of each \ipt. The experiment is over when all the \ipt have been rated.
+In order to reduce the number of items, we decided to perform a selection experiment where the subject is asked to give his opinion on which \ipts is relevant to study. An \ipt is said to be relevant to study if it is likely to be associated to another \ipt of another instrument. Interest is rated on a 7 ticks scale. The subject can listen to all the different nuance and pitch samples of each \ipt. The experiment is over when all the \ipts have been rated.
 
 Rating guidelines are provided :
 \begin{itemize}
-  \item One star: this \ipt is singular, it is not useful to compare it with another \ipt.
+  \item One star: this \ipt is singular, it is not useful to compare it with another \ipt of another instrument.
   \item Four stars: there is a proximity on one aspect of the sound between this \ipt and of an \ipt of another instrument, but this one is neither decisive nor obvious.
-  \item Seven stars: there is a large similarity between this \ipt and an \ipt of another instrument, it is interesting to keep it.
+  \item Seven stars: there is a large similarity between this \ipt and an \ipt of another instrument.
 \end{itemize}
 
-Two music composition professors of the CNSMDP, a renowned French school of music, performed the test. All the couples with a grade higher than three are selected, bringing 78 \ipt to study.
+Two music composition professors of the "conservatoire national sup\'erieur de musique et de danse de Paris", a renowned French school of music, performed the test. All the couples with a grade higher than three are selected, bringing 78 \ipts to study.
 
 \section{Experiment 2}\label{sec:xp2}
 
-The second experiment aims at gathering spontaneous judgment of similarity for the 78 \ipt selected in the previous experiment. To do so, we chose a canonical free sorting task for two main reasons. First, this kind of task gives the ability to the subject to listen to the whole set of \ipt before performing the task. Second, it gives more freedom to the subject, thus potentially more interest to perform the task than a lengthy series of triplet dissimilarity ratings.
+The second experiment aims at gathering spontaneous judgment of similarity for the 78 \ipts selected in the previous experiment. To do so, we consider a canonical free sorting task for two main reasons. First, this kind of task gives the ability to the subject to listen to the whole set of \ipts before performing the task. Second, it gives more freedom to the subject, thus potentially more interest to perform the task than a lengthy series of triplet dissimilarity ratings.
 
-The subjects are thus asked to organize the 78 \ipt displayed as grey dots on a two dimensional plane into groups by assigning colors to each dots according to their "acoustic similarity". The textual instructions provided to introduce the experiment was chosen to be deliberately vague in order to allow the subject to follow its own judgment.
+The subjects are thus asked to organize the 78 \ipts displayed as grey dots on a two dimensional plane into groups by assigning colors to each dots according to their "acoustic similarity". The textual instructions provided to introduce the experiment was chosen to be deliberately vague in order to allow the subject to follow its own judgment.
 
-The \ipt can be listened to by hovering the mouse on the corresponding dot. The experiment is over when the sujbect assigned a color to all the dots. The initial location of the dots on the plane is randomized for each subject and can be changed during the experiment by the subject for convenience. Eventhough the location of the dots is recorded, this data is not considered during the analysis.
+The plane is displayed on a computer screen using a web based interface. The \ipts can be listened to by hovering the mouse on the corresponding dot. The experiment is over when the sujbect assigned a color to all the dots. The initial location of the dots on the plane is randomized for each subject and can be changed during the experiment by the subject for convenience. Eventhough the location of the dots is recorded, this data is not considered during the analysis.
 
-The experiment was available online for two months and requests to perform the test have been sent to internal mailing lists of the CNSMDP and international research mailing with a focus on audio and music processing. The experiment have been performed on a volountary basis without gratification.
+The experiment was available online for two months and requests to perform the test have been sent to internal mailing lists of the CNSMDP and international research mailing with a focus on audio and music processing. The experiment have been performed on a volountary basis without gratification. Subjects were asked to use headphones at a comfortable listening level.
 
 \section{Analysis}\label{sec:analysis}
 
@@ -89,9 +90,7 @@ The experiment was available online for two months and requests to perform the t
 
 31 subjects completed the experiment. An example of resulting organisation of \ipt is given on Figure \ref{fig:xp2display}. The resulting organisation for each subject are available for reader's inspection using the full feature interface provided to the subjects for performing the experiment\footnote{https://mathieulagrange.github.io/paperSpontaneousSimilarity/demo}.
 
-As discussed in the previous section, only the grouping given by the subjects using the color labels is considered to estimate the spontaneous judgments of similarity among \ipt. The spatial organisation of the dots representing the \ipt could provide information about the similarity, but this would implicitely force the fact that the timbral similarity space is two dimensional.
-
-We therefore now only study the properties of the groupings performed by the subject prior to converting them into an overall similarity matrix.
+As discussed in the previous section, only the grouping given by the subjects using the color labels is considered to estimate the spontaneous judgments of similarity among \ipt. The spatial organisation of the dots representing the \ipt could provide information about the similarity, but this would implicitely force the fact that the timbral similarity space is two dimensional. We therefore now only study the properties of the groupings performed by the subject prior to converting them into an overall similarity matrix.
 
 Among the 20 colors available, the subjects used on average $10.2 \pm  4.1$ different colors to group \ipt. The distribution of the number of groups can be seen on Figure \ref{fig:xp2nbGroup}. The size of the groups is on average $7.7 \pm   7.2$. The distribution of the size of groups can be seen on Figure \ref{fig:xp2sizeGroup}. The large number of small groups indicates that many subjects considered that a few of the \ipt were very different from all the remaining \ipt.
 
@@ -113,25 +112,25 @@ A grouping can be considered as a binary similarity measure, with $s(a, b) = 1$ 
 
 In order to gather information about the properties of the data, a cluster analysis is next performed using an agglomerative hierarchical clustering \cite{gordon1987review} using the weighted average algorithm for computing distance between clusters. The resulting dendrogram is displayed on Figure \ref{fig:dendrogram}. A partition of $n$ clusters can be constructed from the agglomerative hierarchical cluster tree by finding the smallest height at which a horizontal cut through the tree leaves $n$ clusters.
 
-One question that arises is whether the similarity is influenced primarily by the instrument or by the playing technique. To answer this question, each partition provided by cutting the dendrogram at successive levels is compared to two reference partitions. One reference is the partition of the \ipt when labeled with the instrument used (I) and the other if the partition of the \ipt when labeled with the playing technique used (Pt).
+One question that arises is whether the similarity is influenced primarily by the instrument or by the playing technique. To answer this question, each partition provided by cutting the dendrogram at successive levels is compared to two reference partitions. One reference is the partition of the \ipts when labeled with the instrument used (I) and the other if the partition of the \ipts when labeled with the playing technique used (Pt).
 
-There are many metrics to compare two partitions by evaluating their degree of correspondance \cite{wagner2007comparing}. The normalized mutual information (NMI) is interesting as it do not require alignement of the groups labels between the two partitions prior correspondance analysis and the two partition are not required to have the same number of groups. It also by design bounded between 0 and 1, 1 meaning perfect match. We consider the normalization proposed in \cite{strehl2002cluster}. Figure \ref{fig:clusters} shows the evolution of the NMI when comparing the partitions provided by the cluster analysis of the dendrogram produced using the human judgment of similarity and respectively the instrument partition ($j/I$) or the playing technique partition ($j/Pt$).
+There are many metrics available to compare two partitions by evaluating their degree of correspondance \cite{wagner2007comparing}. The normalized mutual information (NMI) is interesting as it do not require alignement of the groups labels between the two partitions prior correspondance analysis and the two partition are not required to have the same number of groups. It also by design bounded between 0 and 1, 1 meaning perfect match. We consider the normalization proposed in \cite{strehl2002cluster}. Figure \ref{fig:clusters} shows the evolution of the NMI when comparing the partitions provided by the cluster analysis of the dendrogram produced using the human judgment of similarity and respectively the instrument partition ($j/I$) or the playing technique partition ($j/Pt$).
 
 \begin{figure}
 \center
 \includegraphics[width = \textwidth]{figures/clusterAnalysis.png}
-\caption{Cluster analysis of the similarity judgments. $j/I$ and $j/Pt$ compare the partition obtained using the similarity judgments clustered using a growing number of clusters versus respectively the instrument partition and the playing technique partition. Normalizing factors $nullI$ and $nullPt$ are used to obtain normalized measures: $nj/I$ and $nj/Pt$. \ml{change legend}}
+\caption{Cluster analysis of the similarity judgments. $j/I$ and $j/Pt$ compare the partition obtained using the similarity judgments clustered using a growing number of clusters versus respectively the instrument partition and the playing technique partition. Normalizing factors $nullI$ and $nullPt$ are used to obtain normalized measures: $nj/I$ and $nj/Pt$. \ml{change legend, and use only one null}}
 \label{fig:clusters}
 \end{figure}
 
-There is a clear gain of NMI when considering the playing technique which means that the subjects primarily used cues corresponding to the playing technique to organize the \ipt. Also, for both curves, a global trend of increase with respect to the number of clusters in the $j$ partition can be observed. This is a well documented fact, which simply put, means that it is easier to match any given partition with more clusters at hand \cite{tibshirani2001estimating}. To compensate for this bias, one can consider the NMI that would be achieved by comparing several random partitions of increasing number of clusters to the reference one, be it the instrument partition ($nullI$) or the playing technique partition ($nullPt$). The resulting averaged NMI for 100 randomly generated partitions are displayed on Figure \ref{fig:clusters}. Those curves are useful for normalizing $j/I$ and $j/Pt$ by simply substracting the so-called null NMIs:
+There is a clear gain of NMI when considering the playing technique which means that the subjects primarily used cues corresponding to the playing technique to organize the \ipts. Also, for both curves, a global trend of increase in the $j/x$ partitions with respect to the number of clusters can be observed. This is a well documented fact, which simply put, means that it is easier to match any given partition with more clusters at hand \cite{tibshirani2001estimating}. To compensate for this bias, one can consider the NMI that would be achieved by comparing to the reference partition several random partitions of increasing number of clusters. This so-called null partition is termed $null$. The resulting averaged NMI for 100 randomly generated partitions is displayed on Figure \ref{fig:clusters}. Normalizing $j/I$ and $j/Pt$ to reduce the impact of this bias, we simply substract the $null$ NMI:
 \begin{eqnarray}
-  nj/I &=& j/I - nullI  \\
-  nj/Pt &=& j/Pt - nullPt  \\
+  nj/I &=& j/I - null \\
+  nj/Pt &=& j/Pt - null  \\
 \end{eqnarray}
 This normalization is useful for identifying more easily the number of clusters for which the comparison is most relevant. As can be seen on Figure \ref{fig:clusters}, the number of clusters that leads to the highest NMI is 5 for the playing technique reference and 8 for the instrument reference, leading respectively to an NMI of $0.46$ and $0.21$. For the latter, reducing the number of clusters down to 6 do not decrease the NMI by much, a fact that will be latter discussed in more details. Even by considering the null normalization, the matching level is much higher for the playing technique reference.
 
-The correspondances between those partitions and the reference ones are now studied. For this purpose, Figure \ref{fig:gi} displays two partitions. At the bottom is the partition that corresponds to the instruments labels, whose color code is given by the color bar on the right. The abbreviations used for the instruments are detailed in Section \ref{sec:dataset}. The ordering of \ipt on the horizontal axis is the one given by the cluster analysis, see the dendrogram on Figure \ref{fig:dendrogram}. The partition on top is the result of the clustering with 8 clusters. For visualization purposes, we arbitrarily set colors to clusters of this partition to the color code of the instrument label that is most often encountered in this cluster. If some labels occur equally often, the instrument of the first \ipt of the cluster is chosen. The emerging instrument classes are: Saxophone, Clarinet, Trumpet, Flute and Cello.
+The correspondances between those partitions and the reference ones are now studied. For this purpose, Figure \ref{fig:gi} displays two partitions. At the bottom is the partition that corresponds to the instruments labels, whose color code is given by the color bar on the right. The abbreviations used for the instruments are detailed in Section \ref{sec:dataset}. The ordering of \ipts on the horizontal axis is the one given by the cluster analysis, see the dendrogram on Figure \ref{fig:dendrogram}. The partition on top is the result of the clustering with 8 clusters. For visualization purposes, we arbitrarily set colors to clusters of this partition to the color code of the instrument label that is most often encountered in this cluster. If some labels occur equally often, the instrument of the first \ipt of the cluster is chosen. The emerging instrument classes are: Saxophone, Clarinet, Trumpet, Flute and Cello.
 
 Though, even with an optimal number of clusters, we see that the clusters have  a low purity, \textit{i.e.} a very diverse set of instruments labels for the \ipt they belong to. Also, some clusters could be merged without stong changes in the overall organisation. This probably explains the small changes of NMI when reducing the number of clusters, see Figure \ref{fig:clusters}.
 
@@ -143,7 +142,7 @@ To conclude this section, the process of gathering data about the perceptual sim
 \begin{figure}
 \center
 \includegraphics[width = \textwidth]{figures/groupModes.png}
-\caption{Clustering \ipt using average perceptual similarity into 5 clusters (top) and playing technique labels (top). The color chosen to display each clusters on top corresponds to the playing technique that is dominant in this cluster, from left to right: 'pizzicato', 'slap', 'key', 'ordinario', 'ordinario', 'ponticello', 'art'.}
+\caption{Clustering \ipts using average perceptual similarity into 5 clusters (top) and playing technique labels (top). The color chosen to display each clusters on top corresponds to the playing technique that is dominant in this cluster, from left to right: 'pizzicato', 'slap', 'key', 'ordinario', 'ordinario', 'ponticello', 'art'.}
 \label{fig:gm}
 \end{figure}
 
@@ -154,7 +153,7 @@ To conclude this section, the process of gathering data about the perceptual sim
 \begin{figure}
 \center
 \includegraphics[width = \textwidth]{figures/groupInstruments.png}
-\caption{Clustering \ipt using average perceptual similarity into 8 clusters (a) and instrument reference labels (b). The color chosen to display the groups (on top) corresponds  to the instrument that is dominant in this group, from left to right: 'ASax', 'BBTb', 'Vc', 'ASax', 'TpC', 'Gtr', 'ASax', 'Vc'.}
+\caption{Clustering \ipts using average perceptual similarity into 8 clusters (a) and instrument reference labels (b). The color chosen to display the groups (on top) corresponds  to the instrument that is dominant in this group, from left to right: 'ASax', 'BBTb', 'Vc', 'ASax', 'TpC', 'Gtr', 'ASax', 'Vc'.}
 \label{fig:gi}
 \end{figure}
 

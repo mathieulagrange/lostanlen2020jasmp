@@ -90,7 +90,7 @@ The experiment was available online for two months and requests to perform the t
 
 31 subjects completed the experiment. An example of resulting organisation of \ipt is given on Figure \ref{fig:xp2display}. The resulting organisation for each subject are available for reader's inspection using the full feature interface provided to the subjects for performing the experiment\footnote{https://mathieulagrange.github.io/paperSpontaneousSimilarity/demo}.
 
-As discussed in the previous section, only the grouping given by the subjects using the color labels is considered to estimate the spontaneous judgments of similarity among \ipt. The spatial organisation of the dots representing the \ipt could provide information about the similarity, but this would implicitely force the fact that the timbral similarity space is two dimensional. We therefore now only study the properties of the groupings performed by the subject prior to converting them into an overall similarity matrix.
+As discussed in the previous section, only the clustering given by the subjects using the color labels is considered to estimate the spontaneous judgments of similarity among \ipt. The spatial organisation of the dots representing the \ipt could provide information about the similarity, but this would implicitely force the fact that the timbral similarity space is two dimensional. We therefore now only study the properties of the clusterings performed by the subject prior to converting them into an overall similarity matrix.
 
 Among the 20 colors available, the subjects used on average $10.2 \pm  4.1$ different colors to group \ipt. The distribution of the number of groups can be seen on Figure \ref{fig:xp2nbGroup}. The size of the groups is on average $7.7 \pm   7.2$. The distribution of the size of groups can be seen on Figure \ref{fig:xp2sizeGroup}. The large number of small groups indicates that many subjects considered that a few of the \ipt were very different from all the remaining \ipt.
 
@@ -108,7 +108,7 @@ Among the 20 colors available, the subjects used on average $10.2 \pm  4.1$ diff
 \label{fig:xp2sizeGroup}
 \end{figure}
 
-A grouping can be considered as a binary similarity measure, with $s(a, b) = 1$ if $a$ and $b$ belong to the same group, and $0$ otherwise. By averaging the 31 binary similarity matrix, an overall floating point matrix is obtained that correponds to our measure of the spontaneous perceptual similarity between \ipt.
+A clustering can be considered as a binary similarity measure, with $s(a, b) = 1$ if $a$ and $b$ belong to the same group, and $0$ otherwise. By averaging the 31 binary similarity matrix, an overall floating point matrix is obtained that correponds to our measure of the spontaneous perceptual similarity between \ipt.
 
 In order to gather information about the properties of the data, a cluster analysis is next performed using an agglomerative hierarchical clustering \cite{gordon1987review} using the weighted average algorithm for computing distance between clusters. The resulting dendrogram is displayed on Figure \ref{fig:dendrogram}. A partition of $n$ clusters can be constructed from the agglomerative hierarchical cluster tree by finding the smallest height at which a horizontal cut through the tree leaves $n$ clusters.
 
@@ -159,76 +159,73 @@ To conclude this section, the process of gathering data about the perceptual sim
 
 \section{Model}\label{sec:model}
 
-Once the perceptual data is gathered and controled, our aim is to evaluate the ability of the proposed perceptual model that is now introduced in more details. The model is composed of two processing stages, respectively called the primary and the secondary stage, see Figure \ref{fig:model}. The primary stage is designed to rely on very few meta parameters set arbitrarily by the experimenter to mimic the early stages of the mamalian auditory system. On contrary, the secondary stage rely largely on the data it has to model and in this respect mimic the high plasticity of the later stages of the mamalian auditory system.
+Once the perceptual data is gathered and controled, our aim is now to evaluate the ability of the proposed two stages perceptual model brifely described and motivated in the Introduction. The model is composed of two successive processing stages, respectively called the primary and the secondary stage, see Figure \ref{fig:model}. The primary stage is designed to rely on very few meta parameters set arbitrarily by the experimenter to mimic the early stages of the mamalian auditory system. On contrary, the secondary stage rely largely on the data it has to predict and in this respect mimic the high plasticity of the later stages of the mamalian auditory system.
 
 \begin{figure}
 \center
 \includegraphics[width = \textwidth]{figures/groupInstruments.png}
-\caption{Computational model \ml{TODO}}
+\caption{Computational model composed of two successive processing stages.}
 \label{fig:model}
 \end{figure}
 
 \subsection{Primary stage}
 
-In order to model the early stages of the mamalian auditory system, the time scattering transform (TST) \cite{anden2014deep}, obtained by applying a one dimensional
-wavelet transform in time to a time-frequency wavelet scalogram. This transform thus encodes well modulations over time of energy distributed over frequency, dimensions that are shown to be perceptually important \cite{dau1997modeling}.
+In order to model the early stages of the mamalian auditory system, we use the time scattering transform (TST). This transform is obtained by applying a one dimensional
+wavelet transform in time to a time-frequency wavelet scalogram \cite{anden2014deep}. It is thus well suited to encode modulations over time of energy distributed over frequency, dimensions that are shown to be perceptually important \cite{dau1997modeling}.
 
-This model is chosen over more complex alternatives for the sake of simplicity. Deep convolutional networks could have been considered \cite{lee2009unsupervised}, but the learning stage inherent in this kind of methods did not seem relevant for this study. On contrary, the scattering transform can be conveniently parametrized to match the perceptual capabilities of the auditory system as those parameters are not expected to change significantly among subjects. Also, more complex versions of the scattering like the joint time-frequency scattering \cite{anden2015joint} and the spiral scattering \cite{lostanlen2016wavelet} are not considered in order to achieve a projection of reasonable dimensionality and for lack of evidence that those dimensions are mandatory to model the primary stage of the auditory system.
+This model is chosen over more data driven alternatives mainly for the sake of simplicity. Deep convolutional networks could have been considered \cite{lee2009unsupervised}, but the learning stage inherent in this kind of methods did not seem relevant for this study. On contrary, the scattering transform can be conveniently parametrized to match the perceptual capabilities of the auditory system as those parameters are not expected to change significantly among subjects. Also, more complex versions of the scattering like the joint time-frequency scattering \cite{anden2015joint} and the spiral scattering \cite{lostanlen2016wavelet} are not considered in order to achieve a projection of reasonable dimensionality and for lack of evidence that those dimensions are mandatory to model the primary stage of the auditory system.
 
 \subsection{Secondary stage}
 
-The secondary stage involves a learning based process block that will weight the features outputed by the primary stage.
+The secondary stage involves a learning based process block that will weight and linearly combine the features outputed by the primary stage.
 
-Indeed, if the properties of the first processing stages of the human auditory system can reasonably be considered as similar for every subjects despite potential hearing losses for some, the later ones is expected to vary more drastically due to their respective education, tastes and experiences with stimuli similar to the \ipt that are considered in this study. We therefore consider a supervised setting in order to optimize the representational space provided by the scattering transform. To do so, we will consider as our reference the clusterings provided by the subjects of experiment 2. Therefore, the goal of the secondary stage is to provide a metric space that closely match the one resulting from the data gathering by experiment 2.
+Indeed, if the properties of the first processing stages of the human auditory system can reasonably be considered as similar for every subjects despite potential hearing losses for some, the later ones is expected to vary more drastically due to their respective education, tastes and experiences with stimuli similar to the \ipt that are considered in this study. We therefore consider a supervised setting in order to optimize the feature space provided by the scattering transform. To do so, we will consider as our reference the clusterings provided by the subjects of experiment 2. Therefore, the goal of the secondary stage is to provide a metric space that closely match the one resulting from the data gathered by experiment 2.
 
-To do so, one can first consider the linear discriminant analysis (LDA) \cite{duda2000pattern} to project the data into a representational space of $C-1$ dimensions with $C$ being the number of classes of the reference. The projection computed using this method is such that the ratio of the between-class distance
-to the within-class distance is maximized, thus achieving maximum discrimination between elements of different class.
+To do so, one can first consider the linear discriminant analysis (LDA) \cite{duda2000pattern} to project the data into a representational space of $C-1$ dimensions with $C$ being the number of clusters of the reference. In our case study, the reference is the partition of \ipts provided by a subject during experiment 2. The projection computed using this method is such that the ratio of the between-class distance to the within-class distance is maximized, thus achieving maximum discrimination between elements of different clusters.
 
-Another solution is to compute a projection matrix that maximizes the fact that neighbors in the representational space belong to the same class in the reference clustering while items from different classes are separated by a large margin. To do so, the large margin nearest neighbor (LMNN) metric learning algorithm \cite{weinberger2006distance, weinberger2009distance} is considered. One advantage of the latter is that the resulting representational space is of the same dimensionality as the input one whereas the LDA output dimentionality is contrained by the number of classes in the reference grouping.
+Another solution is to compute a projection matrix that maximizes the fact that neighbors in the representational space belong to the same cluster in the reference clustering while items from different clusters are separated by a large margin. To do so, the large margin nearest neighbor (LMNN) metric learning algorithm \cite{weinberger2006distance, weinberger2009distance} is considered. One advantage of the latter is that the resulting representational space is of the same dimensionality as the input one whereas the LDA output dimentionality is contrained by the number of classes in the reference clustering.
 
-Those methods are designed for considering only one reference grouping. Though, in our case, there is one reference grouping per subject. One approach is to find one consensus grouping that maximally represent the 31 reference groupings. In this paper, the chosen consensus grouping is taken from 3 solutions issued from 3 different algorithmic approaches. This consensus is chosen as the one that has the best averaged NMI when compared to the 31 reference groupings \cite{strehl2002cluster}.
+An important issue is that those methods are designed for considering only one reference clustering. It is thus suited to model the perceptual space of one subject but not many. However, in our case, we would like to model a perceptual space that is shared among subjects. One approach is to find a consensus clustering that maximally represent the 31 reference clusterings. To implement this solution, the chosen consensus clustering is taken from 3 solutions issued from 3 different algorithmic approaches introduced in \cite{strehl2002cluster}. This consensus clusterings is chosen among the 3 solutions as the one that has the best averaged NMI when compared to the 31 reference clusterings.
 
-Another approach is to combine the projection matrices issued from the processing of the projection algorithm over the 31 reference groupings. As the number of classes can vary between reference groupings, the combination is not feasible using the LDA method. On contrary, the LMNN method can outputs a projection matrix per reference grouping. Those projection matrices being of the same dimensionality they can safely be averaged to estimate an consensus projection.
-
-
+Another approach is to combine the projection matrices issued from the processing of the projection algorithm over the 31 reference clusterings. As the number of classes can vary between reference clusterings, the kind of combination is not feasible using the LDA method. On contrary, the LMNN method aloways outputs a projection matrix with equal dimensions. Those projection matrices being of the same dimensionality they can safely be averaged to estimate an consensus projection.
 
 \section{Validation}\label{sec:validation}
 
-As it will be discussed in the next Section, the main application scenario that is considered in this paper is the the recommandation of sounds based on examplar. This involves the definition of a similarity measure that behave similarly to the human perception, at least, that conform to the data we gathered in experiment 2.
+As it will be discussed in the next Section, the main application scenario that is considered in this paper is the recommandation of sounds based on examplar. This involves the definition of a similarity measure that behave similarly to the human perception. In this paper, the reference used for assessing closseness to human perception is the perceptual data gathered in experiment 2.
 
 Our problem is thus casted into a ranking problem, where from several candidates, the algorithm is asked to provide a ranking list of those candidates, sorted by similarity.
 
 \subsection{Data}
 
-As explained in the first section, gathering perceptual similarity data is plagued is plagued with a size problem. In order to provide enough data for the numerical analysis described in this section, we complement the data gathered during the second experiment as follows: for each \ipt, instead of one sound examplar we consider the whole range of nuance and pitch that is available. This leads to a dataset of 9346 sound recordings. It is thus assumed that the perceptual similarity is invariant with respect to pitch and nuance which is not necessarily true, but is taken here as a reasonable assumption.
+As explained in the first section, gathering perceptual similarity data is plagued is plagued with a size problem. Thus, the perceptual data considers 78 \ipts each represented by one sound recording, most often of C4 pitch and nuance mezzo forte. In order to provide enough data for the numerical analysis described in this section, we complement the data gathered during the second experiment as follows: for each \ipt, instead of one sound examplar we consider the whole range of nuance and pitch that is available. This leads to a dataset of 9346 sound recordings. It is thus assumed that the perceptual similarity is invariant with respect to pitch and nuance which is not necessarily true, but is taken in this paper as a reasonable assumption.
 
 \subsection{Metric}
 
-The performance of the different methods are evaluated in a ranking setting. The precision at rank $k$ is thus considered, with $k=5$. For one sound recording taken as the query, the $k$ nearest sound recordings are retrieved from the remaining items of the database. The precision is the number of neighbors that have the same label as the query in the grouping we consider as reference divided by $k$. This process is repeated for each sound recordings taken as query, and the performance is averaged over each query. For example, if a sound is played by a Violin, and among the 5 nearest neighbors of this query sound, 2 are played by a Violin, the precision is $0.4$.
+The performance of the different methods are evaluated in a ranking setting. The precision at rank $k$ is thus considered, with $k=5$. For one sound recording taken as the query, the $k$ nearest sound recordings are retrieved from the remaining items of the database. The precision is the number of neighbors that have the same label as the query in the clustering we consider as reference divided by $k$. For example, if a sound is played by a Violin, and among the 5 nearest neighbors of this query sound, 2 are played by a Violin, the precision is $0.4$. This process is repeated for each sound recordings taken as query, and the performance is averaged over all the queries.
 
-When considering several groupings as reference, the precision is averaged per groupings. In our case, the precision is thus computed for the 31 reference groupings and averaged.
+When considering several clusterings as reference, the precision is averaged per clusterings. In our case, the precision is thus computed for the 31 reference clusterings and averaged.
 
 \subsection{Methods}
 
-To evaluate the performance of the proposed approach, several baselines are considered for comparison purposes. For the first stage, the well known Mel-Frequency Cepstral Coefficients (MFCC)s are considered \cite{rabiner1993fundamentals}. The MFCCs are computed from frame of 25ms, the number of mel bands is 40 and all the DCT coefficients are kept. The resulting features have a dimensionality of 40. The MFCCs are then standardized by removing the mean and dividing by the standard deviation computed over the dataset.
+To evaluate the performance of the proposed approach, several baselines are considered for comparison purposes. For the first stage, the well known Mel-Frequency Cepstral Coefficients (MFCC)s are considered \cite{rabiner1993fundamentals}. The MFCCs are computed from audio frame of 25ms to 1 second, the number of mel bands is 40 and all the discrete cosine transform coefficients are kept. The resulting features have thus a dimensionality of 40. The MFCCs are then standardized by removing the mean and dividing by the standard deviation computed over the whole dataset.
 
-The time scattering is computed over a range frame sizes, from 25 ms to 1 second. The Q factor is set to 8 in order to obtain a frequency decomposition that is equivalent to the mel scale. As the frame size increase, the dimensionality increases. Unless otherwise stated, the frame size is one second. The resulting scattering features are then logarithmically compressed and normalized using the median computed over the dataset.
+The time scattering transform is computed over a range frame sizes, from 25 ms to 1 second. The Q factor is set to 8 in order to obtain a frequency decomposition that is equivalent to the mel scale. As the frame size increase, the dimensionality increases. Unless otherwise stated, the frame size is one second. The resulting scattering features are then logarithmically compressed and normalized using the median computed over the whole dataset.
 
 The LDA method do not requires any setting of parameters and the LMNN method is set to optimize for a neigbors size of 5.
 
 \subsection{Results}
 
-In order to validate the proposed model, some experiments are performed using the above described methods. 3 experimental factors with 2 or 3 modalities are considered:
+In order to validate the proposed model, experiments are performed using the above described methods. 3 experimental factors with 2 to 3 modalities are considered:
 \begin{itemize}
   \item type of features: MFCCs or TST
   \item type of projection: LDA, LMNN
-  \item type of reference for the optimization of the projection if any: consensus (single consensus grouping) or multiple (the 31 reference groupings)
+  \item type of reference for the optimization of the projection if any: consensus (single consensus clustering) or multiple (the 31 reference clusterings)
 \end{itemize}
 The results are shown on Table \ref{tab:res1}. Considering the TST over the MFCCs to implement the primary stage do not improve by much (2 \%) if no secondary stage is used. When the best setting of the secondary stage is considered, the gain is higher (7 \%). this potentially mean that the extra capabilities of description of the TST over the MFCCs need to be targeted to the task at hand in some way in order to gain the full benefits from its use.
 
-In terms of projection method to implement the secondary stage, the LMNN approach is favored over the LDA, probably due to the fact that the dimensionality reduction induced by the low number of classes relatively to the number of dimensions of the input space strongly degrades the description capabilities of the resulting projection. The lower performance of the LDA with respect to no projection is probably partly due to that and the fact that the metric is not computed on the consensus grouping use for computing the LDA.
+In terms of projection method to implement the secondary stage, the LMNN approach is favored over the LDA, probably due to the fact that the dimensionality reduction induced by the low number of classes relatively to the number of dimensions of the input space strongly degrades the description capabilities of the resulting projection. The lower performance of the LDA with respect to no projection is probably partly due to that and the fact that the metric is not computed on the consensus clustering use for computing the LDA.
 
-In this experiment, the consensus approach is favored for TST but not for MFCCs. This approach has the considerable advantage of being more computationaly efficicient as with only one reference to optimize from the LMMN training is much faster. Though, it is very likely that for a larger number of reference groupings, the multiple LMNN would be useful to better model the diversity of the references.
+In this experiment, the consensus approach is favored for TST but not for MFCCs. This approach has the considerable advantage of being more computationaly efficicient as with only one reference to optimize from the LMMN training is much faster. Though, it is very likely that for a larger number of reference clusterings, the multiple LMNN would be useful to better model the diversity of the references.
 
 
 \begin{table}
@@ -263,11 +260,11 @@ We now investigate the influence of the frame size, as it is likely that the mor
 
 An interesting phenomenon appears, the gain of performance due to the larger frame size better improves for the TST if the secondary stage is considered. Again, it seems that enriching the description is most useful if the description is optimized with a purpose.
 
-We investigated the capabilities of the proposed system to model a perceptual space averaged over several subjects. For application purposes that will be discussed in the next Section, it can be useful to consider the reference grouping of only one user and see if the system perform well with this kind of reference. To do so, the evaluation protocol is slightly modified. First the secondary stage is optimized for the 31 reference groupings independantly and for each resulting projection the precision is computed. The 31 precision measures are then averaged and shown in Table \ref{tab:res2}. The excellent results of the TST optimized using LMNN demonstrates the usefullness of the proposed approach to model complex similarity space such as the percpetual ones gathered in Experiment 2.
+We investigated the capabilities of the proposed system to model a perceptual space averaged over several subjects. For application purposes that will be discussed in the next Section, it can be useful to consider the reference clustering of only one user and see if the system perform well with this kind of reference. To do so, the evaluation protocol is slightly modified. First the secondary stage is optimized for the 31 reference clusterings independantly and for each resulting projection the precision is computed. The 31 precision measures are then averaged and shown in Table \ref{tab:res2}. The excellent results of the TST optimized using LMNN demonstrates the usefullness of the proposed approach to model complex similarity space such as the percpetual ones gathered in Experiment 2.
 
 
 \begin{table}
-  \caption{Precision achieved when considered subject based reference groupings. Numbers in bold face indicate best performance.}
+  \caption{Precision achieved when considered subject based reference clusterings. Numbers in bold face indicate best performance.}
   \label{tab:res2}
   \begin{center}
 \begin{tabular}{llc}

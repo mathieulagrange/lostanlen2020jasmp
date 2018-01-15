@@ -54,9 +54,10 @@ figure(1)
 plot([ai; am; ari; arm; ai-ari; am-arm]', 'LineWidth', 2)
 xlabel('Number of clusters')
 ylabel('Nmi')
-legend({'judgmentsInstruments', 'judgmentsModes', 'nullInstruments', 'nullModes', 'normalizedJudgmentsInstruments', 'normalizedJudgmentsModes'})
+legend({'j/I', 'j/Pt', 'nullI', 'nullPt', 'nj/I', 'nj/Pt'})
 set(gca, 'FontSize', 16)
 saveas(gcf, 'figures/clusterAnalysis', 'png')
+saveas(gcf, 'figures/clusterAnalysis', 'fig')
 
 
 figure(2)

@@ -24,19 +24,19 @@
 %
 \begin{abstract}
 
-Musical timbre is a multi-faceted notion that have been extensively studied, mostly focusing on its spectral aspect. By studying the spontaneous judgments of similarity between several instruments played with a diverse set of playing techniques, we aim in this paper at better understanding the influence of the playing technique on the perception of timbre.
+Musical timbre is a multi-faceted notion that have been extensively studied, mostly by focusing on its spectral aspect. The aim of this paper is to better understand the influence of the playing technique on the perception of musical timbre. We do so by studying the spontaneous judgments of similarity between several instruments played with a diverse set of playing techniques,
 
 A first experiment is conducted by music experts to identify which couple of instrument / playing technique in a given dataset is worth comparing to other couples of instrument / playing technique. In a second experiment, spontaneous similarity judgments among the retained couples are collected using a canonic free sorting task experiment design.
 
-To further study the outcomes of this experiment, we assume a two-step computational model of human perception, where the acoustic signal is fed to a statically designed processing unit that accounts for frequency and temporal modulations. The resulting features are then projected using a supervised technique which considers as input the perceptual similarity judgments gathered in the second experiment. Numerical experiments show that the induced perceptual space is able to approximate perceptual data with satisfying accuracy.
+To further study the outcomes of this experiment, we assume a two-step computational model of human perception, where the acoustic signal is fed to a statically designed processing unit that accounts for frequency and temporal modulations. The resulting features are then projected in a supervised manner so that the resulting descrption space matches the perceptual similarity judgments gathered in the second experiment. Numerical experiments show that the induced perceptual space is able to approximate perceptual data with satisfying accuracy.
 
 \end{abstract}
 %
 \section{Introduction}\label{sec:introduction}
 
-Musical timbre is an interesting notion to study as it is perceptively defined \cite{grey1977multidimensional}. Thus, by studying musical timbre, one study many facets of the human auditory system which responds to a diverse but also controled and well documented set of physical stimuli. Indeed, this diversity can be more easily controlled than other stimuli such as speech or environmental sounds.
+Being perceptively defined, musical timbre is an interesting notion to study to better comprehend human auditory perception \cite{grey1977multidimensional}. Thus, by studying musical timbre, one study many facets of the human auditory system which responds to a diverse but also controled and well documented set of physical stimuli. Indeed, this diversity can be more easily controlled than other stimuli such as speech or environmental sounds.
 
-In order further restrict this diversity, we focus in this paper on the influence of the playing technique used for the production of a single tone on the perception of timbre. A popular view of the kind of stimuli considered here is that they can be described by a distribution of energy that evolve through time and across frequency. By following this trend, most researchers translate the exclusion definition of timbre \cite{marozeau2003dependency} into a more specified definition. The exclusion definition states that timbre is "the fourth component of sound quality, the first three being pitch, loudness and duration". In an attempt to specify more this notion of timbre, we will loosely consider in this paper that musical timbre is the influence on the human auditory system of the distribution of intensity across the time / frequency plane.
+In order to further restrict this diversity, we focus in this paper on the influence of the playing technique used for the production of a single tone on the perception of timbre. A popular view of this kind of stimuli is that they can be described by a distribution of energy that evolve through time and across frequency. By following this trend, most researchers translate the exclusion definition of timbre \cite{marozeau2003dependency} into a more specified definition. The exclusion definition states that timbre is "the fourth component of sound quality, the first three being pitch, loudness and duration". In an attempt to specify more this notion of timbre, we will loosely consider in this paper that musical timbre is the influence on the human auditory system of the distribution of intensity across the time / frequency plane.
 
 A great deal of litterature focuses on the instantaneous spectrum \cite{grey1978perceptual} to model this distribution. Other studies also demonstrated the importance of the onset in the recognition of some musical instruments \cite{eronen2001comparison}. All those studies generally assume a rather short term model where the waveform is observed in a range that do not exceed 100 ms, a common processing scenario that is very commonly used in computational recognition models of timbre \cite{tzanetakis2002musical}.
 
@@ -119,7 +119,7 @@ There are many metrics available to compare two partitions by evaluating their d
 \begin{figure}
 \center
 \includegraphics[width = \textwidth]{figures/clusterAnalysis.png}
-\caption{Cluster analysis of the similarity judgments. $j/I$ and $j/Pt$ compare the partition obtained using the similarity judgments clustered using a growing number of clusters versus respectively the instrument partition and the playing technique partition. Normalizing factors $nullI$ and $nullPt$ are used to obtain normalized measures: $nj/I$ and $nj/Pt$. \ml{change legend, and use only one null}}
+\caption{Cluster analysis of the similarity judgments. $j/I$ and $j/Pt$ compare the partition obtained using the similarity judgments clustered using a growing number of clusters versus respectively the instrument partition and the playing technique partition. Normalizing null partitions based NMI $null$ is used to obtain normalized measures: $nj/I$ and $nj/Pt$. \ml{change legend, and use only one null}}
 \label{fig:clusters}
 \end{figure}
 

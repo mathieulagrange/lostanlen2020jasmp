@@ -14,7 +14,7 @@
 % ------
 \title{Spontaneous Similarity Judgments of Musical Tones played with various Playing Techniques}
 
-\author{Christian El-Hajj, Mathias Rossignol, Grégoire Lafay, Mathieu Lagrange}
+\author{Christian El-Hajj, Mathias Rossignol, Gr\'egoire Lafay, Mathieu Lagrange}
 
 \sloppy % please retain sloppy command for improved formatting
 
@@ -119,11 +119,11 @@ There are many metrics available to compare two partitions by evaluating their d
 \begin{figure}
 \center
 \includegraphics[width = \textwidth]{figures/clusterAnalysis.png}
-\caption{Cluster analysis of the similarity judgments. $j/I$ and $j/Pt$ compare the partition obtained using the similarity judgments clustered using a growing number of clusters versus respectively the instrument partition and the playing technique partition. Normalizing null partitions based NMI $null$ is used to obtain normalized measures: $nj/I$ and $nj/Pt$. \ml{change legend, and use only one null}}
+\caption{Cluster analysis of the similarity judgments. $j/I$ and $j/Pt$ compare the partition obtained using the similarity judgments clustered using a growing number of clusters versus respectively the instrument partition and the playing technique partition. Normalizing null partitions based NMI $nullI$ and $nullPt$ are used to obtain normalized measures: $nj/I$ and $nj/Pt$.}
 \label{fig:clusters}
 \end{figure}
 
-There is a clear gain of NMI when considering the playing technique which means that the subjects primarily used cues corresponding to the playing technique to organize the \ipts. Also, for both curves, a global trend of increase in the $j/x$ partitions with respect to the number of clusters can be observed. This is a well documented fact, which simply put, means that it is easier to match any given partition with more clusters at hand \cite{tibshirani2001estimating}. To compensate for this bias, one can consider the NMI that would be achieved by comparing to the reference partition several random partitions of increasing number of clusters. This so-called null partition is termed $null$. The resulting averaged NMI for 100 randomly generated partitions is displayed on Figure \ref{fig:clusters}. Normalizing $j/I$ and $j/Pt$ to reduce the impact of this bias, we simply substract the $null$ NMI:
+There is a clear gain of NMI when considering the playing technique which means that the subjects primarily used cues corresponding to the playing technique to organize the \ipts. Also, for both curves, a global trend of increase in the $j/x$ partitions with respect to the number of clusters can be observed. This is a well documented fact, which simply put, means that it is easier to match any given partition with more clusters at hand \cite{tibshirani2001estimating}. To compensate for this bias, one can consider the NMI that would be achieved by comparing to the reference partition several random partitions of increasing number of clusters. The resulting averaged NMI for 100 randomly generated partitions is displayed on Figure \ref{fig:clusters}. This so-called null partitions NMI are respectively termed $nullI$ and $nullPt$ depending on the reference used. To normalize $j/I$ and $j/Pt$ in order to reduce the impact of this bias, we simply substract the $null$ NMI:
 \begin{eqnarray}
   nj/I &=& j/I - null \\
   nj/Pt &=& j/Pt - null  \\

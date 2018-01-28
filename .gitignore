@@ -1,0 +1,8 @@
+
+*.aux
+
+*.log
+
+*.gz
+
+paper/lagrangeSpontaneousSimilarity2017.pdf

@@ -134,7 +134,7 @@ The dataset considered in this study is taken
 from the studio-on-line (SOL) music library  \cite{peeters2000instrument}.
 It has audio recordings of 16 different musical instruments played
 with different playing techniques,
-which leads to 143 different couples of instrument / playing technique.
+which leads to 235 different couples of instrument / playing technique.
 For each couple, the pitch and intonation is varied leading to 25444 samples.
 The way the dataset is structured
 is explained in more details in Appendix \ref{sec:dataset}.
@@ -168,16 +168,16 @@ Rating guidelines are provided :
 \end{itemize}
 
 Two music composition professors of the
-"conservatoire national sup\'erieur de musique et de danse de Paris", performed the test.
+"conservatoire national sup\'erieur de musique et de danse de Paris" performed the test.
 All the couples with a grade higher than three are selected,
 bringing 78 \ipts to study.
 
-\vl{This subsection needs a box-and-whisker plot of ratings, where the 143 different
+\vl{This subsection needs a box-and-whisker plot of ratings, where the 235 different
 couples of instrument and playing techniques are sorted on the x-axis by average rating. @figure @ratings}
 
 \vl{Are the histogram of ratings similar for the two raters? It would be good to make a statistical test for this. @research @stats @ratings}
 
-\ml{ok, je regarde si on a toujours les données}
+\ml{les histograms sont dans la figure statxp1. Le code pour la generer est dans code/xp1 faire tourner extractData et statData. Un ttest ne rejette pas l'hypothese nulle.}
 
 
 %%%%%%%%%%%%%% CROWDSOURCED JUDGMENTS OF PAIRWISE SIMILARITY %%%%%%%%%%%%%%%%%%%%
@@ -528,7 +528,7 @@ and Ircam for providing access to the SOL database.
 
 \section{Dataset} \label{sec:dataset}
 
-The dataset considered in this paper as been recorded at Ircam and is composed of audio recording of 16 different musical instruments played with different playing techniques, which leads to 143 different couple of instrument / playing technique. For each couple, the pitch and intonation is varied leading to 25444 audio samples.
+The dataset considered in this paper as been recorded at Ircam and is composed of audio recording of 16 different musical instruments played with different playing techniques, which leads to 235 different couple of instrument / playing technique. For each couple, the pitch and intonation is varied leading to 25444 audio samples.
 
 The recorded instruments belongs to the wind and string classes. For winds, the instruments considered in the second experiment are: accordion (Acc), saxophone alto (ASax), tuba (Tb), bassoon (Bn), clarinet Bb (BbCl), flute (Fl), horn (Hn), oboe (Ob), trombone tenor (TTbn), and trumpet C (TpC). For the string class, the instruments are: guitar (Gtr), harp (Hp), viola (Va), violin (Vn), violoncello (Vc), and contrabass (Cb).
 

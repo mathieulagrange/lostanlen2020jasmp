@@ -8,6 +8,7 @@
 \usepackage{color}
 \usepackage{xspace}
 
+\newcommand*{\eg}{e.g.\@\xspace}
 \newcommand{\ipt}{IPT\xspace}
 \newcommand{\ipts}{IPTs\xspace}
 
@@ -185,7 +186,16 @@ The experiment was available online for two months and requests to perform the t
 \begin{figure}
 \center
 \includegraphics[width = \textwidth]{figures/xp2example.png}
-\caption{Spatial and group organization provided by subject 1.}
+\caption{Spatial and group organization provided by subject 1.
+\vl{It would be good to show the three stages of the human-computer interface:
+random initialization,
+geometric clustering on screen,
+and color clustering.
+Besides, the figure is not accessible to readers with
+color vision deficiencies at the moment.
+The color of the clusters should be reinforced with
+geometrical information, \eg{} Voronoi cells.
+@data @figure}}
 \label{fig:xp2display}
 \end{figure}
 
@@ -230,7 +240,7 @@ by placing text upon them,
 so that the plot would be legible to readers with color vision deficiencies.
 Besides, the choice of line labels is cryptic, as it relies on abbreviations.
 The distinction between I and Pt
-can be illustrated by two complementary colors, e.g. blue versus orange.
+can be illustrated by two complementary colors, \eg{} blue versus orange.
 The distinction between j, nj, and null
 can be illustrated by three distinct markers
 (empty circle, filled triangle, asterisk),

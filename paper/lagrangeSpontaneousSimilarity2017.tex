@@ -27,6 +27,7 @@
 
 \author{
 Christian El-Hajj,
+Vincent Lostanlen,
 Mathias Rossignol,
 Gr\'egoire Lafay,
 Mathieu Lagrange}
@@ -87,6 +88,7 @@ Thus, by taking a signal processing view of the matter, one could consider that 
 What the higher levels of the auditory cortex does remains largely unknown, but we can assume that the degree of freedom of the underlying model is very large, unlike at the early stages.  We will assume in this paper that this second step is rather opportunistic. From the large set of features it receives, this second stage aims at multiplexing in some way the ones that are the most relevant for the task at hand. Related work includes the use of the auditory model proposed by Shamma for studying musical timbre \cite{patil2012music}.
 
 \vl{The paragraph above is extremely vague. I don't think that "opportunistic" is the word we're looking for here. @writing}
+\ml{ok}
 
 Considering not only the type of musical instrument but also the playing technique is interesting in that matter, as it invite us to consider the relation between the rate of modulation and timbre percepts. A notion that have not been extensively studied in the literature \cite{burred2010dynamic}. Compared to the reference that is usually taken in timbre studies \ie{} the instrument class, taking into account also the playing technique allows us to consider the notion of timbral similarity at a complementary finer grain of detail.
 
@@ -96,6 +98,7 @@ The contributions of the paper are as follows:
 \vl{It should be made very clear that the IPT taxonomy is
 the set product of the instrument taxonomy
 and the playing technique taxonomy. @writing}
+\ml{ok}
 
 \vl{On pairwise similarity judgments of timbre, cite:
 McAdams, S et al. (1995). Perceptual scaling of synthesized musicaltimbres: common dimensions, specificities, and latent subjectclasses. In: Psychological research 58.3, pp. 177-192.
@@ -107,7 +110,7 @@ Kostka, S (2016). Materials and Techniques of Post Tonal Music, Routledge, 2016,
 \vl{On the two definitions of timbre, cite:
 Castellengo, M and D Dubois (2007). Timbre ou timbres ? Propri\'{e}t\'{e}du signal, de l'instrument, ou construction cognitive ? In: Cahiersde la Soci\'{e}t\'{e} qu\'{e}b\'{e}coise de recherche en musique 9, pp. 25-38
  @biblio}
- 
+
 \vl{On the importance of spectrotemporal modulations in the description
 of timbre, and the commonalities and differences between the notions of
 "feature" in music signal processing and music psychology:
@@ -116,7 +119,7 @@ Siedenburg, Fujinaga, and McAdams. "A comparison ofapproaches to timbre descrip
 \vl{We should probably say a word on the Hornbostel-Sachs taxonomy,
 which is based on player-instrument interaction, but is not outdated
 given the variety of contemporary music techniques. @biblio}
-
+\ml{great, I was missing such references}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DATA COLLECTION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -132,7 +135,7 @@ from the studio-on-line (SOL) music library  \cite{peeters2000instrument}.
 It has audio recordings of 16 different musical instruments played
 with different playing techniques,
 which leads to 143 different couples of instrument / playing technique.
-For each couple, the pitch and intonation is varied leading to 25444 samples. 
+For each couple, the pitch and intonation is varied leading to 25444 samples.
 The way the dataset is structured
 is explained in more details in Appendix \ref{sec:dataset}.
 
@@ -145,14 +148,15 @@ reduces the number but not by much.
 \vl{The paragraph above needs to be rewritten. It introduces mathematical
 notations that are not used later in the text. The adjective "plagued"
 is derogatory and could be replaced by "hindered". @writing}
+\ml{ok}
 
-In order to reduce the number of items, we decided to perform a selection
+In order to reduce the number of items, we perform a selection
 experiment where the subject is asked to give his opinion on which
 \ipts is relevant to study. An \ipt is said to be relevant to study
 if it is likely to be associated to another \ipt of another instrument.
 Interest is rated on a 7 ticks scale. The subject can listen to all the different
 nuance and pitch samples of each \ipt. The experiment is over when all the
-\ipts have been rated.
+\ipts are rated.
 
 Rating guidelines are provided :
 \begin{itemize}
@@ -164,17 +168,17 @@ Rating guidelines are provided :
 \end{itemize}
 
 Two music composition professors of the
-"conservatoire national sup\'erieur de musique et de danse de Paris",
-a renowned French school of music, performed the test.
+"conservatoire national sup\'erieur de musique et de danse de Paris", performed the test.
 All the couples with a grade higher than three are selected,
 bringing 78 \ipts to study.
-
-\vl{Too much passive form in this subsection. This last paragraph ("a renowned French school of music") is un-academic. @writing}
 
 \vl{This subsection needs a box-and-whisker plot of ratings, where the 143 different
 couples of instrument and playing techniques are sorted on the x-axis by average rating. @figure @ratings}
 
 \vl{Are the histogram of ratings similar for the two raters? It would be good to make a statistical test for this. @research @stats @ratings}
+
+\ml{ok, je regarde si on a toujours les données}
+
 
 %%%%%%%%%%%%%% CROWDSOURCED JUDGMENTS OF PAIRWISE SIMILARITY %%%%%%%%%%%%%%%%%%%%
 \subsection{Crowdsourced judgments of pairwise similarity}
@@ -208,6 +212,7 @@ color vision deficiencies at the moment.
 The color of the clusters should be reinforced with
 geometrical information, \eg{} Voronoi cells.
 @data @figure}}
+\ml{ok, tu peux utiliser le site de demo et faire une capture d'écran de l'utilisateur qui te va. Pour les autres display, je ne suis pas sur que cela soit utile.}
 \label{fig:xp2display}
 \end{figure}
 
@@ -222,6 +227,7 @@ Among the 20 colors available, the subjects used on average $10.2 \pm  4.1$ diff
 \includegraphics[width = \textwidth]{figures/nbc.png}
 \caption{Histogram of the number of groups.
 \vl{The width of this figure should be a half page instead of a full page. Pair with next figure. @figure}}
+\ml{ok}
 \label{fig:xp2nbGroup}
 \end{figure}
 
@@ -230,6 +236,7 @@ Among the 20 colors available, the subjects used on average $10.2 \pm  4.1$ diff
 \includegraphics[width = \textwidth]{figures/sbc.png}
 \caption{Histogram of the size of groups.
 \vl{The width of this figure should be a half page instead of a full page. Pair with previous figure. @figure}}
+\ml{ok}
 \label{fig:xp2sizeGroup}
 \end{figure}
 
@@ -260,6 +267,7 @@ associated with
 three distinct line styles (solid, dashed, dotted).
 The NMI abbreviation should be expanded.
 @figure}}
+\ml{ok, le .fig est dispo}
 \label{fig:clusters}
 \end{figure}
 
@@ -284,6 +292,7 @@ To conclude this section, the process of gathering data about the perceptual sim
 \includegraphics[width = \textwidth]{figures/groupModes.png}
 \caption{Clustering \ipts using average perceptual similarity into 5 clusters (top) and playing technique labels (top). The color chosen to display each clusters on top corresponds to the playing technique that is dominant in this cluster, from left to right: 'pizzicato', 'slap', 'key', 'ordinario', 'ordinario', 'ponticello', 'art'.
 \vl{A bubble plot would be preferable to a color map. Abbreviated words should appear in their expanded form instead. @writing}}
+\ml{Je demande a voir, mais je ne suis pas satisfait de cette visu de toute facon. Le code est dispo dans le rep code. Lancer ticelSim en premier.}
 \label{fig:gm}
 \end{figure}
 
@@ -296,6 +305,7 @@ To conclude this section, the process of gathering data about the perceptual sim
 \includegraphics[width = \textwidth]{figures/groupInstruments.png}
 \caption{Clustering \ipts using average perceptual similarity into 8 clusters (a) and instrument reference labels (b). The color chosen to display the groups (on top) corresponds  to the instrument that is dominant in this group, from left to right: 'ASax', 'BBTb', 'Vc', 'ASax', 'TpC', 'Gtr', 'ASax', 'Vc'.
 \vl{A bubble plot would be preferable to a color map. Abbreviated words should appear in their expanded form instead. @writing}}
+\ml{ok}
 \label{fig:gi}
 \end{figure}
 
@@ -305,6 +315,7 @@ Once the perceptual data is gathered and controlled, our aim is now to evaluate 
 
 \vl{Naming the two stages "primary" and "secondary" is not very informative.
 How about "feature extraction" and "similarity learning"? @writing}
+\ml{ok}
 
 \begin{figure}[t]
 \center
@@ -325,13 +336,16 @@ This model is chosen over more data driven alternatives mainly for the sake of s
 
 \vl{The argument behind not training a deep convolutional network is a strawman argument.
 There is a also learning stage inherent to our approach: LDA or LMNN. @writing}
+\ml{so argue the lack of large dataset ? Or not talk about it}
 
 \vl{I do believe that time-frequency scattering (or one of its variants, see McDermott or Patil or Sch\"{a}dler)
 is, in a very precise way, mandatory to model the central auditory system. It's OK to think otherwise but that
 should be motivated. @writing}
+\ml{then you can proceed to the rewrite}
 
 \vl{I would suggest trying to avoid the invention of the "TST" acronym for "temporal scattering transform" if possible.
 This acronym does not already exist in the relevant literature. @writing}
+\ml{this is not an invention, this is a mean to be compact in this paper.}
 
 \subsection{Metric learning}
 
@@ -341,6 +355,7 @@ Indeed, if the properties of the first processing stages of the human auditory s
 
 \vl{I am a bit wary about not giving proper names to the two experiments, but instead calling them "experiment 1" and "experiment 2".
 How about "expert judgments of uniqueness" versus "crowdsourced judgments of similarity"? @writing}
+\ml{J'ai bien peur que cela alourdisse le discours. Mais bon, visiblement on ne repete experiment 2 que 6 fois, ca devrait aller.}
 
 To do so, one can first consider the linear discriminant analysis (LDA) \cite{duda2000pattern} to project the data into a representational space of $(C-1)$ dimensions, with $C$ being the number of clusters of the reference. In our case study, the reference is the partition of \ipts provided by a subject during experiment 2. The projection computed using this method is such that the ratio of the between-class distance to the within-class distance is maximized, thus achieving maximum discrimination between elements of different clusters.
 
@@ -349,14 +364,17 @@ Another solution is to compute a projection matrix that maximizes the fact that 
 An important issue is that those methods are designed for considering only one reference clustering. It is thus suited to model the perceptual space of one subject but not many. However, in our case, we would like to model a perceptual space that is shared among subjects. One approach is to find a consensus clustering that maximally represent the 31 reference clusterings. To implement this solution, the chosen consensus clustering is taken from 3 solutions issued from 3 different algorithmic approaches introduced in \cite{strehl2002cluster}. This consensus clusterings is chosen among the 3 solutions as the one that has the best averaged NMI when compared to the 31 reference clusterings.
 
 \vl{The paragraph above is the most important in the whole paper, and it deserves more attention. How do these three solutions differ? Which one was chosen in the end? Did it make a significant difference in NMI? Is the consensus clustering shown somewhere in the paper? Is it related to the dendrogram in Appendix B? I have so many questions. @writing}
+\ml{ok, je refais un code sur cette partie. Le dendrogram n'est pas un clustering, il part de la matrice de similarité. Bon apres, c'est tres lié...}
 
 \vl{I'm afraid there is also a methodological problem here.
 We need to have a hold-out set of IPTs to evaluate the performance of the clustering algorithm after having trained the metric learning algorithm.
 @methodology @computation}
+\ml{Mmm, je ne suis pas sur, dans l'idée, j'ai besoin d'une projection adaptée a mon contenu, rien ne m'empeche d'optimiser sur tout le corpus. On peut imaginer couper en deux mais ca fait pas beaucoup de données. Perso, je suis pour laiser ca comme ca et le faire si un relecteur rale. Mais je suis ouvert a la discussion.}
 
 Another approach is to combine the projection matrices issued from the processing of the projection algorithm over the 31 reference clusterings. As the number of classes can vary between reference clusterings, the kind of combination is not feasible using the LDA method. On the contrary, the LMNN method always outputs a projection matrix with equal dimensions. Those projection matrices being of the same dimensionality they can safely be averaged to estimate a consensus projection.
 
 \vl{What does "safely" mean here? We are at the epicenter of the paper here: every word matters. @writing}
+\ml{I agree, we should develop a bit.}
 
 \section{Validation}\label{sec:validation}
 
@@ -371,12 +389,14 @@ As explained in the first section, gathering perceptual similarity data is plagu
 One way to do it without collecting new similarity judgments would be to break down the precision by pitch of query.
 Presumably we have an inverted U shape with a peak near C4.
 @research @computation @figure @biblio}
+\ml{Indeed, It would be interesting but would require some research time.}
 
 \subsection{Metric}
 
 The performance of the different methods are evaluated in a ranking setting. The precision at rank $k$ is thus considered, with $k=5$. For one sound recording taken as the query, the $k$ nearest sound recordings are retrieved from the remaining items of the database. The precision is the number of neighbors that have the same label as the query in the clustering we consider as reference divided by $k$. For instance, if a sound is played by a Violin, and among the 5 nearest neighbors of this query sound, 2 are played by a Violin, the precision is $0.4$. This process is repeated for each sound recordings taken as query, and the performance is averaged over all the queries.
 
 \vl{I'm extremely puzzled by the paragraph above. I thought that the point of the paper was precisely to liberate oneself from the taxonomy of musical instruments? @writing}
+\ml{This is just an example. May be state better that is htis example the reference is the instrument taxonomy. Or even better refer to a clustering reference of one subject, but in this case the cluster denomination is more cryptic, like cluster 1, cluster 2...}
 
 When considering several clusterings as reference, the precision is averaged per clusterings. In our case, the precision is thus computed for the 31 reference clusterings and averaged.
 
@@ -387,8 +407,10 @@ To evaluate the performance of the proposed approach, several baselines are cons
 The time scattering transform is computed over a range frame sizes, from 25 ms to 1 second. The Q factor is set to 8 in order to obtain a frequency decomposition that is equivalent to the mel scale. As the frame size increase, the dimensionality increases. Unless otherwise stated, the frame size is one second. The resulting scattering features are then logarithmically compressed and normalized using the median computed over the whole dataset.
 
 \vl{The mel scale has a varying quality factor, so I don't see how this can be right.}
+\ml{I don't understand}
 \vl{I understand what "logarithmically compressed" and "normalized using the median" because I did work on this before but,
 for someone who is less experienced, this might not be precise enough.}
+\ml{ok}
 
 The LDA method do not requires any setting of parameters and the LMNN method is set to optimize for a neighbors size of 5.
 
@@ -405,6 +427,7 @@ The results are shown on Table \ref{tab:res1}. Considering the TST over the MFCC
 \vl{The paragraph above is very peremptory and at the same time quite vague.
 I could quote many tasks in which there is no need to "target in some way" the scattering transform to obtain better results than MFCC.
 What scientific conclusion are we drawing here? @writing}
+\ml{to be discussed}
 
 In terms of projection method to implement the secondary stage, the LMNN approach is favored over the LDA, probably due to the fact that the dimensionality reduction induced by the low number of classes relatively to the number of dimensions of the input space strongly degrades the description capabilities of the resulting projection. The lower performance of the LDA with respect to no projection is probably partly due to that and the fact that the metric is not computed on the consensus clustering use for computing the LDA.
 
@@ -412,7 +435,8 @@ In this experiment, the consensus approach is favored for TST but not for MFCCs.
 
 
 \begin{table}
-  \caption{Precision achieved by the different settings. Numbers in bold face indicate best performance. \vl{What does these variances correspond to? Variance across raters, across IPTs, across instances of each IPT? Furthermore, why are the results with TST, LMNN, and "reference" commented? Do they correspond to same rater between training and evaluation? @methodology @writing}}
+  \caption{Precision achieved by the different settings. Numbers in bold face indicate best performance. \vl{What does these variances correspond to? Variance across raters, across IPTs, across instances of each IPT? Furthermore, why are the results with TST, LMNN, and "reference" commented? Do they correspond to same rater between training and evaluation? @methodology @writing}
+  \ml{variance across raters. Do not understand the second question, to be discussed.}}
   \label{tab:res1}
   \begin{center}
 \begin{tabular}{lllc}
@@ -437,10 +461,11 @@ We now investigate the influence of the frame size, as it is likely that the mor
 \begin{figure}
 \center
 \includegraphics[width = \textwidth]{figures/frame.png}
-\caption{Spatial and group organization provided by subject 1.
-\vl{This caption is obviously wrong, as it was copied verbatim from Figure 1. The x axis should be made logarithmic, which uneven tick marks.
+\caption{Evolution of the precision with respect to the frame size for the different front ends.
+\vl{The x axis should be made logarithmic, which uneven tick marks.
 The legend is difficult to understand (acronyms, subtle difference between "multiple" and "consensus").
 Again, the legend box could be removed after placing the labels next to the lines themselves. @figure}}
+\ml{Proposition ?}
 \label{fig:frame}
 \end{figure}
 
@@ -463,16 +488,14 @@ TST & LMNN & 98.09 $\pm$ 1.28 \\
 \end{table}
 
 
-For the sake of reproducibility, the code of the proposed method and the experimental protocol is available\footnote{https://github.com/mathieulagrange/paperSpontaneousSimilarity \vl{I would love a more memorable name. @writing}}. For convenience, the features (scattering and MFCCs) are also provided, but the software can be used to process audio data.
+For the sake of reproducibility, the code of the proposed method and the experimental protocol is available\footnote{https://github.com/mathieulagrange/paperSpontaneousSimilarity \vl{I would love a more memorable name. @writing}\ml{proposition ? abbreviation of the new title ?}}. For convenience, the features (scattering and MFCCs) are also provided, but the software can be used to process audio data.
 
 \section{Discussion}\label{sec:discussion}
 
-Thanks to the digitization capabilities available, gathering large amount of audio recordings of \ipt is achievable and several databases are now available on the market. Browsing of such databases can be achieved by keyword-based search. It requires that 1) the database is fully annotated with a precise ontology of instruments and playing techniques, 2) that the user has a precise understanding of this ontology, and 3) that the user a precise idea of the kind of timbre he is looking to find the \ipt he is searching for.
+Thanks to the digitization capabilities available, gathering large amount of audio recordings of \ipt is achievable and several databases are now available on the market. Browsing of such databases can be achieved by keyword-based search. It requires that 1) the database is fully annotated with a precise ontology of instruments and playing techniques, 2) that the users have a precise understanding of this ontology, and 3) that the users a precise idea of the kind of timbre they are looking to find the \ipt they are searching for.
 
 \vl{Curiously, this paper does not contain a review of such databases available on the market. @biblio}
-
-\vl{Let's use the gender-neutral singular "they" instead of "he".@writing}
-
+\ml{Indeed}
 
 An interesting alternative type of search is the similarity content based search. Being solely based on sound, this kind of search can be used when querying by example. The user provides an example of the target sound to find \ipt that match the timbre description of the query, be it an onomatopoeia, a tone from another instrument or any kind of sound.
 
@@ -511,14 +534,17 @@ The recorded instruments belongs to the wind and string classes. For winds, the 
 
 Some instruments can be complemented with sordina (S), wha (W). The addition of this kind of device modifying the shape of the instrument, a saxophone alto and saxophone alto with sordina are considered as different instruments.
 \vl{This is crucial and should not be deferred to the appendix. @writing}
+\ml{J'ai mis ca en appendice pour ne pas que le lecteur confonde la base SOL complete et les données considérées dans l'étude.}
 
 Those instruments are recorded for different nuance and pitch if the latter is relevant, but more importantly, several playing technique are considered. For  the second experiment described in this paper, the playing techniques considered are: artificial harmonic (art), blow (blow), exploding slap  (explo), harmonic (harm), key-click (key), col legno   (legno), non vibrato (nonvib), ordinario (ord), pedal tone (pdl), pizzicato (pizz), ponticello (pont), slap (slap), (tasto), tongue-ram (tng), and xylophonic (xyl).
 
 \vl{This section is not precise enough in terms of intensity ranges and pitch ranges.
 The abbreviations can be removed. @data @writing}
+\ml{}
 
 \vl{A bubble plot of number of notes per instrument (x axis) and playing technique
 (y axis) would be extremely useful. @data @figure}
+\ml{Tu voudrais ca pour la base SOL complete ou les données considérées dans l'étude ?}
 
 \section{Dendrogram}
 
@@ -531,5 +557,6 @@ The abbreviations can be removed. @data @writing}
 
 \vl{This dendrogram is very hard to read. Abbreviations must be replaced by the full names of every instrument and playing techniques.
 Another way to visualize it would be a two-dimensional embedding, such as t-SNE or Isomap (I'm biased towards Isomap). @figure}
+\ml{Isomap do not show a dendrogram, right ?}
 
 \end{document}

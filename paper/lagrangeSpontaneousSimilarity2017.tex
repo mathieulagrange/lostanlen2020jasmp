@@ -141,6 +141,10 @@ requires the filling of a $n^2$ matrix. Assuming a symmetric similarity,
 \ie{} the similarity of A to B is equal to the similarity of B to A,
 reduces the number but not by much.
 
+\vl{The paragraph above needs to be rewritten. It introduces mathematical
+notations that are not used later in the text. The adjective "plagued"
+is derogatory and could be replaced by "hindered". @writing}
+
 In order to reduce the number of items, we decided to perform a selection
 experiment where the subject is asked to give his opinion on which
 \ipts is relevant to study. An \ipt is said to be relevant to study
@@ -354,7 +358,7 @@ Our problem is thus cast into a ranking problem, where from several candidates, 
 
 \subsection{Data}
 
-As explained in the first section, gathering perceptual similarity data is plagued is plagued with a size problem. Thus, the perceptual data considers 78 \ipts each represented by one sound recording, most often of C4 pitch and nuance mezzo forte. In order to provide enough data for the numerical analysis described in this section, we complement the data gathered during the second experiment as follows: for each \ipt, instead of one sound exemplar we consider the whole range of nuance and pitch that is available. This leads to a dataset of 9346 sound recordings. It is thus assumed that the perceptual similarity is invariant with respect to pitch and nuance which is not necessarily true, but is taken in this paper as a reasonable assumption.
+As explained in the first section, gathering perceptual similarity data is plagued with a size problem. Thus, the perceptual data considers 78 \ipts each represented by one sound recording, most often of C4 pitch and nuance mezzo forte. In order to provide enough data for the numerical analysis described in this section, we complement the data gathered during the second experiment as follows: for each \ipt, instead of one sound exemplar we consider the whole range of nuance and pitch that is available. This leads to a dataset of 9346 sound recordings. It is thus assumed that the perceptual similarity is invariant with respect to pitch and nuance which is not necessarily true, but is taken in this paper as a reasonable assumption.
 \vl{It's too bad that this "reasonable" assumption is not challenged against the data. In music psychology, the "bandwidth for timbre invariance" is of the order of one octave (Handel and Erickson, Music Perception, 2001) or less (Steele and Williams, Music Perception, 2006).
 One way to do it without collecting new similarity judgments would be to break down the precision by pitch of query.
 Presumably we have an inverted U shape with a peak near C4.
@@ -362,7 +366,9 @@ Presumably we have an inverted U shape with a peak near C4.
 
 \subsection{Metric}
 
-The performance of the different methods are evaluated in a ranking setting. The precision at rank $k$ is thus considered, with $k=5$. For one sound recording taken as the query, the $k$ nearest sound recordings are retrieved from the remaining items of the database. The precision is the number of neighbors that have the same label as the query in the clustering we consider as reference divided by $k$. For example, if a sound is played by a Violin, and among the 5 nearest neighbors of this query sound, 2 are played by a Violin, the precision is $0.4$. This process is repeated for each sound recordings taken as query, and the performance is averaged over all the queries.
+The performance of the different methods are evaluated in a ranking setting. The precision at rank $k$ is thus considered, with $k=5$. For one sound recording taken as the query, the $k$ nearest sound recordings are retrieved from the remaining items of the database. The precision is the number of neighbors that have the same label as the query in the clustering we consider as reference divided by $k$. For instance, if a sound is played by a Violin, and among the 5 nearest neighbors of this query sound, 2 are played by a Violin, the precision is $0.4$. This process is repeated for each sound recordings taken as query, and the performance is averaged over all the queries.
+
+\vl{I'm extremely puzzled by the paragraph above. I thought that the point of the paper was precisely to liberate oneself from the taxonomy of musical instruments? @writing}
 
 When considering several clusterings as reference, the precision is averaged per clusterings. In our case, the precision is thus computed for the 31 reference clusterings and averaged.
 

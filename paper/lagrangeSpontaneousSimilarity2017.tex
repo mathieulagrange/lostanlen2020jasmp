@@ -376,7 +376,11 @@ When considering several clusterings as reference, the precision is averaged per
 
 To evaluate the performance of the proposed approach, several baselines are considered for comparison purposes. For the first stage, the well-known Mel-Frequency Cepstral Coefficients (MFCC)s are considered \cite{rabiner1993fundamentals}. The MFCCs are computed from audio frame of 25ms to 1 second, the number of mel bands is 40 and all the discrete cosine transform coefficients are kept. The resulting features have thus a dimensionality of 40. The MFCCs are then standardized by removing the mean and dividing by the standard deviation computed over the whole dataset.
 
-The time scattering transform is computed over a range frame sizes, from 25 ms to 1 second. The Q factor is set to 8 in order to obtain a frequency decomposition that is equivalent to the mel scale \vl{The mel scale has a varying quality factor, so I don't see how this can be right}. As the frame size increase, the dimensionality increases. Unless otherwise stated, the frame size is one second. The resulting scattering features are then logarithmically compressed and normalized using the median computed over the whole dataset.
+The time scattering transform is computed over a range frame sizes, from 25 ms to 1 second. The Q factor is set to 8 in order to obtain a frequency decomposition that is equivalent to the mel scale. As the frame size increase, the dimensionality increases. Unless otherwise stated, the frame size is one second. The resulting scattering features are then logarithmically compressed and normalized using the median computed over the whole dataset.
+
+\vl{The mel scale has a varying quality factor, so I don't see how this can be right.}
+\vl{I understand what "logarithmically compressed" and "normalized using the median" because I worked on this before but,
+for someone who is less experienced, this might not be precise enough.}
 
 The LDA method do not requires any setting of parameters and the LMNN method is set to optimize for a neighbors size of 5.
 
@@ -389,6 +393,10 @@ In order to validate the proposed model, experiments are performed using the abo
   \item type of reference for the optimization of the projection if any: consensus (single consensus clustering) or multiple (the 31 reference clusterings)
 \end{itemize}
 The results are shown on Table \ref{tab:res1}. Considering the TST over the MFCCs to implement the primary stage do not improve by much (2 \%) if no secondary stage is used. When the best setting of the secondary stage is considered, the gain is higher (7 \%). this potentially mean that the extra capabilities of description of the TST over the MFCCs need to be targeted to the task at hand in some way in order to gain the full benefits from its use.
+
+\vl{The paragraph above is very peremptory and at the same time quite vague.
+I could quote many tasks in which there is no need to "target in some way" the scattering transform to obtain better results than MFCC.
+What scientific conclusion are we drawing here? @writing}
 
 In terms of projection method to implement the secondary stage, the LMNN approach is favored over the LDA, probably due to the fact that the dimensionality reduction induced by the low number of classes relatively to the number of dimensions of the input space strongly degrades the description capabilities of the resulting projection. The lower performance of the LDA with respect to no projection is probably partly due to that and the fact that the metric is not computed on the consensus clustering use for computing the LDA.
 

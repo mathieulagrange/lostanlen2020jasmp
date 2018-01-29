@@ -318,6 +318,13 @@ wavelet transform in time to a time-frequency wavelet scalogram \cite{anden2014d
 
 This model is chosen over more data driven alternatives mainly for the sake of simplicity. Deep convolutional networks could have been considered \cite{lee2009unsupervised}, but the learning stage inherent in this kind of methods did not seem relevant for this study. On the contrary, the scattering transform can be conveniently parametrized to match the perceptual capabilities of the auditory system as those parameters are not expected to change significantly among subjects. Also, more complex versions of the scattering like the joint time-frequency scattering \cite{anden2015joint} and the spiral scattering \cite{lostanlen2016wavelet} are not considered in order to achieve a projection of reasonable dimensionality and for lack of evidence that those dimensions are mandatory to model the primary stage of the auditory system.
 
+\vl{The argument behind not training a deep convolutional network is a strawman argument.
+There is a also learning stage inherent to our approach: LDA or LMNN. @writing}
+
+\vl{I do believe that time-frequency scattering (or one of its variants, see McDermott or Patil or Sch\"{a}dler)
+is, in a very precise way, mandatory to model the central auditory system. It's OK to think otherwise but that
+should be motivated. @writing}
+
 \vl{I would suggest trying to avoid the invention of the "TST" acronym for "temporal scattering transform" if possible.
 This acronym does not already exist in the relevant literature. @writing}
 

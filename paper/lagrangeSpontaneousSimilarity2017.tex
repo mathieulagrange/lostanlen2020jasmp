@@ -311,7 +311,7 @@ This figure is not very useful since it does not distinguish training time from 
 \label{fig:model}
 \end{figure}
 
-\subsection{Primary stage}
+\subsection{Feature extraction}
 
 In order to model the early stages of the mammalian auditory system, we use the time scattering transform (TST). This transform is obtained by applying a one dimensional
 wavelet transform in time to a time-frequency wavelet scalogram \cite{anden2014deep}. It is thus well suited to encode modulations over time of energy distributed over frequency, dimensions that are shown to be perceptually important \cite{dau1997modeling}.
@@ -328,9 +328,9 @@ should be motivated. @writing}
 \vl{I would suggest trying to avoid the invention of the "TST" acronym for "temporal scattering transform" if possible.
 This acronym does not already exist in the relevant literature. @writing}
 
-\subsection{Secondary stage}
+\subsection{Metric learning}
 
-The secondary stage involves a learning based process block that will weight and linearly combine the features produced by the primary stage.
+The secondary stage involves a learning-based process block that will weight and linearly combine the features produced by the primary stage.
 
 Indeed, if the properties of the first processing stages of the human auditory system can reasonably be considered as similar for every subjects despite potential hearing losses for some, the later ones is expected to vary more drastically due to their respective education, tastes and experiences with stimuli similar to the \ipt that are considered in this study. We therefore consider a supervised setting in order to optimize the feature space provided by the scattering transform. To do so, we will consider as our reference the clusterings provided by the subjects of experiment 2. Therefore, the goal of the secondary stage is to provide a metric space that closely match the one resulting from the data gathered by experiment 2.
 

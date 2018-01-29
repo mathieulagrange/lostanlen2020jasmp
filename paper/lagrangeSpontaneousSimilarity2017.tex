@@ -342,13 +342,15 @@ An important issue is that those methods are designed for considering only one r
 
 \vl{The paragraph above is the most important in the whole paper, and it deserves more attention. @writing}
 
-Another approach is to combine the projection matrices issued from the processing of the projection algorithm over the 31 reference clusterings. As the number of classes can vary between reference clusterings, the kind of combination is not feasible using the LDA method. On the contrary, the LMNN method always outputs a projection matrix with equal dimensions. Those projection matrices being of the same dimensionality they can safely be averaged to estimate an consensus projection.
+Another approach is to combine the projection matrices issued from the processing of the projection algorithm over the 31 reference clusterings. As the number of classes can vary between reference clusterings, the kind of combination is not feasible using the LDA method. On the contrary, the LMNN method always outputs a projection matrix with equal dimensions. Those projection matrices being of the same dimensionality they can safely be averaged to estimate a consensus projection.
+
+\vl{What does "safely" mean here? We are at the epicenter of the paper here, every word matters. @writing}
 
 \section{Validation}\label{sec:validation}
 
 As it will be discussed in the next section, the main application scenario that is considered in this paper is the recommendation of sounds based on exemplar. This involves the definition of a similarity measure that behave similarly to the human perception. In this paper, the reference used for assessing similarity to human perception is the perceptual data gathered in experiment 2.
 
-Our problem is thus casted into a ranking problem, where from several candidates, the algorithm is asked to provide a ranking list of those candidates, sorted by similarity.
+Our problem is thus cast into a ranking problem, where from several candidates, the algorithm is asked to provide a ranking list of those candidates, sorted by similarity.
 
 \subsection{Data}
 

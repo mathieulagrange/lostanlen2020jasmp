@@ -294,7 +294,7 @@ To conclude this section, the process of gathering data about the perceptual sim
 
 \section{Model}\label{sec:model}
 
-Once the perceptual data is gathered and controlled, our aim is now to evaluate the ability of the proposed two stages perceptual model brifely described and motivated in the Introduction. The model is composed of two successive processing stages, respectively called the primary and the secondary stage, see Figure \ref{fig:model}. The primary stage is designed to rely on very few meta parameters set arbitrarily by the experimenter to mimic the early stages of the mamalian auditory system. On contrary, the secondary stage rely largely on the data it has to predict and in this respect mimic the high plasticity of the later stages of the mamalian auditory system.
+Once the perceptual data is gathered and controlled, our aim is now to evaluate the ability of the proposed two stages perceptual model brifely described and motivated in the Introduction. The model is composed of two successive processing stages, respectively called the primary and the secondary stage, see Figure \ref{fig:model}. The primary stage is designed to rely on very few meta parameters set arbitrarily by the experimenter to mimic the early stages of the mamalian auditory system. On the contrary, the secondary stage rely largely on the data it has to predict and in this respect mimic the high plasticity of the later stages of the mamalian auditory system.
 
 \vl{Naming the two stages "primary" and "secondary" is not very informative.
 How about "feature extraction" and "similarity learning"? @writing}
@@ -311,7 +311,7 @@ How about "feature extraction" and "similarity learning"? @writing}
 In order to model the early stages of the mammalian auditory system, we use the time scattering transform (TST). This transform is obtained by applying a one dimensional
 wavelet transform in time to a time-frequency wavelet scalogram \cite{anden2014deep}. It is thus well suited to encode modulations over time of energy distributed over frequency, dimensions that are shown to be perceptually important \cite{dau1997modeling}.
 
-This model is chosen over more data driven alternatives mainly for the sake of simplicity. Deep convolutional networks could have been considered \cite{lee2009unsupervised}, but the learning stage inherent in this kind of methods did not seem relevant for this study. On contrary, the scattering transform can be conveniently parametrized to match the perceptual capabilities of the auditory system as those parameters are not expected to change significantly among subjects. Also, more complex versions of the scattering like the joint time-frequency scattering \cite{anden2015joint} and the spiral scattering \cite{lostanlen2016wavelet} are not considered in order to achieve a projection of reasonable dimensionality and for lack of evidence that those dimensions are mandatory to model the primary stage of the auditory system.
+This model is chosen over more data driven alternatives mainly for the sake of simplicity. Deep convolutional networks could have been considered \cite{lee2009unsupervised}, but the learning stage inherent in this kind of methods did not seem relevant for this study. On the contrary, the scattering transform can be conveniently parametrized to match the perceptual capabilities of the auditory system as those parameters are not expected to change significantly among subjects. Also, more complex versions of the scattering like the joint time-frequency scattering \cite{anden2015joint} and the spiral scattering \cite{lostanlen2016wavelet} are not considered in order to achieve a projection of reasonable dimensionality and for lack of evidence that those dimensions are mandatory to model the primary stage of the auditory system.
 
 \subsection{Secondary stage}
 
@@ -325,7 +325,7 @@ Another solution is to compute a projection matrix that maximizes the fact that 
 
 An important issue is that those methods are designed for considering only one reference clustering. It is thus suited to model the perceptual space of one subject but not many. However, in our case, we would like to model a perceptual space that is shared among subjects. One approach is to find a consensus clustering that maximally represent the 31 reference clusterings. To implement this solution, the chosen consensus clustering is taken from 3 solutions issued from 3 different algorithmic approaches introduced in \cite{strehl2002cluster}. This consensus clusterings is chosen among the 3 solutions as the one that has the best averaged NMI when compared to the 31 reference clusterings.
 
-Another approach is to combine the projection matrices issued from the processing of the projection algorithm over the 31 reference clusterings. As the number of classes can vary between reference clusterings, the kind of combination is not feasible using the LDA method. On contrary, the LMNN method always outputs a projection matrix with equal dimensions. Those projection matrices being of the same dimensionality they can safely be averaged to estimate an consensus projection.
+Another approach is to combine the projection matrices issued from the processing of the projection algorithm over the 31 reference clusterings. As the number of classes can vary between reference clusterings, the kind of combination is not feasible using the LDA method. On the contrary, the LMNN method always outputs a projection matrix with equal dimensions. Those projection matrices being of the same dimensionality they can safely be averaged to estimate an consensus projection.
 
 \section{Validation}\label{sec:validation}
 
@@ -391,7 +391,7 @@ TST & LMNN & consensus &   \textbf{94.80 $\pm$ 3.26} \\
 \end{center}
 \end{table}
 
-We now investigate the influence of the frame size, as it is likely that the more observation time is available, the better the description will be as several playing techniques involve strong modulations over long periods of time. We therefore consider a frame size for the 2 sets of features ranging from 25 ms. to 1s. The evolution of the precision with respect to the frame size is shown on Figure \ref{fig:frame}. Even by enlarging the frame size, the performance of the MFCCs do not increase due to the lack of modulation's modeling. On contrary, the TST is able to use the larger frame size to achieve better precision.
+We now investigate the influence of the frame size, as it is likely that the more observation time is available, the better the description will be as several playing techniques involve strong modulations over long periods of time. We therefore consider a frame size for the 2 sets of features ranging from 25 ms. to 1s. The evolution of the precision with respect to the frame size is shown on Figure \ref{fig:frame}. Even by enlarging the frame size, the performance of the MFCCs do not increase due to the lack of modulation's modeling. On the contrary, the TST is able to use the larger frame size to achieve better precision.
 
 \begin{figure}
 \center

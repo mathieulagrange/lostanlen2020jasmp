@@ -9,6 +9,7 @@
 \usepackage{xspace}
 
 \newcommand*{\eg}{e.g.\@\xspace}
+\newcommand*{\ie}{i.e.\@\xspace}
 \newcommand{\ipt}{IPT\xspace}
 \newcommand{\ipts}{IPTs\xspace}
 
@@ -80,13 +81,13 @@ A great deal of literature focuses on the instantaneous spectrum \cite{grey1978p
 
 Agus \& al effectively showed that instrument recognition can be achieved with very little listening time \cite{agus2012fast}. Though, instrument recognition is only part of musical timbre perception. We propose in this paper to study the influence of the playing technique on musical timbre percept. Evidently, the influence of the playing technique can be measured in terms of energy distribution along the frequency axis but also with respect to time on longer time scales than usually considered.
 
-Interestingly, modern physiological models of the primary mammalian auditory system also raises the perceptual importance of the evolution of the energy distribution at longer time scales, \textit{i.e.} how the energy modulates through time for given frequencies.  Dau's model accounts for  rate of modulation over frequency bands of fixed bandwidth on a logarithmic frequency scale\cite{dau1997modeling}. Shamma's model accounts for rate  of modulations over several bandwidth to fully describes the physiological evidence gathered by studying the auditory system of the ferret \cite{yang1992auditory}. Though, the use of numerical implementations of this model applied to several types of classification tasks of audio data did not fully demonstrated the usefulness of the bandwidth dimension \cite{mesgarani2006discrimination}.
+Interestingly, modern physiological models of the primary mammalian auditory system also raises the perceptual importance of the evolution of the energy distribution at longer time scales, \ie{} how the energy modulates through time for given frequencies.  Dau's model accounts for  rate of modulation over frequency bands of fixed bandwidth on a logarithmic frequency scale\cite{dau1997modeling}. Shamma's model accounts for rate  of modulations over several bandwidth to fully describes the physiological evidence gathered by studying the auditory system of the ferret \cite{yang1992auditory}. Though, the use of numerical implementations of this model applied to several types of classification tasks of audio data did not fully demonstrated the usefulness of the bandwidth dimension \cite{mesgarani2006discrimination}.
 
 Thus, by taking a signal processing view of the matter, one could consider that a first stage of the auditory system proceeds to a rather fixed set of convolutions across time and frequency, projecting the signal into a large set of descriptive features organized across frequency and rate of modulations \cite{anden2014deep}.
 
 What the higher levels of the auditory cortex does remains largely unkown, but we can assume that the degree of freedom of the underlying model is very large contrary to the early stages.  We will assume in this paper that this second step is rather opportunistic. From the large set of features it receives, this second stage aims at multiplexing in some way the ones that are the most relevant for the task at hand. Related work includes the use of the auditory model proposed by Shamma for studying musical timbre \cite{patil2012music}.
 
-Considering not only the type of musical instrument but also the playing technique is interesting in that matter, as it invite us to consider the relation between the rate of modulation and timbre percepts. A notion that have not been extensively studied in the literature \cite{burred2010dynamic}. Compared to the reference that is usually taken in timbre studies \textit{i.e.} the instrument class, taking into account also the playing technique allows us to consider the notion of timbral similarity at a complementary finer grain of detail.
+Considering not only the type of musical instrument but also the playing technique is interesting in that matter, as it invite us to consider the relation between the rate of modulation and timbre percepts. A notion that have not been extensively studied in the literature \cite{burred2010dynamic}. Compared to the reference that is usually taken in timbre studies \ie{} the instrument class, taking into account also the playing technique allows us to consider the notion of timbral similarity at a complementary finer grain of detail.
 
 The contributions of the paper are as follows:
 1) provide perceptual data that account for the perception of musical tones played with various playing techniques, 2), demonstrate that, for the gathered data, the type of playing technique plays an important role in the spontaneous judgments of timbral similarity, 3) propose a perceptually motivated computational model of timbre perception that account well for the human judgments studied in this paper and 4) discusses the use of this computational model to define a numerical similarity that can be considered in the usage scenario of browsing databases of instrument / playing technique couples (\ipts).
@@ -137,7 +138,7 @@ is explained in more details in Appendix \ref{sec:dataset}.
 Studies about perceptual similarity are plagued with a dimensional problem.
 When considering $n$ items, a complete exploration of the similarity space
 requires the filling of a $n^2$ matrix. Assuming a symmetric similarity,
-\textit{i.e.} the similarity of A to B is equal to the similarity of B to A,
+\ie{} the similarity of A to B is equal to the similarity of B to A,
 reduces the number but not by much.
 
 In order to reduce the number of items, we decided to perform a selection
@@ -260,7 +261,7 @@ This normalization is useful for identifying more easily the number of clusters 
 
 The correspondances between those partitions and the reference ones are now studied. For this purpose, Figure \ref{fig:gi} displays two partitions. At the bottom is the partition that corresponds to the instruments labels, whose color code is given by the color bar on the right. The abbreviations used for the instruments are detailed in Section \ref{sec:dataset}. The ordering of \ipts on the horizontal axis is the one given by the cluster analysis, see the dendrogram on Figure \ref{fig:dendrogram}. The partition on top is the result of the clustering with 8 clusters. For visualization purposes, we arbitrarily set colors to clusters of this partition to the color code of the instrument label that is most often encountered in this cluster. If some labels occur equally often, the instrument of the first \ipt of the cluster is chosen. The emerging instrument classes are: Saxophone, Clarinet, Trumpet, Flute and Cello.
 
-Though, even with an optimal number of clusters, we see that the clusters have  a low purity, \textit{i.e.} a very diverse set of instruments labels for the \ipt they belong to. Also, some clusters could be merged without stong changes in the overall organisation. This probably explains the small changes of NMI when reducing the number of clusters, see Figure \ref{fig:clusters}.
+Though, even with an optimal number of clusters, we see that the clusters have  a low purity, \ie{} a very diverse set of instruments labels for the \ipt they belong to. Also, some clusters could be merged without stong changes in the overall organisation. This probably explains the small changes of NMI when reducing the number of clusters, see Figure \ref{fig:clusters}.
 
 As can be seen on Figure \ref{fig:gm}, the correspondance between the playing technique reference and the resulting partition with 5 clusters is much higher. Most clusters have a high level of purity and for groups emerge : Pizzicato, Slap, Ordinario, and Ponticello.
 

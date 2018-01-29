@@ -304,7 +304,10 @@ How about "feature extraction" and "similarity learning"? @writing}
 \begin{figure}[t]
 \center
 \includegraphics[width = \textwidth]{figures/spontaneousSimilarity.png}
-\caption{Computational model composed of two successive processing stages and alternative implementations.}
+\caption{Computational model composed of two successive processing stages and alternative implementations.
+\vl{The boxes "features" and "projection" should be renamed "feature extraction" and "metric learning".
+This figure is not very useful since it does not distinguish training time from prediction time.
+@figure}}
 \label{fig:model}
 \end{figure}
 
@@ -314,6 +317,9 @@ In order to model the early stages of the mammalian auditory system, we use the 
 wavelet transform in time to a time-frequency wavelet scalogram \cite{anden2014deep}. It is thus well suited to encode modulations over time of energy distributed over frequency, dimensions that are shown to be perceptually important \cite{dau1997modeling}.
 
 This model is chosen over more data driven alternatives mainly for the sake of simplicity. Deep convolutional networks could have been considered \cite{lee2009unsupervised}, but the learning stage inherent in this kind of methods did not seem relevant for this study. On the contrary, the scattering transform can be conveniently parametrized to match the perceptual capabilities of the auditory system as those parameters are not expected to change significantly among subjects. Also, more complex versions of the scattering like the joint time-frequency scattering \cite{anden2015joint} and the spiral scattering \cite{lostanlen2016wavelet} are not considered in order to achieve a projection of reasonable dimensionality and for lack of evidence that those dimensions are mandatory to model the primary stage of the auditory system.
+
+\vl{I would suggest trying to avoid the invention of the "TST" acronym for "temporal scattering transform" if possible.
+This acronym does not already exist in the relevant literature. @writing}
 
 \subsection{Secondary stage}
 

@@ -339,23 +339,30 @@ The secondary stage involves a learning-based process block that will weight and
 
 Indeed, if the properties of the first processing stages of the human auditory system can reasonably be considered as similar for every subjects despite potential hearing losses for some, the later ones is expected to vary more drastically due to their respective education, tastes and experiences with stimuli similar to the \ipt that are considered in this study. We therefore consider a supervised setting in order to optimize the feature space provided by the scattering transform. To do so, we will consider as our reference the clusterings provided by the subjects of experiment 2. Therefore, the goal of the secondary stage is to provide a metric space that closely match the one resulting from the data gathered by experiment 2.
 
-To do so, one can first consider the linear discriminant analysis (LDA) \cite{duda2000pattern} to project the data into a representational space of $C-1$ dimensions with $C$ being the number of clusters of the reference. In our case study, the reference is the partition of \ipts provided by a subject during experiment 2. The projection computed using this method is such that the ratio of the between-class distance to the within-class distance is maximized, thus achieving maximum discrimination between elements of different clusters.
+\vl{I am a bit wary about not giving proper names to the two experiments, but instead calling them "experiment 1" and "experiment 2".
+How about "expert judgments of uniqueness" versus "crowdsourced judgments of similarity"? @writing}
+
+To do so, one can first consider the linear discriminant analysis (LDA) \cite{duda2000pattern} to project the data into a representational space of $(C-1)$ dimensions, with $C$ being the number of clusters of the reference. In our case study, the reference is the partition of \ipts provided by a subject during experiment 2. The projection computed using this method is such that the ratio of the between-class distance to the within-class distance is maximized, thus achieving maximum discrimination between elements of different clusters.
 
 Another solution is to compute a projection matrix that maximizes the fact that neighbors in the representational space belong to the same cluster in the reference clustering while items from different clusters are separated by a large margin. To do so, the large margin nearest neighbor (LMNN) metric learning algorithm \cite{weinberger2006distance, weinberger2009distance} is considered. One advantage of the latter is that the resulting representational space is of the same dimensionality as the input one whereas the LDA output dimensionality is constrained by the number of classes in the reference clustering.
 
 An important issue is that those methods are designed for considering only one reference clustering. It is thus suited to model the perceptual space of one subject but not many. However, in our case, we would like to model a perceptual space that is shared among subjects. One approach is to find a consensus clustering that maximally represent the 31 reference clusterings. To implement this solution, the chosen consensus clustering is taken from 3 solutions issued from 3 different algorithmic approaches introduced in \cite{strehl2002cluster}. This consensus clusterings is chosen among the 3 solutions as the one that has the best averaged NMI when compared to the 31 reference clusterings.
 
-\vl{The paragraph above is the most important in the whole paper, and it deserves more attention. @writing}
+\vl{The paragraph above is the most important in the whole paper, and it deserves more attention. How do these three solutions differ? Which one was chosen in the end? Did it make a significant difference in NMI? Is the consensus clustering shown somewhere in the paper? Is it related to the dendrogram in Appendix B? I have so many questions. @writing}
+
+\vl{I'm afraid there is also a methodological problem here.
+We need to have a hold-out set of IPTs to evaluate the performance of the clustering algorithm after having trained the metric learning algorithm.
+@methodology @computation}
 
 Another approach is to combine the projection matrices issued from the processing of the projection algorithm over the 31 reference clusterings. As the number of classes can vary between reference clusterings, the kind of combination is not feasible using the LDA method. On the contrary, the LMNN method always outputs a projection matrix with equal dimensions. Those projection matrices being of the same dimensionality they can safely be averaged to estimate a consensus projection.
 
-\vl{What does "safely" mean here? We are at the epicenter of the paper here, every word matters. @writing}
+\vl{What does "safely" mean here? We are at the epicenter of the paper here: every word matters. @writing}
 
 \section{Validation}\label{sec:validation}
 
 As it will be discussed in the next section, the main application scenario that is considered in this paper is the recommendation of sounds based on exemplar. This involves the definition of a similarity measure that behave similarly to the human perception. In this paper, the reference used for assessing similarity to human perception is the perceptual data gathered in experiment 2.
 
-Our problem is thus cast into a ranking problem, where from several candidates, the algorithm is asked to provide a ranking list of those candidates, sorted by similarity.
+Our problem is thus cast into a ranking problem, where from several candidates, the algorithm is asked to provide a ranked list of those candidates, sorted by similarity.
 
 \subsection{Data}
 
@@ -380,7 +387,7 @@ To evaluate the performance of the proposed approach, several baselines are cons
 The time scattering transform is computed over a range frame sizes, from 25 ms to 1 second. The Q factor is set to 8 in order to obtain a frequency decomposition that is equivalent to the mel scale. As the frame size increase, the dimensionality increases. Unless otherwise stated, the frame size is one second. The resulting scattering features are then logarithmically compressed and normalized using the median computed over the whole dataset.
 
 \vl{The mel scale has a varying quality factor, so I don't see how this can be right.}
-\vl{I understand what "logarithmically compressed" and "normalized using the median" because I worked on this before but,
+\vl{I understand what "logarithmically compressed" and "normalized using the median" because I did work on this before but,
 for someone who is less experienced, this might not be precise enough.}
 
 The LDA method do not requires any setting of parameters and the LMNN method is set to optimize for a neighbors size of 5.
@@ -405,7 +412,7 @@ In this experiment, the consensus approach is favored for TST but not for MFCCs.
 
 
 \begin{table}
-  \caption{Precision achieved by the different settings. Numbers in bold face indicate best performance. \vl{Why are the results with TST, LMNN, and "reference" commented? Do they correspond to same rater between training and evaluation? @methodology}}
+  \caption{Precision achieved by the different settings. Numbers in bold face indicate best performance. \vl{What does these variances correspond to? Variance across raters, across IPTs, across instances of each IPT? Furthermore, why are the results with TST, LMNN, and "reference" commented? Do they correspond to same rater between training and evaluation? @methodology @writing}}
   \label{tab:res1}
   \begin{center}
 \begin{tabular}{lllc}

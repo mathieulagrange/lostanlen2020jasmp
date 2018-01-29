@@ -340,6 +340,8 @@ Another solution is to compute a projection matrix that maximizes the fact that 
 
 An important issue is that those methods are designed for considering only one reference clustering. It is thus suited to model the perceptual space of one subject but not many. However, in our case, we would like to model a perceptual space that is shared among subjects. One approach is to find a consensus clustering that maximally represent the 31 reference clusterings. To implement this solution, the chosen consensus clustering is taken from 3 solutions issued from 3 different algorithmic approaches introduced in \cite{strehl2002cluster}. This consensus clusterings is chosen among the 3 solutions as the one that has the best averaged NMI when compared to the 31 reference clusterings.
 
+\vl{The paragraph above is the most important in the whole paper, and it deserves more attention. @writing}
+
 Another approach is to combine the projection matrices issued from the processing of the projection algorithm over the 31 reference clusterings. As the number of classes can vary between reference clusterings, the kind of combination is not feasible using the LDA method. On the contrary, the LMNN method always outputs a projection matrix with equal dimensions. Those projection matrices being of the same dimensionality they can safely be averaged to estimate an consensus projection.
 
 \section{Validation}\label{sec:validation}

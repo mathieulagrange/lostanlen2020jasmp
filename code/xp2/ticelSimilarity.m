@@ -11,7 +11,7 @@ end
 
 addpath('jsonlab');
 
-dataPath = '../data/';
+dataPath = '../../data/';
 
 [status,msg] = mkdir('figures');
 
@@ -66,7 +66,12 @@ for k=1:length(names)
     i = strsplit(c{1}, '+');
     instruments{k} = i{1};
     modes{k} = c{2};
-    names{k} = [c{1} '-' c{2}];
+    m=2;
+    while c{m+1}(1) == lower(c{m+1}(1)) && ~strcmp(c{m+1}, 'mf')
+        modes{k} = [modes{k} '-' c{m+1}];
+        m = m+1;
+    end
+    names{k} = [c{1} '-' modes{k}];
 end
 
 

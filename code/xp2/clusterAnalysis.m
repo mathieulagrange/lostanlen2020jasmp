@@ -8,14 +8,15 @@ l = linkage(dc, 'weighted');
 % names{2} = [names{2} '     .'];
 h=figure(1);
 dendrogram(l, 78,'Orientation','right', 'Labels', names)
-set(gca, 'xtick', [], 'fontSize', 9)
+set(gca, 'xtick', [], 'fontSize', 7)
 % axis tight
 % saveas(gcf, '../paper/figures/allLinkage', 'png')
 
 set(h,'Units','Inches');
 pos = get(h,'Position');
 set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)])
-saveas(gcf, '../paper/figures/dendrogram', 'pdf')
+saveas(gcf, '../../paper/figures/dendrogram', 'pdf')
+saveas(gcf, '../../paper/figures/dendrogram', 'fig')
 
 
 for k=2:15

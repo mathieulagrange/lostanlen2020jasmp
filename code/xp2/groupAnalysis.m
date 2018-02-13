@@ -1,4 +1,6 @@
-function groupAnalysis()
+function groupAnalysis(useConsensus)
+
+if ~exist('useConsensus', 'var'), useConsensus = 1; end
 
 modes = 0;
 load clusters
@@ -26,6 +28,10 @@ for k=1:ncl
 end
 ptx(1)=[];
 
+if (useConsensus),
+    load ticelJudgments
+   smcl = ensemble; 
+end
 
 clusterNames{end} = [clusterNames{end} 'art'];
 clusterNames{2} = [clusterNames{2} 'key'];
@@ -57,8 +63,8 @@ colorbar('Ticks', (1:length(modeClasses))+.5, 'TickLabels', modeClasses, 'TickLe
 set(gca, 'ytick', 1:2)
 set(gca, 'yticklabel', {'Judg.', 'Ref.'});
 % ytickangle(90)
-saveas(gcf, '../paper/figures/groupModes', 'png')
-savefig(gcf, '../paper/figures/groupModes')
+% saveas(gcf, '../paper/figures/groupModes', 'png')
+% savefig(gcf, '../paper/figures/groupModes')
 
 %% instruments
 
@@ -88,6 +94,8 @@ pty(1:2:end) = pty(1:2:end)+.05;
 % clusterNames{end} = [clusterNames{end} 'art'];
 % clusterNames{2} = [clusterNames{2} 'key'];
 
+if (useConsensus), smcl = ensemble; end
+
 figure(2)
 vec = [smcl; ii(icl)'];
 cm = jet(max(vec(:)));
@@ -112,5 +120,5 @@ set(gca, 'ytick', 1:2)
 set(gca, 'yticklabel', {'Judg.', 'Ref.'});
 % ytickangle(90)
 % title('Instruments')
-saveas(gcf, '../paper/figures/groupInstruments', 'png')
-savefig(gcf, '../paper/figures/groupInstruments')
+% saveas(gcf, '../paper/figures/groupInstruments', 'png')
+% savefig(gcf, '../paper/figures/groupInstruments')

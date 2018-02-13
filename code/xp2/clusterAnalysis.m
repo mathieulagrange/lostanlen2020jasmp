@@ -15,8 +15,8 @@ set(gca, 'xtick', [], 'fontSize', 7)
 set(h,'Units','Inches');
 pos = get(h,'Position');
 set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)])
-saveas(gcf, '../../paper/figures/dendrogram', 'pdf')
-saveas(gcf, '../../paper/figures/dendrogram', 'fig')
+% saveas(gcf, '../../paper/figures/dendrogram', 'pdf')
+% saveas(gcf, '../../paper/figures/dendrogram', 'fig')
 
 
 for k=2:15

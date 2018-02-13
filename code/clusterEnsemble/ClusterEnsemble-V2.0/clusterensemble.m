@@ -53,10 +53,10 @@ for i = 1:length(workfcts);
    else
       cl(i,:) = feval(workfct,cls,k);
    end;
-   q(i) = ceevalmutual(cls,cl(i,:));
+   [q(i) qq(i, :)] = ceevalmutual(cls,cl(i,:));
    disp(['clusterensemble: ' workfct ' at ' num2str(q(i))]);
 end;
 
 [qual, best] = max(q);
 
-cl = cl(best,:);
+cl = cl(2,:);

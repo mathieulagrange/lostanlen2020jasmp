@@ -100,17 +100,20 @@ for k=1:size(x, 1)
     scatter(x(k, :), y(k, :), 100, ci(k, :), 'filled');
     axis off
     saveas(gcf, ['figures/' num2str(k)], 'png')
+    if (length(unique(ci(k, :))) == 10)
+        disp(k)
+    end
 end
 
 
-for k=1:size(x, 1)
-    imagesc(squareform(dc(k, :)))
-    colormap gray
-    set(gca, 'xtick', 0)
-set(gca, 'ytick', 1:length(names))
-set(gca, 'yticklabel', names)
-    saveas(gcf, ['figures/' num2str(k) 'Sim'], 'png')
-end
+% for k=1:size(x, 1)
+%     imagesc(squareform(dc(k, :)))
+%     colormap gray
+%     set(gca, 'xtick', 0)
+% set(gca, 'ytick', 1:length(names))
+% set(gca, 'yticklabel', names)
+%     saveas(gcf, ['figures/' num2str(k) 'Sim'], 'png')
+% end
 
 
 
@@ -153,6 +156,10 @@ savejson('', dat, 'figures/allInstruments.json');
 dat.color = ii;
 savejson('', dat, 'figures/allInstrumentsRef.json');
 
+ load ticelJudgments
+dat.color = ensemble;
+savejson('', dat, 'figures/allConsensus.json');
+
 function pm = displayData(ds, type, instruments, modes, source, nb)
 
 pm = mdscale(squareform(ds), 2);
@@ -185,6 +192,23 @@ axis off
 
 title([source ' ' type ' Modes (' num2str(nb)  ')'])
 saveas(gcf, ['figures/' source type 'Modes' num2str(nb)], 'png')
+
+load ticelJudgments
+
+figure(1)
+[cClasses, ~, bi] = unique(ensemble);
+colormap(jet(length(cClasses)))
+scatter(pm(:, 1), pm(:, 2), 100, bi, 'filled')
+caxis([1 16])
+colorbar('Ticks',.5+(1:length(cClasses)),...
+         'TickLabels',cClasses, 'TickLength', 0)
+     
+% dx = 0.01; dy = 0.01; % displacement so the text does not overlay the data points
+% text(pm(:, 1)+dx, pm(:, 2)+dy,  names);
+axis off
+
+title([source ' ' type ' Consensus (' num2str(nb)  ')'])
+saveas(gcf, ['figures/' source type 'Consensus' num2str(nb)], 'png')
 
 
 

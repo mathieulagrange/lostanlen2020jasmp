@@ -3,7 +3,7 @@
 % copyright (c) 1998-2011 by Alexander Strehl
 
 
-function m = ceevalmutual(cls,cl),
+function [m, q] = ceevalmutual(cls,cl),
 
 m = 0;
 totinds = 0;

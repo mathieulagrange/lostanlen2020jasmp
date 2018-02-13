@@ -202,7 +202,7 @@ The experiment was available online for two months and requests to perform the t
 
 \begin{figure}
 \center
-\includegraphics[width = \textwidth]{figures/xp2example.png}
+\includegraphics[width = \textwidth]{figures/xp2example1.png}
 \caption{Spatial and group organization provided by subject 1.
 \vl{
 Why have you chosen subject 1, who made 14 clusters?
@@ -219,7 +219,7 @@ color vision deficiencies at the moment.
 The color of the clusters should be reinforced with
 geometrical information, \eg{} Voronoi cells.
 @data @figure}}
-\ml{ok, tu peux utiliser le site de demo et faire une capture d'écran de l'utilisateur qui te va. Pour les autres display, je ne suis pas sur que cela soit utile.}
+\ml{ok, le nombre de cluster median est 10, les figures xp2example1 2 et 3 sont valides. La premiere est la plus propre. Pour les autres display, je ne suis pas sur que cela soit utile.}
 \label{fig:xp2display}
 \end{figure}
 
@@ -354,7 +354,7 @@ should be motivated. @writing}
 This acronym does not already exist in the relevant literature. @writing}
 \ml{this is not an invention, this is a mean to be compact in this paper.}
 
-\subsection{Metric learning}
+\subsection{Metric learning} \label{sec:consensus}
 
 The secondary stage involves a learning-based process block that will weight and linearly combine the features produced by the primary stage.
 
@@ -368,10 +368,16 @@ To do so, one can first consider the linear discriminant analysis (LDA) \cite{du
 
 Another solution is to compute a projection matrix that maximizes the fact that neighbors in the representational space belong to the same cluster in the reference clustering while items from different clusters are separated by a large margin. To do so, the large margin nearest neighbor (LMNN) metric learning algorithm \cite{weinberger2006distance, weinberger2009distance} is considered. One advantage of the latter is that the resulting representational space is of the same dimensionality as the input one whereas the LDA output dimensionality is constrained by the number of classes in the reference clustering.
 
-An important issue is that those methods are designed for considering only one reference clustering. It is thus suited to model the perceptual space of one subject but not many. However, in our case, we would like to model a perceptual space that is shared among subjects. One approach is to find a consensus clustering that maximally represent the 31 reference clusterings. To implement this solution, the chosen consensus clustering is taken from 3 solutions issued from 3 different algorithmic approaches introduced in \cite{strehl2002cluster}. This consensus clusterings is chosen among the 3 solutions as the one that has the best averaged NMI when compared to the 31 reference clusterings.
+An important issue is that those methods are designed for considering only one reference clustering. It is thus suited to model the perceptual space of one subject but not many. However, in our case, we would like to model a perceptual space that is shared among subjects. One approach is to find a consensus clustering that maximally represent the 31 reference clusterings. To implement this solution, the hypergraph partitionning approach is considered \cite{kernighan1970efficient}. It approaches the concensus clustering problem as by re-partitionning the data
+using the given clusters as indications of strong bonds. The cluster ensemble problem is then
+formulated as a partitioning of the hypergraph that represents the sets of clusterings by cutting a minimal number of hyperedges \cite{strehl2002cluster}.
+
+Ah hypergraph is a generalization of a graph where vertices are connected by hyperedges that can connect not only two by any sets of vertices. In our case, \ipts are the vertices and the clusters of the reference partitions are the hyperedges.
+
+Computation of the resulting clustering shown on Figure \ref{fig:projectionC} is done using the hypergraph partitioning package HMETIS \cite{han1997scalable} using parameters suggested in \cite{strehl2002cluster}.
 
 \vl{The paragraph above is the most important in the whole paper, and it deserves more attention. How do these three solutions differ? Which one was chosen in the end? Did it make a significant difference in NMI? Is the consensus clustering shown somewhere in the paper? Is it related to the dendrogram in Appendix B? I have so many questions. @writing}
-\ml{ok, je refais un code sur cette partie. Le dendrogram n'est pas un clustering, il part de la matrice de similarité. Bon apres, c'est tres lié...}
+\ml{Le dendrogram n'est pas un clustering, il part de la matrice de similarité. Bon apres, c'est tres lié...On ne peut rejeter l'hypothese que les trois solutions sont equivalentes, du coup pour simplifier je ne presente que l'approche classique.}
 
 \vl{I'm afraid there is also a methodological problem here.
 We need to have a hold-out set of IPTs to evaluate the performance of the clustering algorithm after having trained the metric learning algorithm.
@@ -533,6 +539,8 @@ and Ircam for providing access to the SOL database.
 \bibliographystyle{alpha}
 \bibliography{bib}
 
+
+
 \section{Dataset} \label{sec:dataset}
 
 The dataset considered in this paper as been recorded at Ircam and is composed of audio recording of 16 different musical instruments played with different playing techniques, which leads to 235 different couple of instrument / playing technique. For each couple, the pitch and intonation is varied leading to 25444 audio samples.
@@ -553,6 +561,39 @@ The abbreviations can be removed. @data @writing}
 (y axis) would be extremely useful. @data @figure}
 \ml{Tu voudrais ca pour la base SOL complete ou les données considérées dans l'étude ?}
 \vl{Les donn\'{e} de l'\{e}tude, relatives aux Figures 5 et 6.\}
+
+
+\section{Mds projections}
+
+In order to better interpret the data gathered during experiment 2, a multidimensional scaling projection in two dimensions is done using the average similarity matrix computed over the 31 reference clusterings, see \ref{sec:analysis}. The projection is computed  using a nonmetric multidimensional scaling where the Euclidean distances between points  approximate a monotonic transformation of the corresponding similarities using the Kruskal's normalized stress criterion \cite{kruskal1978multidimensional}. Figures \ref{fig:projectionI}, \ref{fig:projectionM}, and \ref{fig:projectionC} consider the same projection with different labels, respectively the names of the instruments of each \ipt, the name of the playing technique or the labels of consensus clustering, see Section \ref{sec:consensus} for the latter.The projections linked to the sounds used as stimuli are available  online \url{}.
+
+\begin{figure}
+\center
+\includegraphics[width = \textwidth]{figures/AllClassInstruments33}
+\caption{Mds projection with instruments as labels.}
+\label{fig:projectionI}
+\end{figure}
+
+
+\begin{figure}
+\center
+\includegraphics[width = \textwidth]{figures/AllClassModes33}
+\caption{Mds projection with playing techniques as labels.}
+\label{fig:projectionM}
+\end{figure}
+
+
+\begin{figure}
+\center
+\includegraphics[width = \textwidth]{figures/AllClassConsensus33}
+\caption{Mds projection with consensus clustering as labels.}
+\label{fig:projectionC}
+\end{figure}
+
+
+
+
+
 
 \section{Dendrogram}
 

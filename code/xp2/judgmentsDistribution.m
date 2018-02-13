@@ -1,7 +1,7 @@
 
 load('judgments.mat')
 
-figPath = '../paper/figures/';
+figPath = '../../paper/figures/';
 
 nbc=[];
 sic=[];
@@ -12,9 +12,9 @@ for k=1:size(ci, 1)
 end
 
 disp('number of groups : ')
-disp([mean(nbc) std(nbc)])
+disp([mean(nbc) std(nbc) median(nbc)])
 disp('size of groups : ')
-disp([mean(sic) std(sic)])
+disp([mean(sic) std(sic) median(sic)])
 
 hist(nbc, 1:20)
 axis([1 20 0 5])

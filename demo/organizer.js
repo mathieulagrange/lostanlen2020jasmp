@@ -75,16 +75,20 @@ app.controller("Organizer", function($scope, $http, $timeout, $log) {
     }
 
 all = [
-      'allInstrumentsRef',
-      'allModesRef',
-    'allInstruments',
-      'allModes'
-    ];
+  ' ',
+      'mdsProjectionReferenceInstruments',
+      'mdsProjectionReferencePlayingTechniques',
+    'mdsProjectionSubjectsClustering_5',
+    'mdsProjectionSubjectsClustering_8',
+    'mdsProjectionSubjectsConsensusClustering'
+  ];
 
   nums = Array.apply(null, {length: 32}).map(Number.call, Number).map(String);
   nums.shift();
+ nums.forEach(function(e){
+  all.push ('subjectJudgment_'+e)})
 
-    $scope.fileNames = all.concat(nums);
+  $scope.fileNames = all;
 
     $scope.fileServerSelected = function(elem) {
 		var file = 'dataVis/'+elem.value+'.json';

@@ -20,14 +20,23 @@
       chargement des sons: {{loadedSounds}} / {{soundsToLoad}}
     </div>
 
-    <p>
+    <!-- <p>
       <input type="file" onchange="angular.element(this).scope().fileSelected(this)"/>
-    </p>
+    </p> -->
+<div style="text-align:center">
+    <br>
+
+    Please use a recent version of Firefox or Chrome
+    <br>      <br>
+    Select a configuration using the drop-down menu
+    <br>
+    <br>
 
     <select ng-init="fileNames[0]"  name="repeatSelect" id="repeatSelect" onchange="angular.element(this).scope().fileServerSelected(this)">
       <option ng-repeat="option in fileNames" value="{{option}}">{{option}}  </option>
     </select>
-
+    <br>
+</div>
 
     <div id="playField" ng-style="{width:playFieldWidth+'px', height:playFieldHeight+'px', left:playFieldLeft+'px', top:playFieldTop+'px'}">
       <div class="point" ng-repeat="point in points" ng-mouseenter="playSound(point)" ng-mouseleave="stopSound(point)"

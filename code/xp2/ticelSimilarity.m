@@ -169,29 +169,31 @@ figure(1)
 colormap(jet(length(instrumentClasses)))
 
 scatter(pm(:, 1), pm(:, 2), 100, bi, 'filled')
-caxis([1 16])
+caxis([1 length(instrumentClasses)+1])
 colorbar('Ticks',.5+(1:length(instrumentClasses)),...
          'TickLabels',instrumentClasses, 'TickLength', 0)
-% dx = 0.01; dy = 0.01; % displacement so the text does not overlay the data points
-% text(pm(:, 1)+dx, pm(:, 2)+dy,  names);
+     dx = 0.01; dy = 0.01; % displacement so the text does not overlay the data points
+text(pm(:, 1)+dx, pm(:, 2)+dy,  instruments);
 axis off
-title([source ' ' type ' Instruments (' num2str(nb)  ')'])
+% title([source ' ' type ' Instruments (' num2str(nb)  ')'])
 saveas(gcf, ['figures/' source type 'Instruments' num2str(nb)], 'png')
+saveas(gcf, ['figures/' source type 'Instruments' num2str(nb)], 'fig')
 
 figure(1)
 [modeClasses, ~, bi] = unique(modes);
 colormap(jet(length(modeClasses)))
 scatter(pm(:, 1), pm(:, 2), 100, bi, 'filled')
-caxis([1 16])
+caxis([1 length(modeClasses)+1])
 colorbar('Ticks',.5+(1:length(modeClasses)),...
          'TickLabels',modeClasses, 'TickLength', 0)
      
-% dx = 0.01; dy = 0.01; % displacement so the text does not overlay the data points
-% text(pm(:, 1)+dx, pm(:, 2)+dy,  names);
+ dx = 0.01; dy = 0.01; % displacement so the text does not overlay the data points
+ text(pm(:, 1)+dx, pm(:, 2)+dy,  modes);
 axis off
 
-title([source ' ' type ' Modes (' num2str(nb)  ')'])
+% title([source ' ' type ' Modes (' num2str(nb)  ')'])
 saveas(gcf, ['figures/' source type 'Modes' num2str(nb)], 'png')
+saveas(gcf, ['figures/' source type 'Modes' num2str(nb)], 'fig')
 
 load ticelJudgments
 
@@ -199,16 +201,17 @@ figure(1)
 [cClasses, ~, bi] = unique(ensemble);
 colormap(jet(length(cClasses)))
 scatter(pm(:, 1), pm(:, 2), 100, bi, 'filled')
-caxis([1 16])
-colorbar('Ticks',.5+(1:length(cClasses)),...
-         'TickLabels',cClasses, 'TickLength', 0)
-     
-% dx = 0.01; dy = 0.01; % displacement so the text does not overlay the data points
-% text(pm(:, 1)+dx, pm(:, 2)+dy,  names);
+ caxis([1 length(cClasses)+1])
+  colorbar('Ticks',.5+(1:length(cClasses)),...
+           'TickLabels',cClasses, 'TickLength', 0)
+%      
+dx = 0.01; dy = 0.01; % displacement so the text does not overlay the data points
+text(pm(:, 1)+dx, pm(:, 2)+dy,  num2str(ensemble'));
 axis off
 
-title([source ' ' type ' Consensus (' num2str(nb)  ')'])
+% title([source ' ' type ' Consensus (' num2str(nb)  ')'])
 saveas(gcf, ['figures/' source type 'Consensus' num2str(nb)], 'png')
+saveas(gcf, ['figures/' source type 'Consensus' num2str(nb)], 'fig')
 
 
 

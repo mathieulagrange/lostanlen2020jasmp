@@ -42,29 +42,16 @@ Mathieu Lagrange}
 
 \begin{abstract}
 
-Musical timbre is a multi-faceted notion that have been extensively studied,
-mostly by focusing on its spectral aspect.
-The aim of this paper is to better understand the influence
-of the playing technique on the perception of musical timbre.
-We do so by studying the spontaneous judgments of similarity between several
-instruments played with a diverse set of playing techniques,
+Musical timbre is a multi-faceted notion that have been extensively studied, mostly by focusing on its spectral aspect.
+The aim of this paper is to better understand the influence of the playing technique on the perception of musical timbre.
+We do so by studying the spontaneous judgments of similarity between several instruments played with a diverse set of playing techniques,
 
-A first experiment is conducted by music experts to identify
-which couple of instrument / playing technique in a given dataset
-is worth comparing to other couples of instrument / playing technique.
-In a second experiment, spontaneous similarity
-judgments among the retained couples are collected
-using a canonic free sorting task experiment design.
+A first experiment is conducted by music experts to identify which couple of instrument / playing technique in a given dataset is worth comparing to other couples of instrument / playing technique.
+In a second experiment, spontaneous similarity judgments among the retained couples are collected using a canonic free sorting task experiment design.
 
-To further study the outcomes of this experiment, we assume a
-two-step computational model of human perception, where the acoustic signal
-is fed to a statically designed processing unit that accounts for frequency
-and temporal modulations.
-The resulting features are then projected in a supervised manner so that
-the resulting description space matches the perceptual similarity judgments
-gathered in the second experiment.
-Numerical experiments show that the induced perceptual space
-is able to approximate perceptual data with satisfying accuracy.
+To further study the outcomes of this experiment, we assume a two-step computational model of human perception, where the acoustic signal is fed to a statically designed processing unit that accounts for frequency and temporal modulations.
+The resulting features are then projected in a supervised manner so that the resulting description space matches the perceptual similarity judgments gathered in the second experiment.
+Numerical experiments show that the induced perceptual space is able to approximate perceptual data with satisfying accuracy.
 
 \end{abstract}
 
@@ -73,24 +60,44 @@ is able to approximate perceptual data with satisfying accuracy.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INTRODUCTION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}\label{sec:introduction}
 
-Being perceptively defined, musical timbre is an interesting notion to study to better understand human auditory perception \cite{grey1977multidimensional}. Thus, by studying musical timbre, one study many facets of the human auditory system which responds to a diverse but also controlled and well documented set of physical stimuli. Indeed, this diversity can be more easily controlled than other stimuli such as speech or environmental sounds.
+% wastebasket notion
 
-In order to further restrict this diversity, we focus in this paper on the influence of the playing technique used for the production of a single tone on the perception of timbre. A popular view of this kind of stimuli is that they can be described by a distribution of energy that evolve through time and across frequency. By following this trend, most researchers translate the exclusion definition of timbre \cite{marozeau2003dependency} into a more specified definition. The exclusion definition states that timbre is "the fourth component of sound quality, the first three being pitch, loudness and duration". In an attempt to specify more this notion of timbre, we will loosely consider in this paper that musical timbre is the influence on the human auditory system of the distribution of intensity across the time / frequency plane.
+\vl{below is the original introduction}
 
-A great deal of literature focuses on the instantaneous spectrum \cite{grey1978perceptual} to model this distribution. Other studies also demonstrated the importance of the onset in the recognition of some musical instruments \cite{eronen2001comparison}. All those studies generally assume a rather short term model where the waveform is observed in a range that do not exceed 100 ms, a common processing scenario that is very commonly used in computational recognition models of timbre \cite{tzanetakis2002musical}.
+Being perceptively defined, musical timbre is an interesting notion to study to better understand human auditory perception \cite{grey1977multidimensional}.
+Thus, by studying musical timbre, one study many facets of the human auditory system which responds to a diverse but also controlled and well documented set of physical stimuli.
+Indeed, this diversity can be more easily controlled than other stimuli such as speech or environmental sounds.
 
-Agus \& al effectively showed that instrument recognition can be achieved with very little listening time \cite{agus2012fast}. However, instrument recognition is only part of musical timbre perception. We propose in this paper to study the influence of the playing technique on musical timbre percept. Evidently, the influence of the playing technique can be measured in terms of energy distribution along the frequency axis but also with respect to time on longer time scales than usually considered.
+In order to further restrict this diversity, we focus in this paper on the influence of the playing technique used for the production of a single tone on the perception of timbre.
+A popular view of this kind of stimuli is that they can be described by a distribution of energy that evolves through time and across frequency.
+By following this trend, most researchers translate the exclusion definition of timbre \cite{marozeau2003dependency} into a more specified definition.
+The exclusion definition states that timbre is "the fourth component of sound quality, the first three being pitch, loudness and duration".
+In an attempt to specify more this notion of timbre, we will loosely consider in this paper that musical timbre is the influence on the human auditory system of the distribution of intensity across the time / frequency plane.
 
-Interestingly, modern physiological models of the primary mammalian auditory system also raises the perceptual importance of the evolution of the energy distribution at longer time scales, \ie{} how the energy modulates through time for given frequencies.  Dau's model accounts for  rate of modulation over frequency bands of fixed bandwidth on a logarithmic frequency scale\cite{dau1997modeling}. Shamma's model accounts for rate of modulations over several subbands to fully describe the physiological evidence gathered by studying the auditory system of the ferret \cite{yang1992auditory}. However, the use of numerical implementations of this model applied to several types of classification tasks of audio data did not fully demonstrated the usefulness of the bandwidth dimension \cite{mesgarani2006discrimination}.
+A great deal of literature focuses on the instantaneous spectrum \cite{grey1978perceptual} to model this distribution.
+Other studies also demonstrated the importance of the onset in the recognition of some musical instruments \cite{eronen2001comparison}.
+All those studies generally assume a rather short term model where the waveform is observed in a range that do not exceed 100 ms, a common processing scenario that is very commonly used in computational recognition models of timbre \cite{tzanetakis2002musical}.
+
+Agus \& al effectively showed that instrument recognition can be achieved with very little listening time \cite{agus2012fast}.
+However, instrument recognition is only part of musical timbre perception. We propose in this paper to study the influence of the playing technique on musical timbre percept.
+Evidently, the influence of the playing technique can be measured in terms of energy distribution along the frequency axis but also with respect to time on longer time scales than usually considered.
+
+Interestingly, modern physiological models of the primary mammalian auditory system also raises the perceptual importance of the evolution of the energy distribution at longer time scales, \ie{} how the energy modulates through time for given frequencies. 
+Dau's model accounts for  rate of modulation over frequency bands of fixed bandwidth on a logarithmic frequency scale\cite{dau1997modeling}. Shamma's model accounts for rate of modulations over several subbands to fully describe the physiological evidence gathered by studying the auditory system of the ferret \cite{yang1992auditory}.
+However, the use of numerical implementations of this model applied to several types of classification tasks of audio data did not fully demonstrated the usefulness of the bandwidth dimension \cite{mesgarani2006discrimination}.
 
 Thus, by taking a signal processing view of the matter, one could consider that a first stage of the auditory system proceeds to a rather fixed set of convolutions across time and frequency, projecting the signal into a large set of descriptive features organized across frequency and rate of modulations \cite{anden2014deep}.
 
-What the higher levels of the auditory cortex does remains largely unknown, but we can assume that the degree of freedom of the underlying model is very large, unlike at the early stages.  We will assume in this paper that this second step is rather opportunistic. From the large set of features it receives, this second stage aims at multiplexing in some way the ones that are the most relevant for the task at hand. Related work includes the use of the auditory model proposed by Shamma for studying musical timbre \cite{patil2012music}.
+What the higher levels of the auditory cortex does remains largely unknown, but we can assume that the degree of freedom of the underlying model is very large, unlike at the early stages. 
+We will assume in this paper that this second step is rather opportunistic. From the large set of features it receives, this second stage aims at multiplexing in some way the ones that are the most relevant for the task at hand.
+Related work includes the use of the auditory model proposed by Shamma for studying musical timbre \cite{patil2012music}.
 
 \vl{The paragraph above is extremely vague. I don't think that "opportunistic" is the word we're looking for here. @writing}
 \ml{ok}
 
-Considering not only the type of musical instrument but also the playing technique is interesting in that matter, as it invite us to consider the relation between the rate of modulation and timbre percepts. A notion that have not been extensively studied in the literature \cite{burred2010dynamic}. Compared to the reference that is usually taken in timbre studies \ie{} the instrument class, taking into account also the playing technique allows us to consider the notion of timbral similarity at a complementary finer grain of detail.
+Considering not only the type of musical instrument but also the playing technique is interesting in that matter, as it invite us to consider the relation between the rate of modulation and timbre percepts.
+A notion that have not been extensively studied in the literature \cite{burred2010dynamic}.
+Compared to the reference that is usually taken in timbre studies \ie{} the instrument class, taking into account also the playing technique allows us to consider the notion of timbral similarity at a complementary finer grain of detail.
 
 The contributions of the paper are as follows:
 1) provide perceptual data that account for the perception of musical tones played with various playing techniques, 2), demonstrate that, for the gathered data, the type of playing technique plays an important role in the spontaneous judgments of timbral similarity, 3) propose a perceptually motivated computational model of timbre perception that account well for the human judgments studied in this paper and 4) discusses the use of this computational model to define a numerical similarity that can be considered in the usage scenario of browsing databases of instrument / playing technique couples (\ipts).
@@ -122,6 +129,8 @@ Siedenburg, Fujinaga, and McAdams. "A comparison of
 approaches to timbre descriptors in music information retrieval
 and music psychology." In: Journal of New Music Research 45.1,
 pp. 27?41. @biblio}
+
+\vl{Automatic taxonomies: Essid et al. TASLP 2009.}
 
 \vl{We should probably say a word on the Hornbostel-Sachs taxonomy,
 which is based on player-instrument interaction, but is now outdated
@@ -569,7 +578,7 @@ In order to better interpret the data gathered during experiment 2, a multidimen
 
 \begin{figure}
 \center
-\includegraphics[width = \textwidth]{figures/AllClassInstruments33}
+%\includegraphics[width = \textwidth]{figures/AllClassInstruments33}
 \caption{Mds projection with instruments as labels.}
 \label{fig:projectionI}
 \end{figure}
@@ -585,7 +594,7 @@ In order to better interpret the data gathered during experiment 2, a multidimen
 
 \begin{figure}
 \center
-\includegraphics[width = \textwidth]{figures/AllClassConsensus33}
+%\includegraphics[width = \textwidth]{figures/AllClassConsensus33}
 \caption{Mds projection with consensus clustering as labels.}
 \label{fig:projectionC}
 \end{figure}

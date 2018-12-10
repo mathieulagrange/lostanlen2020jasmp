@@ -87,6 +87,25 @@ parfor k=1:length(fileList)
             S = scat(a(:,1), Wop3);
             S = format_scat(S,'order_table');
             cc = [S{1+1}' S{1+2}']';
+        case 'tfscat'
+            tm_filt_opt = struct();
+            tm_filt_opt.Q = [12 1];
+            tm_filt_opt.J = T_to_J(sr*setting.sct/1000);
+
+            % NOTE: The parameter `fr_filt_opt.J` controls the largest scale
+            % along the frequency axis as a power of two. For `J = 4`, this
+            % means a largest frequency scale of `2^4 = 16`, which is equal to
+            % 1.5 octaves since `Q = 12`.
+            fr_filt_opt = struct();
+            fr_filt_opt.J = 4;
+
+            Wop = joint_tf_wavelet_factory_1d(size(a, 1), tm_filt_opt, ...
+                fr_filt_opt, scat_opt);
+
+            S = scat(a(:,1), Wop);
+
+            S = format_scat(S, 'order_table');
+            cc [S{1+1}' S{1+2}']';
         case 'null'
             cc = rand(100);
     end

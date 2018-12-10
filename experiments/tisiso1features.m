@@ -80,8 +80,9 @@ parfor k=1:length(fileList)
         case 'mfcc'
             cc = melfcc(a(:,1), sr, 'numcep', 40, 'maxfreq', ceil(sr/2));
         case 'scat'
-            filt_opt = default_filter_options('audio', sr*setting.sct/1000);
-            filt_opt.Q(1) = 12;
+            filt_opt = struct();
+            filt_opt.Q = [12 1];
+            filt_opt.J = T_to_J(sr*setting.sct/1000);
             Wop3 = wavelet_factory_1d(length(a), filt_opt, scat_opt);
             S = scat(a(:,1), Wop3);
             S = format_scat(S,'order_table');

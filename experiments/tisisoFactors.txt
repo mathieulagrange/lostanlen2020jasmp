@@ -1,4 +1,4 @@
-features === {'mel', 'mfcc','scat', 'null'} % type of features used (null is used for checking file access)
+features === {'mel', 'mfcc','scat','tfscat', 'null'} % type of features used (null is used for checking file access)
 sct === [25, 128, 250, 500, 1000] % window size in ms
 projection =2:== {'none', 'lmnn', 'lda'} % type of projection
 split =2:== {'none', '50', '25', '10', 'octave'} % databse split, nukbers are random samples, octave concider only the octave 4

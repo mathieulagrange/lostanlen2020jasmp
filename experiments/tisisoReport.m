@@ -6,7 +6,7 @@ function config = tisisoReport(config)
 % Copyright: Mathieu Lagrange
 % Date: 09-Jan-2017
 
-if nargin==0, timbralSimilaritySol('report', 'r', 'reportName', 'perceptualProjectionSlides'); return; end
+if nargin==0, timbralSimilaritySol('report', 'rcvd', 'reportName', 'perceptualProjectionSlides'); return; end
 
 switch config.reportName
     case 'debugSlides'

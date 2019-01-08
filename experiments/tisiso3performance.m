@@ -11,7 +11,7 @@ function [config, store, obs] = tisiso3performance(config, setting, data)
 % Date: 09-Jan-2017
 
 % Set behavior for debug mode
-if nargin==0, timbralSimilaritySol('do', 3, 'mask', {2 1 2 1 0 5 1 0 2 2 2 2}); return; else store=[]; obs=[]; end
+if nargin==0, timbralSimilaritySol('do', 3, 'mask', {4 1 1 1 0 5 1 0 0 2 2 1 1 2 1}); return; else store=[]; obs=[]; end
 
 rng(0);
 
@@ -65,6 +65,9 @@ switch setting.projection
         end
 end
 % features = features(:, 1);
+
+features = real(features);
+
 
 n=knnsearch(features,features,'k',setting.neighbors+1);
 n(:, 1) = [];

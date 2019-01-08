@@ -11,7 +11,7 @@ function [config, store, obs] = tisiso2project(config, setting, data)
 % Date: 09-Jan-2017
 
 % Set behavior for debug mode
-if nargin==0, timbralSimilaritySol('do', 2, 'mask', {2 1 2 1 1 5 1 1 2 0 0 2 1 2}); return; else store=[]; obs=[]; end
+if nargin==0, timbralSimilaritySol('do', 2, 'mask', {4, 3, 0, 1, 2, 5, 1, 1, 2, 2, 2, 2, 1}); return; else store=[]; obs=[]; end
 
 rng(0);
 
@@ -32,7 +32,7 @@ switch setting.reference
     case 'judgments'
         [data, judgments] = handleJudgments(config, data, setting.averageJudgment);
         
-        parfor k=1:size(judgments, 1)
+        for k=1:size(judgments, 1)
             ju = judgments(k, :);
             projection(k, :, :) = process2project(store, config, data, setting, ju);
         end      
@@ -47,6 +47,8 @@ function projection = process2project(store, config, data, setting, ju)
 if exist('ju', 'var'), data.(setting.reference) = ju; end
 
 data = getFeatures(config, data, setting, config.step.id);
+
+data.features = real(data.features);
 
 [~, ~, gt] = unique(data.(setting.reference));
 

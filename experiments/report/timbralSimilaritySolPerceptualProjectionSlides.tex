@@ -24,11 +24,22 @@
 % Please use this file to document your experiment 
 % You can compile the report by setting the option 'report' as detailed in your expLanes configuration file. 
   
-This is the report to document the expLanes project timbralSimilaritySol using \LaTeX. 
-  
+The first table compares the plain and joint scattering without any reprojection.
+\begin{enumerate}
+\item median: use median renormalization for scattering features
+\item compress: use log compression for scattering features
+\item standardize: standardize features at the end
+\end{enumerate}
+Use of all post processing give best performance. The second table show the results of using some projection. separateJudgment results can be seen as upper bound results.
+
+\begin{enumerate}
+\item averageJudgment: use cluster ensemble techniques http://strehl.com/soft.html to obtain one clustering. thus only one projection is computed
+\item separateJudgment: can be seen as an oracle method where each projection is evaluated using the clustering it has considered and average performance
+\end{enumerate}
+
 \input{tex/exposeTmp} % expLanesInsertionFlag DO NOT CLEAR (but move it where you want the generated temporary LaTEX code to be inserted) 
-  
-  
+
+
 \bibliographystyle{abbrvnat} 
 \bibliography{bib} 
   

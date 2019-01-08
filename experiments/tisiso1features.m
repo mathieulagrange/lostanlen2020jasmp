@@ -11,7 +11,7 @@ function [config, store, obs] = tisiso1features(config, setting, data)
 % Date: 09-Jan-2017
 
 % Set behavior for debug mode
-if nargin==0, timbralSimilaritySol('do', 1, 'mask', {4 1}); return; else store=[]; obs=[]; end
+if nargin==0, timbralSimilaritySol('do', 1, 'mask', {4 2 2 1 0 5 1 0 0 0 0 2 1 1 0}); return; else store=[]; obs=[]; end
 
 % fid = fopen([config.inputPath 'fileList.txt']);
 % fileList = textscan(fid, '%s/%s\n');
@@ -61,20 +61,18 @@ store.family = family;
 store.file = fileList;
 
 scat_opt.M = 2;
-scat_opt.oversampling = 4;
-scat_opt.path_margin = 4;
+scat_opt.oversampling = 1;
+scat_opt.path_margin = 1;
 
-% store = expLoad(config, '', 1);
-% store.file = fileList;
-% return
+%[~, ~, idx] = handleJudgments(config, store, 0, 0);
 
 if strcmp(setting.features, 'null'), return; end
 
 failed = zeros(1, length(fileList));
-length(fileList)
-for k=1:length(fileList)
+done = zeros(1, length(fileList));
+parfor k=1:length(fileList)
+    cc = 1;
     [a,sr] = audioread([config.inputPath fileList{k} '.wav']);
-    cc = 0;
     switch setting.features
         case 'mel'
             [~, cc] = melfcc(a(:,1), sr, 'wintime', setting.sct/1000, 'hoptime', setting.sct/4000);
@@ -92,28 +90,29 @@ for k=1:length(fileList)
             tm_filt_opt = struct();
             tm_filt_opt.Q = [12 1];
             tm_filt_opt.J = T_to_J(sr*setting.sct/1000, tm_filt_opt);
-
+            
             % NOTE: The parameter `fr_filt_opt.J` controls the largest scale
             % along the frequency axis as a power of two. For `J = 4`, this
             % means a largest frequency scale of `2^4 = 16`, which is equal to
             % 1.5 octaves since `Q = 12`.
             fr_filt_opt = struct();
             fr_filt_opt.J = 4;
-
+            
             Wop = joint_tf_wavelet_factory_1d(size(a, 1), tm_filt_opt, ...
                 fr_filt_opt, scat_opt);
-
+            
             S = scat(a(:,1), Wop);
-
             S = format_scat(S, 'order_table');
-            cc = [S{1+1}' S{1+2}']';
+            cc = real([S{1+1}' S{1+2}']');
         case 'null'
-            cc = rand(100);
+            cc = rand(1, 100);
     end
     cc = nanmean(cc');
     if ~isfinite(cc), failed(k)=1; end
     features(k, :) = cc;
 end
 
+
 store.features = features;
+
 obs.failed = sum(failed);

@@ -30,7 +30,7 @@ machineNames  = {{ 'pc-lagrange', 'dodo', 'pc-adtsi-sunda.irccyn.ec-nantes.fr'},
 % path to input data (usually accessed read only)
 inputPath  = {'/data/databases/instruments/SOL', '/data/lagrange/sunda/databases/instruments/SOL'}
 % path to the code repository of the experiment (diamond operator <> do not replace unless you do not want expLanes to fill this field automatically)
-codePath  = {'/home/lagrange/experiments/lmnn4sol/experiments/timbralSimilaritySol', '/home/lagrange/experiments/timbralSimilaritySol'}
+codePath  = {}
 % path to the data repository of the experiment (structured with one directory per step)
 dataPath  = {'/data/experiments/timbralSimilaritySol', '/data/lagrange/sunda/experiments/timbralSimilaritySol'}
 % path to the data repository of the experiment for observation data (same as dataPath if left blank)

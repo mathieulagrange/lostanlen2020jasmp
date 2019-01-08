@@ -1,6 +1,7 @@
-function [data, judgments] = handleJudgments(config, data, average)
+function [data, judgments, idx] = handleJudgments(config, data, average, filter)
 
 if ~exist('average', 'var'), average = 0; end
+if ~exist('filter', 'var'), filter = 1; end
 
 if length(data.mode)<length(data.file), data.file(end) = []; end
 idx = [];
@@ -22,4 +23,7 @@ if average
 else
     judgments = gt(:, ia);
 end
+
+if (filter)
 data = filterData(data, idx);
+end

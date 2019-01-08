@@ -24,7 +24,18 @@
 % Please use this file to document your experiment            
 % You can compile the report by setting the option 'report' as detailed in your expLanes configuration file.            
  
-This is the report to document the expLanes project timbralSimilaritySol using \LaTeX.            
+The first table compares the plain and joint scattering without any reprojection.           
+\begin{enumerate}           
+\item median: use median renormalization for scattering features           
+\item compress: use log compression for scattering features           
+\item standardize: standardize features at the end           
+\end{enumerate}           
+Use of all post processing give best performance. The second table show the results of using some projection. separateJudgment results can be seen as upper bound results.           
+ 
+\begin{enumerate}           
+\item averageJudgment: use cluster ensemble techniques http://strehl.com/soft.html to obtain one clustering. thus only one projection is computed           
+\item separateJudgment: can be seen as an oracle method where each projection is evaluated using the clustering it has considered and average performance           
+\end{enumerate}           
  
  
  
@@ -53,42 +64,49 @@ This is the report to document the expLanes project timbralSimilaritySol using \
  
 \end{frame}   
  
-\begin{frame}\frametitle{sct: 1000, split: none, reference: judgments, randomize: 0, expand: 0, cut: 1, median: 1, compress: 1, standardize: 1}  
+\begin{frame}\frametitle{features: tfscat, sct: 25, projection: none, split: none, reference: judgments, randomize: 0}  
  
 \begin{table}  
 \begin{center}  
 \  
 \setlength{\tabcolsep}{.16667em}  
-\begin{tabular}{llllc}  
-features & projection & averageJudgment & separateJudgment & p (\%) \\  
+\begin{tabular}{lllccccc}  
+median & compress & standardize & p (\%) &  &  &  & p (\%) \\  
 \hline  
-mfcc & lmnn & 0 & 0 &  86.31 $\pm$5.91 \\  
-mfcc & lmnn & 0 & 1 &  86.18 $\pm$6.05 \\  
-mfcc & lmnn & 1 & 0 &  86.22 $\pm$5.92 \\  
-mfcc & none & 1 &  &  85.07 $\pm$6.19 \\  
-mfcc & lda & 1 &  &  81.50 $\pm$7.65 \\  
-scat & lmnn & 0 & 0 &  93.31 $\pm$3.92 \\  
-scat & lmnn & 0 & 1 & \textbf{\textcolor{red}{ 98.09 $\pm$1.28}} \\  
-scat & lmnn & 1 & 0 &  94.80 $\pm$3.26 \\  
-scat & none & 1 &  &  87.01 $\pm$5.81 \\  
-scat & lda & 1 &  & 80.95 $\pm$10.37 \\  
+0 & 0 & 0 & 69.25 $\pm$9.67 &  &  &  & 74.80 $\pm$8.67 \\  
+0 & 0 & 1 & 76.65 $\pm$8.09 &  &  &  & 85.61 $\pm$5.56 \\  
+0 & 1 & 0 & 81.92 $\pm$7.03 &  &  &  & \textbf{89.49 $\pm$4.30} \\  
+0 & 1 & 1 & 81.49 $\pm$7.24 &  &  &  & \textbf{89.95 $\pm$4.08} \\  
+1 & 0 & 0 & 76.99 $\pm$8.14 &  &  &  & 86.43 $\pm$5.36 \\  
+1 & 0 & 1 & 76.65 $\pm$8.09 &  &  &  & 85.61 $\pm$5.56 \\  
+1 & 1 & 0 & \textbf{85.70 $\pm$6.30} &  &  &  & \textbf{91.08 $\pm$3.83} \\  
+1 & 1 & 1 & \textbf{\textcolor{red}{86.39 $\pm$6.13}} &  &  &  & \textbf{\textcolor{red}{91.12 $\pm$3.80}} \\  
 \end{tabular}  
 \end{center}  
-\label{sc1000SpnoRejuRa0Ex0Cu1Me1Co1St1}  
+\label{fetfSc25PrnoSpnoRejuRa0}  
 \end{table}  
  
 \end{frame}   
+\begin{frame}\frametitle{features: tfscat, sct: 25, split: none, reference: judgments, randomize: 0, median: 1, compress: 1, standardize: 1} 
   
-\begin{frame}\frametitle{\small split: none, reference: judgments, randomize: 0, expand: 0, cut: 1, median: 1, compress: 1, standardize: 1} 
+\begin{table} 
 \begin{center} 
-\begin{figure} 
-\centering 
-\includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{./figures/Fig160.pdf} 
-\label{spnoRejuRa0Ex0Cu1Me1Co1St1} 
-\end{figure} 
+\ 
+ \setlength{\tabcolsep}{.16667em} 
+\begin{tabular}{lllccccc} 
+pro & avejud & sepjud & p (\%) &  &  &  & p (\%) \\ 
+\hline 
+none & 1 & 0 & 86.39 $\pm$6.13 &  &  &  & 91.12 $\pm$3.80 \\ 
+lmnn & 0 & 0 & 91.59 $\pm$4.66 &  &  &  & \textbf{96.20 $\pm$2.27} \\ 
+lmnn & 0 & 1 & \textbf{\textcolor{red}{95.22 $\pm$3.23}} &  &  &  & \textbf{\textcolor{red}{96.89 $\pm$2.08}} \\ 
+lmnn & 1 & 0 & 93.19 $\pm$3.84 &  &  &  & 95.60 $\pm$2.32 \\ 
+lda & 1 & 0 & 82.40 $\pm$7.64 &  &  &  & 81.31 $\pm$8.51 \\ 
+lda & 1 & 1 & 82.40 $\pm$7.64 &  &  &  & 81.31 $\pm$8.51 \\ 
+\end{tabular} 
 \end{center} 
-  
-  
+\label{fetfSc25SpnoRejuRa0Me1Co1St1} 
+\end{table} 
+ 
 \end{frame}  
 \input{tex/exposeTmp} % expLanesInsertionFlag DO NOT CLEAR (but move it where you want the generated temporary LaTEX code to be inserted) 
  

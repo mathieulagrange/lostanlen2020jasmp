@@ -1,35 +1,77 @@
+ 
+\documentclass{beamer}           
+\usepackage{beamerthemedefault, multimedia}           
+\useoutertheme{smoothbars}           
+\useinnertheme[shadow=true]{rounded}           
+\setbeamercovered{transparent}           
+\setbeamertemplate{navigation symbols}{}           
+\setbeamertemplate{footline}[frame number]           
+\usepackage{graphicx}           
+\usepackage{morefloats}           
+\usepackage{amsmath}           
+\usepackage{amssymb}           
+\usepackage{rotating}           
+% mcode options for matlab code insertion bw (for printing), numbered (line numbers), framed (frame around code blocks), useliterate (convert Matlab expressions to Latex ones), autolinebreaks (automatic code wraping, use it with caution           
+\usepackage[literate]{mcode}           
+\graphicspath{{figures/}{tex/}{../figures/}{../../}{../}}            
+\title{timbralSimilaritySolDebugSlides}           
+\author{ Mathieu Lagrange }           
+ 
+\begin{document}           
+ 
+\maketitle           
+ 
+% Please use this file to document your experiment           
+% You can compile the report by setting the option 'report' as detailed in your expLanes configuration file.           
+ 
+This is the report to document the expLanes project timbralSimilaritySol using \LaTeX.           
+ 
+ 
+ 
+ 
+ 
+\begin{frame}\frametitle{Factors flow graph}         
+ 
+ 
+\begin{center}        
+ 
+ 
+\begin{figure}       
+ 
+ 
+\includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{../figures/factors.pdf}      
+ 
+ 
+\label{factorFlowGraph}     
+ 
+ 
+\end{figure}    
+ 
+ 
+\end{center}   
+ 
+ 
+\end{frame}  
+ 
+\begin{frame}\frametitle{features: tfscat, sct: 1000, split: none, reference: judgments, randomize: 0, median: 1, compress: 1, standardize: 1} 
   
-\documentclass{beamer} 
- \usepackage{beamerthemedefault, multimedia} 
- \useoutertheme{smoothbars} 
- \useinnertheme[shadow=true]{rounded} 
- \setbeamercovered{transparent} 
- \setbeamertemplate{navigation symbols}{} 
- \setbeamertemplate{footline}[frame number] 
-\usepackage{graphicx} 
-\usepackage{morefloats} 
-\usepackage{amsmath} 
-\usepackage{amssymb} 
-\usepackage{rotating} 
-% mcode options for matlab code insertion bw (for printing), numbered (line numbers), framed (frame around code blocks), useliterate (convert Matlab expressions to Latex ones), autolinebreaks (automatic code wraping, use it with caution 
-\usepackage[literate]{mcode} 
-\graphicspath{{figures/}{tex/}{../figures/}{../../}{../}}  
-\title{timbralSimilaritySolDebugSlides} 
-\author{ Mathieu Lagrange } 
-  
-\begin{document} 
-  
-\maketitle 
-  
-% Please use this file to document your experiment 
-% You can compile the report by setting the option 'report' as detailed in your expLanes configuration file. 
-  
-This is the report to document the expLanes project timbralSimilaritySol using \LaTeX. 
-  
+\begin{table} 
+\begin{center} 
+\ 
+ \setlength{\tabcolsep}{.16667em} 
+\begin{tabular}{c} 
+p (\%) \\ 
+\hline 
+\end{tabular} 
+\end{center} 
+\label{fetfSc1000SpnoRejuRa0Me1Co1St1} 
+\end{table} 
+ 
+\end{frame}  
 \input{tex/exposeTmp} % expLanesInsertionFlag DO NOT CLEAR (but move it where you want the generated temporary LaTEX code to be inserted) 
-  
-  
-\bibliographystyle{abbrvnat} 
-\bibliography{bib} 
-  
-\end{document} 
+ 
+ 
+\bibliographystyle{abbrvnat}           
+\bibliography{bib}           
+ 
+\end{document}           

@@ -11,7 +11,7 @@ function [config, store, obs] = tisiso1features(config, setting, data)
 % Date: 09-Jan-2017
 
 % Set behavior for debug mode
-if nargin==0, timbralSimilaritySol('do', 1, 'mask', {4 2 2 1 0 5 1 0 0 0 0 2 1 1 0}); return; else store=[]; obs=[]; end
+if nargin==0, timbralSimilaritySol('do', 1, 'mask', {4 5 2 1 0 5 1 0 0 0 0 2 1 1 0}); return; else store=[]; obs=[]; end
 
 % fid = fopen([config.inputPath 'fileList.txt']);
 % fileList = textscan(fid, '%s/%s\n');
@@ -70,7 +70,7 @@ if strcmp(setting.features, 'null'), return; end
 
 failed = zeros(1, length(fileList));
 done = zeros(1, length(fileList));
-parfor k=1:length(fileList)
+for k=1554 %1:length(fileList)
     cc = 1;
     [a,sr] = audioread([config.inputPath fileList{k} '.wav']);
     switch setting.features

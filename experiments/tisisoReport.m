@@ -11,8 +11,8 @@ if nargin==0, timbralSimilaritySol('report', 'rcv', 'reportName', 'debugSlides')
 switch config.reportName
     case 'debugSlides'
         
-      mask = {  4, 5, [2  3], 1, 0, 5, 1, 0, 0, 2, 2, 2, 1};
-      config = expExpose(config, 't', 'step', 3, 'mask', mask, 'percent', 0, 'obs', 1, 'highlight', 0, 'precision', 4);
+      mask = {  [3 4], [1 2], [1 2], 1, 0, 5, 1, 0, 0, 2, 2, 2, 1};
+      config = expExpose(config, 't', 'step', 3, 'mask', mask, 'percent', 0, 'obs', 1, 'highlight', 0, 'precision', 4, 'expand', 'sct');
         
     case 'perceptualProjectionSlides'
         

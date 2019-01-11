@@ -25,18 +25,26 @@
   
 \end{frame} 
   
-\begin{frame}\frametitle{features: tfscat, sct: 1000, split: none, reference: judgments, randomize: 0, median: 1, compress: 1, standardize: 1} 
+\begin{frame}\frametitle{split: none, reference: judgments, randomize: 0, median: 1, compress: 1, standardize: 1} 
   
 \begin{table} 
 \begin{center} 
 \ 
  \setlength{\tabcolsep}{.16667em} 
-\begin{tabular}{c} 
-p (\%) \\ 
+\begin{tabular}{llllcc} 
+features & separateJudgment & projection & averageJudgment &   25 &  128 \\ 
 \hline 
+scat & 0 & none & 1 & 86.39 $\pm$6.13 & 86.6983 $\pm$5.9191 \\ 
+scat & 0 & lmnn & 0 & 91.59 $\pm$4.66 & 91.3147 $\pm$4.6484 \\ 
+scat & 0 & lmnn & 1 & 93.19 $\pm$3.84 & 94.1004 $\pm$3.2131 \\ 
+scat & 1 & lmnn & 0 & 95.22 $\pm$3.23 & 96.6844 $\pm$2.2377 \\ 
+tfscat & 0 & none & 1 & 91.12 $\pm$3.80 & \textbf{       - $\pm$-} \\ 
+tfscat & 0 & lmnn & 0 & \textbf{96.20 $\pm$2.27} & 97.7522 $\pm$1.3850 \\ 
+tfscat & 0 & lmnn & 1 & 95.60 $\pm$2.32 & 97.9132 $\pm$1.1261 \\ 
+tfscat & 1 & lmnn & 0 & \textbf{\textcolor{red}{96.89 $\pm$2.08}} & \textbf{\textcolor{red}{98.7899 $\pm$0.8579}} \\ 
 \end{tabular} 
 \end{center} 
-\label{fetfSc1000SpnoRejuRa0Me1Co1St1} 
+\label{spnoRejuRa0Me1Co1St1} 
 \end{table} 
  
 \end{frame}  

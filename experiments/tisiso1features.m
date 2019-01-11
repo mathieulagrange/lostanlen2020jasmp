@@ -70,7 +70,7 @@ if strcmp(setting.features, 'null'), return; end
 
 failed = zeros(1, length(fileList));
 done = zeros(1, length(fileList));
-for k=1554 %1:length(fileList)
+parfor k=1:length(fileList)
     cc = 1;
     [a,sr] = audioread([config.inputPath fileList{k} '.wav']);
     switch setting.features

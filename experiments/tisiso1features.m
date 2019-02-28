@@ -73,6 +73,8 @@ done = zeros(1, length(fileList));
 parfor k=1:length(fileList)
     cc = 1;
     [a,sr] = audioread([config.inputPath fileList{k} '.wav']);
+    a = pad_signal(a, max(size(a, 1), sr*setting.sct/1000), 'zero', true);
+    
     switch setting.features
         case 'mel'
             [~, cc] = melfcc(a(:,1), sr, 'wintime', setting.sct/1000, 'hoptime', setting.sct/4000);

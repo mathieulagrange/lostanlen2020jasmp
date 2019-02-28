@@ -11,13 +11,16 @@ function [config, store, obs] = tisiso3performance(config, setting, data)
 % Date: 09-Jan-2017
 
 % Set behavior for debug mode
-if nargin==0, timbralSimilaritySol('do', 3, 'mask', {4 1 1 1 0 5 1 0 0 2 2 1 1 2 1}); return; else store=[]; obs=[]; end
+if nargin==0, timbralSimilaritySol('do', 3, 'mask', {3 1 2 1 0 5 1 0 0 2 2 2 1 1 3}); return; else store=[]; obs=[]; end
 
 rng(0);
 
-if ((strcmp(setting.projection, 'lda') || strcmp(setting.projection, 'none')) && strcmp(setting.reference, 'judgments') && setting.averageJudgment==0) || ...
-   (strcmp(setting.projection, 'lmnn') && strcmp(setting.reference, 'judgments') && setting.averageJudgment==1 && setting.separateJudgment==1) || ...
-   (strcmp(setting.projection, 'none') && strcmp(setting.reference, 'judgments') && setting.separateJudgment==1)
+if strcmp(setting.reference, 'judgments') && (...
+        (strcmp(setting.projection, 'lda')  && (setting.averageJudgment==0 || (setting.averageJudgment==1 && setting.separateJudgment==0))) || ...
+        (strcmp(setting.projection, 'none')  && (setting.separateJudgment==1 || (setting.averageJudgment==0 && setting.separateJudgment==1))) || ...
+        (strcmp(setting.projection, 'lmnn')  && setting.averageJudgment==1 && setting.separateJudgment==1) || ...
+        strcmp(setting.split, 'octave') ...
+        )
     obs.p=NaN;
     return
 end
@@ -26,8 +29,9 @@ data1 = expLoad(config, '', 1);
 obs.p=[];
 switch setting.reference
     case 'judgments'
-        [data1, judgments] = handleJudgments(config, data1);              
-        parfor k=1:size(judgments, 1)  % par   
+        [data1, judgments] = handleJudgments(config, data1);
+        [data1, judgments] = splitJudgments(data1, judgments, str2num(setting.split), setting.test);
+        parfor k=1:size(judgments, 1)  % par
             p(k) = process3performance(config, data1, data, setting, judgments(k, :), k);
         end
         obs.p = p;
@@ -49,13 +53,22 @@ switch setting.projection
     case 'lmnn'
         switch setting.reference
             case 'judgments'
-                if setting.separateJudgment
-                    data.projection = squeeze(data.projection(k, :, :));
-                else
-                    data.projection = squeeze(mean(data.projection, 1));
+                switch setting.separateJudgment
+                    case 1
+                        data.projection = squeeze(data.projection(min(k, size(data.projection, 1)), :, :));
+                    case 0
+                        data.projection = squeeze(mean(data.projection, 1));
+                    case 2
+                        for  k=1:size(data.projection, 1)
+                            projection = squeeze(data.projection(k, :, :));
+                            [subspaces(:, :, k), ~] = qr(projection);
+                        end
+                        meanSubSpace = karcher_mean(subspaces);
+                        data.projection = meanSubSpace*meanSubSpace';
                 end
+                features = (data.projection*data1.features')';
         end
-        features = (data.projection*data1.features')';
+        
     case 'lda'
         if ndims(data.projection)==3
             data.projection = squeeze(data.projection);

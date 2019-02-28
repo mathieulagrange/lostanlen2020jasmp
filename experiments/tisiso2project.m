@@ -11,7 +11,7 @@ function [config, store, obs] = tisiso2project(config, setting, data)
 % Date: 09-Jan-2017
 
 % Set behavior for debug mode
-if nargin==0, timbralSimilaritySol('do', 2, 'mask', {4, 3, 0, 1, 2, 5, 1, 1, 2, 2, 2, 2, 1}); return; else store=[]; obs=[]; end
+if nargin==0, timbralSimilaritySol('do', 2, 'mask', {2 3 3 5 0 5 1 1 2 0 0 2 1 2 0}); return; else store=[]; obs=[]; end
 
 rng(0);
 
@@ -23,7 +23,7 @@ rng(0);
 %     store.projection = projection;
 % end
 % return
-if strcmp(setting.projection, 'none') || (strcmp(setting.projection, 'lda') && strcmp(setting.reference, 'judgments') && setting.averageJudgment==0)
+if strcmp(setting.projection, 'none') || (strcmp(setting.projection, 'lda') && strcmp(setting.reference, 'judgments') && setting.averageJudgment==0) || (strcmp(setting.reference, 'judgments') && strcmp(setting.split, 'octave'))
     store.projection = [];
     return
 end
@@ -31,7 +31,7 @@ end
 switch setting.reference
     case 'judgments'
         [data, judgments] = handleJudgments(config, data, setting.averageJudgment);
-        
+        [data, judgments] = splitJudgments(data, judgments, str2num(setting.split));
         for k=1:size(judgments, 1)
             ju = judgments(k, :);
             projection(k, :, :) = process2project(store, config, data, setting, ju);

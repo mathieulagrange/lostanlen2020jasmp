@@ -1,0 +1,7 @@
+The modeling of timbre is typically based measuring human perception of known stimuli, such as musical instruments and speech.
+However, the particular stimuli, such as musical notes, are often too simple to explore the complex structure of timbre.
+Other stimuli, such as speech sounds, provide a richer timbre, but also carry higher-level meaning, making unbiased responses harder to obtain.
+Between these extremes, we consider the use of musical instruments coupled with various extended playing techniques (IPTs), offering a broad range of timbre compared while avoiding specific semantic connotations.
+We show how human subjects organize these instrument-IPT recording pairs in a free sorting tasks into clusters that suggest a more general taxonomy than that provided by instrument or IPT alone.
+In addition, we propose a computational model for reproducing this timbral organization based on joint scattering transforms connected to an unsupervised linear layer.
+This model shows good agreement with the timbral similarity judgments of the subjects, providing a promising approach for further exploration of this perceptual dimension.

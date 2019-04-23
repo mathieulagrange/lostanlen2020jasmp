@@ -65,9 +65,9 @@ switch setting.projection
 %                             [subspaces(:, :, k), ~] = qr(projection);
                         end
                         meanSubSpace = psd_karcher_mean(subspaces);
-                        data.projection = meanSubSpace*meanSubSpace';
+                        data.projection = meanSubSpace;
                 end
-                features = (data.projection*data1.features')';
+                features = (sqrtm(data.projection)*data1.features')';
         end
         
     case 'lda'

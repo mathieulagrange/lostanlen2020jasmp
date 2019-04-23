@@ -60,14 +60,14 @@ switch setting.projection
                         data.projection = squeeze(mean(data.projection, 1));
                     case 2
                         for  k=1:size(data.projection, 1)
-                             subspaces(:, :, k) = squeeze(data.projection(k, :, :));
+                             subspaces(:, :, k) = squeeze(data.projection(k, :, :))^2;
 %                                 projection = squeeze(data.projection(k, :, :));
 %                             [subspaces(:, :, k), ~] = qr(projection);
                         end
                         meanSubSpace = psd_karcher_mean(subspaces);
-                        data.projection = meanSubSpace;
+                        data.projection = sqrtm(meanSubSpace);
                 end
-                features = (sqrtm(data.projection)*data1.features')';
+                features = (data.projection*data1.features')';
         end
         
     case 'lda'

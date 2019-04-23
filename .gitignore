@@ -1,8 +1,8 @@
-
 *.aux
-
 *.log
-
 *.gz
+*.blg
+*.bbl
 
-paper/lagrangeSpontaneousSimilarity2017.pdf
+paper/lagrangeTechReport.pdf
+paper/paper.pdf

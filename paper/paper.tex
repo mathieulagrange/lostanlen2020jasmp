@@ -1,0 +1,94 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass{article}
+\usepackage{amsmath,cite,url}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{xspace}
+
+\newcommand*{\eg}{e.g.\@\xspace}
+\newcommand*{\ie}{i.e.\@\xspace}
+\newcommand{\ipt}{IPT\xspace}
+\newcommand{\ipts}{IPTs\xspace}
+
+\newcommand{\ml}[1]{\textcolor{blue}{ML: #1}}
+\newcommand{\vl}[1]{\textcolor{red}{VL: #1}}
+\newcommand{\ja}[1]{\textcolor{purple}{JA: #1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TITLE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Learning Auditory Similarities Between Instrumental Playing Techniques}
+
+\author{
+Christian El-Hajj,
+Vincent Lostanlen,
+Mathias Rossignol, \\
+Gr\'egoire Lafay,
+and Mathieu Lagrange}
+
+\begin{document}
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ABSTRACT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{abstract}
+ABSTRACT HERE
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INTRODUCTION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+\label{sec:introduction}
+
+\begin{itemize}
+\item How to accurately model timbre perception?
+\item Studies either consider stimuli that are ``too simple'' (e.g., tones, instruments with fixed playing techniques) or ``too complex'' (e.g., speech, environmental sounds).
+\item Computational models do not capture enough information (MFCCs and related representations) or are hard to compute or analyze (STRFs, deep networks).
+\item Present a study of timbral similarity perception on diverse set of instrumental sounds with extended playing techniques (instrumental playing techniques, or IPTs). Provides more control in modeling different aspects of timbre.
+\item In addition, propose a computational model for timbral similarity: (joint) scattering plus a linear layer. Fixed representation to extract time-frequency structure with adaptivity in linear component.
+\end{itemize}
+
+\section{Results}
+\label{sec:results}
+
+\begin{itemize}
+\item Subjects asked to cluster 78 IPTs into an arbitrary number of clusters (maximum 20). Resulting partition gives measure of timbral similarity.
+\item Partitions do not completely agree with either instrument (I) of playing technique (PT) taxonomies, although slightly favor PTs. Perceptual measurement captures timbre across IPTs. Show through NMI or other measurements.
+\item Propose computational model for these perceptual similarity measurements: scattering transform (time or time-frequency), followed by a learned linear layer (LDA or LDMM) to adapt representation to measured data.
+\item Model shows good agreement with similarity measurements under different testing protocols (aggregated clusters, aggregated subspaces, cross validation).
+\end{itemize}
+
+\section{Discussion}
+\label{sec:discussion}
+
+\begin{itemize}
+\item Demonstrates complex timbral structure perceived by subjects in study: neither instrument (i.e., spectral envelope) or playing technique (i.e., temporal modulation) dominates similarity judgment. Need joint to characterize time-frequency structure (see Patil et al).
+\item Proposed computational model (scattering + linear) reproduces similarity judgments accurately. Easy to ``retrain'' for other data. Fixed wavelet structure allows for analysis of linear layer and guarantees invariance and stability properties.
+\item Applications: query-by-example in musical sample databases.
+\end{itemize}
+
+\section{Methods}
+\label{sec:methods}
+
+\begin{itemize}
+\item IPTs pre-screened by two composition teachers to select 78 ``interesting'' IPTs that are very similar to (i.e., easily confused with) other IPTs.
+\item Subjects asked to perform free sorting task on the selected IPTs according to similarity. Allowed to label with up to 20 different colors.
+\item Clustering gives similarity measurement for each subject. These measurements were aggregated in a certain way.
+\item The aggregated clustering was compared to instrument and playing technique taxonomies using NMI or other measures.
+\item The (time or time-frequency) scattering transform is composed of alternating layers of wavelet transforms and modulus nonlinearities. The result is a convolutional network with fixed filters. Performs well in various classification and regression tasks when augmented with a learned linear layer.
+\item Linear layer is provided here by LDA or LMNN.
+\item Performance is measured in a query-by-example setting with precision at $k$, where $k = 5$.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% BIBLIOGRAPHY %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\bibliographystyle{alpha}
+\bibliography{bib}
+
+\end{document}

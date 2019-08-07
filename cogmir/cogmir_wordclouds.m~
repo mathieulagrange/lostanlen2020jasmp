@@ -1,0 +1,17 @@
+clf(); clc(); close all;
+fig = openfig('../paper/figures/groupModes.fig');
+color_data = fig.CurrentAxes.Children(6).CData;
+tick_labels = fig.CurrentAxes.Colorbar.TickLabels;
+
+%%
+judg_data = color_data(1, :);
+judg_data_diff = diff(judg_data);
+changepoints = find(judg_data_diff~=0);
+cluster_starts = [1, changepoints+1];
+cluster_stops = [changepoints, length(judg_data)];
+nClusters = length(cluster_starts);
+
+refs = cell(1, nClusters);
+for cluster_id = 1:nClusters
+    refs{cluster_id} = tick_labels(color_data(2, cluster_start:clus));
+end

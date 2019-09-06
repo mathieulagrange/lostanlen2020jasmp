@@ -45,6 +45,7 @@ ABSTRACT HERE
 \section{Introduction}
 \label{sec:introduction}
 
+\textbf{Section outline:}
 \begin{itemize}
 \item How to accurately model timbre perception?
 \item Studies either consider stimuli that are ``too simple'' (e.g., tones, instruments with fixed playing techniques) or ``too complex'' (e.g., speech, environmental sounds).
@@ -52,6 +53,37 @@ ABSTRACT HERE
 \item Present a study of timbral similarity perception on diverse set of instrumental sounds with extended playing techniques (instrumental playing techniques, or IPTs). Provides more control in modeling different aspects of timbre.
 \item In addition, propose a computational model for timbral similarity: (joint) scattering plus a linear layer. Fixed representation to extract time-frequency structure with adaptivity in linear component.
 \end{itemize}
+
+One of the most important properties for identifying the source of a sound is its \emph{timbre}.
+While it is typically defined as the quality of a sound that is independent of its pitch, duration, or loudness, this definition fails to provide an explicit characterization of the attribute.
+Due to its central role in audio perception, timbre has been studied from several angles, including perceptual and psychophysical studies as well as computational methods in machine listening.
+The consensus is that timbre depends not on the purely spectral or temporal structure of a sound, but in its joint spectro--temporal structure, but beyond this, there is little agreement about its precise characterization.
+
+One difficulty that arises in studying the perceptual dimensions of timbre relates to its potential complexity---the dimensionality of the full timbral space is high.
+To combat this, many perceptual and psychophysical studies focus on simple stimuli: pure sine waves, musical instruments with fixed pitch and playing technique, and so on.
+While this has led to important insights in timbre perception, the range of timbres explored by these stimuli is necessarily limited.
+
+On the other end of the spectrum are the computational methods.
+Since their goals are typically task-oriented (recognizing speech, identifying environmental sounds, and so on), they are less concerned with establishing models of auditory perception suitable for analysis.
+While certain audio representations are simple enough to analyze, such as mel-frequency cepstral coefficients (MFCCs) and related approaches, they do not capture enough structure to adequately characterize timbre.
+Indeed, for an overwhelming majority of machine listening tasks have been these representations have been outperformed by learned representations, such as deep neural networks (DNNs).
+While DNNs have enjoyed significant success for these tasks, their relative complexity and the fact that they are learned from data make their analysis difficult, preventing us from deriving relevant insights into timbre perception.
+
+Certain audio representations have been proposed as a middle ground between expressivity and ease of analysis.
+One of the more prominent among these are the \emph{cortical representations} introduced by S. Shamma and collaborators.
+These rely on a spectrogram-like decomposition of the sound, which is then further decomposed in time and frequency using \emph{spectro--temporal receptive fields} (STRFs).
+This model is based on neurophysiological measurements on ferrets, and have been validated in several contexts, ranging from applications in machine listening and reproduction of psychophysical phenomena in auditory perception.
+However, since the original goal of the representation was to model observed electrophysiological signals, this increases its complexity, rendering mathematical anaylsis more difficult.
+
+In particular, cortical representations have been used to study timbre in the work of Patil et al. \cite{patil2012music}.
+While this demonstrates the power of the representation to characterize certain dimensions of timbre, the range of sounds was limited, consisting of single musical notes played using standard instrumental techniques.
+As a result, only a subset of the relevant timbral dimensions are explored, limiting the conclusions of the work.
+
+In this work, we consider representation similar to the cortical representation, namely the \emph{scattering transform}, which provides a mathematical foundation for the study of auditory perception in terms of invariance and stability properties.
+Instead of single musical notes played with standard techniques, we extend the range of sounds to include extended instrumental playing techniques.
+While increasing the complexity of the timbral space explored, these sounds do not include the full range of timbre exhibited, for example, by speech or environmental sounds.
+As a result, we are able to better analyze their characteristics and link them to the properties of the transform.
+
 
 \section{Results}
 \label{sec:results}

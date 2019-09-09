@@ -136,6 +136,22 @@ Note that this result is obtained by simply looking at the raw feature vectors--
 \subsection{Similarity weighting}
 \label{sec:weighting}
 
+While the raw scattering representation provides a powerful model for timbre, it does so without any prior information.
+Incorporating information about what distinguishes one timbre from another should improve the accuracy of the model.
+In the same was that the lower levels of auditory perception do not vary much between subjects (or between species, in the case of mammals), we expect that higher levels incorporate some amount of learning.
+Introducing a learned component into our model, however, could greatly reduce its usefulness with respect to interpretability.
+For this reason, we restrict ourselves to a simple, linear transform of the scattering coefficients.
+By optimizing the linear transform with respect to similarity measurements obtained from human subjects, we expect to obtain a more accurate model of timbre perception.
+
+These human similarity judgments are obtained from a set of $78$ instrument--IPT pairs selected by two music composition professors at the \emph{Conservatoire national sup\'erieur de musique et de danse de Paris} (CNSMDP).
+A subject was provided with these 78 recordings and asked to cluster them in a free sorting task by arranging correspodings dots in two dimensions on a computer screen and assigning a color to each dot.
+While the location of the dots was recorded, this information was not used in our analysis and only served to help the subject organize the sounds spatially.
+The colors assigned to each dot---and, consequently, to each sound---was recorded for each subject.
+
+The above similarity judgments were crowdsourced by sending out requests to perform the experiment on internal mailing lists of the CNSMDP and international research mailing lists with focus on audio and music processing.
+We made the experiment avaialble for two months and obtained results for a total of $31$ subjects.
+
+
 \section{Discussion}
 \label{sec:discussion}
 

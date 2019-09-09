@@ -12,6 +12,8 @@
 \newcommand{\ipt}{IPT\xspace}
 \newcommand{\ipts}{IPTs\xspace}
 
+\newcommand{\patk}{p\mathrm{@}k}
+
 \newcommand{\ml}[1]{\textcolor{blue}{ML: #1}}
 \newcommand{\vl}[1]{\textcolor{red}{VL: #1}}
 \newcommand{\ja}[1]{\textcolor{purple}{JA: #1}}
@@ -88,12 +90,51 @@ As a result, we are able to better analyze their characteristics and link them t
 \section{Results}
 \label{sec:results}
 
+\textbf{Section outline:}
 \begin{itemize}
 \item Subjects asked to cluster 78 IPTs into an arbitrary number of clusters (maximum 20). Resulting partition gives measure of timbral similarity.
 \item Partitions do not completely agree with either instrument (I) of playing technique (PT) taxonomies, although slightly favor PTs. Perceptual measurement captures timbre across IPTs. Show through NMI or other measurements.
 \item Propose computational model for these perceptual similarity measurements: scattering transform (time or time-frequency), followed by a learned linear layer (LDA or LDMM) to adapt representation to measured data.
 \item Model shows good agreement with similarity measurements under different testing protocols (aggregated clusters, aggregated subspaces, cross validation).
 \end{itemize}
+
+\subsection{Scattering transform}
+\label{sec:scattering}
+
+While cortical representations have been successful in distinguishing properties of audio recordings (including similarity analysis and classification tasks), they remain models for the electrophysiological signals recorded in the audio cortex.
+As such, their calculation is not always computationally efficient and their mathematical properties may be difficult to analyze directly.
+
+A closely related representation is that of the joint time--frequency scattering transform, introduced by And\'{e}n et al. \cite{anden2015joint,anden2019joint}.
+Given an audio recording, it decomposes the signal using an analytic wavelet transform and computes the modulus, obtaining the \emph{scalogram} of the signal.
+The scalogram is similar to the spectrogram, but has a time--frequency resolution that varies with frequency: at low frequency, the filters are narrowly tuned in frequency (and hence wide in time), while at high frequency, the filters are wide in frequency (and hence narrowly concentrated in time).
+This representation contains a large amount of information, but not in a form suitable for building statistical models.
+In particular, the scalogram is not \emph{stable} in the sense that small deformations to the original signal may incude large changes to the scalogram.
+One way to resolve this is to average the scalogram in time to obtain a spectral profile of the signal, yielding the first-order scattering coefficients \cite{anden2014deep}.
+
+These first-order coefficients alone cannot accurately characterize the time--frequency structure of the signal, however, since they only include spectral information.
+To augment them, we perform another wavelet decomposition, this time in two dimensions, over the scalogram.
+Similarly to the cortical representation, the result is a four-dimensional array indexed by time, acoustic frequency, modulation frequency (or \emph{rate}), and spectral modulation frequency, known as \emph{quefrency} (or \emph{scale}).
+Again, we compute the modulus of the transform and average in time.
+The result is known as the set of second-order joint time--frequency scattering coefficients \cite{anden2015joint,anden2019joint}.
+
+The definition of the scattering transform in terms of wavelet decompositions and modulus nonlinearities presents several advantages.
+On the computational side, the critical bandwidth guarantees of wavelet transforms allows us to judiciously subsample the output, resulting in a lower-dimensional representation compared to the cortical representations.
+The scattering transform also satisfies the aforementioned stability conditions, providing a guarantee that slightly deforming a signal only results in a negligible change in its scattering transform.
+Furthermore, we may calculate the scattering tranforms of several model signals, including amplitude-modulated harmonic sounds and noise excitations \cite{anden2012scattering,anden2014deep}, frequency-modulated sinusoids \cite{anden2012scattering,anden2019joint}, and beating phenomena \cite{anden2014deep}.
+They have also enjoyed success in several audio classification and similarity retrieval tasks \cite{anden2011multiscale,bauge2013representing,anden2014deep,anden2019joint,lostanlen2018relevance,lostanlen2018extended}.
+
+To evaluate the ability of the scattering transform to characterize the timbre of an audio signal, we consider the task of classifying musical notes from a wide variety of instruments played according to a set of extended instrumental playing techniques (IPTs).
+Increasing the variability in IPTs allows us to explore a wider range of timbre, providing a more robust validation of the proposed model for modeling timbre.
+The metric used is the \emph{precision at rank $k$} ($\patk$), which is calculated by computing the $k$ nearest neighbors in the feature space and recording the proportion of the neighbors that are in the same ``class.''
+In the following, we set $k = 5$.
+
+Concatenating the first- and second-order joint scattering coefficients, we obtain a feature vector of dimension $???$ for a sound recording of duration $???$.
+Computing nearest neighbors with the standard Euclidean measure gives a $\patk$ of $87.0 \pm 5.8$, where the first value indicates the mean and the second the standard deviation.
+As a result, this simple transformation of the original signal results in a representation that lends itself naturally to discriminating timbre.
+Note that this result is obtained by simply looking at the raw feature vectors---no learning is performed to adapt the transform towards discriminating timbre.
+
+\subsection{Similarity weighting}
+\label{sec:weighting}
 
 \section{Discussion}
 \label{sec:discussion}

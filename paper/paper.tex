@@ -154,6 +154,16 @@ The colors assigned to each dot---and, consequently, to each sound---was recorde
 The above similarity judgments were crowdsourced by sending out requests to perform the experiment on internal mailing lists of the CNSMDP and international research mailing lists with focus on audio and music processing.
 We made the experiment available for two months and obtained results for a total of $31$ subjects.
 
+Given the clustering assignments of each subject, we then constructed a consensus clustering using a hypergraph partitioning algorithm \cite{kernighan1970efficient,han1997scalable,strehl2002cluster}.
+Interestingly, although several sounds pairs were obtained from the same instrument (but different IPTs) and others were obtained using the same IPT (but different instruments), the consensus clustering did not favor one of these taxonomies over the other.
+
+We now use the consensus clustering to reweight the similarity between feature vectors (either MFCCs or scattering transforms).
+For this, we use the \emph{large margin nearest neighbor} (LMNN) metric learning algorithm \cite{weinberger2006distance, weinberger2009distance}.
+This approach constructs a positive semi-definite weighting matrix $L$ such that the distance $\|Lx - Ly\|$ best classifies a set of points into a fixed clustering assignment.
+Running LMNN on MFCCs with the consensus clustering obtained above increases $\patk$ slightly to $86.2 \pm 5.9$.
+Consequently, there seems to be little additional timbre information in the MFCCs compared to that given by the standard Euclidean distance.
+We contrast this with LMNN applied to the joint scattering coefficients, which yields a $\patk$ of $94.8 \pm 3.3$, which is a significant increase.
+We therefore conclude that a simple reweighting of the scattering transform yields a more appropriate timbral similarity measure.
 
 \section{Discussion}
 \label{sec:discussion}

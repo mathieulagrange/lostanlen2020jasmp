@@ -132,6 +132,9 @@ Concatenating the first- and second-order joint scattering coefficients, we obta
 Computing nearest neighbors with the standard Euclidean measure gives a $\patk$ of $87.0 \pm 5.8$, where the first value indicates the mean and the second the standard deviation.
 As a result, this simple transformation of the original signal results in a representation that lends itself naturally to discriminating timbre.
 Note that this result is obtained by simply looking at the raw feature vectors---no learning is performed to adapt the transform towards discriminating timbre.
+We contrast this with the results obtained with a baseline MFCC feature vector.
+This results in a $\patk$ of $85.1 \pm 6.2$.
+We therefore conclude that, although the scattering transform provides a good indication of timbral similarity, using its nearest neighbors based on a standard Euclidan distance does not allow us to properly account for the higher-level time--frequency structure characterized by the second-order coefficients.
 
 \subsection{Similarity weighting}
 \label{sec:weighting}

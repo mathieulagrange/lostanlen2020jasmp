@@ -1,11 +1,182 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Template for PLoS
+% Version 3.5 March 2018
+%
+% % % % % % % % % % % % % % % % % % % % % %
+%
+% -- IMPORTANT NOTE
+%
+% This template contains comments intended 
+% to minimize problems and delays during our production 
+% process. Please follow the template instructions
+% whenever possible.
+%
+% % % % % % % % % % % % % % % % % % % % % % % 
+%
+% Once your paper is accepted for publication, 
+% PLEASE REMOVE ALL TRACKED CHANGES in this file 
+% and leave only the final text of your manuscript. 
+% PLOS recommends the use of latexdiff to track changes during review, as this will help to maintain a clean tex file.
+% Visit https://www.ctan.org/pkg/latexdiff?lang=en for info or contact us at latex@plos.org.
+%
+%
+% There are no restrictions on package use within the LaTeX files except that 
+% no packages listed in the template may be deleted.
+%
+% Please do not include colors or graphics in the text.
+%
+% The manuscript LaTeX source should be contained within a single file (do not use \input, \externaldocument, or similar commands).
+%
+% % % % % % % % % % % % % % % % % % % % % % %
+%
+% -- FIGURES AND TABLES
+%
+% Please include tables/figure captions directly after the paragraph where they are first cited in the text.
+%
+% DO NOT INCLUDE GRAPHICS IN YOUR MANUSCRIPT
+% - Figures should be uploaded separately from your manuscript file. 
+% - Figures generated using LaTeX should be extracted and removed from the PDF before submission. 
+% - Figures containing multiple panels/subfigures must be combined into one image file before submission.
+% For figure citations, please use "Fig" instead of "Figure".
+% See http://journals.plos.org/plosone/s/figures for PLOS figure guidelines.
+%
+% Tables should be cell-based and may not contain:
+% - spacing/line breaks within cells to alter layout or alignment
+% - do not nest tabular environments (no tabular environments within tabular environments)
+% - no graphics or colored text (cell background color/shading OK)
+% See http://journals.plos.org/plosone/s/tables for table guidelines.
+%
+% For tables that exceed the width of the text column, use the adjustwidth environment as illustrated in the example table in text below.
+%
+% % % % % % % % % % % % % % % % % % % % % % % %
+%
+% -- EQUATIONS, MATH SYMBOLS, SUBSCRIPTS, AND SUPERSCRIPTS
+%
+% IMPORTANT
+% Below are a few tips to help format your equations and other special characters according to our specifications. For more tips to help reduce the possibility of formatting errors during conversion, please see our LaTeX guidelines at http://journals.plos.org/plosone/s/latex
+%
+% For inline equations, please be sure to include all portions of an equation in the math environment.  For example, x$^2$ is incorrect; this should be formatted as $x^2$ (or $\mathrm{x}^2$ if the romanized font is desired).
+%
+% Do not include text that is not math in the math environment. For example, CO2 should be written as CO\textsubscript{2} instead of CO$_2$.
+%
+% Please add line breaks to long display equations when possible in order to fit size of the column. 
+%
+% For inline equations, please do not include punctuation (commas, etc) within the math environment unless this is part of the equation.
+%
+% When adding superscript or subscripts outside of brackets/braces, please group using {}.  For example, change "[U(D,E,\gamma)]^2" to "{[U(D,E,\gamma)]}^2". 
+%
+% Do not use \cal for caligraphic font.  Instead, use \mathcal{}
+%
+% % % % % % % % % % % % % % % % % % % % % % % % 
+%
+% Please contact latex@plos.org with any questions.
+%
+% % % % % % % % % % % % % % % % % % % % % % % %
 
-\documentclass{article}
-\usepackage{amsmath,cite,url}
-\usepackage{graphicx}
+\documentclass[10pt,letterpaper]{article}
+\usepackage[top=0.85in,left=2.75in,footskip=0.75in]{geometry}
+
+% amsmath and amssymb packages, useful for mathematical formulas and symbols
+\usepackage{amsmath,amssymb}
+
+% Use adjustwidth environment to exceed column width (see example table in text)
+\usepackage{changepage}
+
+% Use Unicode characters when possible
+\usepackage[utf8x]{inputenc}
+
+% textcomp package and marvosym package for additional characters
+\usepackage{textcomp,marvosym}
+
+% cite package, to clean up citations in the main text. Do not remove.
+\usepackage{cite}
+
+% Use nameref to cite supporting information files (see Supporting Information section for more info)
+\usepackage{nameref,hyperref}
+
+% line numbers
+\usepackage[right]{lineno}
+
+% ligatures disabled
+\usepackage{microtype}
+\DisableLigatures[f]{encoding = *, family = * }
+
+% color can be used to apply background shading to table cells only
+\usepackage[table]{xcolor}
+
+% array package and thick rules for tables
+\usepackage{array}
+
+% our packages
+\usepackage{url}
 \usepackage{color}
 \usepackage{xspace}
+
+% create "+" rule type for thick vertical lines
+\newcolumntype{+}{!{\vrule width 2pt}}
+
+% create \thickcline for thick horizontal lines of variable length
+\newlength\savedwidth
+\newcommand\thickcline[1]{%
+  \noalign{\global\savedwidth\arrayrulewidth\global\arrayrulewidth 2pt}%
+  \cline{#1}%
+  \noalign{\vskip\arrayrulewidth}%
+  \noalign{\global\arrayrulewidth\savedwidth}%
+}
+
+% \thickhline command for thick horizontal lines that span the table
+\newcommand\thickhline{\noalign{\global\savedwidth\arrayrulewidth\global\arrayrulewidth 2pt}%
+\hline
+\noalign{\global\arrayrulewidth\savedwidth}}
+
+
+% Remove comment for double spacing
+%\usepackage{setspace} 
+%\doublespacing
+
+% Text layout
+\raggedright
+\setlength{\parindent}{0.5cm}
+\textwidth 5.25in 
+\textheight 8.75in
+
+% Bold the 'Figure #' in the caption and separate it from the title/caption with a period
+% Captions will be left justified
+\usepackage[aboveskip=1pt,labelfont=bf,labelsep=period,justification=raggedright,singlelinecheck=off]{caption}
+\renewcommand{\figurename}{Fig}
+
+% Use the PLoS provided BiBTeX style
+\bibliographystyle{plos2015}
+
+% Remove brackets from numbering in List of References
+\makeatletter
+\renewcommand{\@biblabel}[1]{\quad#1.}
+\makeatother
+
+
+
+% Header and Footer with logo
+\usepackage{lastpage,fancyhdr,graphicx}
+\usepackage{epstopdf}
+%\pagestyle{myheadings}
+\pagestyle{fancy}
+\fancyhf{}
+%\setlength{\headheight}{27.023pt}
+%\lhead{\includegraphics[width=2.0in]{PLOS-submission.eps}}
+\rfoot{\thepage/\pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrule}{\hrule height 2pt \vspace{2mm}}
+\fancyheadoffset[L]{2.25in}
+\fancyfootoffset[L]{2.25in}
+\lfoot{\today}
+
+%% Include all macros below
+
+\newcommand{\lorem}{{\bf LOREM}}
+\newcommand{\ipsum}{{\bf IPSUM}}
+
+%% END MACROS SECTION
+
+%% BEGIN OUR MACROS SECTION
 
 \newcommand*{\eg}{e.g.\@\xspace}
 \newcommand*{\ie}{i.e.\@\xspace}
@@ -18,21 +189,51 @@
 \newcommand{\vl}[1]{\textcolor{red}{VL: #1}}
 \newcommand{\ja}[1]{\textcolor{purple}{JA: #1}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TITLE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\title{Learning Auditory Similarities Between Instrumental Playing Techniques}
-
-\author{
-Christian El-Hajj,
-Vincent Lostanlen,
-Mathias Rossignol, \\
-Gr\'egoire Lafay,
-and Mathieu Lagrange}
+%% END OUR MACROS SECTION
 
 \begin{document}
+\vspace*{0.2in}
 
-\maketitle
+% Title must be 250 characters or less.
+\begin{flushleft}
+{\Large
+\textbf\newline{Learning Auditory Similarities Between Instrumental Playing Techniques} % Please use "sentence case" for title and headings (capitalize only the first word in a title (or heading), the first word in a subtitle (or subheading), and any proper nouns).
+}
+\newline
+% Insert author names, affiliations and corresponding author email (do not include titles, positions, or degrees).
+\\
+Christian El-Hajj\textsuperscript{1},
+Vincent Lostanlen\textsuperscript{2},
+Mathias Rossignol\textsuperscript{3},
+Gr\'egoire Lafay\textsuperscript{1},
+Mathieu Lagrange\textsuperscript{2*}
+\\
+\bigskip
+\textbf{1} Affiliation Dept/Program/Center, Institution Name, City, State, Country
+\\
+\textbf{2} Affiliation Dept/Program/Center, Institution Name, City, State, Country
+\\
+\textbf{3} Affiliation Dept/Program/Center, Institution Name, City, State, Country
+\\
+\bigskip
+
+% Use the asterisk to denote corresponding authorship and provide email address in note below.
+* correspondingauthor@institute.edu
+
+\end{flushleft}
+% Please keep the abstract below 300 words
+\section*{Abstract}
+ABSTRACT HERE
+
+% Please keep the Author Summary between 150 and 200 words
+% Use first person. PLOS ONE authors please skip this step. 
+% Author Summary not valid for PLOS ONE submissions.   
+\section*{Author summary}
+AUTHOR SUMMARY HERE
+
+\linenumbers
+
+\section*{Figures}
 
 Fig 1: strf + scattering (upsampling strf)
 
@@ -43,19 +244,11 @@ Fig 3: same 3 sounds spec + scatt
 
 Fig 4: tags clouds
 
-Fig last: perfs mfcc separable joint 
+Fig last: perfs mfcc separable joint
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ABSTRACT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{abstract}
-ABSTRACT HERE
-\end{abstract}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INTRODUCTION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Introduction}
+% Use "Eq" instead of "Equation" for equation citations.
+\section*{Introduction}
 \label{sec:introduction}
 
 \textbf{Section outline:}
@@ -97,9 +290,20 @@ Instead of single musical notes played with standard techniques, we extend the r
 While increasing the complexity of the timbral space explored, these sounds do not include the full range of timbre exhibited, for example, by speech or environmental sounds.
 As a result, we are able to better analyze their characteristics and link them to the properties of the transform.
 
+\section*{Materials and methods}
+\label{sec:methods}
 
-\section{Results}
-\label{sec:results}
+\begin{itemize}
+\item IPTs pre-screened by two composition teachers to select 78 ``interesting'' IPTs that are very similar to (i.e., easily confused with) other IPTs.
+\item Subjects asked to perform free sorting task on the selected IPTs according to similarity. Allowed to label with up to 20 different colors.
+\item Clustering gives similarity measurement for each subject. These measurements were aggregated in a certain way.
+\item The aggregated clustering was compared to instrument and playing technique taxonomies using NMI or other measures.
+\item The (time or time-frequency) scattering transform is composed of alternating layers of wavelet transforms and modulus nonlinearities. The result is a convolutional network with fixed filters. Performs well in various classification and regression tasks when augmented with a learned linear layer.
+\item Linear layer is provided here by LDA or LMNN.
+\item Performance is measured in a query-by-example setting with precision at $k$, where $k = 5$.
+\end{itemize}
+
+\section*{Results}
 
 \textbf{Section outline:}
 \begin{itemize}
@@ -109,7 +313,7 @@ As a result, we are able to better analyze their characteristics and link them t
 \item Model shows good agreement with similarity measurements under different testing protocols (aggregated clusters, aggregated subspaces, cross validation).
 \end{itemize}
 
-\subsection{Scattering transform}
+\subsection*{Scattering transform}
 \label{sec:scattering}
 
 While cortical representations have been successful in distinguishing properties of audio recordings (including similarity analysis and classification tasks), they remain models for the electrophysiological signals recorded in the audio cortex.
@@ -147,7 +351,7 @@ We contrast this with the results obtained with a baseline MFCC feature vector.
 This results in a $\patk$ of $85.1 \pm 6.2$.
 We therefore conclude that, although the scattering transform provides a good indication of timbral similarity, using its nearest neighbors based on a standard Euclidan distance does not allow us to properly account for the higher-level time--frequency structure characterized by the second-order coefficients.
 
-\subsection{Similarity weighting}
+\subsection*{Similarity weighting}
 \label{sec:weighting}
 
 While the raw scattering representation provides a powerful model for timbre, it does so without any prior information.
@@ -176,7 +380,7 @@ Consequently, there seems to be little additional timbre information in the MFCC
 We contrast this with LMNN applied to the joint scattering coefficients, which yields a $\patk$ of $94.8 \pm 3.3$, which is a significant increase.
 We therefore conclude that a simple reweighting of the scattering transform yields a more appropriate timbral similarity measure.
 
-\section{Discussion}
+\section*{Discussion}
 \label{sec:discussion}
 
 \begin{itemize}
@@ -185,23 +389,19 @@ We therefore conclude that a simple reweighting of the scattering transform yiel
 \item Applications: query-by-example in musical sample databases.
 \end{itemize}
 
-\section{Methods}
-\label{sec:methods}
+\section*{Conclusion}
+\label{sec:conclusion}
 
-\begin{itemize}
-\item IPTs pre-screened by two composition teachers to select 78 ``interesting'' IPTs that are very similar to (i.e., easily confused with) other IPTs.
-\item Subjects asked to perform free sorting task on the selected IPTs according to similarity. Allowed to label with up to 20 different colors.
-\item Clustering gives similarity measurement for each subject. These measurements were aggregated in a certain way.
-\item The aggregated clustering was compared to instrument and playing technique taxonomies using NMI or other measures.
-\item The (time or time-frequency) scattering transform is composed of alternating layers of wavelet transforms and modulus nonlinearities. The result is a convolutional network with fixed filters. Performs well in various classification and regression tasks when augmented with a learned linear layer.
-\item Linear layer is provided here by LDA or LMNN.
-\item Performance is measured in a query-by-example setting with precision at $k$, where $k = 5$.
-\end{itemize}
+\section*{Supporting information}
+\label{sec:supp}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% BIBLIOGRAPHY %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Acknowledgments}
+\label{sec:ack}
 
-\bibliographystyle{alpha}
+\nolinenumbers
+
+\bibliographystyle{plos2015}
 \bibliography{bib}
 
 \end{document}
+

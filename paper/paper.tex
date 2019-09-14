@@ -300,6 +300,25 @@ As a result, we are able to better analyze their characteristics and link them t
 \item Model shows good agreement with similarity measurements under different testing protocols (aggregated clusters, aggregated subspaces, cross validation).
 \end{itemize}
 
+\subsection*{Timbre similarity perception}
+\label{sec:survey}
+
+To validate our timbre perception model, we first acquired similarity judgments from a survey of human subjects.
+The survey was carried out for $78$ sounds, each representing an instrument--playing technique (IPT) pair.
+These IPTs were selected from a larger set of $235$ IPTs by two experts at the \emph{Conservatoire national sup\'erieur de musique et de danse de Paris} (CNSMDP).
+The selection criteria were based on the likelihood of an IPT being similar to some other IPT, ensuring that IPTs that were too singular were excluded from the survey.
+
+In the survey, a subject was provided with these $78$ IPTs at the same pitch and asked to cluster them in a free sorting task.
+This was achieved by arranging correspoding dots in a two-dimensional plane on a computer screen and assigning a color to each dot.
+While the location of the dots was recorded, this information was not used in our analysis and only served to help the subject organize the sounds spatially.
+The colors assigned to each dot---and, consequently, to each sound---was recorded for each subject.
+
+The above similarity judgments were crowdsourced by sending out requests to perform the experiment on internal mailing lists of the CNSMDP and international research mailing lists with focus on audio and music processing.
+We made the experiment available for two months and obtained results for a total of $31$ subjects.
+
+Given the clustering assignments of each subject, we then constructed a consensus clustering using a hypergraph partitioning algorithm \cite{kernighan1970efficient,han1997scalable,strehl2002cluster}.
+Interestingly, although several sounds pairs were obtained from the same instrument (but different PTs) and others were obtained using the same PT (but different instruments), the consensus clustering did not favor one of these taxonomies over the other.
+
 \subsection*{Scattering transform}
 \label{sec:scattering}
 
@@ -347,17 +366,6 @@ In the same was that the lower levels of auditory perception do not vary much be
 Introducing a learned component into our model, however, could greatly reduce its usefulness with respect to interpretability.
 For this reason, we restrict ourselves to a simple, linear transform of the scattering coefficients.
 By optimizing the linear transform with respect to similarity measurements obtained from human subjects, we expect to obtain a more accurate model of timbre perception.
-
-These human similarity judgments are obtained from a set of $78$ instrument--IPT pairs selected by two music composition professors at the \emph{Conservatoire national sup\'erieur de musique et de danse de Paris} (CNSMDP).
-A subject was provided with these 78 recordings and asked to cluster them in a free sorting task by arranging correspodings dots in two dimensions on a computer screen and assigning a color to each dot.
-While the location of the dots was recorded, this information was not used in our analysis and only served to help the subject organize the sounds spatially.
-The colors assigned to each dot---and, consequently, to each sound---was recorded for each subject.
-
-The above similarity judgments were crowdsourced by sending out requests to perform the experiment on internal mailing lists of the CNSMDP and international research mailing lists with focus on audio and music processing.
-We made the experiment available for two months and obtained results for a total of $31$ subjects.
-
-Given the clustering assignments of each subject, we then constructed a consensus clustering using a hypergraph partitioning algorithm \cite{kernighan1970efficient,han1997scalable,strehl2002cluster}.
-Interestingly, although several sounds pairs were obtained from the same instrument (but different IPTs) and others were obtained using the same IPT (but different instruments), the consensus clustering did not favor one of these taxonomies over the other.
 
 We now use the consensus clustering to reweight the similarity between feature vectors (either MFCCs or scattering transforms).
 For this, we use the \emph{large margin nearest neighbor} (LMNN) metric learning algorithm \cite{weinberger2006distance, weinberger2009distance}.

@@ -321,37 +321,55 @@ Interestingly, although several sounds pairs were obtained from the same instrum
 While cortical representations have been successful in distinguishing properties of audio recordings (including similarity analysis and classification tasks), they remain models for the electrophysiological signals recorded in the audio cortex.
 As such, their calculation is not always computationally efficient and their mathematical properties may be difficult to analyze directly.
 
-A closely related representation is that of the joint time--frequency scattering transform, introduced by And\'{e}n et al. \cite{anden2015joint,anden2019joint}.
+A closely related representation is that of the time scattering transform, introduced by And\'{e}n and Mallat \cite{anden2011multiscale,anden2014deep}.
 Given an audio recording, it decomposes the signal using an analytic wavelet transform and computes the modulus, obtaining the \emph{scalogram} of the signal.
 The scalogram is similar to the spectrogram, but has a time--frequency resolution that varies with frequency: at low frequency, the filters are narrowly tuned in frequency (and hence wide in time), while at high frequency, the filters are wide in frequency (and hence narrowly concentrated in time).
 This representation contains a large amount of information, but not in a form suitable for building statistical models.
-In particular, the scalogram is not \emph{stable} in the sense that small deformations to the original signal may incude large changes to the scalogram.
-One way to resolve this is to average the scalogram in time to obtain a spectral profile of the signal, yielding the first-order scattering coefficients \cite{anden2014deep}.
+In particular, the scalogram is not \emph{stable} in the sense that small deformations to the original signal may induce large changes to the scalogram.
+It also lacks \emph{invariance} to time-shifting, which does not affect our perception of a sound, and should therefore not affect its timbre model.
+One way to resolve this is to average the scalogram in time to obtain a spectral profile of the signal, yielding the first-order scattering coefficients.
+These possess both invariance to time-shifting and stability to time-warping deformations \cite{anden2014deep}.
 
-These first-order coefficients alone cannot accurately characterize the time--frequency structure of the signal, however, since they only include spectral information.
-To augment them, we perform another wavelet decomposition, this time in two dimensions, over the scalogram.
+Since these first-order coefficients only include spectral information, they cannot accurately characterize more sophisticated structure in the signal.
+One way to augment them is to calculate another wavelet decomposition in time, this time on each frequency channel of the scalogram.
+Again, we compute the modulus of the wavelet coefficients and average in time.
+The resulting coefficients are known as the second-order time scattering coefficients.
+These also possess the desired invariance and stability properties, but capture more information on the temporal structure of the scalogram \cite{anden2014deep}.
+
+While richer than a simple spectral decomposition, such as MFCCs, the second-order time scattering coefficients described above primarily capture structure in time.
+Indeed, they do not explicitly encode frequency structure in an invariant and stable manner.
+If a signal is transposed or warped in frequency by a small amount, we do not expect its timbre to change significantly.
+We would therefore like our representation to have the same invariance and stability properties along the frequency axis.
+This is achieved by taking first- and second-order scattering coefficients and computing a second scattering transform, this time along the log-frequency axis.
+The resulting coefficients are known as separable time and frequency scattering coefficients \cite{anden2014deep}.
+
+This representation does possess the desired invariance and stability properties, but its separable nature limits its power to adequately represent time--frequency structures that do not separate cleanly in time and frequency, such as chirps.
+To remedy this, another approach was suggested by And\'{e}n et al. \cite{anden2015joint,anden2019joint} wherein the temporal wavelet decomposition of the scalogram is replaced with a two-dimensional, spectro-temporal decomposition.
 Similarly to the cortical representation, the result is a four-dimensional array indexed by time, acoustic frequency, modulation frequency (or \emph{rate}), and spectral modulation frequency, known as \emph{quefrency} (or \emph{scale}).
-Again, we compute the modulus of the transform and average in time.
-The result is known as the set of second-order joint time--frequency scattering coefficients \cite{anden2015joint,anden2019joint}.
+As before, we compute the modulus and average in time, obtaining a set of coefficients known as second-order joint time--frequency scattering coefficients.
 
 The definition of the scattering transform in terms of wavelet decompositions and modulus nonlinearities presents several advantages.
 On the computational side, the critical bandwidth guarantees of wavelet transforms allows us to judiciously subsample the output, resulting in a lower-dimensional representation compared to the cortical representations.
 The scattering transform also satisfies the aforementioned stability conditions, providing a guarantee that slightly deforming a signal only results in a negligible change in its scattering transform.
-Furthermore, we may calculate the scattering tranforms of several model signals, including amplitude-modulated harmonic sounds and noise excitations \cite{anden2012scattering,anden2014deep}, frequency-modulated sinusoids \cite{anden2012scattering,anden2019joint}, and beating phenomena \cite{anden2014deep}.
+Furthermore, we may calculate the scattering tranforms of several model signals, including amplitude-modulated harmonic sounds and noise excitations \cite{anden2012scattering,anden2014deep}, frequency-modulated sinusoids (e.g., chirps) \cite{anden2012scattering,anden2019joint}, and beating phenomena \cite{anden2014deep}.
 They have also enjoyed success in several audio classification and similarity retrieval tasks \cite{anden2011multiscale,bauge2013representing,anden2014deep,anden2019joint,lostanlen2018relevance,lostanlen2018extended}.
 
 To evaluate the ability of the scattering transform to characterize the timbre of an audio signal, we consider the task of classifying musical notes from a wide variety of instruments played according to a set of extended instrumental playing techniques (IPTs).
 Increasing the variability in IPTs allows us to explore a wider range of timbre, providing a more robust validation of the proposed model for modeling timbre.
-The metric used is the \emph{precision at rank $k$} ($\patk$), which is calculated by computing the $k$ nearest neighbors in the feature space and recording the proportion of the neighbors that are in the same ``class.''
+The metric used is the \emph{precision at rank $k$} ($\patk$), which is calculated by computing the $k$ nearest neighbors in the feature space and recording the proportion of the neighbors that are in the same class.
 In the following, we set $k = 5$.
+The classes were obtained from the consensus clustering of human similarity judgments described in the previous section.
+The $\patk$ therefore provides a measure of consistency between the timbre similarity measures obtained by our model and those of the survey subjects.
 
-Concatenating the first- and second-order joint scattering coefficients, we obtain a feature vector of dimension $???$ for a sound recording of duration $???$.
-Computing nearest neighbors with the standard Euclidean measure gives a $\patk$ of $87.0 \pm 5.8$, where the first value indicates the mean and the second the standard deviation.
+Concatenating the first- and second-order separable time and frequency scattering coefficients, we obtain a feature vector of dimension $???$ for a sound recording of duration $???$.
+Computing nearest neighbors with the standard Euclidean measure gives a $\patk$ of $0.870 \pm 0.058$, where the first value indicates the mean and the second the standard deviation.
 As a result, this simple transformation of the original signal results in a representation that lends itself naturally to discriminating timbre.
 Note that this result is obtained by simply looking at the raw feature vectors---no learning is performed to adapt the transform towards discriminating timbre.
-We contrast this with the results obtained with a baseline MFCC feature vector.
-This results in a $\patk$ of $85.1 \pm 6.2$.
-We therefore conclude that, although the scattering transform provides a good indication of timbral similarity, using its nearest neighbors based on a standard Euclidan distance does not allow us to properly account for the higher-level time--frequency structure characterized by the second-order coefficients.
+Replacing the separable second-order coefficients with the joint second-order coefficients boosts the $\patk$ to $???$.
+This is evidence that accurately characterizing the joint time--frequency structure of the sound is important capturing its timbre.
+
+We performed the same evaluation with a standard MFCC representation, obtaining a $\patk$ of $0.851 \pm 0.062$.
+As a result, we conclude that a Euclidean distance over scattering transforms (separable or joint) yield little additional perceptual information compared to standard spectral descriptors.
 
 \subsection*{Similarity weighting}
 \label{sec:weighting}

@@ -251,14 +251,12 @@ Fig last: perfs mfcc separable joint
 \section*{Introduction}
 \label{sec:introduction}
 
-\textbf{Section outline:}
-\begin{itemize}
-\item How to accurately model timbre perception?
-\item Studies either consider stimuli that are ``too simple'' (e.g., tones, instruments with fixed playing techniques) or ``too complex'' (e.g., speech, environmental sounds).
-\item Computational models do not capture enough information (MFCCs and related representations) or are hard to compute or analyze (STRFs, deep networks).
-\item Present a study of timbral similarity perception on diverse set of instrumental sounds with extended playing techniques (instrumental playing techniques, or IPTs). Provides more control in modeling different aspects of timbre.
-\item In addition, propose a computational model for timbral similarity: (joint) scattering plus a linear layer. Fixed representation to extract time-frequency structure with adaptivity in linear component.
-\end{itemize}
+% Section outline:
+% - How to accurately model timbre perception?
+% - Studies either consider stimuli that are ``too simple'' (e.g., tones, instruments with fixed playing techniques) or ``too complex'' (e.g., speech, environmental sounds).
+% - Computational models do not capture enough information (MFCCs and related representations) or are hard to compute or analyze (STRFs, deep networks).
+% - Present a study of timbral similarity perception on diverse set of instrumental sounds with extended playing techniques (instrumental playing techniques, or IPTs). Provides more control in modeling different aspects of timbre.
+% - In addition, propose a computational model for timbral similarity: (joint) scattering plus a linear layer. Fixed representation to extract time-frequency structure with adaptivity in linear component.
 
 One of the most important properties for identifying the source of a sound is its \emph{timbre}.
 While it is typically defined as the quality of a sound that is independent of its pitch, duration, or loudness, this definition fails to provide an explicit characterization of the attribute.
@@ -292,13 +290,11 @@ As a result, we are able to better analyze their characteristics and link them t
 
 \section*{Results}
 
-\textbf{Section outline:}
-\begin{itemize}
-\item Subjects asked to cluster 78 IPTs into an arbitrary number of clusters (maximum 20). Resulting partition gives measure of timbral similarity.
-\item Partitions do not completely agree with either instrument (I) of playing technique (PT) taxonomies, although slightly favor PTs. Perceptual measurement captures timbre across IPTs. Show through NMI or other measurements.
-\item Propose computational model for these perceptual similarity measurements: scattering transform (time or time-frequency), followed by a learned linear layer (LDA or LDMM) to adapt representation to measured data.
-\item Model shows good agreement with similarity measurements under different testing protocols (aggregated clusters, aggregated subspaces, cross validation).
-\end{itemize}
+% Section outline:
+% - Subjects asked to cluster 78 IPTs into an arbitrary number of clusters (maximum 20). Resulting partition gives measure of timbral similarity.
+% - Partitions do not completely agree with either instrument (I) of playing technique (PT) taxonomies, although slightly favor PTs. Perceptual measurement captures timbre across IPTs. Show through NMI or other measurements.
+% - Propose computational model for these perceptual similarity measurements: scattering transform (time or time-frequency), followed by a learned linear layer (LDA or LDMM) to adapt representation to measured data.
+% - Model shows good agreement with similarity measurements under different testing protocols (aggregated clusters, aggregated subspaces, cross validation).
 
 \subsection*{Timbre similarity perception}
 \label{sec:survey}

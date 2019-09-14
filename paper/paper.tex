@@ -290,19 +290,6 @@ Instead of single musical notes played with standard techniques, we extend the r
 While increasing the complexity of the timbral space explored, these sounds do not include the full range of timbre exhibited, for example, by speech or environmental sounds.
 As a result, we are able to better analyze their characteristics and link them to the properties of the transform.
 
-\section*{Materials and methods}
-\label{sec:methods}
-
-\begin{itemize}
-\item IPTs pre-screened by two composition teachers to select 78 ``interesting'' IPTs that are very similar to (i.e., easily confused with) other IPTs.
-\item Subjects asked to perform free sorting task on the selected IPTs according to similarity. Allowed to label with up to 20 different colors.
-\item Clustering gives similarity measurement for each subject. These measurements were aggregated in a certain way.
-\item The aggregated clustering was compared to instrument and playing technique taxonomies using NMI or other measures.
-\item The (time or time-frequency) scattering transform is composed of alternating layers of wavelet transforms and modulus nonlinearities. The result is a convolutional network with fixed filters. Performs well in various classification and regression tasks when augmented with a learned linear layer.
-\item Linear layer is provided here by LDA or LMNN.
-\item Performance is measured in a query-by-example setting with precision at $k$, where $k = 5$.
-\end{itemize}
-
 \section*{Results}
 
 \textbf{Section outline:}
@@ -389,8 +376,18 @@ We therefore conclude that a simple reweighting of the scattering transform yiel
 \item Applications: query-by-example in musical sample databases.
 \end{itemize}
 
-\section*{Conclusion}
-\label{sec:conclusion}
+\section*{Materials and methods}
+\label{sec:methods}
+
+\begin{itemize}
+\item IPTs pre-screened by two composition teachers to select 78 ``interesting'' IPTs that are very similar to (i.e., easily confused with) other IPTs.
+\item Subjects asked to perform free sorting task on the selected IPTs according to similarity. Allowed to label with up to 20 different colors.
+\item Clustering gives similarity measurement for each subject. These measurements were aggregated in a certain way.
+\item The aggregated clustering was compared to instrument and playing technique taxonomies using NMI or other measures.
+\item The (time or time-frequency) scattering transform is composed of alternating layers of wavelet transforms and modulus nonlinearities. The result is a convolutional network with fixed filters. Performs well in various classification and regression tasks when augmented with a learned linear layer.
+\item Linear layer is provided here by LDA or LMNN.
+\item Performance is measured in a query-by-example setting with precision at $k$, where $k = 5$.
+\end{itemize}
 
 \section*{Supporting information}
 \label{sec:supp}

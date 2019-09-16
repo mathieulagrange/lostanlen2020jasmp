@@ -374,19 +374,22 @@ As a result, we conclude that a Euclidean distance over scattering transforms (s
 \subsection*{Similarity weighting}
 \label{sec:weighting}
 
-While the raw scattering representation provides a powerful model for timbre, it does so without any prior information.
-Incorporating information about what distinguishes one timbre from another should improve the accuracy of the model.
-In the same was that the lower levels of auditory perception do not vary much between subjects (or between species, in the case of mammals), we expect that higher levels incorporate some amount of learning.
-Introducing a learned component into our model, however, could greatly reduce its usefulness with respect to interpretability.
-For this reason, we restrict ourselves to a simple, linear transform of the scattering coefficients.
-By optimizing the linear transform with respect to similarity measurements obtained from human subjects, we expect to obtain a more accurate model of timbre perception.
+To improve our measure, we need to replace the standard Euclidean distance on the raw scattering coefficients by something better adapted to discriminating timbre.
+Equivalently, we can apply further transformations to the scattering coefficients and compute the Euclidean distance on the result.
+Very flexible and powerful methods can be brought to bear on this problem, such as deep neural networks, but with their flexibility comes an increase in complexity.
+This increased complexity of the model reduces its usefulness with respect to interpretability.
+
+For this reason, we restrict ourselves to a simple linear transform of the scattering coefficients.
+Specifically, we construct a positive semidefinite matrix $L$ that we apply to the scattering coefficients $x$ so that the Euclidean distance between $Lx$ and $Ly$ best approximates the consensus clustering obtained above.
+We expect the resulting representation $Lx$ to provide a more accurate model for timbre perception.
 
 We now use the consensus clustering to reweight the similarity between feature vectors (either MFCCs or scattering transforms).
 For this, we use the \emph{large margin nearest neighbor} (LMNN) metric learning algorithm \cite{weinberger2006distance, weinberger2009distance}.
 This approach constructs a positive semi-definite weighting matrix $L$ such that the distance $\|Lx - Ly\|$ best classifies a set of points into a fixed clustering assignment.
-Running LMNN on MFCCs with the consensus clustering obtained above increases $\patk$ slightly to $86.2 \pm 5.9$.
+Running LMNN on MFCCs with the consensus clustering obtained above increases $\patk$ slightly to $0.862 \pm 0.059$.
 Consequently, there seems to be little additional timbre information in the MFCCs compared to that given by the standard Euclidean distance.
-We contrast this with LMNN applied to the joint scattering coefficients, which yields a $\patk$ of $94.8 \pm 3.3$, which is a significant increase.
+We contrast this with LMNN applied to the separable scattering coefficients, which yields a $\patk$ of $0.948 \pm 0.033$, which is a significant increase.
+For the joint scattering coefficients, we obtain a $\patk$ of $???$.
 We therefore conclude that a simple reweighting of the scattering transform yields a more appropriate timbral similarity measure.
 
 \section*{Discussion}

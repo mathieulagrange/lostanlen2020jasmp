@@ -1,0 +1,45 @@
+<html ng-app="grouping">
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Grouping - prototype</title>
+    <script src="angular.min.js"></script>
+    <script src="rgbcolor.js"></script>
+    <script src="Sample.js"></script>
+    <script src="app.js"></script>
+    <script src="utils.js"></script>
+    <script src="sounds.js"></script>
+    <script src="node_modules/ua-parser-js/dist/ua-parser.min.js"></script>
+    <script src="organizer.js"></script>
+    <link rel="stylesheet" type="text/css" href="styling.css"/>
+  </head>
+
+  <body ng-controller="Organizer">
+
+    <div id="loadProgress" ng-show="(soundsToLoad != 0) && (loadedSounds != soundsToLoad) && language=='fr'">
+      chargement des sons: {{loadedSounds}} / {{soundsToLoad}}
+    </div>
+
+    <!-- <p>
+      <input type="file" onchange="angular.element(this).scope().fileSelected(this)"/>
+    </p> -->
+<div style="text-align:center">
+
+
+    <select ng-init="fileNames[0]"  name="repeatSelect" id="repeatSelect" onchange="angular.element(this).scope().fileServerSelected(this)">
+      <option ng-repeat="option in fileNames" value="{{option}}">{{option}}  </option>
+    </select>
+
+<div>
+      <br>
+    Please select a timbral organization in the drop down menu.
+</div></div>
+
+    <div id="playField" ng-style="{width:playFieldWidth+'px', height:playFieldHeight+'px', left:playFieldLeft+'px', top:playFieldTop+'px'}">
+      <div class="point" ng-repeat="point in points" ng-mouseenter="playSound(point)" ng-mouseleave="stopSound(point)"
+	   ng-style="{top:point.y+'px', left:point.x+'px', background:(point.color || 'url(images/undefined.png)'), 'border-color':(point.color || 'darkgray'), 'border-radius': pointHalfSize+'px', width:(2*pointHalfSize)+'px', height:(2*pointHalfSize)+'px'}">
+      </div>
+
+  </body>
+
+</html>

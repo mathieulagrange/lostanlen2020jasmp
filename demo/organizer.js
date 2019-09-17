@@ -76,11 +76,9 @@ app.controller("Organizer", function($scope, $http, $timeout, $log) {
 
 all = [
   ' ',
-      'mdsProjectionReferenceInstruments',
-      'mdsProjectionReferencePlayingTechniques',
-    'mdsProjectionSubjectsClustering_5',
-    'mdsProjectionSubjectsClustering_8',
-    'mdsProjectionSubjectsConsensusClustering'
+  'labelByConsensusClustering',        'labelBySubjectiveClustering_5clusters',
+'labelByInstruments',   'labelBySubjectiveClustering_8clusters',
+'labelByPlayingTechniques'
   ];
 
   nums = Array.apply(null, {length: 32}).map(Number.call, Number).map(String);

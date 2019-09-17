@@ -1,182 +1,74 @@
-% Template for PLoS
-% Version 3.5 March 2018
-%
-% % % % % % % % % % % % % % % % % % % % % %
-%
-% -- IMPORTANT NOTE
-%
-% This template contains comments intended 
-% to minimize problems and delays during our production 
-% process. Please follow the template instructions
-% whenever possible.
-%
-% % % % % % % % % % % % % % % % % % % % % % % 
-%
-% Once your paper is accepted for publication, 
-% PLEASE REMOVE ALL TRACKED CHANGES in this file 
-% and leave only the final text of your manuscript. 
-% PLOS recommends the use of latexdiff to track changes during review, as this will help to maintain a clean tex file.
-% Visit https://www.ctan.org/pkg/latexdiff?lang=en for info or contact us at latex@plos.org.
-%
-%
-% There are no restrictions on package use within the LaTeX files except that 
-% no packages listed in the template may be deleted.
-%
-% Please do not include colors or graphics in the text.
-%
-% The manuscript LaTeX source should be contained within a single file (do not use \input, \externaldocument, or similar commands).
-%
-% % % % % % % % % % % % % % % % % % % % % % %
-%
-% -- FIGURES AND TABLES
-%
-% Please include tables/figure captions directly after the paragraph where they are first cited in the text.
-%
-% DO NOT INCLUDE GRAPHICS IN YOUR MANUSCRIPT
-% - Figures should be uploaded separately from your manuscript file. 
-% - Figures generated using LaTeX should be extracted and removed from the PDF before submission. 
-% - Figures containing multiple panels/subfigures must be combined into one image file before submission.
-% For figure citations, please use "Fig" instead of "Figure".
-% See http://journals.plos.org/plosone/s/figures for PLOS figure guidelines.
-%
-% Tables should be cell-based and may not contain:
-% - spacing/line breaks within cells to alter layout or alignment
-% - do not nest tabular environments (no tabular environments within tabular environments)
-% - no graphics or colored text (cell background color/shading OK)
-% See http://journals.plos.org/plosone/s/tables for table guidelines.
-%
-% For tables that exceed the width of the text column, use the adjustwidth environment as illustrated in the example table in text below.
-%
-% % % % % % % % % % % % % % % % % % % % % % % %
-%
-% -- EQUATIONS, MATH SYMBOLS, SUBSCRIPTS, AND SUPERSCRIPTS
-%
-% IMPORTANT
-% Below are a few tips to help format your equations and other special characters according to our specifications. For more tips to help reduce the possibility of formatting errors during conversion, please see our LaTeX guidelines at http://journals.plos.org/plosone/s/latex
-%
-% For inline equations, please be sure to include all portions of an equation in the math environment.  For example, x$^2$ is incorrect; this should be formatted as $x^2$ (or $\mathrm{x}^2$ if the romanized font is desired).
-%
-% Do not include text that is not math in the math environment. For example, CO2 should be written as CO\textsubscript{2} instead of CO$_2$.
-%
-% Please add line breaks to long display equations when possible in order to fit size of the column. 
-%
-% For inline equations, please do not include punctuation (commas, etc) within the math environment unless this is part of the equation.
-%
-% When adding superscript or subscripts outside of brackets/braces, please group using {}.  For example, change "[U(D,E,\gamma)]^2" to "{[U(D,E,\gamma)]}^2". 
-%
-% Do not use \cal for caligraphic font.  Instead, use \mathcal{}
-%
-% % % % % % % % % % % % % % % % % % % % % % % % 
-%
-% Please contact latex@plos.org with any questions.
-%
-% % % % % % % % % % % % % % % % % % % % % % % %
+%% BioMed_Central_Tex_Template_v1.06
+%%                                      %
+%  bmc_article.tex            ver: 1.06 %
+%                                       %
 
-\documentclass[10pt,letterpaper]{article}
-\usepackage[top=0.85in,left=2.75in,footskip=0.75in]{geometry}
+%%IMPORTANT: do not delete the first line of this template
+%%It must be present to enable the BMC Submission system to
+%%recognise this template!!
 
-% amsmath and amssymb packages, useful for mathematical formulas and symbols
-\usepackage{amsmath,amssymb}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                     %%
+%%  LaTeX template for BioMed Central  %%
+%%     journal article submissions     %%
+%%                                     %%
+%%          <8 June 2012>              %%
+%%                                     %%
+%%                                     %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Use adjustwidth environment to exceed column width (see example table in text)
-\usepackage{changepage}
 
-% Use Unicode characters when possible
-\usepackage[utf8x]{inputenc}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                                                 %%
+%% For instructions on how to fill out this Tex template           %%
+%% document please refer to Readme.html and the instructions for   %%
+%% authors page on the biomed central website                      %%
+%% http://www.biomedcentral.com/info/authors/                      %%
+%%                                                                 %%
+%% Please do not use \input{...} to include other tex files.       %%
+%% Submit your LaTeX manuscript as one .tex document.              %%
+%%                                                                 %%
+%% All additional figures and files should be attached             %%
+%% separately and not embedded in the \TeX\ document itself.       %%
+%%                                                                 %%
+%% BioMed Central currently use the MikTex distribution of         %%
+%% TeX for Windows) of TeX and LaTeX.  This is available from      %%
+%% http://www.miktex.org                                           %%
+%%                                                                 %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% textcomp package and marvosym package for additional characters
-\usepackage{textcomp,marvosym}
+\documentclass{bmcart}
 
-% cite package, to clean up citations in the main text. Do not remove.
-\usepackage{cite}
-
-% Use nameref to cite supporting information files (see Supporting Information section for more info)
-\usepackage{nameref,hyperref}
-
-% line numbers
-\usepackage[right]{lineno}
-
-% ligatures disabled
-\usepackage{microtype}
-\DisableLigatures[f]{encoding = *, family = * }
-
-% color can be used to apply background shading to table cells only
-\usepackage[table]{xcolor}
-
-% array package and thick rules for tables
-\usepackage{array}
-
-% our packages
+\usepackage{amsthm,amsmath}
+\usepackage[utf8]{inputenc}
 \usepackage{url}
 \usepackage{color}
 \usepackage{xspace}
 
-% create "+" rule type for thick vertical lines
-\newcolumntype{+}{!{\vrule width 2pt}}
 
-% create \thickcline for thick horizontal lines of variable length
-\newlength\savedwidth
-\newcommand\thickcline[1]{%
-  \noalign{\global\savedwidth\arrayrulewidth\global\arrayrulewidth 2pt}%
-  \cline{#1}%
-  \noalign{\vskip\arrayrulewidth}%
-  \noalign{\global\arrayrulewidth\savedwidth}%
-}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                             %%
+%%  If you wish to display your graphics for   %%
+%%  your own use using includegraphic or       %%
+%%  includegraphics, then comment out the      %%
+%%  following two lines of code.               %%
+%%  NB: These line *must* be included when     %%
+%%  submitting to BMC.                         %%
+%%  All figure files must be submitted as      %%
+%%  separate graphics through the BMC          %%
+%%  submission process, not included in the    %%
+%%  submitted article.                         %%
+%%                                             %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% \thickhline command for thick horizontal lines that span the table
-\newcommand\thickhline{\noalign{\global\savedwidth\arrayrulewidth\global\arrayrulewidth 2pt}%
-\hline
-\noalign{\global\arrayrulewidth\savedwidth}}
 
-
-% Remove comment for double spacing
-%\usepackage{setspace} 
-%\doublespacing
-
-% Text layout
-\raggedright
-\setlength{\parindent}{0.5cm}
-\textwidth 5.25in 
-\textheight 8.75in
-
-% Bold the 'Figure #' in the caption and separate it from the title/caption with a period
-% Captions will be left justified
-\usepackage[aboveskip=1pt,labelfont=bf,labelsep=period,justification=raggedright,singlelinecheck=off]{caption}
-\renewcommand{\figurename}{Fig}
-
-% Use the PLoS provided BiBTeX style
-\bibliographystyle{plos2015}
-
-% Remove brackets from numbering in List of References
-\makeatletter
-\renewcommand{\@biblabel}[1]{\quad#1.}
-\makeatother
+\def\includegraphic{}
+\def\includegraphics{}
 
 
 
-% Header and Footer with logo
-\usepackage{lastpage,fancyhdr,graphicx}
-\usepackage{epstopdf}
-%\pagestyle{myheadings}
-\pagestyle{fancy}
-\fancyhf{}
-%\setlength{\headheight}{27.023pt}
-%\lhead{\includegraphics[width=2.0in]{PLOS-submission.eps}}
-\rfoot{\thepage/\pageref{LastPage}}
-\renewcommand{\headrulewidth}{0pt}
-\renewcommand{\footrule}{\hrule height 2pt \vspace{2mm}}
-\fancyheadoffset[L]{2.25in}
-\fancyfootoffset[L]{2.25in}
-\lfoot{\today}
-
-%% Include all macros below
-
-\newcommand{\lorem}{{\bf LOREM}}
-\newcommand{\ipsum}{{\bf IPSUM}}
-
-%% END MACROS SECTION
-
-%% BEGIN OUR MACROS SECTION
+%%% Put your definitions there:
+\startlocaldefs
 
 \newcommand*{\eg}{e.g.\@\xspace}
 \newcommand*{\ie}{i.e.\@\xspace}
@@ -189,67 +81,161 @@
 \newcommand{\vl}[1]{\textcolor{red}{VL: #1}}
 \newcommand{\ja}[1]{\textcolor{purple}{JA: #1}}
 
-%% END OUR MACROS SECTION
+\endlocaldefs
 
+
+%%% Begin ...
 \begin{document}
-\vspace*{0.2in}
 
-% Title must be 250 characters or less.
-\begin{flushleft}
-{\Large
-\textbf\newline{Learning Auditory Similarities Between Instrumental Playing Techniques} % Please use "sentence case" for title and headings (capitalize only the first word in a title (or heading), the first word in a subtitle (or subheading), and any proper nouns).
+%%% Start of article front matter
+\begin{frontmatter}
+
+\begin{fmbox}
+\dochead{Research}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Enter the title of your article here     %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Learning Auditory Similarities Between Instrumental Playing Techniques}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Enter the authors here                   %%
+%%                                          %%
+%% Specify information, if available,       %%
+%% in the form:                             %%
+%%   <key>={<id1>,<id2>}                    %%
+%%   <key>=                                 %%
+%% Comment or delete the keys which are     %%
+%% not used. Repeat \author command as much %%
+%% as required.                             %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\author[
+   addressref={aff1},                   % id's of addresses, e.g. {aff1,aff2}
+   corref={aff1},                       % id of corresponding address, if any
+   noteref={n1},                        % id's of article notes, if any
+   email={email@example.com}            % email address
+]{\inits{CE}\fnm{Christian} \snm{El-Hajj}}
+\author[
+   addressref={aff2},
+   email={email@example.com}
+]{\inits{VL}\fnm{Vincent} \snm{Lostanlen}}
+\author[
+   addressref={aff2},
+   email={email@example.com}
+]{\inits{MR}\fnm{Mathias} \snm{Rossignol}}
+\author[
+   addressref={aff2},
+   email={email@example.com}
+]{\inits{GL}\fnm{Gr\'egoire} \snm{Lafay}}
+\author[
+   addressref={aff2},
+   email={email@example.com}
+]{\inits{ML}\fnm{Mathieu} \snm{Lagrange}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Enter the authors' addresses here        %%
+%%                                          %%
+%% Repeat \address commands as much as      %%
+%% required.                                %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\address[id=aff1]{%                           % unique id
+  \orgname{Department of Zoology, Cambridge}, % university, etc
+  \street{Waterloo Road},                     %
+  %\postcode{}                                % post or zip code
+  \city{London},                              % city
+  \cny{UK}                                    % country
 }
-\newline
-% Insert author names, affiliations and corresponding author email (do not include titles, positions, or degrees).
-\\
-Christian El-Hajj\textsuperscript{1},
-Vincent Lostanlen\textsuperscript{2},
-Mathias Rossignol\textsuperscript{3},
-Gr\'egoire Lafay\textsuperscript{1},
-Mathieu Lagrange\textsuperscript{2*}
-\\
-\bigskip
-\textbf{1} Affiliation Dept/Program/Center, Institution Name, City, State, Country
-\\
-\textbf{2} Affiliation Dept/Program/Center, Institution Name, City, State, Country
-\\
-\textbf{3} Affiliation Dept/Program/Center, Institution Name, City, State, Country
-\\
-\bigskip
+\address[id=aff2]{%
+  \orgname{Marine Ecology Department, Institute of Marine Sciences Kiel},
+  \street{D\"{u}sternbrooker Weg 20},
+  \postcode{24105}
+  \city{Kiel},
+  \cny{Germany}
+}
 
-% Use the asterisk to denote corresponding authorship and provide email address in note below.
-* correspondingauthor@institute.edu
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Enter short notes here                   %%
+%%                                          %%
+%% Short notes will be after addresses      %%
+%% on first page.                           %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\end{flushleft}
-% Please keep the abstract below 300 words
-\section*{Abstract}
-ABSTRACT HERE
+\begin{artnotes}
+\note[id=n1]{Equal contributor}
+\end{artnotes}
 
-% Please keep the Author Summary between 150 and 200 words
-% Use first person. PLOS ONE authors please skip this step. 
-% Author Summary not valid for PLOS ONE submissions.   
-\section*{Author summary}
-AUTHOR SUMMARY HERE
+\end{fmbox}
 
-\linenumbers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% The Abstract begins here                 %%
+%%                                          %%
+%% Please refer to the Instructions for     %%
+%% authors on http://www.biomedcentral.com  %%
+%% and include the section headings         %%
+%% accordingly for your article type.       %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section*{Figures}
+\begin{abstractbox}
 
-Fig 1: strf + scattering (upsampling strf)
+\begin{abstract}
+Abstract here.
+\end{abstract}
 
-Fig 2: one liner music players (3 ipts bass pizz, bass archo, violin archo) sound, spec, scat, isomap
-other line : perceptual clustering
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% The keywords begin here                  %%
+%%                                          %%
+%% Put each keyword in separate \kwd{}.     %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Fig 3: same 3 sounds spec + scatt
+\begin{keyword}
+\kwd{sample}
+\kwd{article}
+\kwd{author}
+\end{keyword}
 
-Fig 4: tags clouds
+\end{abstractbox}
+%
+%\end{fmbox}% uncomment this for twcolumn layout
 
-Fig last: perfs mfcc separable joint
+\end{frontmatter}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% The Main Body begins here                %%
+%%                                          %%
+%% Please refer to the instructions for     %%
+%% authors on:                              %%
+%% http://www.biomedcentral.com/info/authors%%
+%% and include the section headings         %%
+%% accordingly for your article type.       %%
+%%                                          %%
+%% See the Results and Discussion section   %%
+%% for details on how to create sub-sections%%
+%%                                          %%
+%% use \cite{...} to cite references        %%
+%%  \cite{koon} and                         %%
+%%  \cite{oreg,khar,zvai,xjon,schn,pond}    %%
+%%  \nocite{smith,marg,hunn,advi,koha,mouse}%%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Use "Eq" instead of "Equation" for equation citations.
 \section*{Introduction}
-\label{sec:introduction}
+\label{sec:intro}
 
 % Section outline:
 % - How to accurately model timbre perception?
@@ -288,15 +274,7 @@ Instead of single musical notes played with standard techniques, we extend the r
 While increasing the complexity of the timbral space explored, these sounds do not include the full range of timbre exhibited, for example, by speech or environmental sounds.
 As a result, we are able to better analyze their characteristics and link them to the properties of the transform.
 
-\section*{Results}
-
-% Section outline:
-% - Subjects asked to cluster 78 IPTs into an arbitrary number of clusters (maximum 20). Resulting partition gives measure of timbral similarity.
-% - Partitions do not completely agree with either instrument (I) of playing technique (PT) taxonomies, although slightly favor PTs. Perceptual measurement captures timbre across IPTs. Show through NMI or other measurements.
-% - Propose computational model for these perceptual similarity measurements: scattering transform (time or time-frequency), followed by a learned linear layer (LDA or LDMM) to adapt representation to measured data.
-% - Model shows good agreement with similarity measurements under different testing protocols (aggregated clusters, aggregated subspaces, cross validation).
-
-\subsection*{Timbre similarity perception}
+\section*{Timbre similarity judgments}
 \label{sec:survey}
 
 To validate our timbre perception model, we first acquired similarity judgments from a survey of human subjects.
@@ -314,6 +292,9 @@ We made the experiment available for two months and obtained results for a total
 
 Given the clustering assignments of each subject, we then constructed a consensus clustering using a hypergraph partitioning algorithm \cite{kernighan1970efficient,han1997scalable,strehl2002cluster}.
 Interestingly, although several sounds pairs were obtained from the same instrument (but different PTs) and others were obtained using the same PT (but different instruments), the consensus clustering did not favor one of these taxonomies over the other.
+
+\section*{Proposed approach}
+\label{sec:method}
 
 \subsection*{Scattering transform}
 \label{sec:scattering}
@@ -392,6 +373,12 @@ We contrast this with LMNN applied to the separable scattering coefficients, whi
 For the joint scattering coefficients, we obtain a $\patk$ of $???$.
 We therefore conclude that a simple reweighting of the scattering transform yields a more appropriate timbral similarity measure.
 
+\section*{Results}
+\label{sec:results}
+
+\ja{The results are currently sprinkled into the above methods section.
+These need to be extracted and summarized here.}
+
 \section*{Discussion}
 \label{sec:discussion}
 
@@ -401,29 +388,114 @@ We therefore conclude that a simple reweighting of the scattering transform yiel
 \item Applications: query-by-example in musical sample databases.
 \end{itemize}
 
-\section*{Materials and methods}
-\label{sec:methods}
 
-\begin{itemize}
-\item IPTs pre-screened by two composition teachers to select 78 ``interesting'' IPTs that are very similar to (i.e., easily confused with) other IPTs.
-\item Subjects asked to perform free sorting task on the selected IPTs according to similarity. Allowed to label with up to 20 different colors.
-\item Clustering gives similarity measurement for each subject. These measurements were aggregated in a certain way.
-\item The aggregated clustering was compared to instrument and playing technique taxonomies using NMI or other measures.
-\item The (time or time-frequency) scattering transform is composed of alternating layers of wavelet transforms and modulus nonlinearities. The result is a convolutional network with fixed filters. Performs well in various classification and regression tasks when augmented with a learned linear layer.
-\item Linear layer is provided here by LDA or LMNN.
-\item Performance is measured in a query-by-example setting with precision at $k$, where $k = 5$.
-\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Backmatter begins here                   %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section*{Supporting information}
-\label{sec:supp}
+\begin{backmatter}
 
-\section*{Acknowledgments}
-\label{sec:ack}
+\section*{Competing interests}
+  The authors declare that they have no competing interests.
 
-\nolinenumbers
+\section*{Author's contributions}
+    Text for this section \ldots
 
-\bibliographystyle{plos2015}
+\section*{Acknowledgements}
+  Text for this section \ldots
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                  The Bibliography                       %%
+%%                                                         %%
+%%  Bmc_mathpys.bst  will be used to                       %%
+%%  create a .BBL file for submission.                     %%
+%%  After submission of the .TEX file,                     %%
+%%  you will be prompted to submit your .BBL file.         %%
+%%                                                         %%
+%%                                                         %%
+%%  Note that the displayed Bibliography will not          %%
+%%  necessarily be rendered by Latex exactly as specified  %%
+%%  in the online Instructions for Authors.                %%
+%%                                                         %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\bibliographystyle{bmc-mathphys}
 \bibliography{bib}
 
-\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                               %%
+%% Figures                       %%
+%%                               %%
+%% NB: this is for captions and  %%
+%% Titles. All graphics must be  %%
+%% submitted separately and NOT  %%
+%% included in the Tex document  %%
+%%                               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\section*{Figures}
+
+\begin{figure}[h!]
+\caption{\csentence{STRF + scattering (upsampling STRF)}
+A short description of the figure content should go here.}
+\end{figure}
+
+\begin{figure}[h!]
+\caption{\csentence{Model overview}
+One line music players (3 ipts bass pizz, bass archo, violin archo) sound, spec,
+scat, isomap.
+Second line : perceptual clustering.}
+\end{figure}
+
+\begin{figure}[h!]
+\caption{\csentence{Sample scattering}
+Same 3 sounds spec + scatt.}
+\end{figure}
+
+\begin{figure}[h!]
+\caption{\csentence{Tag clouds}
+A short description of the figure content should go here.}
+\end{figure}
+
+\begin{figure}[h!]
+\caption{\csentence{Perfs MFCC, separable, joint (last)}
+A short description of the figure content should go here.}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                               %%
+%% Tables                        %%
+%%                               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Tables}
+\begin{table}[h!]
+\caption{Sample table title. This is where the description of the table should go.}
+      \begin{tabular}{cccc}
+        \hline
+           & B1  &B2   & B3\\ \hline
+        A1 & 0.1 & 0.2 & 0.3\\
+        A2 & ... & ..  & .\\
+        A3 & ..  & .   & .\\ \hline
+      \end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                               %%
+%% Additional Files              %%
+%%                               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Additional Files}
+  \subsection*{Additional file 1 --- Sample additional file title}
+    Additional file descriptions text (including details of how to
+    view the file, if it is in a non-standard format or the file extension).  This might
+    refer to a multi-page table or a figure.
+
+  \subsection*{Additional file 2 --- Sample additional file title}
+    Additional file descriptions text.
+
+\end{backmatter}
+
+\end{document}

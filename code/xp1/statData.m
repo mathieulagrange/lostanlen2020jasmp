@@ -3,7 +3,7 @@ clear all
 load('extractedData/results.mat')
 
 a = histcounts(rating(:, 1), 1:7)
-b = histcounts(rating(:, 2), 1:7)
+b = histcounts(rating(:, end), 1:7)
 
 bar([a; b]')
 xlabel('Rating')

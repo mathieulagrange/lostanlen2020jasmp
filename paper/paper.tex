@@ -7,9 +7,8 @@
 \usepackage{color}
 \usepackage{xspace}
 
-\def\includegraphic{}
-\def\includegraphics{}
-
+\def\includegraphic[#1]{}
+\def\includegraphics[#1]{}
 
 
 %%% Put your definitions there:
@@ -228,23 +227,18 @@ The adaptivity of the proposed model has the additional advantag of allowing it 
 \section*{Timbre similarity judgments}
 \label{sec:survey}
 
-To validate our timbre perception model, we first acquired similarity judgments from a survey of human subjects.
-The survey was carried out for $78$ sounds, each representing an instrument--playing technique (IPT) pair.
-These IPTs were selected from a larger set of $235$ IPTs by two experts at the \emph{Conservatoire national sup\'erieur de musique et de danse de Paris} (CNSMDP).
-The selection criteria were based on the likelihood of an IPT being similar to some other IPT, ensuring that IPTs that were too singular were excluded from the survey.
+To construct a dataset for exploring the perception of timbre, we conducted a survey on the perceived similarity of a set of sounds.
+The set consists of $78$ recordings of different instrument--PT (IPT) pairs, each played at the same pitch and nuance (for more information on the dataset, see the Dataset section).
+\ja{Mathieu, which pitch and nuance?}%
+In the survey, a subject asked to dots on a two-dimensional place in a free sorting task.
+Each dot corresponded to a different IPT recording and was moved by the user dragging them with the mouse.
+In addition to spatially arranging the dots, the user was also asked to assign one of $20$ colors to each dot, providing a simple clustering of the sounds.
+While both the location and color of each dot was recorded, only the color was used in our subsequent analysis---the spatial arrangement was only used to facilitate the user's ability to organize the sounds.
+More information on the data collection process is available in the Human timbre judgments section.
 
-In the survey, a subject was provided with one sound recording per IPTs with the same nuance and pitch when relevant. The subject is then asked to cluster those $78$ sounds in a free sorting task.
-This was achieved by arranging corresponding dots in a two-dimensional plane on a computer screen and assigning a color to each dot.
-While the location of the dots was recorded, this information was not used in our analysis and only served to help the subject organize the sounds spatially.
-The colors assigned to each dot---and, consequently, to each sound---was recorded for each subject.
-
-The above similarity judgments were crowdsourced by sending out requests to perform the experiment on internal mailing lists of the CNSMDP and international research mailing lists with focus on audio and music processing.
-We made the experiment available for two months and obtained results for a total of $31$ subjects.
-
-
-The outcome of this process can be formalized as follows. For each subject, each pair of IPTs is given a boolean similarity value. If the two IPTs have been given the same color by the subject, the similarity is set to one, and zero otherwise, see Figure \ref{fig:test}. This information is usually called a "clustering", where each item is given a label within a closed set of labels, but those labels do not carry information by itself.
-
-\ja{equation needed ?}
+The above survey was implemented as an interactive website, links to which were sent out on internal mailing lists of the \emph{Conservatoire national sup\'erieur de musique et de danse de Paris} (CNSMDP) and international mailing lists focusing on research in audio and music processing.
+We made the experiment available for two months, during which we obtained results for a total of $31$ subjects.
+The final arrangement and color assignment of one of the subjects is shown in Figure \ref{fix:xp2display}.
 
 \begin{figure}
 \center
@@ -253,14 +247,29 @@ The outcome of this process can be formalized as follows. For each subject, each
 \label{fig:xp2display}
 \end{figure}
 
-\ml{also have the resulting binary similarity matrix ?}
+For each subject, we constructed a matrix of size $78 \times 78$ to represent their similarity judgments for each pair of the $78$ IPTs.
+Specifically, the $(i, j)$th element of the matrix was set to one if the $i$th and $j$th IPT were assigned the same color.
+If not, it was set to zero.
+In other words, we record the clustering assignment of each subject as a binary similarity matrix.
 
-Depending on the application, it may be of interest to condition the timbre space using the information of only one subject. In this case, the resulting timbre space is specialized to a given person. It may also be of interest to condition the timbre space using the information given by several subjects. Though, conditioning the timbre space using several binary similarity matrices is not trivial, and will be discussed extensively in Section \ref{sec:results}.
+\ml{Joakim, equation needed ?}
+\ja{I don't think so.
+It should be fairly straightforward.}%
+
+\ml{also have the resulting binary similarity matrix ?}
+\ja{Yes, but I think we should have it for the consensus clustering described below.}%
+
+Depending on the application, it may be of interest to condition the timbre space using the information of only one subject.
+In this case, the correspondign binary similarity matrix may be used and the resulting timbre space is specialized to a given person.
+It may also be of interest to condition the space using the aggregate similarity judgments given by several subjects.
+That being said, conditioning the timbre space using several binary similarity matrices is not a trivial task, and will be discussed extensively in the Results section.
+\ja{Why discuss it extensively there?
+Don't we just settle on the partitioning algorithm below?}%
 
 We found that using a hypergraph partitioning algorithm \cite{kernighan1970efficient,han1997scalable,strehl2002cluster} to produce the consensus similarity matrix performed well.
 Interestingly, although several sounds pairs were obtained from the same instrument (but different PTs) and others were obtained using the same PT (but different instruments), the consensus clustering did not favor one of these taxonomies over the other.
-
-More information about the data collection process is available in Section \ref{sec:subjective}.
+\ja{We should have some figure to back this up.
+Can this be done using the tag clouds?}
 
 \section*{Proposed approach}
 \label{sec:method}
@@ -350,29 +359,6 @@ We therefore conclude that a simple reweighting of the scattering transform yiel
 \ja{The results are currently sprinkled into the above methods section.
 These need to be extracted and summarized here.}
 
-\section{Dataset} \label{sec:dataset}
-
-The dataset considered in this paper as been recorded at Ircam and is composed of audio recording of 16 different musical instruments played with different playing techniques, which leads to 235 different couple of instrument / playing technique. For each couple, the pitch and intonation is varied leading to 25444 audio samples.
-
-The recorded instruments belongs to the wind and string classes. For winds, the instruments considered in the second experiment are: accordion (Acc), saxophone alto (ASax), tuba (Tb), bassoon (Bn), clarinet Bb (BbCl), flute (Fl), horn (Hn), oboe (Ob), trombone tenor (TTbn), and trumpet C (TpC). For the string class, the instruments are: guitar (Gtr), harp (Hp), viola (Va), violin (Vn), violoncello (Vc), and contrabass (Cb).
-
-Some instruments can be complemented with sordina (S), wha (W). The addition of this kind of device modifying the shape of the instrument, a saxophone alto and saxophone alto with sordina are considered as different instruments.
-\vl{This is crucial and should not be deferred to the appendix. @writing}
-\ml{J'ai mis ca en appendice pour ne pas que le lecteur confonde la base SOL complete et les données considérées dans l'étude.}
-
-Those instruments are recorded for different nuance and pitch if the latter is relevant, but more importantly, several playing technique are considered. For  the second experiment described in this paper, the playing techniques considered are: artificial harmonic (art), blow (blow), exploding slap  (explo), harmonic (harm), key-click (key), col legno   (legno), non vibrato (nonvib), ordinario (ord), pedal tone (pdl), pizzicato (pizz), ponticello (pont), slap (slap), (tasto), tongue-ram (tng), and xylophonic (xyl).
-
-\vl{This section is not precise enough in terms of intensity ranges and pitch ranges.
-The abbreviations can be removed. @data @writing}
-\ml{}
-
-\vl{A bubble plot of number of notes per instrument (x axis) and playing technique
-(y axis) would be extremely useful. @data @figure}
-\ml{Tu voudrais ca pour la base SOL complete ou les données considérées dans l'étude ?}
-\vl{Les donn\'{e} de l'\{e}tude, relatives aux Figures 5 et 6.\}
-
-
-
 \section*{Discussion}
 \label{sec:discussion}
 
@@ -381,6 +367,73 @@ The abbreviations can be removed. @data @writing}
 \item Proposed computational model (scattering + linear) reproduces similarity judgments accurately. Easy to ``retrain'' for other data. Fixed wavelet structure allows for analysis of linear layer and guarantees invariance and stability properties.
 \item Applications: query-by-example in musical sample databases.
 \end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Backmatter begins here                   %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{backmatter}
+
+\section*{Competing interests}
+  The authors declare that they have no competing interests.
+
+\section*{Author's contributions}
+    Text for this section \ldots
+
+\section*{Acknowledgements}
+The Flatiron Institute is a division of the Simons Foundation.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                  The Bibliography                       %%
+%%                                                         %%
+%%  Bmc_mathpys.bst  will be used to                       %%
+%%  create a .BBL file for submission.                     %%
+%%  After submission of the .TEX file,                     %%
+%%  you will be prompted to submit your .BBL file.         %%
+%%                                                         %%
+%%                                                         %%
+%%  Note that the displayed Bibliography will not          %%
+%%  necessarily be rendered by Latex exactly as specified  %%
+%%  in the online Instructions for Authors.                %%
+%%                                                         %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\bibliographystyle{bmc-mathphys}
+\bibliography{bib}
+
+%% Appendices
+
+\section*{Dataset}
+\label{sec:dataset}
+
+The dataset considered in this paper as been recorded at Ircam and is composed of audio recording of $16$ different musical instruments played with different PTs, which leads to $235$ different IPT pairs.
+In addition, the pitch and nuance is varie for each pair (when applicable), yielding a total of $25444$ audio recordings.
+For each couple, the pitch and intonation is varied leading to 25444 audio samples.
+
+The recorded instruments belongs to the wind and string classes.
+For winds, the instruments considered in the second experiment are: accordion (Acc), saxophone alto (ASax), tuba (Tb), bassoon (Bn), clarinet Bb (BbCl), flute (Fl), horn (Hn), oboe (Ob), trombone tenor (TTbn), and trumpet C (TpC).
+For the string class, the instruments are: guitar (Gtr), harp (Hp), viola (Va), violin (Vn), violoncello (Vc), and contrabass (Cb).
+\ja{Better to display these in a table?}
+
+Some instruments can be complemented with sordina (S), wha (W).
+The addition of this kind of device modifies the shape of the instrument.
+Consequently, an alto saxophone and alto saxophone with sordina are considered as different instruments.
+\vl{This is crucial and should not be deferred to the appendix. @writing}
+\ml{J'ai mis ca en appendice pour ne pas que le lecteur confonde la base SOL complete et les données considérées dans l'étude.}
+
+Those instruments are recorded for different nuance and pitch if the latter is relevant, but more importantly, several playing technique are considered.
+For the second experiment described in this paper, the playing techniques considered are: artificial harmonic (art), blow (blow), exploding slap (explo), harmonic (harm), key-click (key), col legno (legno), non vibrato (nonvib), ordinario (ord), pedal tone (pdl), pizzicato (pizz), ponticello (pont), slap (slap), (tasto), tongue-ram (tng), and xylophonic (xyl).
+
+\vl{This section is not precise enough in terms of intensity ranges and pitch ranges.
+The abbreviations can be removed. @data @writing}
+\ml{}
+
+\vl{A bubble plot of number of notes per instrument (x axis) and playing technique
+(y axis) would be extremely useful. @data @figure}
+\ml{Tu voudrais ca pour la base SOL complete ou les données considérées dans l'étude ?}
+\vl{Les donn\'{e} de l'\'{e}tude, relatives aux Figures 5 et 6.}
 
 \section*{Human timbre judgments}
 \label{sec:subjective}
@@ -399,7 +452,12 @@ Gathering the similarity judgments between each pair of samples would be a daunt
 One reasonable assumption that we choose to consider here is that the pitch and nuance do not alter significantly the perception of timbral similarity. This is in line with the ANSI negative definition of timbre \vl{expliquer, citer, et modérer le propos en donnant des exemples dans lequel le pitch ou la nuance change le timbre}.
 
 
-\subsection{Reducing Expert judgments of technique peculiarities}
+\section*{Reducing Expert judgments of technique peculiarities}
+
+\ja{This needs to be summarized (possible in the previous section).
+I'm copying two sentences in here that I had in the Timbre similarity judgments section.}%
+These IPTs were selected from a larger set of $235$ IPTs by two experts at the \emph{Conservatoire national sup\'erieur de musique et de danse de Paris} (CNSMDP).
+The selection criteria were based on the likelihood of an IPT being similar to some other IPT, ensuring that IPTs that were too singular were excluded from the survey.
 
 Even so, considering every pairs of IPTs is not practical. A selection
 experiment is thus conducted where the subject is asked to give his opinion on which
@@ -434,7 +492,10 @@ Even if the hypothesis that the distributions of ratings comes from independent 
 Keeping in mind that the gathering of the perceptual judgments of \ipt similarities shall remain practical, the number of \ipts considered shall be lower than $100$. We thus select the \ipts with an average rating higher than three, which brings us 78 \ipts to study.
 
 %%%%%%%%%%%%%% CROWDSOURCED JUDGMENTS OF PAIRWISE SIMILARITY %%%%%%%%%%%%%%%%%%%%
-\subsection{Crowdsourced judgments of pairwise similarity}
+\section*{Crowdsourced judgments of pairwise similarity}
+
+\ja{A lot of this is covered in the main text.
+Not sure what we need to add in the appendix.}
 
 The second experiment aims at gathering spontaneous judgment of similarity for those 78 \ipts using a canonical free sorting task. This type of task is chosen among others for two main reasons. First, it gives the ability to the subject to listen to the whole set of \ipts before performing the task. Second, it gives more freedom to the subject, thus potentially more interest to perform the task than a lengthy series of XXY dissimilarity ratings.
 
@@ -452,7 +513,10 @@ As only the clustering given by the subjects using the color labels is considere
 This results in $31$ clusterings that can be considered for defining a perceptual timbre space of \ipts.
 
 
-\subsection{Analysis}\label{sec:analysis}
+\section*{Analysis}\label{sec:analysis}
+
+\ja{I thought all of this stuff was going away and we were just replacing it with a brief analysis using the tag clouds (and so on).
+At any rate, the relevant analysis results should be in the main text (under Timbre similarity judgments, after we describe the experiments).}%
 
 In order to gain information about the relevance those $31$ clusterings for defining a perceptual timbre space of \ipts, an analysis is performed.
 
@@ -546,40 +610,6 @@ To conclude this section, the process of gathering data about the perceptual sim
 \end{figure}
 
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%                                          %%
-%% Backmatter begins here                   %%
-%%                                          %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{backmatter}
-
-\section*{Competing interests}
-  The authors declare that they have no competing interests.
-
-\section*{Author's contributions}
-    Text for this section \ldots
-
-\section*{Acknowledgements}
-  Text for this section \ldots
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%                  The Bibliography                       %%
-%%                                                         %%
-%%  Bmc_mathpys.bst  will be used to                       %%
-%%  create a .BBL file for submission.                     %%
-%%  After submission of the .TEX file,                     %%
-%%  you will be prompted to submit your .BBL file.         %%
-%%                                                         %%
-%%                                                         %%
-%%  Note that the displayed Bibliography will not          %%
-%%  necessarily be rendered by Latex exactly as specified  %%
-%%  in the online Instructions for Authors.                %%
-%%                                                         %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\bibliographystyle{bmc-mathphys}
-\bibliography{bib}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                               %%

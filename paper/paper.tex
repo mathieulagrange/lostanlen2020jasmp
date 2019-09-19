@@ -227,23 +227,18 @@ The adaptivity of the proposed model has the additional advantag of allowing it 
 \section*{Timbre similarity judgments}
 \label{sec:survey}
 
-To validate our timbre perception model, we first acquired similarity judgments from a survey of human subjects.
-The survey was carried out for $78$ sounds, each representing an instrument--playing technique (IPT) pair.
-These IPTs were selected from a larger set of $235$ IPTs by two experts at the \emph{Conservatoire national sup\'erieur de musique et de danse de Paris} (CNSMDP).
-The selection criteria were based on the likelihood of an IPT being similar to some other IPT, ensuring that IPTs that were too singular were excluded from the survey.
+To construct a dataset for exploring the perception of timbre, we conducted a survey on the perceived similarity of a set of sounds.
+The set consists of $78$ recordings of different instrument--PT (IPT) pairs, each played at the same pitch and nuance (for more information on the dataset, see the Dataset section).
+\ja{Mathieu, which pitch and nuance?}%
+In the survey, a subject asked to dots on a two-dimensional place in a free sorting task.
+Each dot corresponded to a different IPT recording and was moved by the user dragging them with the mouse.
+In addition to spatially arranging the dots, the user was also asked to assign one of $20$ colors to each dot, providing a simple clustering of the sounds.
+While both the location and color of each dot was recorded, only the color was used in our subsequent analysis---the spatial arrangement was only used to facilitate the user's ability to organize the sounds.
+More information on the data collection process is available in the Human timbre judgments section.
 
-In the survey, a subject was provided with one sound recording per IPTs with the same nuance and pitch when relevant. The subject is then asked to cluster those $78$ sounds in a free sorting task.
-This was achieved by arranging corresponding dots in a two-dimensional plane on a computer screen and assigning a color to each dot.
-While the location of the dots was recorded, this information was not used in our analysis and only served to help the subject organize the sounds spatially.
-The colors assigned to each dot---and, consequently, to each sound---was recorded for each subject.
-
-The above similarity judgments were crowdsourced by sending out requests to perform the experiment on internal mailing lists of the CNSMDP and international research mailing lists with focus on audio and music processing.
-We made the experiment available for two months and obtained results for a total of $31$ subjects.
-
-
-The outcome of this process can be formalized as follows. For each subject, each pair of IPTs is given a boolean similarity value. If the two IPTs have been given the same color by the subject, the similarity is set to one, and zero otherwise, see Figure \ref{fig:test}. This information is usually called a "clustering", where each item is given a label within a closed set of labels, but those labels do not carry information by itself.
-
-\ml{Joakim, equation needed ?}
+The above survey was implemented as an interactive website, links to which were sent out on internal mailing lists of the \emph{Conservatoire national sup\'erieur de musique et de danse de Paris} (CNSMDP) and international mailing lists focusing on research in audio and music processing.
+We made the experiment available for two months, during which we obtained results for a total of $31$ subjects.
+The final arrangement and color assignment of one of the subjects is shown in Figure \ref{fix:xp2display}.
 
 \begin{figure}
 \center
@@ -252,14 +247,29 @@ The outcome of this process can be formalized as follows. For each subject, each
 \label{fig:xp2display}
 \end{figure}
 
-\ml{also have the resulting binary similarity matrix ?}
+For each subject, we constructed a matrix of size $78 \times 78$ to represent their similarity judgments for each pair of the $78$ IPTs.
+Specifically, the $(i, j)$th element of the matrix was set to one if the $i$th and $j$th IPT were assigned the same color.
+If not, it was set to zero.
+In other words, we record the clustering assignment of each subject as a binary similarity matrix.
 
-Depending on the application, it may be of interest to condition the timbre space using the information of only one subject. In this case, the resulting timbre space is specialized to a given person. It may also be of interest to condition the timbre space using the information given by several subjects. Though, conditioning the timbre space using several binary similarity matrices is not trivial, and will be discussed extensively in Section \ref{sec:results}.
+\ml{Joakim, equation needed ?}
+\ja{I don't think so.
+It should be fairly straightforward.}%
+
+\ml{also have the resulting binary similarity matrix ?}
+\ja{Yes, but I think we should have it for the consensus clustering described below.}%
+
+Depending on the application, it may be of interest to condition the timbre space using the information of only one subject.
+In this case, the correspondign binary similarity matrix may be used and the resulting timbre space is specialized to a given person.
+It may also be of interest to condition the space using the aggregate similarity judgments given by several subjects.
+That being said, conditioning the timbre space using several binary similarity matrices is not a trivial task, and will be discussed extensively in the Results section.
+\ja{Why discuss it extensively there?
+Don't we just settle on the partitioning algorithm below?}%
 
 We found that using a hypergraph partitioning algorithm \cite{kernighan1970efficient,han1997scalable,strehl2002cluster} to produce the consensus similarity matrix performed well.
 Interestingly, although several sounds pairs were obtained from the same instrument (but different PTs) and others were obtained using the same PT (but different instruments), the consensus clustering did not favor one of these taxonomies over the other.
-
-More information about the data collection process is available in Section \ref{sec:subjective}.
+\ja{We should have some figure to back this up.
+Can this be done using the tag clouds?}
 
 \section*{Proposed approach}
 \label{sec:method}

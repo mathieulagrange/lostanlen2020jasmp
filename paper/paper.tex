@@ -368,6 +368,73 @@ These need to be extracted and summarized here.}
 \item Applications: query-by-example in musical sample databases.
 \end{itemize}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Backmatter begins here                   %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{backmatter}
+
+\section*{Competing interests}
+  The authors declare that they have no competing interests.
+
+\section*{Author's contributions}
+    Text for this section \ldots
+
+\section*{Acknowledgements}
+The Flatiron Institute is a division of the Simons Foundation.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                  The Bibliography                       %%
+%%                                                         %%
+%%  Bmc_mathpys.bst  will be used to                       %%
+%%  create a .BBL file for submission.                     %%
+%%  After submission of the .TEX file,                     %%
+%%  you will be prompted to submit your .BBL file.         %%
+%%                                                         %%
+%%                                                         %%
+%%  Note that the displayed Bibliography will not          %%
+%%  necessarily be rendered by Latex exactly as specified  %%
+%%  in the online Instructions for Authors.                %%
+%%                                                         %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\bibliographystyle{bmc-mathphys}
+\bibliography{bib}
+
+%% Appendices
+
+\section*{Dataset}
+\label{sec:dataset}
+
+The dataset considered in this paper as been recorded at Ircam and is composed of audio recording of $16$ different musical instruments played with different PTs, which leads to $235$ different IPT pairs.
+In addition, the pitch and nuance is varie for each pair (when applicable), yielding a total of $25444$ audio recordings.
+For each couple, the pitch and intonation is varied leading to 25444 audio samples.
+
+The recorded instruments belongs to the wind and string classes.
+For winds, the instruments considered in the second experiment are: accordion (Acc), saxophone alto (ASax), tuba (Tb), bassoon (Bn), clarinet Bb (BbCl), flute (Fl), horn (Hn), oboe (Ob), trombone tenor (TTbn), and trumpet C (TpC).
+For the string class, the instruments are: guitar (Gtr), harp (Hp), viola (Va), violin (Vn), violoncello (Vc), and contrabass (Cb).
+\ja{Better to display these in a table?}
+
+Some instruments can be complemented with sordina (S), wha (W).
+The addition of this kind of device modifies the shape of the instrument.
+Consequently, an alto saxophone and alto saxophone with sordina are considered as different instruments.
+\vl{This is crucial and should not be deferred to the appendix. @writing}
+\ml{J'ai mis ca en appendice pour ne pas que le lecteur confonde la base SOL complete et les données considérées dans l'étude.}
+
+Those instruments are recorded for different nuance and pitch if the latter is relevant, but more importantly, several playing technique are considered.
+For the second experiment described in this paper, the playing techniques considered are: artificial harmonic (art), blow (blow), exploding slap (explo), harmonic (harm), key-click (key), col legno (legno), non vibrato (nonvib), ordinario (ord), pedal tone (pdl), pizzicato (pizz), ponticello (pont), slap (slap), (tasto), tongue-ram (tng), and xylophonic (xyl).
+
+\vl{This section is not precise enough in terms of intensity ranges and pitch ranges.
+The abbreviations can be removed. @data @writing}
+\ml{}
+
+\vl{A bubble plot of number of notes per instrument (x axis) and playing technique
+(y axis) would be extremely useful. @data @figure}
+\ml{Tu voudrais ca pour la base SOL complete ou les données considérées dans l'étude ?}
+\vl{Les donn\'{e} de l'\'{e}tude, relatives aux Figures 5 et 6.}
+
 \section*{Human timbre judgments}
 \label{sec:subjective}
 
@@ -385,7 +452,7 @@ Gathering the similarity judgments between each pair of samples would be a daunt
 One reasonable assumption that we choose to consider here is that the pitch and nuance do not alter significantly the perception of timbral similarity. This is in line with the ANSI negative definition of timbre \vl{expliquer, citer, et modérer le propos en donnant des exemples dans lequel le pitch ou la nuance change le timbre}.
 
 
-\subsection{Reducing Expert judgments of technique peculiarities}
+\subsection*{Reducing Expert judgments of technique peculiarities}
 
 Even so, considering every pairs of IPTs is not practical. A selection
 experiment is thus conducted where the subject is asked to give his opinion on which
@@ -420,7 +487,7 @@ Even if the hypothesis that the distributions of ratings comes from independent 
 Keeping in mind that the gathering of the perceptual judgments of \ipt similarities shall remain practical, the number of \ipts considered shall be lower than $100$. We thus select the \ipts with an average rating higher than three, which brings us 78 \ipts to study.
 
 %%%%%%%%%%%%%% CROWDSOURCED JUDGMENTS OF PAIRWISE SIMILARITY %%%%%%%%%%%%%%%%%%%%
-\subsection{Crowdsourced judgments of pairwise similarity}
+\subsection*{Crowdsourced judgments of pairwise similarity}
 
 The second experiment aims at gathering spontaneous judgment of similarity for those 78 \ipts using a canonical free sorting task. This type of task is chosen among others for two main reasons. First, it gives the ability to the subject to listen to the whole set of \ipts before performing the task. Second, it gives more freedom to the subject, thus potentially more interest to perform the task than a lengthy series of XXY dissimilarity ratings.
 
@@ -438,7 +505,7 @@ As only the clustering given by the subjects using the color labels is considere
 This results in $31$ clusterings that can be considered for defining a perceptual timbre space of \ipts.
 
 
-\subsection{Analysis}\label{sec:analysis}
+\subsection*{Analysis}\label{sec:analysis}
 
 In order to gain information about the relevance those $31$ clusterings for defining a perceptual timbre space of \ipts, an analysis is performed.
 
@@ -532,73 +599,6 @@ To conclude this section, the process of gathering data about the perceptual sim
 \end{figure}
 
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%                                          %%
-%% Backmatter begins here                   %%
-%%                                          %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{backmatter}
-
-\section*{Competing interests}
-  The authors declare that they have no competing interests.
-
-\section*{Author's contributions}
-    Text for this section \ldots
-
-\section*{Acknowledgements}
-The Flatiron Institute is a division of the Simons Foundation.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%                  The Bibliography                       %%
-%%                                                         %%
-%%  Bmc_mathpys.bst  will be used to                       %%
-%%  create a .BBL file for submission.                     %%
-%%  After submission of the .TEX file,                     %%
-%%  you will be prompted to submit your .BBL file.         %%
-%%                                                         %%
-%%                                                         %%
-%%  Note that the displayed Bibliography will not          %%
-%%  necessarily be rendered by Latex exactly as specified  %%
-%%  in the online Instructions for Authors.                %%
-%%                                                         %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\bibliographystyle{bmc-mathphys}
-\bibliography{bib}
-
-%% Appendices
-
-\section*{Dataset}
-\label{sec:dataset}
-
-The dataset considered in this paper as been recorded at Ircam and is composed of audio recording of $16$ different musical instruments played with different PTs, which leads to $235$ different IPT pairs.
-In addition, the pitch and nuance is varie for each pair (when applicable), yielding a total of $25444$ audio recordings.
-For each couple, the pitch and intonation is varied leading to 25444 audio samples.
-
-The recorded instruments belongs to the wind and string classes.
-For winds, the instruments considered in the second experiment are: accordion (Acc), saxophone alto (ASax), tuba (Tb), bassoon (Bn), clarinet Bb (BbCl), flute (Fl), horn (Hn), oboe (Ob), trombone tenor (TTbn), and trumpet C (TpC).
-For the string class, the instruments are: guitar (Gtr), harp (Hp), viola (Va), violin (Vn), violoncello (Vc), and contrabass (Cb).
-\ja{Better to display these in a table?}
-
-Some instruments can be complemented with sordina (S), wha (W).
-The addition of this kind of device modifies the shape of the instrument.
-Consequently, an alto saxophone and alto saxophone with sordina are considered as different instruments.
-\vl{This is crucial and should not be deferred to the appendix. @writing}
-\ml{J'ai mis ca en appendice pour ne pas que le lecteur confonde la base SOL complete et les données considérées dans l'étude.}
-
-Those instruments are recorded for different nuance and pitch if the latter is relevant, but more importantly, several playing technique are considered.
-For the second experiment described in this paper, the playing techniques considered are: artificial harmonic (art), blow (blow), exploding slap (explo), harmonic (harm), key-click (key), col legno (legno), non vibrato (nonvib), ordinario (ord), pedal tone (pdl), pizzicato (pizz), ponticello (pont), slap (slap), (tasto), tongue-ram (tng), and xylophonic (xyl).
-
-\vl{This section is not precise enough in terms of intensity ranges and pitch ranges.
-The abbreviations can be removed. @data @writing}
-\ml{}
-
-\vl{A bubble plot of number of notes per instrument (x axis) and playing technique
-(y axis) would be extremely useful. @data @figure}
-\ml{Tu voudrais ca pour la base SOL complete ou les données considérées dans l'étude ?}
-\vl{Les donn\'{e} de l'\'{e}tude, relatives aux Figures 5 et 6.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                               %%

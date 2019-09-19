@@ -11,7 +11,7 @@ function [config, store, obs] = tisiso3performance(config, setting, data)
 % Date: 09-Jan-2017
 
 % Set behavior for debug mode
-if nargin==0, timbralSimilaritySol('do', 3, 'mask', {3 1 2 1 0 5 1 0 0 2 2 2 1 1 3}); return; else store=[]; obs=[]; end
+if nargin==0, timbralSimilaritySol('do', 3, 'mask', {3 0 1 1 2 5 1 1 2 2 2 2 1 0}); return; else store=[]; obs=[]; end
 
 rng(0);
 
@@ -25,13 +25,14 @@ if strcmp(setting.reference, 'judgments') && (...
     return
 end
 
-data1 = expLoad(config, '', 1);
+data1 = expLoad(config, '', 1, 'data');
 obs.p=[];
 switch setting.reference
     case 'judgments'
         [data1, judgments] = handleJudgments(config, data1);
         [data1, judgments] = splitJudgments(data1, judgments, str2num(setting.split), setting.test);
         parfor k=1:size(judgments, 1)  % par
+            k
             p(k) = process3performance(config, data1, data, setting, judgments(k, :), k);
         end
         obs.p = p;
@@ -60,16 +61,26 @@ switch setting.projection
                         data.projection = squeeze(mean(data.projection, 1));
                     case 2
                         for  k=1:size(data.projection, 1)
-                             subspaces(:, :, k) = squeeze(data.projection(k, :, :))^2;
-%                                 projection = squeeze(data.projection(k, :, :));
-%                             [subspaces(:, :, k), ~] = qr(projection);
+                            projMatrix = squeeze(data.projection(k, :, :));
+                            subspaces(:, :, k) = projMatrix*projMatrix';
                         end
                         meanSubSpace = psd_karcher_mean(subspaces);
+                        disp('done karcher');
                         data.projection = sqrtm(meanSubSpace);
+                        %                         for  k=1:size(data.projection, 1)
+                        %                              subspaces(:, :, k) = squeeze(data.projection(k, :, :))^2;
+                        %                                 projection = squeeze(data.projection(k, :, :));
+                        %                             [subspaces(:, :, k), ~] = qr(projection);
+                        %                         end
+                        %                         subspaces = (subspaces + permute(subspaces, [2 1 3]))/2;
+                        %                         meanSubSpace = psd_karcher_mean(subspaces);
+                        %                         data.projection = sqrtm(meanSubSpace);
                     case 3
                         meanMatrix = zeros(size(data.projection, 2), size(data.projection, 3));
                         for k = 1:size(data.projection, 1)
-                            meanMatrix = meanMatrix + squeeze(data.projection(k, :, :))^2;
+                            projMatrix = squeeze(data.projection(k, :, :));
+                            projMatrix   = projMatrix*projMatrix';
+                            meanMatrix = meanMatrix + projMatrix^2;
                         end
                         data.projection = sqrtm(1/size(data.projection, 1)*meanMatrix);
                 end

@@ -6,18 +6,15 @@ function config = tisisoReport(config)
 % Copyright: Mathieu Lagrange
 % Date: 09-Jan-2017
 
-if nargin==0, timbralSimilaritySol('report', 'rcv', 'reportName', 'karcherSlides'); return; end
+if nargin==0, timbralSimilaritySol('report', 'r', 'reportName', 'completeSlides'); return; end
 
 switch config.reportName
-    case 'karcherSlides'
-        mask = {2:4, 1, 2, 1, 0, 5, 1, 1, 2, 2, 2, 2, 1, 1};
-     config = expExpose(config, 't', 'step', 3, 'mask', mask, 'percent', 0, 'obs', 1, 'highlight', 0, 'precision', 3, 'shortFactors', 1, 'uncertainty', -1);
    case 'completeSlides'
         
-      mask = {[3 4], [0], [1 2], 1, 0, 5, 1, 0, 0, 2, 2, 2, 1};
-      config = expExpose(config, 'p', 'step', 3, 'mask', mask, 'percent', 0, 'obs', 1, 'highlight', 0, 'precision', 4, 'expand', 'sct', 'uncertainty', -1);
-     mask = {[2 3 4], [0], [0], 1, 0, 5, 1, 1, 2, 2, 2, 2, 1};
-     config = expExpose(config, 't', 'step', 3, 'mask', mask, 'percent', 0, 'obs', 1, 'highlight', 0, 'precision', 3, 'expand', 'sct', 'shortFactors', 1, 'uncertainty', -1);
+      mask = {[3 4], [0], [1 2], 2, 2, 5, 1, 0, 0, 2, 2, 2, 1};
+      config = expExpose(config, 'p', 'step', 3, 'mask', mask, 'percent', 0, 'obs', 'p', 'highlight', 0, 'precision', 4, 'expand', 'sct', 'uncertainty', -1);
+     mask = {[2 3 4], [0], [0], 2, 2, 5, 1, 1, 2, 2, 2, 2, 1};
+     config = expExpose(config, 't', 'step', 3, 'mask', mask, 'percent', 0, 'obs', 'p', 'highlight', 0, 'precision', 3, 'expand', 'sct', 'shortFactors', 1, 'uncertainty', -1);
      
     case 'splitSlides'
   

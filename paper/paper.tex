@@ -179,50 +179,38 @@ Abstract here.
 \section*{Introduction}
 \label{sec:intro}
 
-% Section outline:
-% - How to accurately model timbre space? Useful for studying auditory perception, browsing databases, etc.
-% - Studies either consider stimuli that are ``too simple'' (e.g., tones, instruments with fixed playing techniques) or ``too complex'' (e.g., speech, environmental sounds).
-% - Computational models do not capture enough information (MFCCs and related representations) or are hard to compute or analyze (STRFs, deep networks).
-% - Present a study of timbral similarity perception on diverse set of instrumental sounds with extended playing techniques (PTs). Provides more control in modeling different aspects of timbre.
-% - In addition, propose a computational model for timbral similarity: scattering (separable or joint) plus a linear layer. Fixed representation to extract time-frequency structure with adaptivity in linear component.
+Music information retrieval operates at either of two levels: symbolic and auditory.
+By resting on a notation system, the symbolic level facilitates the comparison of musical notes in terms of quantitative attributes, such as duration, pitch, or intensity at the source.
+Timbre, in contrast, is a qualitative attribute of music, thus irreducible to a one-dimensional axis.
+As a result, symbolic representations describe timbre indirectly, either via visuotactile metaphors (\eg{} dry, rough, bright, round, and so forth) or by specifying an instrumental playing technique (\eg{} bowed or plucked).
 
-One of the most important properties for identifying the source of a sound is its \emph{timbre}.
-While it is typically defined as the quality of a sound that is independent of its pitch, duration, or loudness, this definition fails to provide an explicit characterization of the attribute.
-Due to its central role in audio perception, timbre has been studied from several angles, including perceptual and psychophysical studies.
-Since timbre extraction forms the basis of many audio-based information retrieval tasks, such as classification and determining acoustical similarity, the subject has also been studied from a machine listening perspective.
-\ja{Need references for the above statements.}
+Despite their widespread use, linguistic references to musical timbre suffer from limited adequacy.
+On the one hand, adjectives such as \emph{bright} or \emph{rough} are prone to misunderstanding, as they do not prescribe any musical gesture that is capable of achieving them.
+On the other hand, the sole mention of playing technique does not determine any intended effect; and therefore, fails to generalize to the entire instrumentarium.
+For instance, although the term \emph{breathy} alludes to a playing technique that is peculiar to wind instruments, a cellist may accomplish a seemingly breathy timbre by bowing near the fingerboard, i.e., \emph{sul tasto} in Italian.
 
-A natural candidate for characterizing timbre is the spectral content of a signal.
-This information, however, is not rich enough to fully characterize the timbre of a sound, as evidenced by the recent move from spectral descriptors such as mel-spectrograms and mel-frequency cepstral coefficients (MFCCs) and descriptors of spectral energy distributions.
-Indeed, the success of deep neural networks (DNNs) applied to time--frequency representations (such as spectrograms or scalograms) in machine listening have demonstrated the necessity for capturing both spectral and temporal content.
-In neurophysiological, the auditory perception models proposed by S. Shamma and collaborators, known as \emph{spectro--temporal receptive fields} (STRFs) all characterize temporal structure in addition to purely spectral information.
-It seems, therefore, that timbre is inherently spectro--temporal.
-\ja{Again, refs.}
+The prospect of retrieving timbre perception across playing techniques necessarily exceeds the symbolic domain.
+Instead, it involves a cognitive process which arises from the subjective experience of listening to music.
+From the standpoint of audio signal processing, the task of simulating this cognitive process amounts to the design of a multidimensional feature space wherein some distance function evaluates arbitrary pairs of stimuli.
+Rather than to merely discriminate instruments as mutually exclusive categories, this distance function must reflect a consensus of quantitative judgments of acoustic dissimilarity, all other parameters --- \ie{} duration, pitch, and intensity --- being equal.
 
-While the above models offer some insight into the structure of timbre, their complexity makes interpretation and analysis difficult.
-The expressive power of DNNs are due to tuning a large number of parameters, so it is often hard to relate a specific component to a property of the resulting perception model.
-STRFs, on the other hand, have a simpler structure, but are ultimately constructed to model electrophysiological signal in the auditory cortex.
-As a result, they consist several adjustments that make their computation costly and their mathematical analysis difficult.
-\ja{Refs.}
+Behind the overarching challenge of coming up with a robust predictive challenge for human behavior, the main practical application of timbre similarity retrieval lies in the emerging topic of computer-assisted instrumentation.
+Following the aesthetic tradition of spectralism in contemporary music creation, the composer queries the machine with an arbitrary audio signal.
+The outcome of this is an instrumental audio sample, alongside textual attributes of playing technique.
+In this context, the computer serves as a bridge from the auditory level to the symbolic level, allowing to approximate a potentially infinite realm of timbral sensations by an orchestra of priorly specified extent and technical range.
+To maximize the perceptual fidelity of such an approximation, a query-by-example search engine in the auditory domain should summarize the vastest possible vocabulary of timbral templates.
 
-Another difficulty in studying the perception of timbre is the choice of stimuli.
-Previous work on timbre characterization of STRFs \cite{patil2012music} has focused on instrumental sounds of isolated notes played with standard playing techniques.
-This inherently restricts the range of available timbre studied, limiting the conclusions of the work.
-On the other end of the spectrum are computational models for information retrieval tasks.
-Since these are primarily concerned with performance on real-world sounds, the possible range of timbre is very broad.
-The analysis of the resulting model is therefore all the more difficult, since we have little control over the complexity of the stimuli.
-\ja{Refs.}
+In this paper, we propose a machine listening model which computes the dissimilarity in timbre between any two audio samples.
+The main originality of our model is that it encompasses a broad range of extended playing techniques, well beyond the so-called ``ordinary'' mode of acoustic production.
+Specifically, we fit pairwise judgments for 78 different techniques arising from 16 instruments, some of which include removable timbre-altering devices such as mutes.
+A second originality of our model is that we purposefully disregard the playing technique metadata underlying each audio sample during the training phase of our model.
+Said otherwise, we rely on listeners, not performers, to define and evaluate the task at hand.
 
-Our contribution is twofold.
-First, we propose a simple model for timbre perception involving a fixed time--frequency descriptor, the scattering, followed by a learned linear layer optimized for the timbral space under consideration.
-Second, we validate this model on a set of instrumental sounds with extended playing techniques (PTs), allowing for a richer range of timbre compared to ordinary instrumental sounds while retaining the structure of the space necessary for interpretability.
+%% TODO: list Sections
 
-As part of validating the model, we have collected timbral similarity judgments in a crowdsourced listening experiment.
-These are used as a ``ground truth'' dataset, which allow us to evaluate the model's ability to characterize the perceived similarity of the stimuli.
-Analysis of these experimental results also confirms the necessity of including a range of PTs, as these are shown to influence similarity judgments to the same extent as the identity of the instrument itself.
+%% TODO: mention companion website and open-source software
 
-We conclude with a discussion of potential applications to browsing interfaces for musical databases, where composers can easily find sounds on a query-by-example basis.
-The adaptivity of the proposed model has the additional advantag of allowing it to be adjusted to a particular listener's preferences by retraining the linear layer.
+
 
 \section*{Timbre similarity judgments}
 \label{sec:survey}

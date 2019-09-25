@@ -6,9 +6,9 @@
 \usepackage{url}
 \usepackage{color}
 \usepackage{xspace}
-
-\def\includegraphic[#1]{}
-\def\includegraphics[#1]{}
+\usepackage{graphicx}
+% \def\includegraphic[#1]{}
+% \def\includegraphics[#1]{}
 
 
 %%% Put your definitions there:
@@ -64,11 +64,11 @@
    corref={aff1},                       % id of corresponding address, if any
    noteref={n1},                        % id's of article notes, if any
    email={email@example.com}            % email address
-]{\inits{CE}\fnm{Christian} \snm{El-Hajj}}
+]{\inits{VL}\fnm{Vincent} \snm{Lostanlen}}
 \author[
    addressref={aff2},
    email={email@example.com}
-]{\inits{VL}\fnm{Vincent} \snm{Lostanlen}}
+]{\inits{CE}\fnm{Christian} \snm{El-Hajj}}
 \author[
    addressref={aff2},
    email={email@example.com}
@@ -77,6 +77,10 @@
    addressref={aff2},
    email={email@example.com}
 ]{\inits{GL}\fnm{Gr\'egoire} \snm{Lafay}}
+\author[
+   addressref={aff2},
+   email={email@example.com}
+]{\inits{JA}\fnm{Joakim} \snm{And\`en}}
 \author[
    addressref={aff2},
    email={email@example.com}
@@ -216,13 +220,12 @@ Said otherwise, we rely on listeners, not performers, to define and evaluate the
 \label{sec:survey}
 
 To construct a dataset for exploring the perception of timbre, we conducted a survey on the perceived similarity of a set of sounds.
-The set consists of $78$ recordings of different instrument--PT (IPT) pairs, each played at the same pitch and nuance (for more information on the dataset, see the Dataset section).
-\ja{Mathieu, which pitch and nuance?}%
-In the survey, a subject asked to dots on a two-dimensional place in a free sorting task.
-Each dot corresponded to a different IPT recording and was moved by the user dragging them with the mouse.
-In addition to spatially arranging the dots, the user was also asked to assign one of $20$ colors to each dot, providing a simple clustering of the sounds.
-While both the location and color of each dot was recorded, only the color was used in our subsequent analysis---the spatial arrangement was only used to facilitate the user's ability to organize the sounds.
-More information on the data collection process is available in the Human timbre judgments section.
+The set consists of $78$ recordings of different instrument--PT (IPT) pairs, each played at the same pitch (C4) and nuance \textit{mezzo-forte}. For more information on the dataset considered in this study, see Section \ref{sec:dataset}.
+In the survey, the subject is asked to organize dots on a two-dimensional place in a free sorting task.
+Each dot corresponded to a different IPT recording and is moved by the user dragging them with the mouse.
+In addition to spatially arranging the dots, the user is also asked to assign one of $20$ colors to each dot, providing a simple clustering of the sounds.
+While both the location and color of each dot was recorded, only the color is used in our subsequent analysis---the spatial arrangement is only used to facilitate the user's ability to organize the sounds.
+More information on the data collection process is available in  Section \ref{sec:judgments}.
 
 The above survey was implemented as an interactive website, links to which were sent out on internal mailing lists of the \emph{Conservatoire national sup\'erieur de musique et de danse de Paris} (CNSMDP) and international mailing lists focusing on research in audio and music processing.
 We made the experiment available for two months, during which we obtained results for a total of $31$ subjects.
@@ -235,29 +238,34 @@ The final arrangement and color assignment of one of the subjects is shown in Fi
 \label{fig:xp2display}
 \end{figure}
 
-For each subject, we constructed a matrix of size $78 \times 78$ to represent their similarity judgments for each pair of the $78$ IPTs.
+For each subject, a matrix of size $78 \times 78$ is constructed to represent the similarity judgments for each pair of the $78$ IPTs.
 Specifically, the $(i, j)$th element of the matrix was set to one if the $i$th and $j$th IPT were assigned the same color.
-If not, it was set to zero.
-In other words, we record the clustering assignment of each subject as a binary similarity matrix.
+If not, it is set to zero.
+In other words, the clustering assignment of each subject as a binary similarity matrix. Depending on the application, it may be of interest to condition the timbre space using the information of only one subject.
+In this case, the corresponding binary similarity matrix may be used and the resulting timbre space is specialized to a given person.
 
-\ml{Joakim, equation needed ?}
-\ja{I don't think so.
-It should be fairly straightforward.}%
 
-\ml{also have the resulting binary similarity matrix ?}
-\ja{Yes, but I think we should have it for the consensus clustering described below.}%
+It may also be of interest to condition the space using the aggregate similarity judgments given by several subjects. We found that using a hypergraph partitioning algorithm \cite{kernighan1970efficient,han1997scalable,strehl2002cluster} to produce the consensus similarity matrix performed well. Interestingly, although several sounds pairs were obtained from the same instrument (but different PTs) and others were obtained using the same PT (but different instruments), the consensus clustering did not favor one of these taxonomies over the other, see Figure \ref{fig:consensusVsIpt}.
 
-Depending on the application, it may be of interest to condition the timbre space using the information of only one subject.
-In this case, the correspondign binary similarity matrix may be used and the resulting timbre space is specialized to a given person.
-It may also be of interest to condition the space using the aggregate similarity judgments given by several subjects.
-That being said, conditioning the timbre space using several binary similarity matrices is not a trivial task, and will be discussed extensively in the Results section.
-\ja{Why discuss it extensively there?
-Don't we just settle on the partitioning algorithm below?}%
+\begin{figure}
+\center
+\includegraphics[width = \textwidth]{../code/xp2/consensusVsI.png}
+\caption{'ASax'    'BBTb'    'BbCl'    'Bn'    'Cb'    'Fl'    'Gtr'    'Hn'    'Hp'    'Ob'    'TTbn'    'TpC'  'Va'    'Vc'}
+\label{fig:consensusVsIpt}
+\end{figure}
 
-We found that using a hypergraph partitioning algorithm \cite{kernighan1970efficient,han1997scalable,strehl2002cluster} to produce the consensus similarity matrix performed well.
-Interestingly, although several sounds pairs were obtained from the same instrument (but different PTs) and others were obtained using the same PT (but different instruments), the consensus clustering did not favor one of these taxonomies over the other.
+\begin{figure}
+\center
+\includegraphics[width = \textwidth]{../code/xp2/consensusVsPt.png}
+\caption{ 'art-harm'    'blow-no-reed'    'explo-slap'    'harm-fngr'    'key-cl'    'legno-batt'    'legno-tratto'
+    'nonvib'    'ord'    'ord-closed'    'ord-hi-reg'    'ord-open'    'pdl-tone'    'pizz'    'pizz-bartok'
+    'pizz-lv'    'pizz-sec'    'pont'    'slap'    'slap-unp'    'tasto'    'tng-ram'}
+\label{fig:consensusVsIpt}
+\end{figure}
+
 \ja{We should have some figure to back this up.
 Can this be done using the tag clouds?}
+\ml{tentative solution using similarity matrices, see fig, if ok should be improved by vl (code/xp2/consensusVsIpt.m)}
 
 \section*{Proposed approach}
 \label{sec:method}
@@ -343,6 +351,25 @@ We therefore conclude that a simple reweighting of the scattering transform yiel
 
 \section*{Results}
 \label{sec:results}
+
+The processing pipeline presented in Figure \ref{fig:pipeline} addresses the problem of conditioning a timbre space using perceptual judgments of timbral similarity. The relevance of the many design choices that had to be made  are addressed in this section using an experimental protocol that considers a dataset of audio that will be given as input to the processing pipeline and one metric used for evaluating its performance under a given experimental setting.
+
+As gathering perceptual similarity data is plagued with a size problem. the perceptual data gathered during the perceptual experiment considers 78 \ipts each represented by one sound recording. In order to provide enough data for the numerical analysis described in this section, we assume that the impact of the pitch and nuance on perceptual similarity is lower than the timbral similarity constraints expressed by the subjects. Assuming invariance to timbre with respect to pitch and nuance is in line with the ansi definition of timbre, it is  thus taken in this paper as a reasonable assumption. Quantification of this invariance is left for further study.
+
+This result in considering for each of the 78 \ipts the whole range of nuance and pitch, leading to a dataset composed of 9346 sound recordings where two sounds of this dataset $a$ and $b$, corresponding to \ipts $I_a$ and $I_b$ are considered as similar with respect to a given reference clustering $c_i$ if the \ipts $I_a$ and $I_b$ are grouped in the same cluster.
+
+The metric is the average precision at rank $k=5$ (ap@5), that allows us to evaluate if the outputs of the proposed system are likely to satisfy the user.
+
+The reference considered here is thus the $31$ clusterings obtained with the perceptual experiment, see Section \ref{sec:judgments}. for each of those clusterings, the precision at rank $5$ is computed, and the $31$ p@5 are averaged to obtain the ap@5.
+
+\ml{note pour vincent, on a pas de fold, mais on a les resultats par sujet, on peut donc evaluer la dispersion de la p@5 par sujets si cela est utile.}
+
+The choice of the rank is chosen with the application in mind. When searching for sounds that are similar to a query, the listener is likely to listen to up to $5$ proposals, rarely more. For the same reason, more global metrics commonly considered for ranking tasks such as the mean average precision is not considered here.
+
+
+The processing pipeline is composed of 2 main building blocks. The first takes a digital audio recording as input and outputs one vector of features.
+
+The second considers one vector of features as input and another vector of project features as output.
 
 \ja{The results are currently sprinkled into the above methods section.
 These need to be extracted and summarized here.}
@@ -530,19 +557,9 @@ The experiment was available online for two months and requests to perform the t
 
 31 subjects completed the experiment. An example of resulting organization of \ipt is given on Figure \ref{fig:xp2display}. \footnote{The resulting organization for each subject are available for reader's inspection using the full feature interface provided to the subjects for performing the experiment \url{https://mathieulagrange.github.io/paperSpontaneousSimilarity/demo}}.
 
-As only the clustering given by the subjects using the color labels is considered to estimate the spontaneous judgments of similarity among \ipt. The spatial organization of the dots representing the \ipt could provide information about the similarity, but this would implicitly enforce the fact that the timbral similarity space is two dimensional. We therefore now only study the properties of the clusterings performed by the subject prior to converting them into an overall similarity matrix.
+Only the clustering given by the subjects using the color labels is considered to estimate the spontaneous judgments of similarity among \ipt. The spatial organization of the dots representing the \ipt could provide information about the similarity, but this would implicitly enforce the fact that the timbral similarity space is two dimensional. We therefore now only study the properties of the clusterings performed by the subject prior to converting them into an overall similarity matrix.
 
-This results in $31$ clusterings that can be considered for defining a perceptual timbre space of \ipts.
-
-
-\section*{Analysis}\label{sec:analysis}
-
-\ja{I thought all of this stuff was going away and we were just replacing it with a brief analysis using the tag clouds (and so on).
-At any rate, the relevant analysis results should be in the main text (under Timbre similarity judgments, after we describe the experiments).}%
-
-In order to gain information about the relevance those $31$ clusterings for defining a perceptual timbre space of \ipts, an analysis is performed.
-
-Among the 20 colors available, the subjects used on average $10.2 \pm  4.1$ different colors to group \ipts. The distribution of the number of groups can be seen on Figure \ref{fig:xp2nbGroup}. The size of the groups is on average $7.7 \pm   7.2$. The distribution of the size of groups can be seen on Figure \ref{fig:xp2sizeGroup}. The large number of small groups indicates that many subjects considered that a few of the \ipt were very different from all the remaining \ipt.
+This results in $31$ clusterings that can be considered for defining a perceptual timbre space of \ipts. Among the 20 colors available, the subjects used on average $10.2 \pm  4.1$ different colors to group \ipts. The distribution of the number of groups can be seen on Figure \ref{fig:xp2nbGroup}. The size of the groups is on average $7.7 \pm   7.2$. The distribution of the size of groups can be seen on Figure \ref{fig:xp2sizeGroup}. The large number of small groups indicates that many subjects considered that a few of the \ipt were very different from all the remaining \ipt.
 
 \begin{figure}
 \center
@@ -561,76 +578,6 @@ Among the 20 colors available, the subjects used on average $10.2 \pm  4.1$ diff
 \ml{ok}
 \label{fig:xp2sizeGroup}
 \end{figure}
-
-A clustering can be considered as a binary similarity measure, with $s(a, b) = 1$ if $a$ and $b$ belong to the same group, and $0$ otherwise. By averaging the 31 binary similarity matrix, an overall floating point matrix is obtained that corresponds to our measure of the spontaneous perceptual similarity between \ipt.
-
-In order to gather information about the properties of the data, a cluster analysis is next performed using an agglomerative hierarchical clustering \cite{gordon1987review} using the weighted average algorithm for computing distance between clusters. The resulting dendrogram is displayed on Figure \ref{fig:dendrogram}. A partition of $n$ clusters can be constructed from the agglomerative hierarchical cluster tree by finding the smallest height at which a horizontal cut through the tree leaves $n$ clusters.
-
-One question that arises is whether the similarity is influenced primarily by the instrument or by the playing technique. To answer this question, each partition provided by cutting the dendrogram at successive levels is compared to two reference partitions. One reference is the partition of the \ipts when labeled with the instrument used (I) and the other if the partition of the \ipts when labeled with the playing technique used (Pt).
-
-There are many metrics available to compare two partitions by evaluating their degree of correspondence \cite{wagner2007comparing}. The normalized mutual information (NMI) is interesting as it do not require alignement of the groups labels between the two partitions prior correspondence analysis and the two partition are not required to have the same number of groups. It also by design bounded between 0 and 1, 1 meaning perfect match. We consider the normalization proposed in \cite{strehl2002cluster}. Figure \ref{fig:clusters} shows the evolution of the NMI when comparing the partitions provided by the cluster analysis of the dendrogram produced using the human judgment of similarity and respectively the instrument partition ($j/I$) or the playing technique partition ($j/Pt$).
-
-\begin{figure}
-\center
-\includegraphics[width = \textwidth]{figures/clusterAnalysis.png}
-\caption{Cluster analysis of the similarity judgments. $j/I$ and $j/Pt$ compare the partition obtained using the similarity judgments clustered using a growing number of clusters versus respectively the instrument partition and the playing technique partition. Normalizing null partitions based NMI $nullI$ and $nullPt$ are used to obtain normalized measures: $nj/I$ and $nj/Pt$.
-\vl{This line plot is very hard to understand.
-The legend box occludes the data on the top-right corner.
-It would be preferable to remove this legend box and label lines
-by placing text upon them,
-so that the plot would be legible to readers with color vision deficiencies.
-Besides, the choice of line labels is cryptic, as it relies on abbreviations.
-The distinction between I and Pt
-can be illustrated by two complementary colors, \eg{} blue versus orange.
-The distinction between j, nj, and null
-can be illustrated by three distinct markers
-(empty circle, filled triangle, asterisk),
-associated with
-three distinct line styles (solid, dashed, dotted).
-The NMI abbreviation should be expanded.
-@figure}}
-\ml{ok, le .fig est dispo}
-\label{fig:clusters}
-\end{figure}
-
-There is a clear gain of NMI when considering the playing technique which means that the subjects primarily used cues corresponding to the playing technique to organize the \ipts. Also, for both curves, a global trend of increase in the $j/x$ partitions with respect to the number of clusters can be observed. This is a well documented fact, which simply put, means that it is easier to match any given partition with more clusters at hand \cite{tibshirani2001estimating}. To compensate for this bias, one can consider the NMI that would be achieved by comparing to the reference partition several random partitions of increasing number of clusters. The resulting averaged NMI for 100 randomly generated partitions is displayed on Figure \ref{fig:clusters}. This so-called null partitions NMI are respectively termed $nullI$ and $nullPt$ depending on the reference used. To normalize $j/I$ and $j/Pt$ in order to reduce the impact of this bias, we simply subtract the $null$ NMI:
-\begin{eqnarray}
-  nj/I &=& j/I - null \\
-  nj/Pt &=& j/Pt - null  \\
-\end{eqnarray}
-This normalization is useful for identifying more easily the number of clusters for which the comparison is most relevant. As can be seen on Figure \ref{fig:clusters}, the number of clusters that leads to the highest NMI is 5 for the playing technique reference and 8 for the instrument reference, leading respectively to an NMI of $0.46$ and $0.21$. For the latter, reducing the number of clusters down to 6 do not decrease the NMI by much, a fact that will be latter discussed in more details. Even by considering the null normalization, the matching level is much higher for the playing technique reference.
-
-The correspondences between those partitions and the reference ones are now studied. For this purpose, Figure \ref{fig:gi} displays two partitions. At the bottom is the partition that corresponds to the instruments labels, whose color code is given by the color bar on the right. The abbreviations used for the instruments are detailed in Section \ref{sec:dataset}. The ordering of \ipts on the horizontal axis is the one given by the cluster analysis, see the dendrogram on Figure \ref{fig:dendrogram}. The partition on top is the result of the clustering with 8 clusters. For visualization purposes, we arbitrarily set colors to clusters of this partition to the color code of the instrument label that is most often encountered in this cluster. If some labels occur equally often, the instrument of the first \ipt of the cluster is chosen. The emerging instrument classes are: Saxophone, Clarinet, Trumpet, Flute and Cello.
-
-However, even with an optimal number of clusters, we see that the clusters have  a low purity, \ie{} a very diverse set of instruments labels for the \ipt they belong to. Also, some clusters could be merged without strong changes in the overall organization. This probably explains the small changes of NMI when reducing the number of clusters, see Figure \ref{fig:clusters}.
-
-As can be seen on Figure \ref{fig:gm}, the correspondence between the playing technique reference and the resulting partition with 5 clusters is much higher. Most clusters have a high level of purity and for groups emerge : Pizzicato, Slap, Ordinario, and Ponticello.
-
-To conclude this section, the process of gathering data about the perceptual similarity of \ipt is found to be successful as the subjects used their degree of freedom in a consistent manner and no inconsistency in the data has been detected during the analysis process. The main result is that the playing technique is an important factor when modeling the spontaneous judgment of similarity gathered in the second experiment.
-
-
-\begin{figure}
-\center
-\includegraphics[width = \textwidth]{figures/groupModes.png}
-\caption{Clustering \ipts using average perceptual similarity into 5 clusters (top) and playing technique labels (top). The color chosen to display each clusters on top corresponds to the playing technique that is dominant in this cluster, from left to right: 'pizzicato', 'slap', 'key', 'ordinario', 'ordinario', 'ponticello', 'art'.
-\vl{A bubble plot would be preferable to a color map. Abbreviated words should appear in their expanded form instead. @writing}}
-\ml{Je demande a voir, mais je ne suis pas satisfait de cette visu de toute facon. Le code est dispo dans le rep code. Lancer ticelSim en premier.}
-\label{fig:gm}
-\end{figure}
-
-
-
-
-
-\begin{figure}
-\center
-\includegraphics[width = \textwidth]{figures/groupInstruments.png}
-\caption{Clustering \ipts using average perceptual similarity into 8 clusters (a) and instrument reference labels (b). The color chosen to display the groups (on top) corresponds  to the instrument that is dominant in this group, from left to right: 'ASax', 'BBTb', 'Vc', 'ASax', 'TpC', 'Gtr', 'ASax', 'Vc'.
-\vl{A bubble plot would be preferable to a color map. Abbreviated words should appear in their expanded form instead. @writing}}
-\ml{ok}
-\label{fig:gi}
-\end{figure}
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

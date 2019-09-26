@@ -354,59 +354,64 @@ We therefore conclude that a simple reweighting of the scattering transform yiel
 
 The processing pipeline presented in Figure \ref{fig:pipeline} addresses the problem of conditioning a timbre space using perceptual judgments of timbral similarity. The relevance of the many design choices that had to be made  are addressed in this section using an experimental protocol that considers a dataset of audio that will be given as input to the processing pipeline and one metric used for evaluating its performance under a given experimental setting.
 
-As gathering perceptual similarity data is plagued with a size problem. the perceptual data gathered during the perceptual experiment considers 78 \ipts each represented by one sound recording. In order to provide enough data for the numerical analysis described in this section, we assume that the impact of the pitch and nuance on perceptual similarity is lower than the timbral similarity constraints expressed by the subjects. Assuming invariance to timbre with respect to pitch and nuance is in line with the ansi definition of timbre, it is  thus taken in this paper as a reasonable assumption. Quantification of this invariance is left for further study.
+\subsection*{Data}
 
-This result in considering for each of the 78 \ipts the whole range of nuance and pitch, leading to a dataset composed of 9346 sound recordings where two sounds of this dataset $a$ and $b$, corresponding to \ipts $I_a$ and $I_b$ are considered as similar with respect to a given reference clustering $c_i$ if the \ipts $I_a$ and $I_b$ are grouped in the same cluster.
+The perceptual data gathered during the perceptual experiment considers 78 \ipts each represented by one sound recording that the subject could listen to before clustering the \ipts. For those 78 \ipts, 31 clusterings $C_k, 0<k<31, Card(C_k)=78$ are available, that are our reference in terms of timbre similarity. If \ipt $i$ and \ipt $j$ are clustered together by subject $k$, then $C_k(i)=C_k(j)$. In essence, an effective ranking system should retrieve sounds that belong to \ipts that are clustered together in each of the 31 clusterings. Depending on the preferences of subjects, there may be competition between clusterings that should be mitigated when appreciating quantitatively the ranking performance.
 
-The metric is the average precision at rank $k=5$ (ap@5), that allows us to evaluate if the outputs of the proposed system are likely to satisfy the user.
+In order to provide enough data for the numerical analysis described in this section, we assume that the impact of the pitch and nuance on perceptual similarity is much lower than the timbral similarity constraints expressed by the perceptual judgments of the subjects. Assuming invariance to timbre with respect to pitch and nuance is in line with the ansi definition of timbre \ml{vl, citation}, it is  thus taken in this paper as a reasonable assumption. Quantification of this invariance is left for further study.
 
-The reference considered here is thus the $31$ clusterings obtained with the perceptual experiment, see Section \ref{sec:judgments}. for each of those clusterings, the precision at rank $5$ is computed, and the $31$ p@5 are averaged to obtain the ap@5.
+The whole range of nuance and pitch is thus considered for each of the 78 \ipts, leading to a dataset composed of 9346 sound recordings. The clusterings $C_k$ are propagated to this dataset to produce new reference clusterings $D_k, 0<k<31, Card(D_k)=9346$ using the following scheme. If a sound of this dataset $s_a$ corresponds to \ipt $i$, then $D_k(a) = C_k(i), \forall k$.
+
+\subsection*{Metric}
+
+The metric considered in this paper is the average precision at rank $k=5$ (ap@5). It allows us to evaluate if the outputs of the proposed system are likely to satisfy the user. The ap@5 is computed as follows.
+
+Considering an output of the system, that is a features vector $F_n$ per sound $s_n$, the precision at rank $5$ is computed for each of the $D_k$ clusterings, and the $31$ p@5 are averaged to obtain the ap@5.
+
+For a given reference clustering $D_k$, the p@5 is computed as follows. For each sound $s_q, 0<q<9346$ considered as a query, its 5 nearest neighbors $s_n, 0<n<5$ in the timbre space under evaluation are retrieved using the Euclidean distance between corresponding features vectors. For this query, the precision is defined as:
+$$
+p@5_q = \frac{\sum_{n=5}^5 D_q==D_n}{5}
+$$
+The p@5 is the average $p@5_q$ computed over all queries.
 
 \ml{note pour vincent, on a pas de fold, mais on a les resultats par sujet, on peut donc evaluer la dispersion de la p@5 par sujets si cela est utile.}
 
 The choice of the rank is chosen with the application in mind. When searching for sounds that are similar to a query, the listener is likely to listen to up to $5$ proposals, rarely more. For the same reason, more global metrics commonly considered for ranking tasks such as the mean average precision is not considered here.
 
+\subsection*{Performance analysis}
 
-The processing pipeline is composed of 2 main building blocks. The first takes a digital audio recording as input and outputs one vector of features.
+The processing pipeline is composed of 2 main building blocks. The first block $B_1$ takes a digital audio recording as input and outputs one vector of features. For this block, the main factors are the time support $B_1^t$ for computing the features and the type of features $B_1^f$. We considered $B_1^t \in \{ 25, 128, 250, 500, 1000 \}$ ms and $B_1^f \in \{ \text{mfccs}, \text{separable scattering}, \text{joint scattering} \}$. The mfccs are the standard Mel frequency cepstral coefficients with 40 Mel bands and selection of the 13$^\text{th}$ first discrete cosine transform (dct) coefficients.
 
-The second considers one vector of features as input and another vector of project features as output.
+\ml{provide parameters for scattering}
 
-\ja{The results are currently sprinkled into the above methods section.
-These need to be extracted and summarized here.}
+As found in many studies, log compression and median processing are beneficial post processing steps for the scattering.
 
-post processing
+For each sound, a set of features are computed for each time support. This set is averaged over time to give one feature vector per sound.
+All features are standardized with zero mean and unit variance across the dataset.
 
-std consisten across features
-mfcc cut
-consistent with [previous papers] each item provides incremental gain of perforamnces
+The second block $B_2$ considers one vector of features and the consensus clustering $D_c$ as inputs and another vector of features as output. For this block, the main factor is the type of projection $B_2^p \in \{ \text{lda}, \text{lmnn} \}$. The lda is the linear discriminant analysis \cite{} and the lmnn is the large margin nearest neighbors algorithm presented in Section \ref{}. For this algorithm the neighborhood is set to $5$.
 
-table 3 valeurs erreur
+The complete experiments with all settings have been computed. For the sake of clarity, only part of the results are discussed here.
 
-ablation study
+The best performing system considers the separable scattering computed over $1000$ms time support, projected using the lmnn algorithm. Evaluated over the entire dataset, that is the computation of the projection and the evaluation are performed on the whole dataset, this system reaches the satifactory performance of $99.5\%$ of $ap@5$. That means that, for a given sound dataset of \ipts for which subjective evaluation of similarity between \ipts are available, a very large number of queries would return interesting results to the user using this processing pipeline.
 
-tfscat+lmnn
-tfscat
-scat
+In order to better understand the benefits of each design choice, an ablation study \ml{vl ref ??} is now performed using a slightly different protocol. In order to reduce the risk of misleading performance results using learning systems due to overfitting, it common to identify factors of variability that could lead to such problems and mitigate those. In our case, two factors can readily be identified, the variability of the audio data and the one of the perceptual judgments.
 
-9 pas de weighting averaging not end to end
+We mitigate the first by considering a random split of the dataset in two halves, one for learning the projection and one for evaluating the performance. The impact of the variability of the perceptual judgments and its impact on machine listening systems such as the one discussed in this paper is not in the scope of this paper and left for further research. By considering this protocol, the proposed system reaches a $ap@5$ of $95.5\%$. If considering the same first half both for learning and evaluation leads to a $ap@5$ of $96.5\%$, indicating a low risk of overfitting.
 
-separate pas trop de perte : consensus bon
++rand
 
-perf du best tool chain on complete dataset
-
-randomize
-
-perf on 50/50
-
-lda
+lmnn -> lda
 
 -lmnn
 
-tf -> scat
+time support
 
-tfscat -> mfcc + etendus
+tfscat -> scat
 
+tfscat -> mfcc
 
+tfscat -> mfcc monomials
 
 \section*{Discussion}
 \label{sec:discussion}

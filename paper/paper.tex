@@ -423,11 +423,35 @@ tfscat -> mfcc monomials
 \section*{Discussion}
 \label{sec:discussion}
 
-\begin{itemize}
-\item Demonstrates complex timbral structure perceived by subjects in study: neither instrument (i.e., spectral envelope) or playing technique (i.e., temporal modulation) dominates similarity judgment. Need joint to characterize time-frequency structure (see Patil et al).
-\item Proposed computational model (scattering + linear) reproduces similarity judgments accurately. Easy to ``retrain'' for other data. Fixed wavelet structure allows for analysis of linear layer and guarantees invariance and stability properties.
-\item Applications: query-by-example in musical sample databases.
-\end{itemize}
+The success of the above system in identifying timbral similarities has immediate applications in browsing music databases.
+These are typically organized based on instrumental and PT taxonomies, with additional keywords offering a more flexible organization.
+Accessing the sounds in these databases therefore requires some knowledge of the taxonomy and keywords used.
+Furthermore, the user needs to have some idea of the particular IPT they are searching for.
+
+As an alternative, content-based searches allow the user to identify sounds based on similarity to some given query sound.
+This query-by-example approach provides an opportunity to search for sounds without having a specific instrument of PT in mind, yielding a wider range of available sounds.
+A composer with access to such a system would therefore be able to draw on a more diverse palette of musical timbre.
+
+The computational model proposed in this work is well suited to such a query-by-example task.
+We have shown that it is able to approximate well the timbral judgments of a wide range of subjects included in our study.
+Not only that, but the system can be easily retrained to approximate an individual user's timbre perception by having that user perform the clustering task on a reduced set of $78$ IPTs and running the LMNN training step on those clustering assignments.
+This model can then be applied to new data, or, alternatively, be retrained with these new examples if the existing model proves unsatisfactory.
+
+We shall note, however, that the current model has several drawbacks.
+First, it is only applied to instrumental sounds.
+While this has the advantage of simplifying the intepretation of the results, the range of timbre under consideration is necessarily limited (although less restricted than only considering \emph{ordinario} PTs).
+This also makes applications such as \emph{query-by-humming} difficult, since we cannot guarantee that the timbral similarity measure is accurate for such sounds.
+
+That being said, the above model is general enough to encompass a wide variety of recordings, not just instrumental sounds.
+Indeed, the tools used (scattering transforms and LMNN weighting matrices) do not depend on the type of sound being processed and work for more general classes of sounds.
+To extend the model, it is only necessary to retrain the LMNN weighting matrix by supplying it with new cluster assignments.
+These can again be obtained by performing a new clustering experiment with one or more human subjects.
+
+Another aspect is the granularity of the similarity judgments.
+In the above method, we have used \emph{hard} clustering assignments to build our model.
+A more nuanced similarity judgment would ask users to rate the similarity of a pair of IPTs on a more graduated scale, which would yield a finer, or \emph{soft}, assignment.
+This however, comes with additional difficulties in providing a consistent scale across subjects, but could be feasible if the goal is to only adapt the timbral space to a single individual.
+An approach not based on clustering would also have to replace the LMNN algorithm with one that accounts for such soft assigments.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                          %%

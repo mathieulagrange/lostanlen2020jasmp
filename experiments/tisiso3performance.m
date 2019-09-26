@@ -11,13 +11,13 @@ function [config, store, obs] = tisiso3performance(config, setting, data)
 % Date: 09-Jan-2017
 
 % Set behavior for debug mode
-if nargin==0, timbralSimilaritySol('do', 3, 'mask', {3 0 1 1 2 5 1 1 2 2 2 2 1 0}); return; else store=[]; obs=[]; end
+if nargin==0, timbralSimilaritySol('do', 3, 'mask', {3 5 2 1 0 5 1 1 2 2 2 2 1 2}); return; else store=[]; obs=[]; end
 
 rng(0);
 
 if strcmp(setting.reference, 'judgments') && (...
         (strcmp(setting.projection, 'lda')  && (setting.averageJudgment==0 || (setting.averageJudgment==1 && setting.separateJudgment==0))) || ...
-        (strcmp(setting.projection, 'none')  && (setting.separateJudgment==1 || (setting.averageJudgment==0 && setting.separateJudgment==1))) || ...
+        (strcmp(setting.projection, 'none')  && (setting.separateJudgment==1 || setting.averageJudgment==1 || (setting.averageJudgment==0 && setting.separateJudgment==1))) || ...
         (strcmp(setting.projection, 'lmnn')  && setting.averageJudgment==1 && setting.separateJudgment==1) || ...
         strcmp(setting.split, 'octave') ...
         )
@@ -32,7 +32,6 @@ switch setting.reference
         [data1, judgments] = handleJudgments(config, data1);
         [data1, judgments] = splitJudgments(data1, judgments, str2num(setting.split), setting.test);
         parfor k=1:size(judgments, 1)  % par
-            k
             p(k) = process3performance(config, data1, data, setting, judgments(k, :), k);
         end
         obs.p = p;

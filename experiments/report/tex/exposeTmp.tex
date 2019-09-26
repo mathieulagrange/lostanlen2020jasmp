@@ -25,28 +25,39 @@
   
 \end{frame} 
   
-\begin{frame}\frametitle{sct: 25, projection: lmnn, split: none, reference: judgments, randomize: 0, expand: 0, cut: 1, median: 1, compress: 1, standardize: 1, averageJudgment: 0} 
+\begin{frame}\frametitle{consensus vs averaging} 
   
 \begin{table} 
 \begin{center} 
 \ 
  \setlength{\tabcolsep}{.16667em} 
-\begin{tabular}{llc} 
-fea & sepjud & p (\%) \\ 
+\begin{tabular}{lllc} 
+features & separateJudgment & averageJudgment & none \\ 
 \hline 
-mfcc & 0 & 86.3 \\ 
-mfcc & 1 & 86.2 \\ 
-mfcc & 2 & 79.0 \\ 
-mfcc & 3 & 84.9 \\ 
-scat & 0 & 91.6 \\ 
-scat & 1 & 95.2 \\ 
-scat & 2 & 86.4 \\ 
-tfscat & 0 & \textbf{96.2} \\ 
-tfscat & 1 & \textbf{\textcolor{red}{96.9}} \\ 
-tfscat & 2 & 91.1 \\ 
+mfcc & 0 & 0 & 86.3 \\ 
+mfcc & 0 & 1 & 86.5 \\ 
+mfcc & 1 & 0 & 86.2 \\ 
+scat & 0 & 0 & 93.3 \\ 
+scat & 0 & 1 & 95.5 \\ 
+scat & 1 & 0 & 98.1 \\ 
+tfscat & 0 & 0 & 98.0 \\ 
+tfscat & 0 & 1 & 99.0 \\ 
+tfscat & 1 & 0 & 99.5 \\ 
 \end{tabular} 
 \end{center} 
-\label{sc25PrlmSpnoRejuRa0Ex0Cu1Me1Co1St1Avju0} 
+\label{sc1000PrlmTe1RejuRa0Ex0Cu1Me1Co1St1} 
 \end{table} 
  
+\end{frame}  
+  
+\begin{frame}\frametitle{\small split: none, reference: judgments, randomize: 0, expand: 0, cut: 1, median: 1, compress: 1, standardize: 1} 
+\begin{center} 
+\begin{figure} 
+\centering 
+\includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{./figures/Fig206.pdf} 
+\label{spnoRejuRa0Ex0Cu1Me1Co1St1} 
+\end{figure} 
+\end{center} 
+  
+  
 \end{frame}  

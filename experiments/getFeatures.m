@@ -20,7 +20,7 @@ switch setting.reference
             otherwise
                 nbItems = length(data.mode);
                 idx = randi(nbItems, ceil(nbItems*str2num(setting.split)/100), 1);
-                if step==2 && setting.test
+                if step==3 && setting.test
                     idx = setdiff(1:nbItems, idx);
                 end
         end

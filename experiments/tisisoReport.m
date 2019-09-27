@@ -53,7 +53,7 @@ switch config.reportName
         config = expExpose(config, 't', 'step', 3, 'mask', mask, 'percent', 0, 'obs', 'p', 'precision', 3, 'expand', 'split', 'uncertainty', -1, 'highlight', -1, 'caption', caption);  
         
         % complete
-        mask = {[2 3 4], [0], [1 2], 1, 2, 5, 1, 1, 2, 2, 2, 2, 1};
+        mask = {[2 3 4], [0], [1 2], 2, 2, 5, 1, 1, 2, 2, 2, 2, 1};
         config = expExpose(config, 't', 'step', 3, 'mask', mask, 'percent', 0, 'obs', 'p', 'highlight', 0, 'precision', 3, 'expand', 'sct', 'shortFactors', 1, 'uncertainty', -1, 'save', 'cs6');
         config = expExpose(config, 'p', 'step', 3, 'mask', mask, 'percent', 0, 'obs', 'p', 'highlight', 0, 'precision', 4, 'expand', 'sct', 'uncertainty', -1);
         

@@ -385,11 +385,19 @@ The p@5 is the average $p@5_q$ computed over all queries.
 
 The choice of the rank is chosen with the application in mind. When searching for sounds that are similar to a query, the listener is likely to listen to up to $5$ proposals, rarely more. For the same reason, more global metrics commonly considered for ranking tasks such as the mean average precision is not considered here.
 
-\subsection*{Performance analysis}
+\subsection*{Analysis}
 
 The processing pipeline is composed of 2 main building blocks. The first block $B_1$ takes a digital audio recording as input and outputs one vector of features. For this block, the main factors are the time support $B_1^t$ for computing the features and the type of features $B_1^f$. We considered $B_1^t \in \{ 25, 128, 250, 500, 1000 \}$ ms and $B_1^f \in \{ \text{mfccs}, \text{separable scattering}, \text{joint scattering} \}$. The mfccs are the standard Mel frequency cepstral coefficients with 40 Mel bands and selection of the 13$^\text{th}$ first discrete cosine transform (dct) coefficients.
 
-\ml{provide parameters for scattering}
+\ml{provide parameters for scattering
+\texttt{
+case 'scat'
+    filt\_opt.Q = [12 1];
+    filt\_opt.J = T\_to\_J(sr*setting.sct/1000, filt\_opt);
+case 'tfscat'
+    tm\_filt\_opt.Q = [12 1];
+    tm\_filt\_opt.J = T\_to\_J(sr*setting.sct/1000, tm\_filt\_opt);
+    fr\_filt\_opt.J = 4;}}
 
 As found in many studies, log compression and median processing are beneficial post processing steps for the scattering.
 
@@ -406,19 +414,23 @@ In order to better understand the benefits of each design choice, an ablation st
 
 We mitigate the first by considering a random split of the dataset in two halves, one for learning the projection and one for evaluating the performance. The impact of the variability of the perceptual judgments and its impact on machine listening systems such as the one discussed in this paper is not in the scope of this paper and left for further research. By considering this protocol, the proposed system reaches a $ap@5$ of $95.5\%$. If considering the same first half both for learning and evaluation leads to a $ap@5$ of $96.5\%$, indicating a low risk of overfitting.
 
-+rand
+Another risk when considering reprojection techniques such as the lmnn may appear when the dimensionality of the features gets closer to the  number of items in the dataset. For example there exists a trivial solution for optimizing the p@1 when the dimensionality of the features is equal to the number of items in the dataset. In this case, no information needs to be carried by the features set to obtain perfect performance.
 
-lmnn -> lda
+In order to quantify the importance of the information carried by the feature set in the final performance, the numerical values of the features are replaced with random numbers sampled from a uniform distribution. In this case, the performance drops down to $23.6\%$. Not considering the learning block gives a $aP@5$ of $23.8\%$. It can be concluded from these results that the learning block is not able to perform effectively if no information is carried by the input features set.
 
--lmnn
+The slight decrease of performance when considering lmnn may be explained by the fact that the learning algorithm optimizes the projection using correlations in the training set that are not found in the testing set.
 
-time support
+The lmnn algorithm is a popular algorithm for solving such a task, but other alternatives can be considered. One of those is the linear discriminant analysis \ml{ja ref ?}\cite{}. When considering the lda in place of the lmnn algorithm, the performance drops down to $81.2\%$.
 
-tfscat -> scat
+The lower performance of the lda may be explained by the fact that the dimensionality of the projected feature set is set to one plus the number of clusters in the reference clustering, which lowers the dimensionality from 1180 to 20.
 
-tfscat -> mfcc
+Considering a learning block implies some constraints. Performing the learning on large datasets require some computation. The projection has to be updated if the reference clustering or the dataset are modified significantly. Not considering any learning block reduces the performance to $92.9\% \pm 3$.
 
-tfscat -> mfcc monomials
+Concerning the feature computation block $B_1$, an important factor is the time support. When considering the commonly used duration of 25ms, the performance drop down to \ml{check value} $\%$. This demonstrates that the joint scattering is able to benefit from a larger time support, possibly to capture long term modulations which plays an important part when considering extended playing techniques.
+
+Considering the separable scattering gives a performance of $93\% \pm 4.2$.
+
+Simplifying further the feature set by considering the mfccs gives a performance of $82.3\% \pm 7.1$. Considering the mfccs is equivalent to considering the separable scattering at order 1. Compared to the separable scattering, the information captured by the mfccs is considerably reduced. In order to confirm that the additional information captured by the joint scattering is effectively important, another feature set is considered where the mfccs are complemented with monomials in order to reach the dimensionality of the joint scattering. To do so, the 40 features $f_i$ of the mfccs are multiplied together $f_{i, j} = f_i*f_j, i \neq j$. The resulting features set is composed of the 40 mfccs features $f_i$ and the first 1140 $f_{i, j}$. The resulting aP@5 of $81.8\% \pm 7$ indicates that the increase of dimensionality is likely to have no effect, confirming the relevance of the additional information provided by the joint scattering. \ml{vl outro on modulations}
 
 \section*{Discussion}
 \label{sec:discussion}

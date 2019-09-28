@@ -22,6 +22,9 @@ switch config.reportName
             captions{k}
             mk=mask;
             mk{factors(k)}= modalities(k)
+            if k==4
+                mk{14}=1;
+            end
             config = expExpose(config, 'l', 'save', ['tt' num2str(k)], 'step', 3, 'mask', mk, 'percent', 0, 'obs', 'p', 'highlight', 0, 'precision', 3);
         end
          % monomials

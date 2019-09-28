@@ -6,11 +6,29 @@ function config = tisisoReport(config)
 % Copyright: Mathieu Lagrange
 % Date: 09-Jan-2017
 
-if nargin==0, timbralSimilaritySol('report', 'rcv', 'reportName', 'cSlides'); return; end
+if nargin==0, timbralSimilaritySol('report', 'r', 'reportName', 'tt'); return; end
 
 switch config.reportName
     case 'tt'
-    
+        % full
+        mask = {4, 5, 2, 1, 2, 5, 1, 1, 2, 2, 2, 2, 1, 2, 1};
+        config = expExpose(config, 'l', 'save', ['tt0'], 'step', 3, 'mask', mask, 'percent', 0, 'obs', 'p', 'highlight', 0, 'precision', 3);
+        mask = {4, 5, 2, 2, 2, 5, 1, 1, 2, 2, 2, 2, 1, 2, 1};
+        factors  = [1 7 3 3 2 1 1];
+        modalities = [4 2 3 1 5 3 2];
+        captions = {'split', 'random', 'lda', 'nolearning', '25ms', 'separable', 'mfcc', 'monomials'};
+        for k=1:length(factors)
+            k
+            captions{k}
+            mk=mask;
+            mk{factors(k)}= modalities(k)
+            config = expExpose(config, 'l', 'save', ['tt' num2str(k)], 'step', 3, 'mask', mk, 'percent', 0, 'obs', 'p', 'highlight', 0, 'precision', 3);
+        end
+         % monomials
+         captions{end}
+        mask = {2, 5, 2, 2, 2, 5, 1, 2, 2, 2, 2, 2, 1, 2, 1};
+        config = expExpose(config, 'l', 'save', ['tt' num2str(length(factors)+1)], 'step', 3, 'mask', mask, 'percent', 0, 'obs', 'p', 'highlight', 0, 'precision', 3);
+      
     case 'dg'
     mask =   {[2  3  4], 5, 1, 1, 1, 5, 1, 1, 0, 0, 0, 0, 1, 1, 1};
         caption = ' post processing of features';

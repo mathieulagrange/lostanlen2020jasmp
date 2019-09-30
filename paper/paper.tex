@@ -222,6 +222,31 @@ Said otherwise, we rely on listeners, not performers, to define and evaluate the
 %% TODO: mention companion website and open-source software
 
 
+\section*{Related work}
+Timbre involves multiple time scales in conjunction, from a few microseconds for an attack transient to several seconds for a sustained tone.
+Therefore, computational models of timbre perception must summarize acoustic information over a long analysis window, typically amounting to $10^{4}$ digital audio samples or more.
+Mapping this input to a feature space in which distances denote timbral dissimilarities requires a data-driven stage of dimensionality reduction.
+The scientific literature exhibits a methodological divide as regards the collection of human-annotated data.
+
+On the one hand, most publications in music information retrieval cast timbre modeling as an audio classification problem.
+In this context, the instrumentation of each musical excerpt serves as an unstructured set of ``audio tags'', encoded as binary outputs within some predefined label space.
+Because such tags often belong to the publicly available metadata of music releases, the process of curating a training set for musical instrument classification requires little or no human intervention.
+Although scraping user-generated content from online music hosting platforms may not always reflect the true instrumentation with perfect accuracy, it offers a scalable and ecologically valid insight onto the acoustic underpinnings of musical timbre.
+Furthermore, supplementing user-generated content with the outcome of a crowdsourced annotation campaign  allows an explicit verification of instrument tags.
+For instance, the Open-MIC dataset, maintained by the Community for Open and Sustainable Music Information Research (COSMIR), comprises a vast corpus of X polyphonic music recordings spanning X instruments, as a derivative of the Free Music Archive (FMA) dataset.
+Another example is the Medley-solos-DB dataset, which comprises X monophonic excerpts from 8 instruments, as a derivative of the MedleyDB dataset of multitrack music.
+Over the past decade, the surge of these large digital audio collections, together with the democratization of high-performance computing on dedicated hardware, has spurred the development of deep learning techniques, and notably deep convolutional networks, in music instrument recognition.
+We refer to X for a recent review of the state of the art in this domain.
+
+On the other hand, the field of music psychology investigates timbre with the aim of discovering its physiological and behavioral foundations.
+In this setting, prior knowledge, however accurate, of instrumentation does not suffice to conduct a study.
+Rather, each excerpt must be played back to multiple human listeners.
+Yet, collecting subjective responses to acoustic stimuli is a tedious and unscalable procedure, thus restricting the size of the musical corpus under study.
+Such restriction hampers the applicability of iterative representation learning algorithms, such as stochastic gradient descent in artificial neural networks.
+Nevertheless, advanced methods in electrophysiology allow to observe the firing patterns of biological neurons in the presence of controlled stimuli.
+This observation, originally carried out on the ferret, has led to a comprehensive mapping of the primary auditory cortex, in terms of its spectrotemporal receptive fields (STRF).
+
+
 
 \section*{Timbre similarity judgments}
 \label{sec:survey}

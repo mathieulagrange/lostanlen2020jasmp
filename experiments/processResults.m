@@ -23,6 +23,7 @@ captions(3)=[];
 
 
 mean(p')
+var(p')
 fig = figure(1);
 boxplot(p', 'orientation', 'horizontal')
 set(gca, 'yticklabels', captions);
@@ -35,7 +36,7 @@ s=scatter(p(:), x(:), 'filled');
 s.CData = c(:);
 s.SizeData = 70;
 set(gca, 'yticklabels', captions);
-axis([55 103 0.5 8.5])
+axis([50 100 0.5 8.5])
 xlabel('aP@5')
 saveas(fig, 'samplesRes.png')
 

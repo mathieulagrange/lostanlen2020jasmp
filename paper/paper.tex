@@ -146,7 +146,15 @@
 \begin{abstractbox}
 
 \begin{abstract}
-Abstract here.
+
+The notion of musical timbre have been extensively considered through the lens of the classic instrumentarium. For such a purpose, datasets of instruments played \textit{ordinario} are considered. On thoses datasets, computational model of timbre considering static spectral features such as Mel Frequency Cepstral coefficents displayed excellent performance.
+
+The availability of richer musical datasets with many playing techniques, allows us to consider computational modeling of musical timbre with the outcomes of recent study  that stresses the importance of long term modulations in auditory perception.
+
+We propose a timbre model that is based on a parametrized...
+
+This model is evaluated in a retrieval task using a perceptually defined retrieval objective. Computational experiments demonstrates 1) the importance of handling long term modulations both in time and frequency, with a gain of $14\%$ in precision compared to Mfccs  2) the relevance of a learned layer that is able provide an average gain of $3\%$ in precision with a reduction of the variance of the prediction error of a factor of 2.
+
 \end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -212,8 +220,13 @@ In this context, the computer serves as a bridge from the auditory level to the 
 To maximize the perceptual fidelity of such an approximation, a query-by-example search engine in the auditory domain should summarize the vastest possible vocabulary of timbral templates.
 
 In this paper, we propose a machine listening model which computes the dissimilarity in timbre between any two audio samples.
-
-\ml{decrire les contributions signal ici}
+It is composed of two stages, one fixed and one learned, the former providing a baseline model for audio perception, with the latter specifically adapting the representation for estimation of timbre similarity.
+The fixed stage is constructed using the joint time--frequency scattering transform introduced by And\'en et al. \cite{anden2015joint,anden2019joint}.
+This representation extracts the time--frequency structure of the audio signal in a manner invariant to small time-shifts and stable to time-warping deformations.
+As such, it provides a general description of the audio signal that is not necessarily tailored to measuring timbre similarity.
+The second stage consists of a learned linear transform that, applied to the scattering representation, induces a metric that more closely aligns with timbre similarity judgments extracted from human listeners.
+We see that, numerically, this learned metric almost exactly reproduces the human similarity judgments.
+Moreover, we perform an ablation study of the model showing that degrading any element of it (replacing the scattering transform by simpler spectral descriptors, for example) significantly reduces the accuracy of the fit.
 
 The main originality of our model is that it encompasses a broad range of extended playing techniques, well beyond the so-called ``ordinary'' mode of acoustic production \ml{vl cite dlfm ?}.
 Specifically, we fit pairwise judgments for 78 different techniques arising from 16 instruments, some of which include removable timbre-altering devices such as mutes.
@@ -439,7 +452,20 @@ Simplifying further the feature set by considering the mfccs gives a performance
 \section*{Discussion}
 \label{sec:discussion}
 
-\ml{ parler des contributions signal ici}
+We see from the ablation study conducted above that each step of the proposed model is necessary for its high performance.
+Among other things, it indicates the joint time--frequency scattering transform itself should not be used directly for similarity comparisons, but is best augmented by a learned stage.
+This explains the relative success over such models \cite{lostanlen2018relevance,lostanlen2018extended} over others where distances on raw scattering coefficients were used for judging audio similarity \cite{bauge2013representing}.
+
+On the other hand, we note that the complexity of the learned model does not have to be high.
+Indeed, for this task, a linear model on the scattering coefficients is sufficient.
+There is no need for deep networks with large numbers of parameters to accurately represent the similarity information.
+In other words, the scattering transform parametrizes the signal structure in a way that many relevant quantities (such as timbre similarity) can be extracted through a simple linear mapping.
+This is in line with other classification results, where linear support vector machines applied to scattering coefficients have achieved significant success \cite{anden2015joint,anden2019joint}.
+
+We also see the necessity of a fully \emph{joint} time--frequency model for accessing timbre, as opposed to a purely spectral model or one that treats the two axes in a separable manner.
+This fact has also been observed in other contexts, such as the work of Patil et al. \cite{patil2012music}.
+A related observation is the need for capturing large-scale structure.
+Indeed, reducing the window size to $25~\mathrm{ms}$ means that we lose a great deal of time--frequency structure, bringing results closer to that of the separable model.
 
 The success of the above system in identifying timbral similarities has immediate applications in browsing music databases.
 These are typically organized based on instrumental and playing techniques taxonomies, with additional keywords offering a more flexible organization.

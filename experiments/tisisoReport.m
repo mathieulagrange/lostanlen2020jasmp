@@ -14,8 +14,8 @@ switch config.reportName
         mask = {4, 5, 2, 1, 2, 5, 1, 1, 2, 2, 2, 2, 1, 2, 1};
         config = expExpose(config, 'l', 'save', ['tt0'], 'step', 3, 'mask', mask, 'percent', 0, 'obs', 'p', 'highlight', 0, 'precision', 3);
         mask = {4, 5, 2, 2, 2, 5, 1, 1, 2, 2, 2, 2, 1, 2, 1};
-        factors  = [1 7 3 3 2 1 1];
-        modalities = [4 2 3 1 5 3 2];
+        factors  =   [1 7 3 3 2 1 1];
+        modalities = [4 2 3 1 1 3 2];
         captions = {'split', 'random', 'lda', 'nolearning', '25ms', 'separable', 'mfcc', 'monomials'};
         for k=1:length(factors)
             k

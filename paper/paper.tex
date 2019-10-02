@@ -452,7 +452,20 @@ Simplifying further the feature set by considering the mfccs gives a performance
 \section*{Discussion}
 \label{sec:discussion}
 
-\ml{ parler des contributions signal ici}
+We see from the ablation study conducted above that each step of the proposed model is necessary for its high performance.
+Among other things, it indicates the joint time--frequency scattering transform itself should not be used directly for similarity comparisons, but is best augmented by a learned stage.
+This explains the relative success over such models \cite{lostanlen2018relevance,lostanlen2018extended} over others where distances on raw scattering coefficients were used for judging audio similarity \cite{bauge2013representing}.
+
+On the other hand, we note that the complexity of the learned model does not have to be high.
+Indeed, for this task, a linear model on the scattering coefficients is sufficient.
+There is no need for deep networks with large numbers of parameters to accurately represent the similarity information.
+In other words, the scattering transform parametrizes the signal structure in a way that many relevant quantities (such as timbre similarity) can be extracted through a simple linear mapping.
+This is in line with other classification results, where linear support vector machines applied to scattering coefficients have achieved significant success \cite{anden2015joint,anden2019joint}.
+
+We also see the necessity of a fully \emph{joint} time--frequency model for accessing timbre, as opposed to a purely spectral model or one that treats the two axes in a separable manner.
+This fact has also been observed in other contexts, such as the work of Patil et al. \cite{patil2012music}.
+A related observation is the need for capturing large-scale structure.
+Indeed, reducing the window size to $25~\mathrm{ms}$ means that we lose a great deal of time--frequency structure, bringing results closer to that of the separable model.
 
 The success of the above system in identifying timbral similarities has immediate applications in browsing music databases.
 These are typically organized based on instrumental and playing techniques taxonomies, with additional keywords offering a more flexible organization.

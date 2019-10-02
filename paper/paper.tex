@@ -146,15 +146,15 @@
 \begin{abstractbox}
 
 \begin{abstract}
-
-The notion of musical timbre have been extensively considered through the lens of the classic instrumentarium. For such a purpose, datasets of instruments played \textit{ordinario} are considered. On thoses datasets, computational model of timbre considering static spectral features such as Mel Frequency Cepstral coefficents displayed excellent performance.
-
-The availability of richer musical datasets with many playing techniques, allows us to consider computational modeling of musical timbre with the outcomes of recent study  that stresses the importance of long term modulations in auditory perception.
-
-We propose a timbre model that is based on a parametrized...
-
-This model is evaluated in a retrieval task using a perceptually defined retrieval objective. Computational experiments demonstrates 1) the importance of handling long term modulations both in time and frequency, with a gain of $14\%$ in precision compared to Mfccs  2) the relevance of a learned layer that is able provide an average gain of $3\%$ in precision with a reduction of the variance of the prediction error of a factor of 2.
-
+The timbre of a sound is an important factor in determining its identity and source.
+One successful means of exploring the timbre space has been the construction of computational models to analyze datasets of musical instrument recordings.
+However, these datasets have typically only included a limited set of instruments played with standard playing techniques, limiting the timbral range.
+For these datasets, models based on static spectral descriptors, such as mel-frequency cepstral coefficients (MFCCs), have enjoyed excellent performance.
+However, with richer datasets containing a wider array of instruments played with a variety of playing techniques, we need more sophisticated models which incorporate dynamic large-scale signal structure.
+To this end, we propose a simple but rich model based on joint time--frequency scattering transforms that are linearly transformed to yield a timbral descriptor.
+The linear mapping is learned from human similarity judgments obtained in a crowdsourced free sorting task.
+We show that this proposed computational model accurately reproduces the human similarity judgments to $99\%$ accuracy.
+In addition, we perform an ablation study demonstrating the necessity of various components in this model.
 \end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -222,8 +222,9 @@ To maximize the perceptual fidelity of such an approximation, a query-by-example
 In this paper, we propose a machine listening system which computes the dissimilarity in timbre between any two audio samples.
 This system composes two stages: unsupervised feature extraction and supervised metric learning.
 The feature extraction stage is a nonlinear map which relies on the joint time--frequency scattering transform \cite{anden2015joint}, followed by per-feature Gaussianization \cite{lostanlen2018relevance}.
-It aims at encoding patterns of spectrotemporal modulation in the query while offering numerical guarantees of stability to local deformations.
-The metric learning stage is a linear map, optimized via large-margin nearest neighbors (LMNN), which recombines scattering coefficients so as to fit a training set of human judgments.
+It encodes patterns of spectrotemporal modulation in the query while offering numerical guarantees of stability to local deformations.
+The metric learning stage is a linear map, optimized via large-margin nearest neighbors (LMNN) \cite{}.
+It recombines scattering coefficients so as to fit a training set of human judgments.
 
 The main originality of our model is that it encompasses a broad range of extended playing techniques, well beyond the so-called ``ordinary'' mode of acoustic production \cite{lostanlen2018extended}.
 Specifically, we fit pairwise judgments for 78 different techniques arising from 16 instruments, some of which include removable timbre-altering devices such as mutes.
@@ -249,7 +250,7 @@ Although scraping user-generated content from online music hosting platforms may
 Furthermore, supplementing user-generated content with the outcome of a crowdsourced annotation campaign  allows an explicit verification of instrument tags.
 For instance, the Open-MIC dataset \cite{humphrey2018ismir}, maintained by the Community for Open and Sustainable Music Information Research (COSMIR) \cite{mcfee2016ismir}, comprises a vast corpus of 20k polyphonic music recordings spanning across 20 instruments, as a derivative of the Free Music Archive (FMA) dataset \cite{defferrard2017ismir}.
 Another example is the Medley-solos-DB dataset \cite{lostanlen2016ismir}, which comprises 21k monophonic excerpts from 8 instruments, as a derivative of the MedleyDB dataset of multitrack music \cite{bittner2014ismir}.
-Over the past decade, the surge of these large digital audio collections, together with the democratization of high-performance computing on dedicated hardware, has spurred the development of deep learning techniques, and notably deep convolutional networks, in music instrument recognition \cite{mcfee2015ismir}.
+Over the past decade, the surge of these large digital audio collections, together with the democratization of high-performance computing on dedicated hardware, has spurred the development of deep learning techniques, and notably deep convolutional networks, in music instrument recognition \cite{mcfee2015ismir,pons2017eusipco,gururani2018ismir}.
 We refer to \cite{han2017taslp} for a recent review of the state of the art in this domain.
 
 On the other hand, the field of music psychology investigates timbre with the aim of discovering its physiological and behavioral foundations \ml{vl cite}.
@@ -263,6 +264,8 @@ This observation, originally carried out on the ferret, has led to a comprehensi
 
 Our model borrows from both aforementioned lines of research in music information retrieval and music psychology.
 Indeed, the joint time--frequency scattering transform can be regarded as a deep convolutional network with fixed synaptic weights; or, alternatively, as an idealized computational model for STRFs \cite{anden2019joint}.
+
+We refer to \cite{bellet2015book} for a review of the state of the art in this domain.
 
 
 % \ml{vl citer, dire que c'est du coup une base solide de représentation et que le modèle mathamtique que l'on utilisera ici est quasi equivalent}.

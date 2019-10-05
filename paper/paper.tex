@@ -198,14 +198,14 @@ In addition, we perform an ablation study demonstrating the necessity of various
 \section*{Introduction}
 \label{sec:intro}
 
-Music information retrieval operates at either of two levels: symbolic and auditory.
+Music information retrieval operates at either of two levels: symbolic and auditory \cite{downie2003mir}.
 By resting on a notation system, the symbolic level facilitates the comparison of musical notes in terms of quantitative attributes, such as duration, pitch, or intensity at the source.
 Timbre, in contrast, is a qualitative attribute of music, thus irreducible to a one-dimensional axis \cite{siedenburg2019chapter}.
-As a result, symbolic representations describe timbre indirectly, either via visuotactile metaphors (\eg{} dry, rough, bright, round, and so forth) or by specifying an instrumental playing technique (\eg{} bowed or plucked).
+As a result, symbolic representations describe timbre indirectly, either via visuotactile metaphors (\eg{} bright, rough, and so forth \cite{faure1996icmpc}) or via an instrumental playing technique (\eg{} bowed or plucked \cite{kostka2016book}).
 
 Despite their widespread use, linguistic references to musical timbre suffer from limited adequacy.
-On the one hand, adjectives such as \emph{bright} or \emph{rough} are prone to misunderstanding, as they do not prescribe any musical gesture that is capable of achieving them \cite{faure1996icmpc}.
-On the other hand, the sole mention of playing technique does not determine any intended effect; and therefore, fails to generalize to the entire instrumentarium.
+On the one hand, adjectives such as \emph{bright} or \emph{rough} are prone to misunderstanding, as they do not prescribe any musical gesture that is capable of achieving them \cite{antoine2018isma}.
+On the other hand, the sole mention of playing technique does not determine any intended effect; and therefore, fails to generalize to the entire instrumentarium \cite{kolozali2011ismir}.
 For instance, although the term \emph{breathy} alludes to a playing technique that is peculiar to wind instruments, a cellist may accomplish a seemingly breathy timbre by bowing near the fingerboard, i.e., \emph{sul tasto} in the classical terminology.
 
 The prospect of modeling timbre perception thus necessarily exceeds the symbolic domain.
@@ -214,17 +214,17 @@ From an audio signal processing standpoint, the task of simulating this cognitiv
 Rather than to merely discriminate instruments as mutually exclusive categories, this function must reflect a consensus of quantitative judgments of acoustic dissimilarity, all other parameters --- \ie{} duration, pitch, and intensity --- being equal.
 
 Behind the overarching challenge of coming up with a robust predictive model for human behavior, the main practical application of timbre similarity retrieval lies in the emerging topic of computer-assisted instrumentation \cite{maresz2013cmr}.
-Following the aesthetic tradition of spectralism in contemporary music creation, the composer queries the machine with an arbitrary audio signal \cite{antoine2018isma}.
+Following the aesthetic tradition of spectralism in contemporary music creation, the composer queries the machine with an arbitrary audio signal.
 The outcome of this query is an instrumental audio sample, alongside textual attributes of playing technique.
-In this context, the computer serves as a bridge from the auditory level to the symbolic level, allowing to approximate a potentially infinite realm of timbral sensations by an orchestra of priorly specified extent and technical range.
+In this context, the computer serves as a bridge from the auditory level to the symbolic level, \ie{} from a potentially infinite realm of timbral sensations to a musical score of priorly specified range.
 To maximize the perceptual fidelity of such an approximation, a query-by-example search engine in the auditory domain should summarize the vastest possible vocabulary of timbral templates.
 
-In this paper, we propose a machine listening system which computes the dissimilarity in timbre between any two audio samples.
+In this article, we propose a machine listening system which computes the dissimilarity in timbre between any two audio samples.
 This system composes two stages: unsupervised feature extraction and supervised metric learning.
 The feature extraction stage is a nonlinear map which relies on the joint time--frequency scattering transform \cite{anden2015joint}, followed by per-feature Gaussianization \cite{lostanlen2018relevance}.
 It encodes patterns of spectrotemporal modulation in the query while offering numerical guarantees of stability to local deformations.
-The metric learning stage is a linear map, optimized via large-margin nearest neighbors (LMNN) \cite{}.
-It recombines scattering coefficients so as to fit a training set of human judgments.
+The metric learning stage is a linear map, optimized via large-margin nearest neighbors (LMNN) \cite{weinberger2009distance}.
+It recombines scattering coefficients so as to fit a training set of human judgments \cite{mcadams1995psychres}.
 
 The main originality of our model is that it encompasses a broad range of extended playing techniques, well beyond the so-called ``ordinary'' mode of acoustic production \cite{lostanlen2018extended}.
 Specifically, we fit pairwise judgments for 78 different techniques arising from 16 instruments, some of which include removable timbre-altering devices such as mutes.
@@ -243,7 +243,7 @@ Therefore, computational models of timbre perception must summarize acoustic inf
 Mapping this input to a feature space in which distances denote timbral dissimilarities requires a data-driven stage of dimensionality reduction.
 The scientific literature exhibits a methodological divide as regards the collection of human-annotated data \cite{siedenburg2016jnmr}.
 
-On the one hand, most publications in music information retrieval cast timbre modeling as an audio classification problem  \cite{martin1998asa,brown1999jasa,eronen2000icassp,herrera2003jnmr,wieczorkowska2003jiis,kaminskyj2005jiis,benetos2006icassp,bhalke2016jiis}.
+On the one hand, most publications in music information retrieval cast timbre modeling as an audio classification problem  \cite{martin1998asa,brown1999jasa,eronen2000icassp,herrera2003jnmr,wieczorkowska2003jiis,krishna2004icassp,kaminskyj2005jiis,benetos2006icassp,bhalke2016jiis}.
 In this context, the instrumentation of each musical excerpt serves as an unstructured set of ``audio tags'', encoded as binary outputs within some predefined label space.
 Because such tags often belong to the publicly available metadata of music releases, the process of curating a training set for musical instrument classification requires little or no human intervention.
 Although scraping user-generated content from online music hosting platforms may not always reflect the true instrumentation with perfect accuracy, it offers a scalable and ecologically valid insight onto the acoustic underpinnings of musical timbre.

@@ -214,7 +214,7 @@ From an audio signal processing standpoint, the task of simulating this cognitiv
 Rather than to merely discriminate instruments as mutually exclusive categories, this function must reflect a consensus of quantitative judgments of acoustic dissimilarity, all other parameters --- \ie{} duration, pitch, and intensity --- being equal.
 
 Behind the overarching challenge of coming up with a robust predictive model for human behavior, the main practical application of timbre similarity retrieval lies in the emerging topic of computer-assisted instrumentation \cite{maresz2013cmr}.
-Following the aesthetic tradition of spectralism in contemporary music creation, the composer queries the machine with an arbitrary audio signal.
+Following the aesthetic tradition of spectralism in contemporary music creation, the composer queries the machine with an arbitrary audio signal \cite{antoine2018isma}.
 The outcome of this query is an instrumental audio sample, alongside textual attributes of playing technique.
 In this context, the computer serves as a bridge from the auditory level to the symbolic level, allowing to approximate a potentially infinite realm of timbral sensations by an orchestra of priorly specified extent and technical range.
 To maximize the perceptual fidelity of such an approximation, a query-by-example search engine in the auditory domain should summarize the vastest possible vocabulary of timbral templates.
@@ -242,7 +242,7 @@ Therefore, computational models of timbre perception must summarize acoustic inf
 Mapping this input to a feature space in which distances denote timbral dissimilarities requires a data-driven stage of dimensionality reduction.
 The scientific literature exhibits a methodological divide as regards the collection of human-annotated data.
 
-On the one hand, most publications in music information retrieval cast timbre modeling as an audio classification problem  \cite{lostanlen2016ismir}.
+On the one hand, most publications in music information retrieval cast timbre modeling as an audio classification problem  \cite{martin1998asa,brown1999jasa,eronen2000icassp,herrera2003jnmr,wieczorkowska2003jiis,kaminskyj2005jiis,benetos2006icassp,lostanlen2016ismir}.
 In this context, the instrumentation of each musical excerpt serves as an unstructured set of ``audio tags'', encoded as binary outputs within some predefined label space.
 Because such tags often belong to the publicly available metadata of music releases, the process of curating a training set for musical instrument classification requires little or no human intervention.
 Although scraping user-generated content from online music hosting platforms may not always reflect the true instrumentation with perfect accuracy, it offers a scalable and ecologically valid insight onto the acoustic underpinnings of musical timbre.

@@ -240,7 +240,7 @@ A comprehensive ablation study of our system demonstrates that all design choice
 Timbre involves multiple time scales in conjunction, from a few microseconds for an attack transient to several seconds for a sustained tone.
 Therefore, computational models of timbre perception must summarize acoustic information over a long analysis window, typically amounting to $10^{4}$ digital audio samples or more.
 Mapping this input to a feature space in which distances denote timbral dissimilarities requires a data-driven stage of dimensionality reduction.
-The scientific literature exhibits a methodological divide as regards the collection of human-annotated data.
+The scientific literature exhibits a methodological divide as regards the collection of human-annotated data \cite{siedenburg2016jnmr}.
 
 On the one hand, most publications in music information retrieval cast timbre modeling as an audio classification problem  \cite{martin1998asa,brown1999jasa,eronen2000icassp,herrera2003jnmr,wieczorkowska2003jiis,kaminskyj2005jiis,benetos2006icassp,bhalke2016jiis}.
 In this context, the instrumentation of each musical excerpt serves as an unstructured set of ``audio tags'', encoded as binary outputs within some predefined label space.
@@ -249,7 +249,7 @@ Although scraping user-generated content from online music hosting platforms may
 Furthermore, supplementing user-generated content with the outcome of a crowdsourced annotation campaign  allows an explicit verification of instrument tags.
 For instance, the Open-MIC dataset \cite{humphrey2018ismir}, maintained by the Community for Open and Sustainable Music Information Research (COSMIR) \cite{mcfee2016ismir}, comprises a vast corpus of 20k polyphonic music recordings spanning across 20 instruments, as a derivative of the Free Music Archive (FMA) dataset \cite{defferrard2017ismir}.
 Another example is the Medley-solos-DB dataset \cite{lostanlen2016ismir}, which comprises 21k monophonic excerpts from 8 instruments, as a derivative of the MedleyDB dataset of multitrack music \cite{bittner2014ismir}.
-Over the past decade, the surge of these large digital audio collections, together with the democratization of high-performance computing on dedicated hardware, has spurred the development of deep learning techniques, and notably deep convolutional networks, in music instrument recognition.
+Over the past decade, the surge of these large digital audio collections, together with the democratization of high-performance computing on dedicated hardware, has spurred the development of deep learning techniques, and notably deep convolutional networks, in music instrument recognition \cite{mcfee2015ismir}.
 We refer to \cite{han2017taslp} for a recent review of the state of the art in this domain.
 
 On the other hand, the field of music psychology investigates timbre with the aim of discovering its physiological and behavioral foundations \ml{vl cite}.

@@ -219,14 +219,11 @@ The outcome of this query is an instrumental audio sample, alongside textual att
 In this context, the computer serves as a bridge from the auditory level to the symbolic level, allowing to approximate a potentially infinite realm of timbral sensations by an orchestra of priorly specified extent and technical range.
 To maximize the perceptual fidelity of such an approximation, a query-by-example search engine in the auditory domain should summarize the vastest possible vocabulary of timbral templates.
 
-In this paper, we propose a machine listening model which computes the dissimilarity in timbre between any two audio samples.
-It is composed of two stages, one fixed and one learned, the former providing a baseline model for audio perception, with the latter specifically adapting the representation for estimation of timbre similarity.
-The fixed stage is constructed using the joint time--frequency scattering transform introduced by And\'en et al. \cite{anden2015joint,anden2019joint}.
-This representation extracts the time--frequency structure of the audio signal in a manner invariant to small time-shifts and stable to time-warping deformations.
-As such, it provides a general description of the audio signal that is not necessarily tailored to measuring timbre similarity.
-The second stage consists of a learned linear transform that, applied to the scattering representation, induces a metric that more closely aligns with timbre similarity judgments extracted from human listeners.
-We see that, numerically, this learned metric almost exactly reproduces the human similarity judgments.
-Moreover, we perform an ablation study of the model showing that degrading any element of it (replacing the scattering transform by simpler spectral descriptors, for example) significantly reduces the accuracy of the fit.
+In this paper, we propose a machine listening system which computes the dissimilarity in timbre between any two audio samples.
+This system composes two stages: unsupervised feature extraction and supervised metric learning.
+The feature extraction stage is a nonlinear map which relies on the joint time--frequency scattering transform \cite{anden2019joint}, followed by per-feature Gaussianization \cite{lostanlen2018relevance}.
+It aims at encoding patterns of spectrotemporal modulation in the query while offering numerical guarantees of stability to local deformations.
+The metric learning stage is a linear map, optimized via large-margin nearest neighbors (LMNN), which recombines scattering coefficients so as to fit a training set of human judgments.
 
 The main originality of our model is that it encompasses a broad range of extended playing techniques, well beyond the so-called ``ordinary'' mode of acoustic production \ml{vl cite dlfm ?}.
 Specifically, we fit pairwise judgments for 78 different techniques arising from 16 instruments, some of which include removable timbre-altering devices such as mutes.

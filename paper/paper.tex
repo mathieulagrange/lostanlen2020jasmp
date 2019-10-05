@@ -242,15 +242,15 @@ Therefore, computational models of timbre perception must summarize acoustic inf
 Mapping this input to a feature space in which distances denote timbral dissimilarities requires a data-driven stage of dimensionality reduction.
 The scientific literature exhibits a methodological divide as regards the collection of human-annotated data.
 
-On the one hand, most publications in music information retrieval cast timbre modeling as an audio classification problem  \cite{martin1998asa,brown1999jasa,eronen2000icassp,herrera2003jnmr,wieczorkowska2003jiis,kaminskyj2005jiis,benetos2006icassp,lostanlen2016ismir}.
+On the one hand, most publications in music information retrieval cast timbre modeling as an audio classification problem  \cite{martin1998asa,brown1999jasa,eronen2000icassp,herrera2003jnmr,wieczorkowska2003jiis,kaminskyj2005jiis,benetos2006icassp}.
 In this context, the instrumentation of each musical excerpt serves as an unstructured set of ``audio tags'', encoded as binary outputs within some predefined label space.
 Because such tags often belong to the publicly available metadata of music releases, the process of curating a training set for musical instrument classification requires little or no human intervention.
 Although scraping user-generated content from online music hosting platforms may not always reflect the true instrumentation with perfect accuracy, it offers a scalable and ecologically valid insight onto the acoustic underpinnings of musical timbre.
 Furthermore, supplementing user-generated content with the outcome of a crowdsourced annotation campaign  allows an explicit verification of instrument tags.
-For instance, the Open-MIC dataset \cite{humphrey2016ismir}, maintained by the Community for Open and Sustainable Music Information Research (COSMIR) \cite{mcfee2016ismir}, comprises a vast corpus of X polyphonic music recordings spanning X instruments, as a derivative of the Free Music Archive (FMA) dataset.
-Another example is the Medley-solos-DB dataset, which comprises X monophonic excerpts from 8 instruments, as a derivative of the MedleyDB dataset of multitrack music.
+For instance, the Open-MIC dataset \cite{humphrey2018ismir}, maintained by the Community for Open and Sustainable Music Information Research (COSMIR) \cite{mcfee2016ismir}, comprises a vast corpus of 20k polyphonic music recordings spanning across 20 instruments, as a derivative of the Free Music Archive (FMA) dataset \cite{defferrard2017ismir}.
+Another example is the Medley-solos-DB dataset \cite{lostanlen2016ismir}, which comprises 21k monophonic excerpts from 8 instruments, as a derivative of the MedleyDB dataset of multitrack music \cite{bittner2014ismir}.
 Over the past decade, the surge of these large digital audio collections, together with the democratization of high-performance computing on dedicated hardware, has spurred the development of deep learning techniques, and notably deep convolutional networks, in music instrument recognition.
-We refer to X for a recent review of the state of the art in this domain.
+We refer to \cite{han2017taslp} for a recent review of the state of the art in this domain.
 
 On the other hand, the field of music psychology investigates timbre with the aim of discovering its physiological and behavioral foundations \ml{vl cite}.
 In this setting, prior knowledge, however accurate, of instrumentation does not suffice to conduct a study.

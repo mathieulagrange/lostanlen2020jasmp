@@ -217,10 +217,10 @@ Behind the overarching challenge of coming up with a robust predictive model for
 Following the aesthetic tradition of spectralism in contemporary music creation, the composer queries the machine with an arbitrary audio signal.
 The outcome of this query is an instrumental audio sample, alongside textual attributes of playing technique.
 In this context, the computer serves as a bridge from the auditory level to the symbolic level, \ie{} from a potentially infinite realm of timbral sensations to a musical score of priorly specified range.
-To maximize the perceptual fidelity of such an approximation, a query-by-example search engine in the auditory domain should summarize the vastest possible vocabulary of timbral templates.
+%To maximize the perceptual fidelity of such an approximation, a query-by-example search engine in the auditory domain should summarize a vast  of timbres.
 
-In this article, we propose a machine listening system which computes the dissimilarity in timbre between any two audio samples.
-This system composes two stages: unsupervised feature extraction and supervised metric learning.
+This article proposes a machine listening system which computes the dissimilarity in timbre between any two audio samples.
+Our system composes two stages: unsupervised feature extraction and supervised metric learning.
 The feature extraction stage is a nonlinear map which relies on the joint time--frequency scattering transform \cite{anden2015joint}, followed by per-feature Gaussianization \cite{lostanlen2018relevance}.
 It encodes patterns of spectrotemporal modulation in the query while offering numerical guarantees of stability to local deformations.
 The metric learning stage is a linear map, optimized via large-margin nearest neighbors (LMNN) \cite{weinberger2009distance}.
@@ -260,10 +260,15 @@ Yet, collecting subjective responses to acoustic stimuli is a tedious and unscal
 Such restriction hampers the applicability of iterative representation learning algorithms, such as stochastic gradient descent in artificial neural networks.
 Nevertheless, advanced methods in electrophysiology allow to observe the firing patterns of biological neurons in the presence of controlled stimuli.
 This observation, originally carried out on the ferret, has led to a comprehensive mapping of the primary auditory cortex, in terms of its spectrotemporal receptive fields (STRFs) \cite{depireux2001jneur}.
+The STRF of a neuron is a function of time and frequency which represents the optimal predictor of its post-stimulus time histogram (PSTH) during exposure to a diverse range of auditory stimuli \cite{aertsen1981biolcyb}.
+The simplest method to compute it in practice is by reverse correlation, i.e. by averaging all stimuli that trigger an action potential \cite{deboer1968biomed}.
+Historically, STRFs were defined by their Wigner--Ville distribution \cite{flandrin1998book}, thereby sparing the choice of a tradeoff in time--frequency localization, but incurring cross-term interference \cite{eggermont1993hearing}.
+More recently, the STRF was redefined directly as a spectrographic representation of the spike-triggered average, in order to improve readability \cite{klein2000compneur}.
 
 
 Our model borrows from both aforementioned lines of research in music information retrieval and music psychology.
 Indeed, the joint time--frequency scattering transform can be regarded as a deep convolutional network with fixed synaptic weights; or, alternatively, as an idealized computational model for STRFs \cite{anden2019joint}.
+
 
 We refer to \cite{bellet2015book} for a review of the state of the art in this domain.
 

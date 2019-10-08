@@ -263,7 +263,8 @@ This observation, originally carried out on the ferret, has led to a comprehensi
 The STRF of a neuron is a function of time and frequency which represents the optimal predictor of its post-stimulus time histogram (PSTH) during exposure to a diverse range of auditory stimuli \cite{aertsen1981biolcyb}.
 The simplest method to compute it in practice is by reverse correlation, i.e. by averaging all stimuli that trigger an action potential \cite{deboer1968biomed}.
 Historically, STRFs were defined by their Wigner--Ville distribution \cite{flandrin1998book}, thereby sparing the choice of a tradeoff in time--frequency localization, but incurring cross-term interference \cite{eggermont1993hearing}.
-More recently, the STRF was redefined directly as a spectrographic representation of the spike-triggered average, in order to improve readability \cite{klein2000compneur}.
+More recently, in order to improve readability \cite{klein2000compneur}, the STRF was redefined directly as a spectrographic representation of the spike-triggered average.
+
 
 
 Our model borrows from both aforementioned lines of research in music information retrieval and music psychology.
@@ -331,7 +332,7 @@ Can this be done using the tag clouds?}
 \section*{Proposed approach}
 \label{sec:method}
 
-\ml{introduce the system globally, while stressing the ability of the system to be conditionned for one or many people}
+\ml{introduce the system globally, while stressing the ability of the system to be conditioned for one or many people (VL). consensus ou un compositeur particulier.}
 
 \subsection*{Scattering transform}
 \label{sec:scattering}
@@ -395,7 +396,7 @@ The processing pipeline presented in Figure \ref{fig:pipeline} addresses the pro
 
 The perceptual data gathered during the perceptual experiment considers 78 \ipts each represented by one sound recording that the subject could listen to before clustering the \ipts. For those 78 \ipts, 31 clusterings $C_k, 0<k<31, Card(C_k)=78$ are available, that are our reference in terms of timbre similarity. If \ipt $i$ and \ipt $j$ are clustered together by subject $k$, then $C_k(i)=C_k(j)$. In essence, an effective ranking system should retrieve sounds that belong to \ipts that are clustered together in each of the 31 clusterings. Depending on the preferences of subjects, there may be competition between clusterings that should be mitigated when appreciating quantitatively the ranking performance.
 
-In order to provide enough data for the numerical analysis described in this section, we assume that the impact of the pitch and nuance on perceptual similarity is much lower than the timbral similarity constraints expressed by the perceptual judgments of the subjects. Assuming invariance to timbre with respect to pitch and nuance is in line with the ansi definition of timbre \ml{vl, citation}, it is  thus taken in this paper as a reasonable assumption. Quantification of this invariance is left for further study.
+In order to provide enough data for the numerical analysis described in this section, we assume that the impact of the pitch and nuance on perceptual similarity is much lower than the timbral similarity constraints expressed by the perceptual judgments of the subjects. Assuming invariance to timbre with respect to pitch and nuance is in line with the ansi definition of timbre \ml{vl, citation. reformuler tout le paragraphe}, it is  thus taken in this paper as a reasonable assumption. Quantification of this invariance is left for further study.
 
 The whole range of nuance and pitch is thus considered for each of the 78 \ipts, leading to a dataset composed of 9346 sound recordings. The clusterings $C_k$ are propagated to this dataset to produce new reference clusterings $D_k, 0<k<31, Card(D_k)=9346$ using the following scheme. If a sound of this dataset $s_a$ corresponds to \ipt $i$, then $D_k(a) = C_k(i), \forall k$.
 
@@ -419,7 +420,7 @@ The choice of the rank is chosen with the application in mind. When searching fo
 
 The processing pipeline is composed of 2 main building blocks. The first block $B_1$ takes a digital audio recording as input and outputs one vector of features. For this block, the main factors are the time support $B_1^t$ for computing the features and the type of features $B_1^f$. We considered $B_1^t \in \{ 25, 128, 250, 500, 1000 \}$ ms and $B_1^f \in \{ \text{mfccs}, \text{separable scattering}, \text{joint scattering} \}$. The mfccs are the standard Mel frequency cepstral coefficients with 40 Mel bands and selection of the 13$^\text{th}$ first discrete cosine transform (dct) coefficients.
 
-\ml{provide parameters for scattering
+\ml{VL. provide parameters for scattering
 \texttt{
 case 'scat'
     filt\_opt.Q = [12 1];
@@ -440,7 +441,7 @@ The complete experiments with all settings have been computed. For the sake of c
 
 The best performing system considers the separable scattering computed over $1000$ms time support, projected using the lmnn algorithm. Evaluated over the entire dataset, that is the computation of the projection and the evaluation are performed on the whole dataset, this system reaches the satifactory performance of $99.5\%$ of $ap@5$. That means that, for a given sound dataset of \ipts for which subjective evaluation of similarity between \ipts are available, a very large number of queries would return interesting results to the user using this processing pipeline.
 
-In order to better understand the benefits of each design choice, an ablation study \ml{vl ref ??} is now performed using a slightly different protocol. In order to reduce the risk of misleading performance results using learning systems due to overfitting, it common to identify factors of variability that could lead to such problems and mitigate those. In our case, two factors can readily be identified, the variability of the audio data and the one of the perceptual judgments.
+In order to better understand the benefits of each design choice, an ablation study is now performed using a slightly different protocol. In order to reduce the risk of misleading performance results using learning systems due to overfitting, it common to identify factors of variability that could lead to such problems and mitigate those. In our case, two factors can readily be identified, the variability of the audio data and the one of the perceptual judgments.
 
 We mitigate the first by considering a random split of the dataset in two halves, one for learning the projection and one for evaluating the performance. The impact of the variability of the perceptual judgments and its impact on machine listening systems such as the one discussed in this paper is not in the scope of this paper and left for further research. By considering this protocol, the proposed system reaches a $ap@5$ of $95.5\%$. If considering the same first half both for learning and evaluation leads to a $ap@5$ of $96.5\%$, indicating a low risk of overfitting.
 
@@ -450,7 +451,7 @@ In order to quantify the importance of the information carried by the feature se
 
 The slight decrease of performance when considering lmnn may be explained by the fact that the learning algorithm optimizes the projection using correlations in the training set that are not found in the testing set.
 
-The lmnn algorithm is a popular algorithm for solving such a task, but other alternatives can be considered. One of those is the linear discriminant analysis \ml{ja ref ?}\cite{}. When considering the lda in place of the lmnn algorithm, the performance drops down to $81.2\%$.
+The lmnn algorithm is a popular algorithm for solving such a task, but other alternatives can be considered. One of those is the linear discriminant analysis \ml{vl ref ?}\cite{}. When considering the lda in place of the lmnn algorithm, the performance drops down to $81.2\%$.
 
 The lower performance of the lda may be explained by the fact that the dimensionality of the projected feature set is set to one plus the number of clusters in the reference clustering, which lowers the dimensionality from 1180 to 20.
 
@@ -458,7 +459,7 @@ Considering a learning block implies some constraints. Performing the learning o
 
 Concerning the feature computation block $B_1$, an important factor is the time support. When considering the commonly used duration of 25ms, the performance drop down to $92\% \pm$. This demonstrates that the joint scattering is able to benefit from a larger time support, possibly to capture long term modulations which plays an important part when considering extended playing techniques.
 
-Considering the separable scattering gives a performance of $93\% \pm 4.2$. \ml{ ja write details on what is lost here ?}
+Considering the separable scattering gives a performance of $93\% \pm 4.2$. \ml{ vl. explain separable vs joint. write details on what is lost here ?}
 
 Simplifying further the feature set by considering the mfccs gives a performance of $82.3\% \pm 7.1$. Considering the mfccs is equivalent to considering the separable scattering at order 1. Compared to the separable scattering, the information captured by the mfccs is considerably reduced. In order to confirm that the additional information captured by the joint scattering is effectively important, another feature set is considered where the mfccs are complemented with monomials in order to reach the dimensionality of the joint scattering. To do so, the 40 features $f_i$ of the mfccs are multiplied together $f_{i, j} = f_i*f_j, i \neq j$. The resulting features set is composed of the 40 mfccs features $f_i$ and the first 1140 $f_{i, j}$. The resulting aP@5 of $81.8\% \pm 7$ indicates that the increase of dimensionality is likely to have no effect, confirming the relevance of the additional information provided by the joint scattering. \ml{vl outro on modulations}
 
@@ -499,7 +500,7 @@ First, it is only applied to instrumental sounds.
 While this has the advantage of simplifying the interpretation of the results, the range of timbre under consideration is necessarily limited (although less restricted than only considering \emph{ordinario} PTs).
 This also makes applications such as \emph{query-by-humming} difficult, since we cannot guarantee that the timbral similarity measure is accurate for such sounds.
 
-\ml{vl je reecrira le par du dessus en positif fture work}
+\ml{je reecrirai le par du dessus en positif future work (TODO VL).}
 
 That being said, the above model is general enough to encompass a wide variety of recordings, not just instrumental sounds.
 Indeed, the tools used (scattering transforms and LMNN weighting matrices) do not depend on the type of sound being processed and work for more general classes of sounds.
@@ -559,13 +560,7 @@ For each couple, the pitch and intonation is varied leading to 25444 audio sampl
 The recorded instruments belongs to the wind and string classes.
 For winds, the instruments considered in the second experiment are: accordion (Acc), saxophone alto (ASax), tuba (Tb), bassoon (Bn), clarinet Bb (BbCl), flute (Fl), horn (Hn), oboe (Ob), trombone tenor (TTbn), and trumpet C (TpC).
 For the string class, the instruments are: guitar (Gtr), harp (Hp), viola (Va), violin (Vn), violoncello (Vc), and contrabass (Cb).
-\ja{Better to display these in a table?}
-
-Some instruments can be complemented with sordina (S), wha (W).
-The addition of this kind of device modifies the shape of the instrument.
-Consequently, an alto saxophone and alto saxophone with sordina are considered as different instruments.
-\vl{This is crucial and should not be deferred to the appendix. @writing}
-\ml{J'ai mis ca en appendice pour ne pas que le lecteur confonde la base SOL complete et les données considérées dans l'étude.}
+\ml{Better to display these in a table? VL todo table}
 
 Those instruments are recorded for different nuance and pitch if the latter is relevant, but more importantly, several playing technique are considered.
 For the second experiment described in this paper, the playing techniques considered are: artificial harmonic (art), blow (blow), exploding slap (explo), harmonic (harm), key-click (key), col legno (legno), non vibrato (nonvib), ordinario (ord), pedal tone (pdl), pizzicato (pizz), ponticello (pont), slap (slap), (tasto), tongue-ram (tng), and xylophonic (xyl).

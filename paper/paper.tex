@@ -247,7 +247,7 @@ On the one hand, most publications in music information retrieval cast timbre mo
 In this context, the instrumentation of each musical excerpt serves as an unstructured set of ``audio tags'', encoded as binary outputs within some predefined label space.
 Because such tags often belong to the publicly available metadata of music releases, the process of curating a training set for musical instrument classification requires little or no human intervention.
 Although scraping user-generated content from online music hosting platforms may not always reflect the true instrumentation with perfect accuracy, it offers a scalable and ecologically valid insight onto the acoustic underpinnings of musical timbre.
-Furthermore, supplementing user-generated content with the outcome of a crowdsourced annotation campaign  allows an explicit verification of instrument tags.
+Furthermore, supplementing user-generated content with the outcome of a crowdsourced annotation campaign allows an explicit verification of instrument tags.
 For instance, the Open-MIC dataset \cite{humphrey2018ismir}, maintained by the Community for Open and Sustainable Music Information Research (COSMIR) \cite{mcfee2016ismir}, comprises a vast corpus of 20k polyphonic music recordings spanning across 20 instruments, as a derivative of the Free Music Archive (FMA) dataset \cite{defferrard2017ismir}.
 Another example is the Medley-solos-DB dataset \cite{lostanlen2016ismir}, which comprises 21k monophonic excerpts from 8 instruments, as a derivative of the MedleyDB dataset of multitrack music \cite{bittner2014ismir}.
 Over the past decade, the surge of these large digital audio collections, together with the democratization of high-performance computing on dedicated hardware, has spurred the development of deep learning techniques, and notably deep convolutional networks, in music instrument recognition \cite{mcfee2015ismir,pons2017eusipco,gururani2018ismir}.
@@ -264,23 +264,28 @@ The STRF of a neuron is a function of time and frequency which represents the op
 The simplest method to compute it in practice is by reverse correlation, i.e. by averaging all stimuli that trigger an action potential \cite{deboer1968biomed}.
 Historically, STRFs were defined by their Wigner--Ville distribution \cite{flandrin1998book}, thereby sparing the choice of a tradeoff in time--frequency localization, but suffering from cross-term interference \cite{eggermont1993hearing}.
 Since then, the STRF of a neuron was redefined as a spectrographic representation of its spike-triggered average \cite{klein2000compneur}.
-Although this new definition is necessarily tied to a choice of spectrogram parameters, it yields more interpretable patterns than the original one, which it supersedes.
+Although this new definition is necessarily tied to a choice of spectrogram parameters, it yields more interpretable patterns than a Wigner-Ville distribution.
 In particular, a substantial portion of spectrographic STRFs exhibits a ripple-like response around a given region $(t, \lambda)$ of the time--frequency domain.
 This response can be approximately described by a pair of scalar values: a temporal modulation rate $\alpha$ in Hertz and a frequential modulation rate $\beta$ in cycles per octave.
 Interestingly, both $\alpha$ and $\beta$ appear to be arranged in a geometric series and independent from the selected center time $t$ and center frequency $\lambda$.
-This observation has led auditory neuroscientists to formulate an idealized computational model for STRF, known as ``full cortical model''.
+This observation has led auditory neuroscientists to formulate an idealized computational model for STRF, known as ``full cortical model'' \cite{chi2005jasa}. 
+Over recent years, several publications have employed the full cortical model as a feature extractor for a task of musical instrument classification, both in isolated recordings \cite{patil2012ploscompbiol} and in solo phrases \cite{patil2015eurasip}.
+These biologically inspired features have shown to outperform the state of the art, especially in the small data regime.
 
-Our model borrows from both aforementioned lines of research in music information retrieval and music psychology.
-Indeed, the joint time--frequency scattering transform can be regarded as a deep convolutional network with fixed synaptic weights; or, alternatively, as an idealized computational model for STRFs \cite{anden2019joint}.
 
-We refer to \cite{bellet2015book} for a review of the state of the art in this domain.
+% enjoys a thirty-fold reduction in dimensionality, while covering a  time span that is four times larger (1000 ms) and an acoustic bandwidth that is also four times larger (0--16 kHz).
 
 \begin{figure}[h!]
 \caption{\csentence{STRF + scattering (upsampling STRF)}
 A short description of the figure content should go here.}
 \end{figure}
 
-\ml{vl on fait toujours cette figure ?}
+
+Our model borrows from both aforementioned lines of research in music information retrieval and music psychology.
+Indeed, the joint time--frequency scattering transform can be regarded as a deep convolutional network with fixed synaptic weights; or, alternatively, as an idealized computational model for STRFs \cite{anden2019joint}.
+
+We refer to \cite{bellet2015book} for a review of the state of the art in this domain.
+
 
 \section*{Timbre similarity judgments}
 \label{sec:survey}
@@ -497,7 +502,7 @@ In other words, the scattering transform parametrizes the signal structure in a 
 This is in line with other classification results, where linear support vector machines applied to scattering coefficients have achieved significant success \cite{anden2015joint,anden2019joint}.
 
 We also see the necessity of a fully \emph{joint} time--frequency model for accessing timbre, as opposed to a purely spectral model or one that treats the two axes in a separable manner.
-This fact has also been observed in other contexts, such as the work of Patil et al. \cite{patil2012music}.
+This fact has also been observed in other contexts, such as the work of Patil et al. \cite{patil2012ploscompbiol}.
 A related observation is the need for capturing large-scale structure.
 Indeed, reducing the window size to $25~\mathrm{ms}$ means that we lose a great deal of time--frequency structure, bringing results closer to that of the separable model.
 

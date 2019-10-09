@@ -269,11 +269,12 @@ Although this new definition is necessarily tied to a choice of spectrogram para
 In particular, a substantial portion of spectrographic STRFs exhibits a ripple-like response around a given region $(t, \lambda)$ of the time--frequency domain.
 This response can be approximately described by a pair of scalar values: a temporal modulation rate $\alpha$ in Hertz and a frequential modulation rate $\beta$ in cycles per octave.
 Interestingly, both $\alpha$ and $\beta$ appear to be arranged in a geometric series and independent from the selected center time $t$ and center frequency $\lambda$.
-This observation has led auditory neuroscientists to formulate an idealized computational model for STRF, known as ``full cortical model'' \cite{chi2005jasa}. 
+This observation has led auditory neuroscientists to formulate an idealized computational model for STRF, known as ``full cortical model'' \cite{chi2005jasa}, which densely covers the scale-rate domain $(\alpha, \beta)$.
 Over recent years, several publications have employed the full cortical model as a feature extractor for a task of musical instrument classification, both in isolated recordings \cite{patil2012ploscompbiol} and in solo phrases \cite{patil2015eurasip}.
 These biologically inspired features have shown to outperform the state of the art, especially in the small data regime when deep learning is inapplicable. % TODO cite?
 Furthermore, the confusion matrix of the full cortical model in the label space of musical instruments strongly correlates with the confusion matrix between a human listener and the ground truth.
 In other words, although there is no evidence that the full cortical model consistently predicts the same instrument labels as a human listener, cross-instrument confusions do occur in the same proportions overall.
+
 
 % enjoys a thirty-fold reduction in dimensionality, while covering a  time span that is four times larger (1000 ms) and an acoustic bandwidth that is also four times larger (0--16 kHz).
 

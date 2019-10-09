@@ -274,9 +274,13 @@ Over recent years, several publications have employed the full cortical model as
 These biologically inspired features have shown to outperform the state of the art, especially in the small data regime when deep learning is inapplicable. % TODO cite?
 Furthermore, the confusion matrix of the full cortical model in the label space of musical instruments strongly correlates with the confusion matrix between a human listener and the ground truth.
 In other words, although there is no evidence that the full cortical model consistently predicts the same instrument labels as a human listener, cross-instrument confusions do occur in the same proportions overall.
-
+%Lastly, beyond the realm of supervised classification, % todo cite thoret, cite hemery
+%For these reasons, STRFs offer an appealing starting point towards the development of a query-by-example search engine for instrumental playing techniques.
+%Yet, the full cortical model 
 
 % enjoys a thirty-fold reduction in dimensionality, while covering a  time span that is four times larger (1000 ms) and an acoustic bandwidth that is also four times larger (0--16 kHz).
+
+
 
 \begin{figure}[h!]
 \caption{\csentence{STRF + scattering (upsampling STRF)}
@@ -364,6 +368,8 @@ Same 3 sounds spec + scatt.}
 
 \subsection*{Scattering transform}
 \label{sec:scattering}
+
+% cite Lostanlen PhD dissertation. classification results on Medley-solos-DB. suggests that JTFS is competitive wrt deep learning techniques even in the large data regime (500-5000 samples per class).
 
 While cortical representations have been successful in distinguishing properties of audio recordings (including similarity analysis and classification tasks), they remain models for the electrophysiological signals recorded in the audio cortex.
 As such, their calculation is not always computationally efficient and their mathematical properties may be difficult to analyze directly.

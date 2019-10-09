@@ -31,11 +31,13 @@ figure(1)
 colormap bone
 [~, ~, perm] = dendrogram(linkage(min, 'ward'));
 imagesc(1-min(perm, perm))
+set(gca,'TickLabelInterpreter','latex')
 set(gca, 'xtick', 1:length(ins))
 set(gca, 'xticklabels', ins(perm))
 set(gca, 'ytick', 1:length(ins))
 set(gca, 'yticklabels', ins(perm))
 set(gca, 'fontsize', 16)
+axis square
 xtickangle(45)
 
 saveas(gcf, 'consensusVsI.png')
@@ -58,12 +60,14 @@ figure(2)
 colormap bone
 [~, ~, perm] = dendrogram(linkage(moon, 'ward'));
 imagesc(1-moon(perm, perm))
+set(gca,'TickLabelInterpreter','latex')
 set(gca, 'xtick', 1:length(mod))
 set(gca, 'xticklabels', mod(perm))
 set(gca, 'ytick', 1:length(mod))
 set(gca, 'yticklabels', mod(perm))
 xtickangle(45)
 set(gca, 'fontsize', 16)
+axis square
 saveas(gcf, 'consensusVsPt.png')
 return
 

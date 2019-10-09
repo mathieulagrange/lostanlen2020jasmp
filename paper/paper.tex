@@ -270,20 +270,17 @@ This response can be approximately described by a pair of scalar values: a tempo
 Interestingly, both $\alpha$ and $\beta$ appear to be arranged in a geometric series and independent from the selected center time $t$ and center frequency $\lambda$.
 This observation has led auditory neuroscientists to formulate an idealized computational model for STRF, known as ``full cortical model''.
 
-
-% 
-
 Our model borrows from both aforementioned lines of research in music information retrieval and music psychology.
 Indeed, the joint time--frequency scattering transform can be regarded as a deep convolutional network with fixed synaptic weights; or, alternatively, as an idealized computational model for STRFs \cite{anden2019joint}.
 
-
 We refer to \cite{bellet2015book} for a review of the state of the art in this domain.
 
+\begin{figure}[h!]
+\caption{\csentence{STRF + scattering (upsampling STRF)}
+A short description of the figure content should go here.}
+\end{figure}
 
-% \ml{vl citer, dire que c'est du coup une base solide de représentation et que le modèle mathamtique que l'on utilisera ici est quasi equivalent}.
-
-%\ml{parler des travaux de Mounia}
-
+\ml{vl on fait toujours cette figure ?}
 
 \section*{Timbre similarity judgments}
 \label{sec:survey}
@@ -294,11 +291,11 @@ In the survey, the subject is asked to organize dots on a two-dimensional place 
 Each dot corresponded to a different IPT recording and is moved by the user dragging them with the mouse.
 In addition to spatially arranging the dots, the user is also asked to assign one of $20$ colors to each dot, providing a simple information of clustering of the sounds.
 While both the location and color of each dot was recorded, only the color is used in our subsequent analysis---the spatial arrangement is only used to facilitate the user's ability to organize the sounds.
-More information on the data collection process is available in  Section \ref{sec:judgments}.
+More information on the data collection process is available in  Section \ref{sec:subjective}.
 
 The above survey was implemented as an interactive website, links to which were sent out on internal mailing lists of the \emph{Conservatoire national sup\'erieur de musique et de danse de Paris} (CNSMDP) and international mailing lists focusing on research in audio and music processing.
 We made the experiment available for two months, during which we obtained results for a total of $31$ subjects.
-The final arrangement and color assignment of one of the subjects is shown in Figure \ref{fix:xp2display}.
+The final arrangement and color assignment of one of the subjects is shown in Figure \ref{fig:xp2display}.
 
 \begin{figure}
 \center
@@ -313,30 +310,47 @@ If not, it is set to zero.
 In other words, the clustering assignment of each subject as a binary similarity matrix. Depending on the application, it may be of interest to condition the timbre space using the information of only one subject. In this case, the corresponding binary similarity matrix may be used and the resulting timbre space is specialized to a given person.
 
 
-It may also be of interest to condition the space using the aggregate similarity judgments given by several subjects. We found that using a hypergraph partitioning algorithm \cite{kernighan1970efficient,han1997scalable,strehl2002cluster} to produce the consensus similarity matrix performed well. Interestingly, although several sounds pairs were obtained from the same instrument (but different PTs) and others were obtained using the same PT (but different instruments), the consensus clustering did not favor one of these taxonomies over the other, see Figure \ref{fig:consensusVsIpt}.
+It may also be of interest to condition the space using the aggregate similarity judgments given by several subjects. We found that using a hypergraph partitioning algorithm \cite{kernighan1970efficient,han1997scalable,strehl2002cluster} to produce the consensus similarity matrix performed well.
+
+In order to better interpret the information captured by the consensus clustering, we generate two similarity matrices, one for the 15 instruments used, see Figure \ref{fig:consensusVsI}, and one for the 23 PTs used, see Figure \ref{fig:consensusVsPt}. For the instruments similarity matrix, the value within each cell counts the number of times two instruments have been grouped in the consensus clustering, normalized by the average number of IPTs that considered the two instruments. The PTs similarity matrix is computed in the same way.
+
+The ordering of the instruments or the PTs on the vertical and horizontals axes is chosen according to the ordering given by an agglomerative hierarchical clustering using the ward criterion of the similarity matrix under inspection. This ordering allows us to interpret the similarity matrices more easily compared to an alphabetical ordering while preserving the  similarity values between each pair of instruments or PTs.
+
+Interestingly, although several sounds pairs were obtained from the same instrument (but different PTs) and others were obtained using the same PT (but different instruments), the consensus clustering did not favor one of these taxonomies over the other.
+
+\ml{vl : je pense qu'il faut remplacer la derniere phrase par quelque chose de plus musicologique, en disant que l'on retrouve bien l'organologie, et montrer certains points d'interet sur les pts pour guider le lecteur.}
 
 \begin{figure}
 \center
-\includegraphics[width = \textwidth]{../code/xp2/consensusVsI.png}
-\caption{'ASax'    'BBTb'    'BbCl'    'Bn'    'Cb'    'Fl'    'Gtr'    'Hn'    'Hp'    'Ob'    'TTbn'    'TpC'  'Va'    'Vc'}
-\label{fig:consensusVsIpt}
+\includegraphics[width = \textwidth]{figures/consensusVsI.png}
+\caption{}
+\label{fig:consensusVsI}
 \end{figure}
 
 \begin{figure}
 \center
-\includegraphics[width = \textwidth]{../code/xp2/consensusVsPt.png}
-\caption{ 'art-harm'    'blow-no-reed'    'explo-slap'    'harm-fngr'    'key-cl'    'legno-batt'    'legno-tratto'
-    'nonvib'    'ord'    'ord-closed'    'ord-hi-reg'    'ord-open'    'pdl-tone'    'pizz'    'pizz-bartok'
-    'pizz-lv'    'pizz-sec'    'pont'    'slap'    'slap-unp'    'tasto'    'tng-ram'}
-\label{fig:consensusVsIpt}
+\includegraphics[width = \textwidth]{figures/consensusVsPt.png}
+\caption{ }
+\label{fig:consensusVsPt}
 \end{figure}
-
-\ja{We should have some figure to back this up.
-Can this be done using the tag clouds?}
-\ml{tentative solution using similarity matrices, see fig, if ok should be improved by vl (code/xp2/consensusVsIpt.m)}
 
 \section*{Proposed approach}
 \label{sec:method}
+
+
+
+\begin{figure}[h!]
+\caption{\csentence{Model overview}
+One line music players (3 ipts bass pizz, bass archo, violin archo) sound, spec,
+scat, isomap.
+Second line : perceptual clustering.}
+\label{fig:pipeline}
+\end{figure}
+
+\begin{figure}[h!]
+\caption{\csentence{Sample scattering}
+Same 3 sounds spec + scatt.}
+\end{figure}
 
 \ml{introduce the system globally, while stressing the ability of the system to be conditioned for one or many people (VL). consensus ou un compositeur particulier.}
 
@@ -441,7 +455,7 @@ As found in many studies, log compression and median processing are beneficial p
 For each sound, a set of features are computed for each time support. This set is averaged over time to give one feature vector per sound.
 All features are standardized with zero mean and unit variance across the dataset.
 
-The second block $B_2$ considers one vector of features and the consensus clustering $D_c$ as inputs and another vector of features as output. For this block, the main factor is the type of projection $B_2^p \in \{ \text{lda}, \text{lmnn} \}$. The lda is the linear discriminant analysis \cite{} and the lmnn is the large margin nearest neighbors algorithm presented in Section \ref{}. For this algorithm the neighborhood is set to $5$.
+The second block $B_2$ considers one vector of features and the consensus clustering $D_c$ as inputs and another vector of features as output. For this block, the main factor is the type of projection $B_2^p \in \{ \text{lda}, \text{lmnn} \}$. The lda is the linear discriminant analysis \cite{} and the lmnn is the large margin nearest neighbors algorithm presented in Section \ref{sec:weighting}. For this algorithm the neighborhood is set to $5$.
 
 The complete experiments with all settings have been computed. For the sake of clarity, only part of the results are discussed here.
 
@@ -687,34 +701,10 @@ This results in $31$ clusterings that can be considered for defining a perceptua
 %%                               %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section*{Figures}
+%\section*{Figures}
 
-\begin{figure}[h!]
-\caption{\csentence{STRF + scattering (upsampling STRF)}
-A short description of the figure content should go here.}
-\end{figure}
 
-\begin{figure}[h!]
-\caption{\csentence{Model overview}
-One line music players (3 ipts bass pizz, bass archo, violin archo) sound, spec,
-scat, isomap.
-Second line : perceptual clustering.}
-\end{figure}
 
-\begin{figure}[h!]
-\caption{\csentence{Sample scattering}
-Same 3 sounds spec + scatt.}
-\end{figure}
-
-\begin{figure}[h!]
-\caption{\csentence{Tag clouds}
-A short description of the figure content should go here.}
-\end{figure}
-
-\begin{figure}[h!]
-\caption{\csentence{Perfs MFCC, separable, joint (last)}
-A short description of the figure content should go here.}
-\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                               %%
@@ -722,17 +712,17 @@ A short description of the figure content should go here.}
 %%                               %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section*{Tables}
-\begin{table}[h!]
-\caption{Sample table title. This is where the description of the table should go.}
-      \begin{tabular}{cccc}
-        \hline
-           & B1  &B2   & B3\\ \hline
-        A1 & 0.1 & 0.2 & 0.3\\
-        A2 & ... & ..  & .\\
-        A3 & ..  & .   & .\\ \hline
-      \end{tabular}
-\end{table}
+% \section*{Tables}
+% \begin{table}[h!]
+% \caption{Sample table title. This is where the description of the table should go.}
+%       \begin{tabular}{cccc}
+%         \hline
+%            & B1  &B2   & B3\\ \hline
+%         A1 & 0.1 & 0.2 & 0.3\\
+%         A2 & ... & ..  & .\\
+%         A3 & ..  & .   & .\\ \hline
+%       \end{tabular}
+% \end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                               %%

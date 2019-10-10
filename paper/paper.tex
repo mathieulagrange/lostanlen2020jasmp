@@ -282,10 +282,12 @@ Lastly, beyond the realm of supervised classification, a previous publication \c
 A short description of the figure content should go here.}
 \end{figure}
 
-These reasons make STRFs an appealing feature extractor for a perceptual description of timbral similarity across instrumental playing techniques.
+The reasons above make STRFs an appealing feature extractor for a perceptual description of timbral similarity across instrumental playing techniques.
 Nonetheless, current implementations of STRF suffer from a lack of scalability, which explains why they have found few applications in MIR thus far.
 Indeed, the full cortical model is usually computed via two-dimensional Fourier transforms over adjacent time--frequency regions, followed by averaging around specific rates and scales.
-On the contrary, joint time--frequency scattering offers a faster extraction spectrotemporal modulation while preserving properties of differentiability \cite{andreux2019jmlr} and invertibility \cite{lostanlen2019dafx}.
+On the contrary, joint time--frequency scattering offers a faster extraction of spectrotemporal modulation while preserving properties of differentiability \cite{andreux2019jmlr} and invertibility \cite{lostanlen2019dafx}.
+Such acceleration is made possible by discretizing the wavelet transforms involved in time--frequency scattering according to a multirate scheme, both along the time and the log-frequency variables.
+This multirate scheme also has the benefit of drawing an explicit connection between scattering networks and deep convolutional networks, as both involves numerous convolutions with small kernels, pointwise rectifying nonlinearities, and dyadic pooling operations \cite{mallat2016philtrans}.
 
 
 % enjoys a thirty-fold reduction in dimensionality, while covering a  time span that is four times larger (1000 ms) and an acoustic bandwidth that is also four times larger (0--16 kHz).

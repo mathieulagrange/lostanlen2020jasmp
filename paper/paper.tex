@@ -220,16 +220,21 @@ In this context, the computer serves as a bridge from the auditory level to the 
 
 This article proposes a machine listening system which computes the dissimilarity in timbre between any two audio samples.
 Our system composes two stages: unsupervised feature extraction and supervised metric learning.
-The feature extraction stage is a nonlinear map which relies on the joint time--frequency scattering transform \cite{anden2015joint}, followed by per-feature Gaussianization \cite{lostanlen2018jasmp}.
+The feature extraction stage is a nonlinear map which relies on the joint time--frequency scattering transform \cite{anden2015mlsp}, followed by per-feature Gaussianization \cite{lostanlen2018jasmp}.
 It encodes patterns of spectrotemporal modulation in the query while offering numerical guarantees of stability to local deformations.
 The metric learning stage is a linear map, optimized via large-margin nearest neighbors (LMNN) \cite{weinberger2009distance}.
 It recombines scattering coefficients so as to fit a training set of human judgments \cite{mcadams1995psychres}.
 
-The main originality of our model is that it encompasses a broad range of extended playing techniques, well beyond the so-called ``ordinary'' mode of acoustic production \cite{lostanlen2018extended}.
+
+This article gathers three novel contributions.
+First, our model encompasses a broad range of extended playing techniques, well beyond the so-called ``ordinary'' mode of acoustic production \cite{lostanlen2018extended}.
 Specifically, we fit pairwise judgments for 78 different techniques arising from 16 instruments, some of which include removable timbre-altering devices such as mutes.
-A second originality of our model is that we purposefully disregard the playing technique metadata underlying each audio sample during the training phase of our model.
+Secondly, we purposefully disregard the playing technique metadata underlying each audio sample during the training phase of our model.
 Said otherwise, we rely on listeners, not performers, to define and evaluate the task at hand.
 A comprehensive ablation study of our system demonstrates that all design choices presented hereafter benefit the retrieval precision of our system.
+Thirdly, we supplement our quantitative benchmark with some visualizations of time--frequency scattering coefficients in the rate--scale domain, for various typical samples of realistic instrumental playing techniques.
+These visualizations confirm the theoretical predictions of previous research \cite{anden2015mlsp}, which relied on simple synthetic sounds such as exponential chirps.
+They are also in line with visualizations of the modulation power spectrum in auditory neurophysiology, while offering an accelerated algorithm for scalable feature extraction.
 
 %% TODO: list Sections
 
@@ -268,7 +273,7 @@ Although this new definition is necessarily tied to a choice of spectrogram para
 In particular, a substantial portion of spectrographic STRFs exhibits a ripple-like response around a given region $(t, \lambda)$ of the time--frequency domain.
 This response can be approximately described by a pair of scalar values: a temporal modulation rate $\alpha$ in Hertz and a frequential modulation rate $\beta$ in cycles per octave.
 Interestingly, both $\alpha$ and $\beta$ appear to be arranged in a geometric series and independent from the selected center time $t$ and center frequency $\lambda$.
-This observation has led auditory neuroscientists to formulate an idealized computational model for STRF, known as ``full cortical model'' \cite{chi2005jasa}, which densely covers the rate-scale domain $(\alpha, \beta)$.
+This observation has led auditory neuroscientists to formulate an idealized computational model for STRF, known as ``full cortical model'' \cite{chi2005jasa}, which densely covers the rate--scale domain $(\alpha, \beta)$.
 
 Over recent years, several publications have employed the full cortical model as a feature extractor for a task of musical instrument classification, both in isolated recordings \cite{patil2012ploscompbiol} and in solo phrases \cite{patil2015eurasip}.
 These biologically inspired features have shown to outperform the state of the art, especially in the small data regime when deep learning is inapplicable. % TODO cite?
@@ -277,24 +282,25 @@ Another appeal of the full cortical model is that the third-order $(\lambda, \al
 This is unlike fully end-to-end learning architectures, whose post hoc interpretability requires advanced techniques for saliency map estimation. %VL TODO cite Choi Auralization
 Lastly, beyond the realm of supervised classification, a previous publication \cite{hemery2015frontiers} has shown that query-by-example search with STRFs allows to discriminate categories of environmental soundscapes, even after temporal integration and unsupervised dimensionality reduction.
 
-\begin{figure}
-\caption{\csentence{STRF + scattering (upsampling STRF)}
-A short description of the figure content should go here.}
-\end{figure}
+%\begin{figure}
+%\caption{\csentence{STRF + scattering (upsampling STRF)}
+%A short description of the figure content should go here.}
+%\end{figure}
 
 The reasons above make STRFs an appealing feature extractor for a perceptual description of timbral similarity across instrumental playing techniques.
 Nonetheless, current implementations of STRF suffer from a lack of scalability, which explains why they have found few applications in MIR thus far.
 Indeed, the full cortical model is usually computed via two-dimensional Fourier transforms over adjacent time--frequency regions, followed by averaging around specific rates and scales.
-On the contrary, joint time--frequency scattering offers a faster extraction of spectrotemporal modulation while preserving properties of differentiability \cite{andreux2019jmlr} and invertibility \cite{lostanlen2019dafx}.
-Such acceleration is made possible by discretizing the wavelet transforms involved in time--frequency scattering according to a multirate scheme, both along the time and the log-frequency variables.
+On the contrary, joint time--frequency scattering offers a faster extraction of spectrotemporal modulations while preserving properties of differentiability \cite{andreux2019jmlr} and invertibility \cite{lostanlen2019dafx}.
+Such acceleration is made possible by discretizing the wavelet transforms involved in time--frequency scattering according to a multirate scheme, both along the time and the log-frequency variables \cite{anden2019tsp}.
 This multirate scheme also has the benefit of drawing an explicit connection between scattering networks and deep convolutional networks, as both involves numerous convolutions with small kernels, pointwise rectifying nonlinearities, and dyadic pooling operations \cite{mallat2016philtrans}.
-
+Moreover, a quantitative benchmark over Medley-solos-DB has demonstrated that joint time--frequency scattering, unlike purely temporal scattering, outperforms deep convolutional networks in supervised musical instrument classification, even in a relatively large data regime with 500 to 5k samples per class.
+Recently, a previous publication 
 
 % enjoys a thirty-fold reduction in dimensionality, while covering a  time span that is four times larger (1000 ms) and an acoustic bandwidth that is also four times larger (0--16 kHz).
 
 
 %Our model borrows from both aforementioned lines of research in music information retrieval and music psychology.
-%Indeed, the joint time--frequency scattering transform can be regarded as a deep convolutional network with fixed synaptic weights; or, alternatively, as an idealized computational model for STRFs \cite{anden2019joint}.
+%Indeed, the joint time--frequency scattering transform can be regarded as a deep convolutional network with fixed synaptic weights; or, alternatively, as an idealized computational model for STRFs \cite{anden2019tsp}.
 %We refer to \cite{bellet2015book} for a review of the state of the art in this domain.
 
 
@@ -401,15 +407,15 @@ This is achieved by taking first- and second-order scattering coefficients and c
 The resulting coefficients are known as separable time and frequency scattering coefficients \cite{anden2014deep}.
 
 This representation does possess the desired invariance and stability properties, but its separable nature limits its power to adequately represent time--frequency structures that do not separate cleanly in time and frequency, such as chirps.
-To remedy this, another approach was suggested by And\'{e}n et al. \cite{anden2015joint,anden2019joint} wherein the temporal wavelet decomposition of the scalogram is replaced with a two-dimensional, spectro-temporal decomposition.
+To remedy this, another approach was suggested by And\'{e}n et al. \cite{anden2015mlsp,anden2019tsp} wherein the temporal wavelet decomposition of the scalogram is replaced with a two-dimensional, spectro-temporal decomposition.
 Similarly to the cortical representation, the result is a four-dimensional array indexed by time, acoustic frequency, modulation frequency (or \emph{rate}), and spectral modulation frequency, known as \emph{quefrency} (or \emph{scale}).
 As before, we compute the modulus and average in time, obtaining a set of coefficients known as second-order joint time--frequency scattering coefficients.
 
 The definition of the scattering transform in terms of wavelet decompositions and modulus nonlinearities presents several advantages.
 On the computational side, the critical bandwidth guarantees of wavelet transforms allows us to judiciously subsample the output, resulting in a lower-dimensional representation compared to the cortical representations.
 The scattering transform also satisfies the aforementioned stability conditions, providing a guarantee that slightly deforming a signal only results in a negligible change in its scattering transform.
-Furthermore, we may calculate the scattering tranforms of several model signals, including amplitude-modulated harmonic sounds and noise excitations \cite{anden2012scattering,anden2014deep}, frequency-modulated sinusoids (e.g., chirps) \cite{anden2012scattering,anden2019joint}, and beating phenomena \cite{anden2014deep}.
-They have also enjoyed success in several audio classification and similarity retrieval tasks \cite{anden2011multiscale,bauge2013representing,anden2014deep,anden2019joint,lostanlen2018jasmp,lostanlen2018extended}.
+Furthermore, we may calculate the scattering tranforms of several model signals, including amplitude-modulated harmonic sounds and noise excitations \cite{anden2012scattering,anden2014deep}, frequency-modulated sinusoids (e.g., chirps) \cite{anden2012scattering,anden2019tsp}, and beating phenomena \cite{anden2014deep}.
+They have also enjoyed success in several audio classification and similarity retrieval tasks \cite{anden2011multiscale,bauge2013representing,anden2014deep,anden2019tsp,lostanlen2018jasmp,lostanlen2018extended}.
 
 \subsection*{Similarity weighting}
 \label{sec:weighting}
@@ -512,7 +518,7 @@ On the other hand, we note that the complexity of the learned model does not hav
 Indeed, for this task, a linear model on the scattering coefficients is sufficient.
 There is no need for deep networks with large numbers of parameters to accurately represent the similarity information.
 In other words, the scattering transform parametrizes the signal structure in a way that many relevant quantities (such as timbre similarity) can be extracted through a simple linear mapping.
-This is in line with other classification results, where linear support vector machines applied to scattering coefficients have achieved significant success \cite{anden2015joint,anden2019joint}.
+This is in line with other classification results, where linear support vector machines applied to scattering coefficients have achieved significant success \cite{anden2015mlsp,anden2019tsp}.
 
 We also see the necessity of a fully \emph{joint} time--frequency model for accessing timbre, as opposed to a purely spectral model or one that treats the two axes in a separable manner.
 This fact has also been observed in other contexts, such as the work of Patil et al. \cite{patil2012ploscompbiol}.

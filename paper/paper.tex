@@ -203,7 +203,7 @@ By resting on a notation system, the symbolic level facilitates the comparison o
 Timbre, in contrast, is a qualitative attribute of music, thus irreducible to a one-dimensional axis \cite{siedenburg2019chapter}.
 As a result, symbolic representations describe timbre indirectly, either via visuotactile metaphors (\eg{} bright, rough, and so forth \cite{faure1996icmpc}) or via an instrumental playing technique (\eg{} bowed or plucked \cite{kostka2016book}).
 
-Despite their widespread use, linguistic references to musical timbre suffer from limited adequacy.
+Despite their widespread use, purely linguistic references to timbre fail to convey the intention of the composer.
 On the one hand, adjectives such as \emph{bright} or \emph{rough} are prone to misunderstanding, as they do not prescribe any musical gesture that is capable of achieving them \cite{antoine2018isma}.
 On the other hand, the sole mention of playing technique does not determine any intended effect; and therefore, fails to generalize to the entire instrumentarium \cite{kolozali2011ismir}.
 For instance, although the term \emph{breathy} alludes to a playing technique that is peculiar to wind instruments, a cellist may accomplish a seemingly breathy timbre by bowing near the fingerboard, i.e., \emph{sul tasto} in the classical terminology.
@@ -220,7 +220,7 @@ In this context, the computer serves as a bridge from the auditory level to the 
 
 This article proposes a machine listening system which computes the dissimilarity in timbre between any two audio samples.
 Our system composes two stages: unsupervised feature extraction and supervised metric learning.
-The feature extraction stage is a nonlinear map which relies on the joint time--frequency scattering transform \cite{anden2015joint}, followed by per-feature Gaussianization \cite{lostanlen2018relevance}.
+The feature extraction stage is a nonlinear map which relies on the joint time--frequency scattering transform \cite{anden2015joint}, followed by per-feature Gaussianization \cite{lostanlen2018jasmp}.
 It encodes patterns of spectrotemporal modulation in the query while offering numerical guarantees of stability to local deformations.
 The metric learning stage is a linear map, optimized via large-margin nearest neighbors (LMNN) \cite{weinberger2009distance}.
 It recombines scattering coefficients so as to fit a training set of human judgments \cite{mcadams1995psychres}.
@@ -262,7 +262,7 @@ Nevertheless, advanced methods in electrophysiology allow to observe the firing 
 This observation, originally carried out on the ferret, has led to a comprehensive mapping of the primary auditory cortex, in terms of its spectrotemporal receptive fields (STRFs) \cite{depireux2001jneur}.
 The STRF of a neuron is a function of time and frequency which represents the optimal predictor of its post-stimulus time histogram (PSTH) during exposure to a diverse range of auditory stimuli \cite{aertsen1981biolcyb}.
 The simplest method to compute it in practice is by reverse correlation, i.e. by averaging all stimuli that trigger an action potential \cite{deboer1968biomed}.
-Historically, STRFs were defined by their Wigner--Ville distribution \cite{flandrin1998book}, thereby sparing the choice of a tradeoff in time--frequency localization, but suffering from cross-term interference \cite{eggermont1993hearing}.
+Historically, STRFs were defined by their Wigner--Ville distribution \cite{flandrin1998book}, thereby sparing the choice of a tradeoff in time--frequency localization, but eliciting cross-term interferences \cite{eggermont1993hearing}.
 Since then, the STRF of a neuron was redefined as a spectrographic representation of its spike-triggered average \cite{klein2000compneur}.
 Although this new definition is necessarily tied to a choice of spectrogram parameters, it yields more interpretable patterns than a Wigner-Ville distribution.
 In particular, a substantial portion of spectrographic STRFs exhibits a ripple-like response around a given region $(t, \lambda)$ of the time--frequency domain.
@@ -274,27 +274,26 @@ Over recent years, several publications have employed the full cortical model as
 These biologically inspired features have shown to outperform the state of the art, especially in the small data regime when deep learning is inapplicable. % TODO cite?
 Furthermore, the confusion matrix of the full cortical model in the label space of musical instruments strongly correlates with the confusion matrix between a human listener and the ground truth.
 Another appeal of the full cortical model is that the third-order $(\lambda, \alpha, \beta)$ tensor of frequencies, rates, and scales can be segmented into contiguous regions of maximal perceptual relevance for each instrument \cite{thoret2016jasa}.
-This is in contrast with fully end-to-end learning architectures, whose post hoc interpretability requires advanced techniques for saliency map estimation. %cite 
-Lastly, beyond the realm of supervised classification, a previous publication \cite{hemery2015frontiers} has shown that query-by-example search in the feature space of STRFs allows to recover the acoustic similarity between environmental soundscapes, even after temporal integration and unsupervised dimensionality reduction.
+This is unlike fully end-to-end learning architectures, whose post hoc interpretability requires advanced techniques for saliency map estimation. %VL TODO cite Choi Auralization
+Lastly, beyond the realm of supervised classification, a previous publication \cite{hemery2015frontiers} has shown that query-by-example search with STRFs allows to discriminate categories of environmental soundscapes, even after temporal integration and unsupervised dimensionality reduction.
 
-%Lastly, beyond the realm of supervised classification, % todo cite thoret, cite hemery
-%For these reasons, STRFs offer an appealing starting point towards the development of a query-by-example search engine for instrumental playing techniques.
-%Yet, the full cortical model 
-
-% enjoys a thirty-fold reduction in dimensionality, while covering a  time span that is four times larger (1000 ms) and an acoustic bandwidth that is also four times larger (0--16 kHz).
-
-
-
-\begin{figure}[h!]
+\begin{figure}
 \caption{\csentence{STRF + scattering (upsampling STRF)}
 A short description of the figure content should go here.}
 \end{figure}
 
+These reasons make STRFs an appealing feature extractor for a perceptual description of timbral similarity across instrumental playing techniques.
+Nonetheless, current implementations of STRF suffer from a lack of scalability, which explains why they have found few applications in MIR thus far.
+Indeed, the full cortical model is usually computed via two-dimensional Fourier transforms over adjacent time--frequency regions, followed by averaging around specific rates and scales.
+On the contrary, joint time--frequency scattering offers a faster extraction spectrotemporal modulation while preserving properties of differentiability \cite{andreux2019jmlr} and invertibility \cite{lostanlen2019dafx}.
 
-Our model borrows from both aforementioned lines of research in music information retrieval and music psychology.
-Indeed, the joint time--frequency scattering transform can be regarded as a deep convolutional network with fixed synaptic weights; or, alternatively, as an idealized computational model for STRFs \cite{anden2019joint}.
 
-We refer to \cite{bellet2015book} for a review of the state of the art in this domain.
+% enjoys a thirty-fold reduction in dimensionality, while covering a  time span that is four times larger (1000 ms) and an acoustic bandwidth that is also four times larger (0--16 kHz).
+
+
+%Our model borrows from both aforementioned lines of research in music information retrieval and music psychology.
+%Indeed, the joint time--frequency scattering transform can be regarded as a deep convolutional network with fixed synaptic weights; or, alternatively, as an idealized computational model for STRFs \cite{anden2019joint}.
+%We refer to \cite{bellet2015book} for a review of the state of the art in this domain.
 
 
 \section*{Timbre similarity judgments}
@@ -408,7 +407,7 @@ The definition of the scattering transform in terms of wavelet decompositions an
 On the computational side, the critical bandwidth guarantees of wavelet transforms allows us to judiciously subsample the output, resulting in a lower-dimensional representation compared to the cortical representations.
 The scattering transform also satisfies the aforementioned stability conditions, providing a guarantee that slightly deforming a signal only results in a negligible change in its scattering transform.
 Furthermore, we may calculate the scattering tranforms of several model signals, including amplitude-modulated harmonic sounds and noise excitations \cite{anden2012scattering,anden2014deep}, frequency-modulated sinusoids (e.g., chirps) \cite{anden2012scattering,anden2019joint}, and beating phenomena \cite{anden2014deep}.
-They have also enjoyed success in several audio classification and similarity retrieval tasks \cite{anden2011multiscale,bauge2013representing,anden2014deep,anden2019joint,lostanlen2018relevance,lostanlen2018extended}.
+They have also enjoyed success in several audio classification and similarity retrieval tasks \cite{anden2011multiscale,bauge2013representing,anden2014deep,anden2019joint,lostanlen2018jasmp,lostanlen2018extended}.
 
 \subsection*{Similarity weighting}
 \label{sec:weighting}
@@ -505,7 +504,7 @@ Simplifying further the feature set by considering the mfccs gives a performance
 
 We see from the ablation study conducted above that each step of the proposed model is necessary for its high performance.
 Among other things, it indicates the joint time--frequency scattering transform itself should not be used directly for similarity comparisons, but is best augmented by a learned stage.
-This explains the relative success over such models \cite{lostanlen2018relevance,lostanlen2018extended} over others where distances on raw scattering coefficients were used for judging audio similarity \cite{bauge2013representing}.
+This explains the relative success over such models \cite{lostanlen2018jasmp,lostanlen2018extended} over others where distances on raw scattering coefficients were used for judging audio similarity \cite{bauge2013representing}.
 
 On the other hand, we note that the complexity of the learned model does not have to be high.
 Indeed, for this task, a linear model on the scattering coefficients is sufficient.

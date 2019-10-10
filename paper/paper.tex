@@ -209,15 +209,14 @@ On the other hand, the sole mention of playing technique does not determine any 
 For instance, although the term \emph{breathy} alludes to a playing technique that is peculiar to wind instruments, a cellist may accomplish a seemingly breathy timbre by bowing near the fingerboard, i.e., \emph{sul tasto} in the classical terminology.
 
 The prospect of modeling timbre perception thus necessarily exceeds the symbolic domain.
-Instead, it involves a cognitive process which arises from the subjective experience of listening.
+Instead, it involves a cognitive process which arises from the subjective experience of listening. % TODO VL refs. 
 From an audio signal processing standpoint, the task of simulating this cognitive process amounts to the design of a multidimensional feature space wherein some distance function evaluates arbitrary pairs of stimuli.
-Rather than to merely discriminate instruments as mutually exclusive categories, this function must reflect a consensus of quantitative judgments of acoustic dissimilarity, all other parameters --- \ie{} duration, pitch, and intensity --- being equal.
+Rather than to merely discriminate instruments as mutually exclusive categories, this function must reflect a consensus of quantitative judgments of acoustic dissimilarity, all other parameters --- \ie{} duration, pitch, and intensity --- being equal \cite{thoret2018jasa}.
 
 Behind the overarching challenge of coming up with a robust predictive model for human behavior, the main practical application of timbre similarity retrieval lies in the emerging topic of computer-assisted instrumentation \cite{maresz2013cmr}.
 Following the aesthetic tradition of spectralism in contemporary music creation, the composer queries the machine with an arbitrary audio signal.
 The outcome of this query is an instrumental audio sample, alongside textual attributes of playing technique.
 In this context, the computer serves as a bridge from the auditory level to the symbolic level, \ie{} from a potentially infinite realm of timbral sensations to a musical score of priorly specified range.
-%To maximize the perceptual fidelity of such an approximation, a query-by-example search engine in the auditory domain should summarize a vast  of timbres.
 
 This article proposes a machine listening system which computes the dissimilarity in timbre between any two audio samples.
 Our system composes two stages: unsupervised feature extraction and supervised metric learning.
@@ -230,7 +229,7 @@ The main originality of our model is that it encompasses a broad range of extend
 Specifically, we fit pairwise judgments for 78 different techniques arising from 16 instruments, some of which include removable timbre-altering devices such as mutes.
 A second originality of our model is that we purposefully disregard the playing technique metadata underlying each audio sample during the training phase of our model.
 Said otherwise, we rely on listeners, not performers, to define and evaluate the task at hand.
-A comprehensive ablation study of our system demonstrates that all design choices presented hereafter benefit the average precision at rank 5 of our system.
+A comprehensive ablation study of our system demonstrates that all design choices presented hereafter benefit the retrieval precision of our system.
 
 %% TODO: list Sections
 
@@ -269,11 +268,15 @@ Although this new definition is necessarily tied to a choice of spectrogram para
 In particular, a substantial portion of spectrographic STRFs exhibits a ripple-like response around a given region $(t, \lambda)$ of the time--frequency domain.
 This response can be approximately described by a pair of scalar values: a temporal modulation rate $\alpha$ in Hertz and a frequential modulation rate $\beta$ in cycles per octave.
 Interestingly, both $\alpha$ and $\beta$ appear to be arranged in a geometric series and independent from the selected center time $t$ and center frequency $\lambda$.
-This observation has led auditory neuroscientists to formulate an idealized computational model for STRF, known as ``full cortical model'' \cite{chi2005jasa}, which densely covers the scale-rate domain $(\alpha, \beta)$.
+This observation has led auditory neuroscientists to formulate an idealized computational model for STRF, known as ``full cortical model'' \cite{chi2005jasa}, which densely covers the rate-scale domain $(\alpha, \beta)$.
+
 Over recent years, several publications have employed the full cortical model as a feature extractor for a task of musical instrument classification, both in isolated recordings \cite{patil2012ploscompbiol} and in solo phrases \cite{patil2015eurasip}.
 These biologically inspired features have shown to outperform the state of the art, especially in the small data regime when deep learning is inapplicable. % TODO cite?
 Furthermore, the confusion matrix of the full cortical model in the label space of musical instruments strongly correlates with the confusion matrix between a human listener and the ground truth.
-In other words, although there is no evidence that the full cortical model consistently predicts the same instrument labels as a human listener, cross-instrument confusions do occur in the same proportions overall.
+Another appeal of the full cortical model is that the third-order $(\lambda, \alpha, \beta)$ tensor of frequencies, rates, and scales can be segmented into contiguous regions of maximal perceptual relevance for each instrument \cite{thoret2016jasa}.
+This is in contrast with fully end-to-end learning architectures, whose post hoc interpretability requires advanced techniques for saliency map estimation. %cite 
+Lastly, beyond the realm of supervised classification, a previous publication \cite{hemery2015frontiers} has shown that query-by-example search in the feature space of STRFs allows to recover the acoustic similarity between environmental soundscapes, even after temporal integration and unsupervised dimensionality reduction.
+
 %Lastly, beyond the realm of supervised classification, % todo cite thoret, cite hemery
 %For these reasons, STRFs offer an appealing starting point towards the development of a query-by-example search engine for instrumental playing techniques.
 %Yet, the full cortical model 

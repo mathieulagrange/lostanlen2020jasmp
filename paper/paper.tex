@@ -294,8 +294,11 @@ On the contrary, joint time--frequency scattering offers a faster extraction of 
 Such acceleration is made possible by discretizing the wavelet transforms involved in time--frequency scattering according to a multirate scheme, both along the time and the log-frequency variables \cite{anden2019tsp}.
 This multirate scheme also has the benefit of drawing an explicit connection between scattering networks and deep convolutional networks, as both involves numerous convolutions with small kernels, pointwise rectifying nonlinearities, and dyadic pooling operations \cite{mallat2016philtrans}.
 Moreover, a quantitative benchmark over Medley-solos-DB has demonstrated that joint time--frequency scattering, unlike purely temporal scattering, outperforms deep convolutional networks in supervised musical instrument classification, even in a relatively large data regime with 500 to 5k samples per class.
-Recently, the authors of a previous publication trained a classifier of playing techniques on separable (\ie{} non-joint) time--frequency scattering features, and achieved state-of-the-art results in continuous performance recordings of the Chinese bamboo flute \cite{wang2019ismir}.
+Recently, Wang et al.~\cite{wang2019ismir} trained a classifier of playing techniques on separable (\ie{} non-joint) time--frequency scattering features, and achieved state-of-the-art results in continuous performance recordings of the Chinese bamboo flute.
+Despite showing experimental evidence that time--frequency scattering is better suited to playing technique recognition than purely temporal scattering, it remains to be known whether this findings can scale up from a single instrument (here, the Chinese bamboo flute) to an entire orchestra.
+In addition, previous publications in time--frequency scattering, whether separable or joint, lacks a human-centric evaluation in terms of its ability to reproduce subjective dissimilarity judgments, remotely from any classification task.
 
+This paper strives to fill the gap in scholarship
 % enjoys a thirty-fold reduction in dimensionality, while covering a  time span that is four times larger (1000 ms) and an acoustic bandwidth that is also four times larger (0--16 kHz).
 
 

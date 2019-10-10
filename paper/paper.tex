@@ -282,11 +282,6 @@ Another appeal of the full cortical model is that the third-order $(\lambda, \al
 This is unlike fully end-to-end learning architectures, whose post hoc interpretability requires advanced techniques for saliency map estimation. %VL TODO cite Choi Auralization
 Lastly, beyond the realm of supervised classification, a previous publication \cite{hemery2015frontiers} has shown that query-by-example search with STRFs allows to discriminate categories of environmental soundscapes, even after temporal integration and unsupervised dimensionality reduction.
 
-%\begin{figure}
-%\caption{\csentence{STRF + scattering (upsampling STRF)}
-%A short description of the figure content should go here.}
-%\end{figure}
-
 The reasons above make STRFs an appealing feature extractor for a perceptual description of timbral similarity across instrumental playing techniques.
 Nonetheless, current implementations of STRF suffer from a lack of scalability, which explains why they have found few applications in MIR thus far.
 Indeed, the full cortical model is usually computed via two-dimensional Fourier transforms over adjacent time--frequency regions, followed by averaging around specific rates and scales.
@@ -296,18 +291,14 @@ This multirate scheme also has the benefit of drawing an explicit connection bet
 Moreover, a quantitative benchmark over Medley-solos-DB has demonstrated that joint time--frequency scattering, unlike purely temporal scattering, outperforms deep convolutional networks in supervised musical instrument classification, even in a relatively large data regime with 500 to 5k samples per class.
 Recently, Wang et al.~\cite{wang2019ismir} trained a classifier of playing techniques on separable (\ie{} non-joint) time--frequency scattering features, and achieved state-of-the-art results in continuous performance recordings of the Chinese bamboo flute.
 Despite supplying experimental evidence that time--frequency scattering is better suited to playing technique recognition than purely temporal scattering, it remains to be known whether this findings can scale up from a single instrument to an entire orchestra.
-In addition, previous publications in time--frequency scattering, whether separable or joint, lacks a human-centric evaluation in terms of its ability to reproduce subjective dissimilarity judgments, remotely from any classification task.
+In addition, previous publications in time--frequency scattering, whether separable or joint, lacks a human-centric evaluation, remotely from any classification task.
 
-In summary, our paper strives to fill the gap in scholarship between MIR and music cognition approaches to timbre, in the context of computer-assisted spectralist orchestration with extended playing techniques.
-From the standpoint of MIR, 
-Conversely, from the standpoint of music cognition, this paper 
+In summary, this paper strives to fill the gap in scholarship between MIR and music cognition approaches to timbre, in the context of computer-assisted spectralist orchestration with extended playing techniques.
+From the standpoint of MIR, our model offers a tractable and generic multidimensional representation for timbre similarity, alongside formal guarantees of robustness to elastic deformations in the time--frequency domain, whether random or adversarial.
+Conversely, from the standpoint of music cognition, our model offers a scalable and biologically plausible surrogate for stimulus-based collection of acoustic dissimilarity judgments, with the potential of being tailored to subjective preferences.
+
 % enjoys a thirty-fold reduction in dimensionality, while covering a  time span that is four times larger (1000 ms) and an acoustic bandwidth that is also four times larger (0--16 kHz).
-
-
-%Our model borrows from both aforementioned lines of research in music information retrieval and music psychology.
-%Indeed, the joint time--frequency scattering transform can be regarded as a deep convolutional network with fixed synaptic weights; or, alternatively, as an idealized computational model for STRFs \cite{anden2019tsp}.
-%We refer to \cite{bellet2015book} for a review of the state of the art in this domain.
-
+%We refer to \cite{bellet2015book} for a review of the state of the art in metric learning.
 
 \section*{Timbre similarity judgments}
 \label{sec:survey}

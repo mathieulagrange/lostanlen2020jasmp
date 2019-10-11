@@ -7,6 +7,7 @@
 \usepackage{color}
 \usepackage{xspace}
 \usepackage{graphicx}
+\usepackage{hyperref}
 % \def\includegraphic[#1]{}
 % \def\includegraphics[#1]{}
 
@@ -150,9 +151,8 @@ The timbre of a sound is an important factor in determining its identity and sou
 One successful means of exploring the timbre space has been the construction of computational models to analyze datasets of musical instrument recordings.
 However, these datasets have typically only included a limited set of instruments played with standard playing techniques, limiting the timbral range.
 For these datasets, models based on static spectral descriptors, such as mel-frequency cepstral coefficients (MFCCs), have enjoyed excellent performance.
-However, with richer datasets containing a wider array of instruments played with a variety of playing techniques, we need more sophisticated models which incorporate dynamic large-scale signal structure.
-To this end, we propose a simple but rich model based on joint time--frequency scattering transforms that are linearly transformed to yield a timbral descriptor.
-The linear mapping is learned from human similarity judgments obtained in a crowdsourced free sorting task.
+However, with richer datasets containing a wider array of instruments played with a variety of playing techniques, more sophisticated models which incorporate dynamic large-scale signal structure are needed.
+To this end, we propose a simple but rich model based on joint time--frequency scattering transforms that are linearly transformed to yield perceptively motivated timbral descriptors as the linear mapping is learned from human similarity judgments obtained in a crowdsourced free sorting task.
 We show that this proposed computational model accurately reproduces the human similarity judgments to $99\%$ accuracy.
 In addition, we perform an ablation study demonstrating the necessity of various components in this model.
 \end{abstract}
@@ -205,15 +205,15 @@ As a result, symbolic representations describe timbre indirectly, either via vis
 
 Despite their widespread use, purely linguistic references to timbre fail to convey the intention of the composer.
 On the one hand, adjectives such as \emph{bright} or \emph{rough} are prone to misunderstanding, as they do not prescribe any musical gesture that is capable of achieving them \cite{antoine2018isma}.
-On the other hand, the sole mention of playing technique does not determine any intended effect; and therefore, fails to generalize to the entire instrumentarium \cite{kolozali2011ismir}.
+On the other hand, the sole mention of a playing technique does not determine any intended effect; and therefore, fails to generalize to the entire instrumentarium \cite{kolozali2011ismir}.
 For instance, although the term \emph{breathy} alludes to a playing technique that is peculiar to wind instruments, a cellist may accomplish a seemingly breathy timbre by bowing near the fingerboard, i.e., \emph{sul tasto} in the classical terminology.
 
 The prospect of modeling timbre perception thus necessarily exceeds the symbolic domain.
-Instead, it involves a cognitive process which arises from the subjective experience of listening. % TODO VL refs. 
+Instead, it involves a cognitive process which arises from the subjective experience of listening. % TODO VL refs.
 The task of simulating this cognitive process amounts to the design of a multidimensional feature space wherein some distance function evaluates arbitrary pairs of stimuli.
 Rather than to merely discriminate instruments as mutually exclusive categories, this function must reflect a consensus of quantitative judgments of acoustic dissimilarity, all other parameters --- \ie{} duration, pitch, and intensity --- being equal \cite{thoret2018jasa}.
 
-Behind the overarching challenge of coming up with a robust predictive model for human behavior, the main practical application of timbre similarity retrieval lies in the emerging topic of computer-assisted instrumentation \cite{maresz2013cmr}.
+Behind the overarching challenge of coming up with a robust predictive model for such a human behavior, the main practical application of timbre similarity retrieval lies in the emerging topic of computer-assisted instrumentation \cite{maresz2013cmr}.
 Following the aesthetic tradition of spectralism in contemporary music creation, the composer queries the machine with an arbitrary audio signal.
 The outcome of this query is an instrumental audio sample, alongside textual attributes of playing technique.
 In this context, the computer serves as a bridge from the auditory level to the symbolic level, \ie{} from a potentially infinite realm of timbral sensations to a musical score of priorly specified range.
@@ -234,14 +234,14 @@ Said otherwise, we rely on listeners, not performers, to define and evaluate the
 A comprehensive ablation study of our system demonstrates that all design choices presented hereafter benefit the retrieval precision of our system.
 Thirdly, we supplement our quantitative benchmark with some visualizations of time--frequency scattering coefficients in the rate--scale domain, for various typical samples of realistic instrumental playing techniques.
 These visualizations confirm the theoretical predictions of previous research \cite{anden2015mlsp}, which relied on simple synthetic sounds such as exponential chirps.
-They are also in line with visualizations of the modulation power spectrum in auditory neurophysiology, while offering an accelerated algorithm for scalable feature extraction.
+They are also in line with visualizations of the modulation power spectrum in auditory neurophysiology \cite{patil2012ploscompbiol}, while offering an accelerated algorithm for scalable feature extraction.
 
-%% TODO: list Sections
-
-%% TODO: mention companion website and open-source software
+The remaining of this paper is organized as follows. Section \ref{sec:soa} presents an in-depth review of the state of the art in the computational modeling of musical timbre. The perceptual data that allows us to train and evaluate the proposed model is briefly presented in Section \ref{sec:survey}. Extended presentation of the gathering protocol used for collecting this data is presented in Annex \ref{sec:subjective}. The computational model and its core components are described in Section \ref{sec:method}. Their benefits are evaluated in Section \ref{sec:results} and discussed in Section \ref{sec:discussion}\footnote{Reproducible research statement: the implementation of the proposed model and the experimental protocol used to produce the results discussed in this paper are available alongside the anonymized version of the perceptual data: \url{https://github.com/mathieulagrange/paperPlayingTechniquesSimilarityLearning}}.
 
 
 \section*{Related work}
+\label{sec:soa}
+
 Timbre involves multiple time scales in conjunction, from a few microseconds for an attack transient to several seconds for a sustained tone.
 Therefore, computational models of timbre perception must summarize acoustic information over a long analysis window, typically amounting to $10^{4}$ digital audio samples or more.
 Mapping this input to a feature space in which distances denote timbral dissimilarities requires a data-driven stage of dimensionality reduction.
@@ -293,19 +293,17 @@ Recently, Wang et al.~\cite{wang2019ismir} trained a classifier of playing techn
 Despite supplying experimental evidence that time--frequency scattering is better suited to playing technique recognition than purely temporal scattering, it remains to be known whether this findings can scale up from a single instrument to an entire orchestra.
 In addition, previous publications in time--frequency scattering, whether separable or joint, lacks a human-centric evaluation, remotely from any classification task.
 
-In summary, this paper strives to fill the gap in scholarship between MIR and music cognition approaches to timbre, in the context of computer-assisted spectralist orchestration with extended playing techniques.
-From the standpoint of MIR, our model offers a tractable and generic multidimensional representation for timbre similarity, alongside formal guarantees of robustness to elastic deformations in the time--frequency domain, whether random or adversarial.
+Contributions presented in this paper strives to fill the gap in scholarship between MIR and music cognition approaches to timbre, in the context of computer-assisted spectralist orchestration with extended playing techniques.
+From the standpoint of MIR, the model presented here offers a tractable and generic multidimensional representation for timbre similarity, alongside formal guarantees of robustness to elastic deformations in the time--frequency domain, whether random or adversarial.
 Conversely, from the standpoint of music cognition, our model offers a scalable and biologically plausible surrogate for stimulus-based collection of acoustic dissimilarity judgments, with the potential of being readily tailored to subjective preferences.
 
 % enjoys a thirty-fold reduction in dimensionality, while covering a  time span that is four times larger (1000 ms) and an acoustic bandwidth that is also four times larger (0--16 kHz).
 %We refer to \cite{bellet2015book} for a review of the state of the art in metric learning.
 
-\section*{Data collection of timbre disimilarity judgments}
+\section*{Timbre disimilarity judgments}
 \label{sec:survey}
 
-
-
-To construct a dataset for exploring the perception of timbre, we conducted a survey on the perceived similarity of a set of sounds.
+To construct a dataset for exploring the perception of timbre for different instruments and playing techniques, we conducted a survey on the perceived similarity of a set of sounds.
 The set consists of $78$ recordings of different instrument--PT (IPT) pairs, each played at the same pitch (C4) and nuance \textit{mezzo-forte}. For more information on the dataset considered in this study, see Section \ref{sec:appendix-dataset}.
 In the survey, the subject is asked to organize dots on a two-dimensional place in a free sorting task.
 Each dot corresponded to a different IPT recording and is moved by the user dragging them with the mouse.

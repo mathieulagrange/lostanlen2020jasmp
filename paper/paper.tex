@@ -236,7 +236,11 @@ Thirdly, we supplement our quantitative benchmark with some visualizations of ti
 These visualizations confirm the theoretical predictions of previous research \cite{anden2015mlsp}, which relied on simple synthetic sounds such as exponential chirps.
 They are also in line with visualizations of the modulation power spectrum in auditory neurophysiology \cite{patil2012ploscompbiol}, while offering an accelerated algorithm for scalable feature extraction.
 
-The remaining of this paper is organized as follows. Section \ref{sec:soa} presents an in-depth review of the state of the art in the computational modeling of musical timbre. The perceptual data that allows us to train and evaluate the proposed model is briefly presented in Section \ref{sec:survey}. Extended presentation of the gathering protocol used for collecting this data is presented in Annex \ref{sec:subjective}. The computational model and its core components are described in Section \ref{sec:method}. Their benefits are evaluated in Section \ref{sec:results} and discussed in Section \ref{sec:discussion}\footnote{Reproducible research statement: the implementation of the proposed model and the experimental protocol used to produce the results discussed in this paper are available alongside the anonymized version of the perceptual data: \url{https://github.com/mathieulagrange/paperPlayingTechniquesSimilarityLearning}}.
+Section \ref{sec:soa} reviews recent research in the computational modeling of musical timbre.
+Section \ref{sec:survey} describes our data collection procedure for auditory similarities across playing techniques.
+Section \ref{sec:method} presents the technical components of our machine listening system, namely joint time--frequency scattering and large-margin nearest neighbors.
+Section \ref{sec:results} reports the results of an ablation study of our system.
+Section \ref{sec:discussion} discusses the implications of our findings for future research on timbral similarity.\footnote{Reproducible research statement: the implementation of the proposed model and the experimental protocol used to produce the results discussed in this paper are available alongside the anonymized version of the perceptual data: \url{https://github.com/mathieulagrange/paperPlayingTechniquesSimilarityLearning}}.
 
 
 \section*{Related work}

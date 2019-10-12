@@ -209,11 +209,11 @@ On the other hand, the sole mention of a playing technique does not determine an
 For instance, although the term \emph{breathy} alludes to a playing technique that is peculiar to wind instruments, a cellist may accomplish a seemingly breathy timbre by bowing near the fingerboard, i.e., \emph{sul tasto} in the classical terminology.
 
 The prospect of modeling timbre perception thus necessarily exceeds the symbolic domain.
-Instead, it involves a cognitive process which arises from the subjective experience of listening. % TODO VL refs.
+Instead, it involves a cognitive process which arises from the subjective experience of listening \cite{erickson1975book}.
 The task of simulating this cognitive process amounts to the design of a multidimensional feature space wherein some distance function evaluates arbitrary pairs of stimuli.
 Rather than to merely discriminate instruments as mutually exclusive categories, this function must reflect a consensus of quantitative judgments of acoustic dissimilarity, all other parameters --- \ie{} duration, pitch, and intensity --- being equal \cite{thoret2018jasa}.
 
-Behind the overarching challenge of coming up with a robust predictive model for such a human behavior, the main practical application of timbre similarity retrieval lies in the emerging topic of computer-assisted instrumentation \cite{maresz2013cmr}.
+Behind the overarching challenge of coming up with a robust predictive model for human listening behaviors, the main practical application of timbre similarity retrieval lies in the emerging topic of computer-assisted instrumentation \cite{maresz2013cmr}.
 Following the aesthetic tradition of spectralism in contemporary music creation, the composer queries the machine with an arbitrary audio signal.
 The outcome of this query is an instrumental audio sample, alongside textual attributes of playing technique.
 In this context, the computer serves as a bridge from the auditory level to the symbolic level, \ie{} from a potentially infinite realm of timbral sensations to a musical score of priorly specified range.
@@ -316,7 +316,8 @@ We refer to \cite{x} and \cite{x} for a review of recent literature on the timbr
 
 We consider a list of 15 instruments: violin (Vn), viola (Va), cello (Vc), contrabass (Cb), concert harp (Hp), Spanish guitar (Gtr), flute (Fl), soprano clarinet (BbCl), alto saxophone (ASax), oboe (Ob), bassoon (Bn), trumpet in C (TpC), French horn (Hn), tenor trombone (TTbn), and bass tuba (BBTb). % TODO check tuba abbreviation
 Among this list, the former six are strings, the next five are woodwind, and the last five are brass.
-
+Each of these instruments affords a panel of playing techniques ranging in size between X and Y. % TODO update with numbers
+Furthermore, independently of the playing technique, some instruments may be temporarily equipped with timbre-altering mutes, such as a rubber sordina on the bridge of a violin or an aluminium ``wah-wah'' inside in the bell of a trumpet.
 
 
 To construct a dataset for exploring the perception of timbre, we conducted a survey on the perceived similarity of a set of sounds.

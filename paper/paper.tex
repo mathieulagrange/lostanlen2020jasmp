@@ -314,10 +314,15 @@ Furthermore, although percussive instruments certainly exhibit a rich diversity 
 In comparison, techniques for sustained tones such as \emph{vibrato} or \emph{tremolo} permeate throughout a vast instrumentarium, \eg{} bowed strings and reed alike.
 We refer to \cite{x} and \cite{x} for a review of recent literature on the timbre modeling of percussive sounds, from the standpoints of MIR and music cognition respectively. % TODO VL CITE
 
-We consider a list of 15 instruments: violin (Vn), viola (Va), cello (Vc), contrabass (Cb), concert harp (Hp), Spanish guitar (Gtr), flute (Fl), soprano clarinet (BbCl), alto saxophone (ASax), oboe (Ob), bassoon (Bn), trumpet in C (TpC), French horn (Hn), tenor trombone (TTbn), and bass tuba (BBTb). % TODO check tuba abbreviation
+We consider a list of 16 instruments: violin (Vn), viola (Va), cello (Vc), contrabass (Cb), concert harp (Hp), Spanish guitar (Gtr), accordion (Acc), flute (Fl), soprano clarinet (BbCl), alto saxophone (ASax), oboe (Ob), bassoon (Bn), trumpet in C (TpC), French horn (Hn), tenor trombone (TTbn), and bass tuba (BBTb). 
 Among this list, the former six are strings, the next five are woodwind, and the last five are brass.
-Each of these instruments affords a panel of playing techniques ranging in size between X and Y. % TODO update with numbers
-Furthermore, independently of the playing technique, some instruments may be temporarily equipped with timbre-altering mutes, such as a rubber sordina on the bridge of a violin or an aluminium ``wah-wah'' inside in the bell of a trumpet.
+Some of these instruments may be temporarily equipped with timbre-altering mutes, such as a rubber sordina on the bridge of a violin or an aluminium ``wah-wah'' inside in the bell of a trumpet.
+Once augmented with mutes, the list of 16 instruments grows up to X. % TODO complete
+Furthermore, every instrument, whether equipped with a mute or not, affords a panel of playing techniques ranging in size between X (for the X) and Y (for the Y). % TODO update with number.
+In total, the feasible triplets of instrument, mute, and technique amount to a list of $N=235$ combinations.
+
+% TODO explain the conundrum leading to reduce the dataset size.
+
 
 
 To construct a dataset for exploring the perception of timbre, we conducted a survey on the perceived similarity of a set of sounds.
@@ -609,6 +614,98 @@ The Flatiron Institute is a division of the Simons Foundation.
 
 \section*{Dataset}
 \label{sec:appendix-dataset}
+
+\begin{table}
+\caption{Full list of audio stimuli (1/2).}
+      \begin{tabular}{llll}
+          name & instrument  & mute   &  playing technique \\ \hline \hline
+        \texttt{ASax-key-cl-C4-p} & Alto saxophone & & key click \\
+        \texttt{ASax-ord-C4-mf} & Alto saxophone &  &  \\
+        \texttt{ASax-ord-hi-reg-C6-mf} & Alto saxophone &   & \\ 
+        \texttt{ASax-slap-C4-mf} & Alto saxophone & & slap tonguing \\ 
+        \texttt{ASax-slap-unp-C4-p} & Alto saxophone & & unpitched slap tonguing \\ \hline
+        \texttt{BbCl-key-cl-C4-pp} & Soprano clarinet & & key click \\
+        \texttt{BbCl-ord-hi-reg-A6-ff} & Soprano clarinet & & \\ \hline
+        \texttt{BBTb-explo-slap-C\#1-mf} & Bass tuba &  & explosive slap \\ 
+		\texttt{BBTb-pdl-tone-F1-mf} & Bass tuba & & pedal tone \\
+		\texttt{BBTb-slap-F1-mf} & Bass tuba & & slap tonguing \\
+		\texttt{BBTb-slap-unp-mf-1} & Bass tuba & & unpitched slap tonguing \\ \hline
+		\texttt{Bn-key-cl-C3-mf} & Bassoon & & key click \\
+		\texttt{Bn-ord-C4-mf} & Bassoon & & \\ \hline
+		\texttt{Cb-pizz-bartok-C4-ff-1c} & Contrabass & & pizzicato Bart\'ok (snap) \\
+		\texttt{Cb-pizz-lv-C4-mf-1c} & Contrabass & & pizzicato \& \emph{laissez vibrer} \\
+        \texttt{Cb-pizz-sec-C4-mf-1c} & Contrabass & & pizzicato secco \\
+        \texttt{Cb-pont-C4-mf-1c} & Contrabass & & sul ponticello \\ \hline
+        \texttt{Fl-key-cl-C4-f} & Flute & & key click \\
+        \texttt{Fl-ord-C4-mf} & Flute & & \\
+        \texttt{Fl-tng-ram-C4-mf} & Flute & & tongue ram \\ \hline
+        \texttt{Gtr-ord-C4-mf-2c} & Spanish guitar & & \\
+        \texttt{Gtr-ord-hi-reg-E5-mf-3c} & Spanish guitar & & \\
+        \texttt{Gtr-pizz-bartok-C4-ff-2c} & Spanish guitar & & pizzicato Bart\'ok\\
+        \texttt{Gtr-pizz-C4-mf-2c} & Spanish guitar &  & pizzicato \\ \hline
+        \texttt{Hn-ord-C4-mf} & French horn & & \\
+        \texttt{Hn-slap-C4-mf} & French horn & & slap tonguing \\ \hline
+        \texttt{Hp-harm-fngr-C4-f} & Harp & & harmonic fingering \\
+        \texttt{Hp-ord-C4-m4} & Harp & & \\
+        \texttt{Hp-pizz-bartok-C4-mf} & Harp & & pizzicato Bart\'ok \\
+        \texttt{Hp-xyl-C4-p} & Harp & & xylophonic \\ \hline
+        \texttt{Ob-blow-no-reed-C4} & Oboe & & blow without reed \\
+        \texttt{Ob-key-cl-C4-pp} & Oboe & & key click \\
+        \texttt{Ob-ord-C4-mf} & Oboe & & \\ \hline
+        \texttt{TpC-ord-C4-mf} & Trumpet in C & & \\
+        \texttt{TpC-pdl-tone-F3-mf} & Trumpet in C & & pedal tone \\
+        \texttt{TpC-slap-C4-p} & Trumpet in C & & slap tonguing \\
+        \texttt{TpC+C-ord-C4-mf} & Trumpet in C & cup & \\
+        \texttt{TpC+H-ord-C4-mf} & Trumpet in C & harmon & \\
+        \texttt{TpC+S-ord-C4-mf} & Trumpet in C & straight & \\
+        \texttt{TpC+W-ord-closed-C4-mf} & Trumpet in C & wah (closed) & \\
+        \texttt{TpC+W-ord-open-C4-mf} & Trumpet in C & wah (open) & \\ \hline
+        \texttt{TTbn-ord-C4-mf} & Tenor trombone & &  \\ 
+        \texttt{TTbn+C-ord-C4-mf} & Tenor trombone & cup & \\ 
+        \texttt{TTbn+H-ord-C4-mf} & Tenor trombone & harmon & \\
+        \texttt{TTbn+S-ord-C4-mf} & Tenor trombone & straight & \\
+        \texttt{TTbn+W-ord-closed-C4-mf} & Tenor trombone & wah (closed) & \\
+        \texttt{TTbn+W-ord-open-C4-mf} & Tenor trombone & wah (open) & \\ \hline
+        \texttt{Va-art-harm-C5-mf-4c} & Viola & & artificial harmonic \\
+        \texttt{Va-legno-batt-C4-mf-3c} & Viola & & col legno battuto \\
+        \texttt{Va-ord-C4-mf-3c} & Viola & & \\
+        \texttt{Va-pizz-bartok-C4-ff-3c} & Viola & & pizzicato Bart\'ok \\
+        \texttt{Va-pizz-lv-C4-mf-3c} & Viola & & pizzicato \& \emph{laissez vibrer} \\
+        \texttt{Va-pizz-sec-C4-mf-3c} & Viola & & pizzicato secco \\
+        \texttt{Va-pont-C4-mf-3c} & Viola & & sul ponticello \\
+        \texttt{Va+S-ord-C3-mf-3c} & Viola & sordina & \\
+        \texttt{Va+SP-ord-D4-mf-2c} & Viola & piombo & \\ \hline
+        \texttt{Vc-art-harm-C4-mf} & Cello & & artificial harmonic \\
+        \texttt{Vc-legno-batt-C4-mf-1c} & Cello & & col legno battuto \\
+        \texttt{Vc-legno-tratto-C4-mf-1c} & Cello & & col legno tratto \\
+        \texttt{Vc-nonvib-C4-mf-1c} & Cello & & nonvibrato \\
+        \texttt{Vc-ord-C4-mf-1c} & Cello & & \\
+        \texttt{Vc-pizz-bartok-C4-ff-1c} & Cello & & pizzicato Bart\'ok \\
+        \texttt{Vc-pizz-lv-C4-mf-1c} & Cello & & pizzicato \& \emph{laissez vibrer} \\
+        \texttt{Vc-pizz-sec-C4-mf-1c} & Cello & & pizzicato secco \\
+        \texttt{Vc-pont-C4-mf-2c} & Cello & & sul ponticello \\
+        \texttt{Vc-tasto-C4-mf-1c} & Cello & & sul tasto \\
+        \texttt{Vc+S-ord-C4-mf-1c} & Cello & sordina & \\
+        \texttt{Vc+SP-ord-C4-mf-1c} & Cello & piombo & \\ \hline
+    \end{tabular}
+\end{table}
+
+\begin{table*}
+\caption{Full list of audio stimuli (2/2).}
+\begin{tabular}{llll}
+          name & instrument  & mute   &  playing technique \\ \hline \hline
+          \texttt{Vn-art-harm-G5-mf-4c} & Violin & & artificial harmonic \\
+          \texttt{Vn-legno-batt-C4-mf-4c} & Violin & & col legno battuto \\
+          \texttt{Vn-nonvib-C4-mf-4c} & Violin & & nonvibrato \\
+          \texttt{Vn-ord-C4-mf-4c} & Violin & & \\
+          \texttt{Vn-pizz-bartok-C4-ff-4c} & Violin & & pizzicato Bart\'ok \\
+          \texttt{Vn-pizz-lv-C4-mf-4c} & Violin & pizzicato \& \emph{laissez vibrer} \\
+          \texttt{Vn-pizz-sec-C4-mf-4c} & Violin & pizzicato secco \\
+          \texttt{Vn-pont-C4-mf-4c} & Violin & & sul ponticello \\
+          \texttt{Vn+S-ord-C4-mf-4c} & Violin & sordina & \\
+          \texttt{Vn+SP-ord-C4-mf-4c} & Violin & piombo & \\ \hline
+\end{tabular}
+\end{table*}
 
 The dataset considered in this paper as been recorded at Ircam and is composed of audio recording of $16$ different musical instruments played with different PTs, which leads to $235$ different IPT pairs.
 In addition, the pitch and nuance is varie for each pair (when applicable), yielding a total of $25444$ audio recordings.

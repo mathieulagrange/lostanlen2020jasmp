@@ -327,7 +327,7 @@ Second line : perceptual clustering.}
 Same 3 sounds spec + scatt.}
 \end{figure}
 
-Following the above discussed matters, we propose a ranking system that is based on a processing pipeline made of two main components, see Figure \ref{fig:pipeline}. The first component projects the audio signal of the query and the items of the database in a high dimensional timbre space using the scattering transform. The second component modify the timbre space by taking into account perceptual judgments represented as a consensus clustering of the items in the dataset, as presented in Section \ref{sec:judgments}. It considers the large margin nearest neigbors to learn the weights of the reprojection.
+Following the above discussed matters, we propose a ranking system that is based on a processing pipeline made of two main components, see Figure \ref{fig:pipeline}. The first component projects the audio signal of the query and the items of the database in a high dimensional timbre space using the scattering transform. The second component further modifies the timbre space by taking into account perceptual judgments represented as a consensus clustering of the items in the dataset, as presented in Section \ref{sec:survey}. It considers the large margin nearest neigbors to learn the weights of the reprojection.
 
 
 
@@ -409,7 +409,7 @@ In total, the feasible triplets of instrument, mute, and technique amount to a l
 
 
 To construct a dataset for exploring the perception of timbre, we conducted a survey on the perceived similarity of a set of sounds.
-The set consists of $78$ recordings of different instrument--PT (IPT) pairs, each played at the same pitch (C4) and nuance \textit{mezzo-forte}. For more information on the dataset considered in this study, see Section \ref{sec:appendix-dataset}.
+The set consists of $78$ recordings of different instrument--PT (IPT) pairs, each played at the same pitch (C4) and nuance \textit{mezzo-forte}. %For more information on the dataset considered in this study, see Section \ref{sec:appendix-dataset}.
 In the survey, the subject is asked to organize dots on a two-dimensional place in a free sorting task.
 Each dot corresponded to a different IPT recording and is moved by the user dragging them with the mouse.
 In addition to spatially arranging the dots, the user is also asked to assign one of $20$ colors to each dot, providing a simple information of clustering of the sounds.
@@ -423,7 +423,7 @@ The final arrangement and color assignment of one of the subjects is shown in Fi
 \begin{figure}
 \center
 \includegraphics[width = \textwidth]{figures/xp2example1.png}
-\caption{Spatial and group organization provided by subject 1\footnote{The organizations of the other subjects are available online \url{https://mathieulagrange.github.io/paperPlayingTechniquesSimilarityLearning/demo}. For each subject, the stimuli can be played back by hovering on the dots.}.}
+\caption{Spatial and group organization provided by subject 1. Contributions of the other subjects are available online \url{https://mathieulagrange.github.io/paperPlayingTechniquesSimilarityLearning/demo}. For each subject, the stimuli can be played back by hovering on the dots.}
 \label{fig:xp2display}
 \end{figure}
 
@@ -620,10 +620,75 @@ The Flatiron Institute is a division of the Simons Foundation.
 
 %% Appendices
 
-\section*{Dataset}
-\label{sec:appendix-dataset}
+% \section*{Dataset}
+% \label{sec:appendix-dataset}
+%
+%
+% The dataset considered in this paper as been recorded at Ircam and is composed of audio recording of $16$ different musical instruments played with different PTs, which leads to $235$ different IPT pairs.
+% In addition, the pitch and nuance is varie for each pair (when applicable), yielding a total of $25444$ audio recordings.
+% For each couple, the pitch and intonation is varied leading to 25444 audio samples.
+%
+% The recorded instruments belongs to the wind and string classes.
+% For winds, the instruments considered in the second experiment are: accordion (Acc), saxophone alto (ASax), tuba (Tb), bassoon (Bn), clarinet Bb (BbCl), flute (Fl), horn (Hn), oboe (Ob), trombone tenor (TTbn), and trumpet C (TpC).
+% For the string class, the instruments are: guitar (Gtr), harp (Hp), viola (Va), violin (Vn), violoncello (Vc), and contrabass (Cb).
+% \ml{Better to display these in a table? VL todo table}
+%
+% Those instruments are recorded for different nuance and pitch if the latter is relevant, but more importantly, several playing technique are considered.
+% For the second experiment described in this paper, the playing techniques considered are: artificial harmonic (art), blow (blow), exploding slap (explo), harmonic (harm), key-click (key), col legno (legno), non vibrato (nonvib), ordinario (ord), pedal tone (pdl), pizzicato (pizz), ponticello (pont), slap (slap), (tasto), tongue-ram (tng), and xylophonic (xyl).
+%
+% \vl{This section is not precise enough in terms of intensity ranges and pitch ranges.
+% The abbreviations can be removed. @data @writing}
+% \ml{}
+%
+% \vl{A bubble plot of number of notes per instrument (x axis) and playing technique
+% (y axis) would be extremely useful. @data @figure}
+% \ml{Tu voudrais ca pour la base SOL complete ou les données considérées dans l'étude ?}
+% \vl{Les donn\'{e} de l'\'{e}tude, relatives aux Figures 5 et 6.}
+
+\section*{Human timbre judgments}
+\label{sec:subjective}
+
+The dataset considered in this study is taken
+from the studio-on-line (SOL) music library  \cite{peeters2000instrument}.
+It has audio recordings of 16 different musical instruments played
+with different playing techniques,
+which leads to $235$ different couples of instrument / playing technique.
+For each couple, the pitch and intonation is varied leading to $25444$ recordings.
+%The way the dataset is structured is explained in more details in Appendix \ref{sec:appendix-dataset}.
+
+Gathering the similarity judgments between each pair of samples would be a daunting task. Indeed, studies about perceptual similarity are hindered with a dimensional problem as the number of pairs to be evaluated grows with the square of the number of items considered.
+
+One reasonable assumption that we choose to consider here is that the pitch and nuance do not alter significantly the perception of timbral similarity. This is in line with the ANSI negative definition of timbre \vl{expliquer, citer, et modérer le propos en donnant des exemples dans lequel le pitch ou la nuance change le timbre}.
+
+
+\section*{Reducing Expert judgments of technique peculiarities}
+
+\ja{This needs to be summarized (possible in the previous section).
+I'm copying two sentences in here that I had in the Timbre similarity judgments section.}%
+These IPTs were selected from a larger set of $235$ IPTs by two experts at the \emph{Conservatoire national sup\'erieur de musique et de danse de Paris} (CNSMDP).
+The selection criteria were based on the likelihood of an IPT being similar to some other IPT, ensuring that IPTs that were too singular were excluded from the survey.
+
+Even so, considering every pairs of IPTs is not practical. A selection
+experiment is thus conducted where the subject is asked to give his opinion on which
+\ipts are relevant to study. More precisely, an \ipt is said to be relevant to study
+if it is likely to be associated to another \ipt of another instrument.
+Interest is rated on a 7 ticks scale. The subject can listen to all the different
+nuance and pitch samples of each \ipt. The experiment is over when all the
+\ipts are rated.
+
+Rating guidelines are provided :
+\begin{itemize}
+  \item One star: this \ipt is singular, it is not useful to compare it with another \ipt of another instrument.
+  \item Four stars: there is a proximity on one aspect of the sound between this
+  \ipt and of an \ipt of another instrument,
+  but this one is neither decisive nor obvious.
+  \item Seven stars: there is a large similarity between this \ipt and an \ipt of another instrument.
+\end{itemize}
+
+Two music composition professors of the CNSMDP performed the test, that is rating each $235$ \ipt.
 
 \begin{table}
+  \label{tab:list1}
 \caption{Full list of audio stimuli (1/2).}
       \begin{tabular}{llll}
           name & instrument  & mute   &  playing technique \\ \hline \hline
@@ -699,6 +764,7 @@ The Flatiron Institute is a division of the Simons Foundation.
 \end{table}
 
 \begin{table*}
+  \label{tab:list2}
 \caption{Full list of audio stimuli (2/2).}
 \begin{tabular}{llll}
           name & instrument  & mute   &  playing technique \\ \hline \hline
@@ -715,82 +781,9 @@ The Flatiron Institute is a division of the Simons Foundation.
 \end{tabular}
 \end{table*}
 
-The dataset considered in this paper as been recorded at Ircam and is composed of audio recording of $16$ different musical instruments played with different PTs, which leads to $235$ different IPT pairs.
-In addition, the pitch and nuance is varie for each pair (when applicable), yielding a total of $25444$ audio recordings.
-For each couple, the pitch and intonation is varied leading to 25444 audio samples.
-
-The recorded instruments belongs to the wind and string classes.
-For winds, the instruments considered in the second experiment are: accordion (Acc), saxophone alto (ASax), tuba (Tb), bassoon (Bn), clarinet Bb (BbCl), flute (Fl), horn (Hn), oboe (Ob), trombone tenor (TTbn), and trumpet C (TpC).
-For the string class, the instruments are: guitar (Gtr), harp (Hp), viola (Va), violin (Vn), violoncello (Vc), and contrabass (Cb).
-\ml{Better to display these in a table? VL todo table}
-
-Those instruments are recorded for different nuance and pitch if the latter is relevant, but more importantly, several playing technique are considered.
-For the second experiment described in this paper, the playing techniques considered are: artificial harmonic (art), blow (blow), exploding slap (explo), harmonic (harm), key-click (key), col legno (legno), non vibrato (nonvib), ordinario (ord), pedal tone (pdl), pizzicato (pizz), ponticello (pont), slap (slap), (tasto), tongue-ram (tng), and xylophonic (xyl).
-
-\vl{This section is not precise enough in terms of intensity ranges and pitch ranges.
-The abbreviations can be removed. @data @writing}
-\ml{}
-
-\vl{A bubble plot of number of notes per instrument (x axis) and playing technique
-(y axis) would be extremely useful. @data @figure}
-\ml{Tu voudrais ca pour la base SOL complete ou les données considérées dans l'étude ?}
-\vl{Les donn\'{e} de l'\'{e}tude, relatives aux Figures 5 et 6.}
-
-\section*{Human timbre judgments}
-\label{sec:subjective}
-
-The dataset considered in this study is taken
-from the studio-on-line (SOL) music library  \cite{peeters2000instrument}.
-It has audio recordings of 16 different musical instruments played
-with different playing techniques,
-which leads to $235$ different couples of instrument / playing technique.
-For each couple, the pitch and intonation is varied leading to $25444$ recordings.
-The way the dataset is structured
-is explained in more details in Appendix \ref{sec:appendix-dataset}.
-
-Gathering the similarity judgments between each pair of samples would be a daunting task. Indeed, studies about perceptual similarity are hindered with a dimensional problem as the number of pairs to be evaluated grows with the square of the number of items considered.
-
-One reasonable assumption that we choose to consider here is that the pitch and nuance do not alter significantly the perception of timbral similarity. This is in line with the ANSI negative definition of timbre \vl{expliquer, citer, et modérer le propos en donnant des exemples dans lequel le pitch ou la nuance change le timbre}.
-
-
-\section*{Reducing Expert judgments of technique peculiarities}
-
-\ja{This needs to be summarized (possible in the previous section).
-I'm copying two sentences in here that I had in the Timbre similarity judgments section.}%
-These IPTs were selected from a larger set of $235$ IPTs by two experts at the \emph{Conservatoire national sup\'erieur de musique et de danse de Paris} (CNSMDP).
-The selection criteria were based on the likelihood of an IPT being similar to some other IPT, ensuring that IPTs that were too singular were excluded from the survey.
-
-Even so, considering every pairs of IPTs is not practical. A selection
-experiment is thus conducted where the subject is asked to give his opinion on which
-\ipts are relevant to study. More precisely, an \ipt is said to be relevant to study
-if it is likely to be associated to another \ipt of another instrument.
-Interest is rated on a 7 ticks scale. The subject can listen to all the different
-nuance and pitch samples of each \ipt. The experiment is over when all the
-\ipts are rated.
-
-Rating guidelines are provided :
-\begin{itemize}
-  \item One star: this \ipt is singular, it is not useful to compare it with another \ipt of another instrument.
-  \item Four stars: there is a proximity on one aspect of the sound between this
-  \ipt and of an \ipt of another instrument,
-  but this one is neither decisive nor obvious.
-  \item Seven stars: there is a large similarity between this \ipt and an \ipt of another instrument.
-\end{itemize}
-
-Two music composition professors of the CNSMDP performed the test, that is rating each $235$ \ipt.
-
-\vl{This subsection needs a box-and-whisker plot of ratings, where the 235 different
-couples of instrument and playing techniques are sorted on the x-axis by average rating. @figure @ratings}
-
-\ml{il n'y que deux raters, ca ne pas pas sens de faire et ca sera illisible}
-
-\vl{Are the histogram of ratings similar for the two raters? It would be good to make a statistical test for this. @research @stats @ratings}
-
-\ml{les histograms sont dans la figure statxp1. Le code pour la generer est dans code/xp1 faire tourner extractData et statData. Un ttest rejette l'hypothese nulle.}
-
 Even if the hypothesis that the distributions of ratings comes from independent random samples from normal distributions with equal means and equal but unknown variances, is verified using the two-sample t-test, inspection of the respective histograms reveals that averaging the ratings of the two raters is reasonable.
 
-Keeping in mind that the gathering of the perceptual judgments of \ipt similarities shall remain practical, the number of \ipts considered shall be lower than $100$. We thus select the \ipts with an average rating higher than three, which brings us 78 \ipts to study.
+Keeping in mind that the gathering of the perceptual judgments of \ipt similarities shall remain practical, the number of \ipts considered shall be lower than $100$. We thus select the \ipts with an average rating higher than three, which brings us 78 \ipts to study which are listed in Tables \ref{tab:list1} and \ref{tab:list2}.
 
 %%%%%%%%%%%%%% CROWDSOURCED JUDGMENTS OF PAIRWISE SIMILARITY %%%%%%%%%%%%%%%%%%%%
 \section*{Crowdsourced judgments of pairwise similarity}
@@ -811,25 +804,20 @@ The experiment was available online for two months and requests to perform the t
 
 Only the clustering given by the subjects using the color labels is considered to estimate the spontaneous judgments of similarity among \ipt. The spatial organization of the dots representing the \ipt could provide information about the similarity, but this would implicitly enforce the fact that the timbral similarity space is two dimensional. We therefore now only study the properties of the clusterings performed by the subject prior to converting them into an overall similarity matrix.
 
-This results in $31$ clusterings that can be considered for defining a perceptual timbre space of \ipts. Among the 20 colors available, the subjects used on average $10.2 \pm  4.1$ different colors to group \ipts. The distribution of the number of groups can be seen on Figure \ref{fig:xp2nbGroup}. The size of the groups is on average $7.7 \pm   7.2$. The distribution of the size of groups can be seen on Figure \ref{fig:xp2sizeGroup}. The large number of small groups indicates that many subjects considered that a few of the \ipt were very different from all the remaining \ipt.
+This results in $31$ clusterings that can be considered for defining a perceptual timbre space of \ipts. Among the 20 colors available, the subjects used on average $10.2 \pm  4.1$ different colors to group \ipts. The distribution of the number of groups can be seen on Figure \ref{fig:xp2nbSize}(a). The size of the groups is on average $7.7 \pm   7.2$. The distribution of the size of groups can be seen on Figure \ref{fig:xp2nbSize}(b). The large number of small groups indicates that many subjects considered that a few of the \ipt were very different from all the remaining \ipt.
 
 \begin{figure}
 \center
-\includegraphics[width = \textwidth]{figures/nbc.png}
-\caption{Histogram of the number of groups.
-\vl{The width of this figure should be a half page instead of a full page. Pair with next figure. @figure}}
-\ml{ok}
-\label{fig:xp2nbGroup}
+\begin{tabular}{cc}
+  (a) & (b) \\
+  \includegraphics[width = \textwidth]{figures/nbc.png} &
+  \includegraphics[width = \textwidth]{figures/sbc.png}
+\end{tabular}
+\caption{Histogram of the number of clusters (a) and the size of the clusters (b) defined by the $31$ subjects.}
+\label{fig:xp2nbSize}
 \end{figure}
 
-\begin{figure}
-\center
-\includegraphics[width = \textwidth]{figures/sbc.png}
-\caption{Histogram of the size of groups.
-\vl{The width of this figure should be a half page instead of a full page. Pair with previous figure. @figure}}
-\ml{ok}
-\label{fig:xp2sizeGroup}
-\end{figure}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

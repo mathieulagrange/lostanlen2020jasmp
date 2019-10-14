@@ -1,4 +1,3 @@
-
 \documentclass{bmcart}
 
 \usepackage{amsthm,amsmath}
@@ -62,29 +61,30 @@
 
 \author[
    addressref={aff1},                   % id's of addresses, e.g. {aff1,aff2}
-   corref={aff1},                       % id of corresponding address, if any
-   noteref={n1},                        % id's of article notes, if any
-   email={email@example.com}            % email address
+                        % id of corresponding address, if any
+%   noteref={n1},                        % id's of article notes, if any
+   email={vincent.lostanlen@nyu.edu}            % email address
 ]{\inits{VL}\fnm{Vincent} \snm{Lostanlen}}
 \author[
    addressref={aff2},
-   email={email@example.com}
+   email={christian.elhajj@ls2n.fr}
 ]{\inits{CE}\fnm{Christian} \snm{El-Hajj}}
 \author[
-   addressref={aff2},
-   email={email@example.com}
+   addressref={aff3},
+   email={mathias.rossignol@lonofi.com}
 ]{\inits{MR}\fnm{Mathias} \snm{Rossignol}}
 \author[
-   addressref={aff2},
-   email={email@example.com}
+   addressref={aff3},
+   email={gregoire.lafay@lonofi.com}
 ]{\inits{GL}\fnm{Gr\'egoire} \snm{Lafay}}
 \author[
    addressref={ccm},
    email={janden@flatironinstitute.org}
 ]{\inits{JA}\fnm{Joakim} \snm{And\'en}}
 \author[
-   addressref={aff2},
-   email={email@example.com}
+  corref={aff2},
+  addressref={aff2},
+  email={mathieu.lagrange@ls2n.fr}
 ]{\inits{ML}\fnm{Mathieu} \snm{Lagrange}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -104,11 +104,18 @@
   \cny{USA}                                    % country
 }
 \address[id=aff2]{%
-  \orgname{Marine Ecology Department, Institute of Marine Sciences Kiel},
-  \street{D\"{u}sternbrooker Weg 20},
-  \postcode{24105}
-  \city{Kiel},
-  \cny{Germany}
+  \orgname{LS2N, CNRS, Centrale Nantes, Nantes University},
+  \street{1, rue de la Noe},
+  \postcode{44000},
+  \city{Nantes},
+  \cny{France}
+}
+\address[id=aff3]{%
+  \orgname{Lonofi},
+  \street{57 rue Letort},
+  \postcode{75018},
+  \city{Paris},
+  \cny{France}
 }
 \address[id=ccm]{%
   \orgname{Center for Computational Mathematics, Flatiron Institute},
@@ -128,7 +135,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{artnotes}
-\note[id=n1]{Equal contributor}
+%\note[id=n1]{Equal contributor}
 \end{artnotes}
 
 \end{fmbox}
@@ -314,7 +321,7 @@ Furthermore, although percussive instruments certainly exhibit a rich diversity 
 In comparison, techniques for sustained tones such as \emph{vibrato} or \emph{tremolo} permeate throughout a vast instrumentarium, \eg{} bowed strings and reed alike.
 We refer to \cite{x} and \cite{x} for a review of recent literature on the timbre modeling of percussive sounds, from the standpoints of MIR and music cognition respectively. % TODO VL CITE
 
-We consider a list of 16 instruments: violin (Vn), viola (Va), cello (Vc), contrabass (Cb), concert harp (Hp), Spanish guitar (Gtr), accordion (Acc), flute (Fl), soprano clarinet (BbCl), alto saxophone (ASax), oboe (Ob), bassoon (Bn), trumpet in C (TpC), French horn (Hn), tenor trombone (TTbn), and bass tuba (BBTb). 
+We consider a list of 16 instruments: violin (Vn), viola (Va), cello (Vc), contrabass (Cb), concert harp (Hp), Spanish guitar (Gtr), accordion (Acc), flute (Fl), soprano clarinet (BbCl), alto saxophone (ASax), oboe (Ob), bassoon (Bn), trumpet in C (TpC), French horn (Hn), tenor trombone (TTbn), and bass tuba (BBTb).
 Among this list, the former six are strings, the next five are woodwind, and the last five are brass.
 Some of these instruments may be temporarily equipped with timbre-altering mutes, such as a rubber sordina on the bridge of a violin or an aluminium ``wah-wah'' inside in the bell of a trumpet.
 Once augmented with mutes, the list of 16 instruments grows up to X. % TODO complete
@@ -621,12 +628,12 @@ The Flatiron Institute is a division of the Simons Foundation.
           name & instrument  & mute   &  playing technique \\ \hline \hline
         \texttt{ASax-key-cl-C4-p} & Alto saxophone & & key click \\
         \texttt{ASax-ord-C4-mf} & Alto saxophone &  &  \\
-        \texttt{ASax-ord-hi-reg-C6-mf} & Alto saxophone &   & \\ 
-        \texttt{ASax-slap-C4-mf} & Alto saxophone & & slap tonguing \\ 
+        \texttt{ASax-ord-hi-reg-C6-mf} & Alto saxophone &   & \\
+        \texttt{ASax-slap-C4-mf} & Alto saxophone & & slap tonguing \\
         \texttt{ASax-slap-unp-C4-p} & Alto saxophone & & unpitched slap tonguing \\ \hline
         \texttt{BbCl-key-cl-C4-pp} & Soprano clarinet & & key click \\
         \texttt{BbCl-ord-hi-reg-A6-ff} & Soprano clarinet & & \\ \hline
-        \texttt{BBTb-explo-slap-C\#1-mf} & Bass tuba &  & explosive slap \\ 
+        \texttt{BBTb-explo-slap-C\#1-mf} & Bass tuba &  & explosive slap \\
 		\texttt{BBTb-pdl-tone-F1-mf} & Bass tuba & & pedal tone \\
 		\texttt{BBTb-slap-F1-mf} & Bass tuba & & slap tonguing \\
 		\texttt{BBTb-slap-unp-mf-1} & Bass tuba & & unpitched slap tonguing \\ \hline
@@ -660,8 +667,8 @@ The Flatiron Institute is a division of the Simons Foundation.
         \texttt{TpC+S-ord-C4-mf} & Trumpet in C & straight & \\
         \texttt{TpC+W-ord-closed-C4-mf} & Trumpet in C & wah (closed) & \\
         \texttt{TpC+W-ord-open-C4-mf} & Trumpet in C & wah (open) & \\ \hline
-        \texttt{TTbn-ord-C4-mf} & Tenor trombone & &  \\ 
-        \texttt{TTbn+C-ord-C4-mf} & Tenor trombone & cup & \\ 
+        \texttt{TTbn-ord-C4-mf} & Tenor trombone & &  \\
+        \texttt{TTbn+C-ord-C4-mf} & Tenor trombone & cup & \\
         \texttt{TTbn+H-ord-C4-mf} & Tenor trombone & harmon & \\
         \texttt{TTbn+S-ord-C4-mf} & Tenor trombone & straight & \\
         \texttt{TTbn+W-ord-closed-C4-mf} & Tenor trombone & wah (closed) & \\

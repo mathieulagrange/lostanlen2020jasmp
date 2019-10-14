@@ -347,7 +347,7 @@ The final arrangement and color assignment of one of the subjects is shown in Fi
 \begin{figure}
 \center
 \includegraphics[width = \textwidth]{figures/xp2example1.png}
-\caption{Spatial and group organization provided by subject 1.}
+\caption{Spatial and group organization provided by subject 1\footnote{The organizations of the other subjects are available online \url{https://mathieulagrange.github.io/paperPlayingTechniquesSimilarityLearning/demo}. For each subject, the stimuli can be played back by hovering on the dots.}.}
 \label{fig:xp2display}
 \end{figure}
 
@@ -357,7 +357,7 @@ If not, it is set to zero.
 In other words, the clustering assignment of each subject as a binary similarity matrix. Depending on the application, it may be of interest to condition the timbre space using the information of only one subject. In this case, the corresponding binary similarity matrix may be used and the resulting timbre space is specialized to a given person.
 
 
-It may also be of interest to condition the space using the aggregate similarity judgments given by several subjects. We found that using a hypergraph partitioning algorithm \cite{kernighan1970efficient,han1997scalable,strehl2002cluster} to produce the consensus similarity matrix performed well.
+In this study, we choose to condition the space using the aggregate similarity judgments given by several subjects. We found that using a hypergraph partitioning algorithm \cite{kernighan1970efficient,han1997scalable,strehl2002cluster} to produce the consensus similarity matrix performed well.
 
 In order to better interpret the information captured by the consensus clustering, we generate two similarity matrices, one for the 15 instruments used, see Figure \ref{fig:consensusVsI}, and one for the 23 PTs used, see Figure \ref{fig:consensusVsPt}. For the instruments similarity matrix, the value within each cell counts the number of times two instruments have been grouped in the consensus clustering, normalized by the average number of IPTs that considered the two instruments. The PTs similarity matrix is computed in the same way.
 
@@ -370,14 +370,14 @@ Interestingly, although several sounds pairs were obtained from the same instrum
 \begin{figure}
 \center
 \includegraphics[width = \textwidth]{figures/consensusVsI.png}
-\caption{}
+\caption{Normalized similarity matrix of the consensus clustering aggregated by the musical instruments used. Ordering is chosen to maximize readability.}
 \label{fig:consensusVsI}
 \end{figure}
 
 \begin{figure}
 \center
 \includegraphics[width = \textwidth]{figures/consensusVsPt.png}
-\caption{ }
+\caption{Normalized similarity matrix of the consensus clustering aggregated by the playing techniques used. Ordering is chosen to maximize readability.}
 \label{fig:consensusVsPt}
 \end{figure}
 

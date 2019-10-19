@@ -21,9 +21,11 @@
 
 \newcommand{\patk}{p\mathrm{@}k}
 
-\newcommand{\ml}[1]{\textcolor{blue}{ML: #1}}
-\newcommand{\vl}[1]{\textcolor{red}{VL: #1}}
-\newcommand{\ja}[1]{\textcolor{purple}{JA: #1}}
+\newcommand{\Card}{\mathrm{Card}}
+
+\newcommand{\ml}[1]{\textcolor{blue}{ML: #1}\xspace}
+\newcommand{\vl}[1]{\textcolor{red}{VL: #1}\xspace}
+\newcommand{\ja}[1]{\textcolor{purple}{JA: #1}\xspace}
 
 \endlocaldefs
 
@@ -159,7 +161,8 @@ One successful means of exploring the timbre space has been the construction of 
 However, these datasets have typically only included a limited set of instruments played with standard playing techniques, limiting the timbral range.
 For these datasets, models based on static spectral descriptors, such as mel-frequency cepstral coefficients (MFCCs), have enjoyed excellent performance.
 However, with richer datasets containing a wider array of instruments played with a variety of playing techniques, more sophisticated models which incorporate dynamic large-scale signal structure are needed.
-To this end, we propose a simple but rich model based on joint time--frequency scattering transforms that are linearly transformed to yield perceptively motivated timbral descriptors as the linear mapping is learned from human similarity judgments obtained in a crowdsourced free sorting task.
+To this end, we propose a simple but rich model based on joint time--frequency scattering transforms followed by a linear mapping.
+The linear part is learned from human similarity judgments obtained in a crowdsourced free sorting task, so the resulting descriptor provides a perceptually motivated characterization of timbre.
 We show that this proposed computational model accurately reproduces the human similarity judgments to $99\%$ accuracy.
 In addition, we perform an ablation study demonstrating the necessity of various components in this model.
 \end{abstract}
@@ -205,49 +208,49 @@ In addition, we perform an ablation study demonstrating the necessity of various
 \section*{Introduction}
 \label{sec:intro}
 
-Music information retrieval operates at either of two levels: symbolic and auditory \cite{downie2003mir}.
-By resting on a notation system, the symbolic level facilitates the comparison of musical notes in terms of quantitative attributes, such as duration, pitch, or intensity at the source.
-Timbre, in contrast, is a qualitative attribute of music, thus irreducible to a one-dimensional axis \cite{siedenburg2019chapter}.
+Music information retrieval (MIR) operates at either of two levels: symbolic and auditory \cite{downie2003mir}.
+By resting on a notation system, the symbolic level facilitates the comparison of musical notes in terms of quantitative attributes, such as duration, pitch, and intensity at the source.
+Timbre, in contrast, is a qualitative attribute of music, and is thus not reducible to a one-dimensional axis \cite{siedenburg2019chapter}.
 As a result, symbolic representations describe timbre indirectly, either via visuotactile metaphors (\eg{} bright, rough, and so forth \cite{faure1996icmpc}) or via an instrumental playing technique (\eg{} bowed or plucked \cite{kostka2016book}).
 
 Despite their widespread use, purely linguistic references to timbre fail to convey the intention of the composer.
 On the one hand, adjectives such as \emph{bright} or \emph{rough} are prone to misunderstanding, as they do not prescribe any musical gesture that is capable of achieving them \cite{antoine2018isma}.
-On the other hand, the sole mention of a playing technique does not determine any intended effect; and therefore, fails to generalize to the entire instrumentarium \cite{kolozali2011ismir}.
+On the other hand, the sole mention of a playing technique does not determine any intended effect; as a result, it fails to generalize to the entire instrumentarium \cite{kolozali2011ismir}.
 For instance, although the term \emph{breathy} alludes to a playing technique that is peculiar to wind instruments, a cellist may accomplish a seemingly breathy timbre by bowing near the fingerboard, i.e., \emph{sul tasto} in the classical terminology.
 
 The prospect of modeling timbre perception thus necessarily exceeds the symbolic domain.
 Instead, it involves a cognitive process which arises from the subjective experience of listening \cite{erickson1975book}.
 The task of simulating this cognitive process amounts to the design of a multidimensional feature space wherein some distance function evaluates arbitrary pairs of stimuli.
-Rather than to merely discriminate instruments as mutually exclusive categories, this function must reflect a consensus of quantitative judgments of acoustic dissimilarity, all other parameters --- \ie{} duration, pitch, and intensity --- being equal \cite{thoret2018jasa}.
+Rather than to merely discriminate instruments as mutually exclusive categories, this function must reflect a consensus of quantitative judgments of acoustic dissimilarity, all other parameters---duration, pitch, and intensity---being equal \cite{thoret2018jasa}.
 
 Behind the overarching challenge of coming up with a robust predictive model for human listening behaviors, the main practical application of timbre similarity retrieval lies in the emerging topic of computer-assisted instrumentation \cite{maresz2013cmr}.
 Following the aesthetic tradition of spectralism in contemporary music creation, the composer queries the machine with an arbitrary audio signal.
 The outcome of this query is an instrumental audio sample, alongside textual attributes of playing technique.
-In this context, the computer serves as a bridge from the auditory level to the symbolic level, \ie{} from a potentially infinite realm of timbral sensations to a musical score of priorly specified range.
+In this context, the computer serves as a bridge from the auditory level to the symbolic level, \ie{} from a potentially infinite realm of timbral sensations to a musical score of predetermined range.
 
 This article proposes a machine listening system which computes the dissimilarity in timbre between any two audio samples.
-Our system composes two stages: unsupervised feature extraction and supervised metric learning.
-The feature extraction stage is a nonlinear map which relies on the joint time--frequency scattering transform \cite{anden2015mlsp}, followed by per-feature Gaussianization \cite{lostanlen2018jasmp}.
+Our system consists of two stages: unsupervised feature extraction and supervised metric learning.
+The feature extraction stage is a nonlinear map which relies on the joint time--frequency scattering transform \cite{anden2015mlsp,anden2019tsp}, followed by per-feature Gaussianization \cite{lostanlen2018jasmp}.
 It encodes patterns of spectrotemporal modulation in the query while offering numerical guarantees of stability to local deformations.
 The metric learning stage is a linear map, optimized via large-margin nearest neighbors (LMNN) \cite{weinberger2009distance}.
 It recombines scattering coefficients so as to fit a training set of human judgments \cite{mcadams1995psychres}.
-
 
 This article gathers three novel contributions.
 First, our model encompasses a broad range of extended playing techniques, well beyond the so-called ``ordinary'' mode of acoustic production \cite{lostanlen2018extended}.
 Specifically, we fit pairwise judgments for 78 different techniques arising from 16 instruments, some of which include removable timbre-altering devices such as mutes.
 Secondly, we purposefully disregard the playing technique metadata underlying each audio sample during the training phase of our model.
-Said otherwise, we rely on listeners, not performers, to define and evaluate the task at hand.
+In other words, we rely on listeners, not performers, to define and evaluate the task at hand.
 A comprehensive ablation study of our system demonstrates that all design choices presented hereafter benefit the retrieval precision of our system.
 Thirdly, we supplement our quantitative benchmark with some visualizations of time--frequency scattering coefficients in the rate--scale domain, for various typical samples of realistic instrumental playing techniques.
-These visualizations confirm the theoretical predictions of previous research \cite{anden2015mlsp}, which relied on simple synthetic sounds such as exponential chirps.
+These visualizations confirm the theoretical predictions of previous research \cite{anden2019tsp}, which relied on simple synthetic sounds such as exponential chirps.
 They are also in line with visualizations of the modulation power spectrum in auditory neurophysiology \cite{patil2012ploscompbiol}, while offering an accelerated algorithm for scalable feature extraction.
 
+\ja{These section numbers aren't showing up since we're not numbering the sections (per the style guide).}
 Section \ref{sec:soa} reviews recent research in the computational modeling of musical timbre.
 Section \ref{sec:survey} describes our data collection procedure for auditory similarities across playing techniques.
 Section \ref{sec:method} presents the technical components of our machine listening system, namely joint time--frequency scattering and large-margin nearest neighbors.
 Section \ref{sec:results} reports the results of an ablation study of our system.
-Section \ref{sec:discussion} discusses the implications of our findings for future research on timbral similarity.\footnote{Reproducible research statement: the implementation of the proposed model and the experimental protocol used to produce the results discussed in this paper are available alongside the anonymized version of the perceptual data: \url{https://github.com/mathieulagrange/paperPlayingTechniquesSimilarityLearning}}.
+Section \ref{sec:discussion} discusses the implications of our findings for future research on timbral similarity.\footnote{Reproducible research statement: the implementation of the proposed model and the experimental protocol used to produce the results discussed in this paper are available alongside the anonymized version of the perceptual data at \url{https://github.com/mathieulagrange/paperPlayingTechniquesSimilarityLearning}}
 
 
 \section*{Related work}
@@ -259,12 +262,12 @@ Mapping this input to a feature space in which distances denote timbral dissimil
 In this respect, the scientific literature exhibits a methodological divide as regards the collection of human-annotated data \cite{siedenburg2016jnmr}.
 
 On the one hand, most publications in music information retrieval cast timbre modeling as an audio classification problem  \cite{martin1998asa,brown1999jasa,eronen2000icassp,herrera2003jnmr,wieczorkowska2003jiis,livshin2004dafx,krishna2004icassp,kaminskyj2005jiis,benetos2006icassp,bhalke2016jiis}.
-In this context, the instrumentation of each musical excerpt serves as an unstructured set of ``audio tags'', encoded as binary outputs within some predefined label space.
+In this context, the instrumentation of each musical excerpt serves as an unstructured set of ``audio tags,'' encoded as binary outputs within some predefined label space.
 Because such tags often belong to the metadata of music releases, the process of curating a training set for musical instrument classification requires little or no human intervention.
 Although scraping user-generated content from online music hosting platforms may not always reflect the true instrumentation with perfect accuracy, it offers a scalable and ecologically valid insight onto the acoustic underpinnings of musical timbre.
 Furthermore, supplementing user-generated content with the outcome of a crowdsourced annotation campaign allows an explicit verification of instrument tags.
-For instance, the Open-MIC dataset \cite{humphrey2018ismir}, maintained by the Community for Open and Sustainable Music Information Research (COSMIR) \cite{mcfee2016ismir}, comprises a vast corpus of 20k polyphonic music recordings spanning across 20 instruments, as a derivative of the Free Music Archive (FMA) dataset \cite{defferrard2017ismir}.
-Another example is the Medley-solos-DB dataset \cite{lostanlen2016ismir}, which comprises 21k monophonic excerpts from 8 instruments, as a derivative of the MedleyDB dataset of multitrack music \cite{bittner2014ismir}.
+For instance, the Open-MIC dataset \cite{humphrey2018ismir}, maintained by the Community for Open and Sustainable Music Information Research (COSMIR) \cite{mcfee2016ismir}, comprises a vast corpus of 20000 polyphonic music recordings spanning 20 instruments as a derivative of the Free Music Archive (FMA) dataset \cite{defferrard2017ismir}.
+Another example is the Medley-solos-DB dataset \cite{lostanlen2016ismir}, which comprises 21k monophonic excerpts from 8 instruments as a derivative of the MedleyDB dataset of multitrack music \cite{bittner2014ismir}.
 Over the past decade, the availability of large digital audio collections, together with the democratization of high-performance computing on dedicated hardware, has spurred the development of deep learning architectures, and notably deep convolutional networks, in music instrument recognition \cite{mcfee2015ismir,pons2017eusipco,gururani2018ismir}.
 Notwithstanding the growing accuracy of these architectures in the large data regime, it remains unclear how to extend them from musical instrument recognition to playing technique recognition, where labeled samples are considerably scarcer.
 We refer to \cite{han2017taslp} for a recent review of the state of the art in this domain.
@@ -272,22 +275,26 @@ We refer to \cite{han2017taslp} for a recent review of the state of the art in t
 On the other hand, the field of music psychology investigates timbre with the aim of discovering its physiological and behavioral foundations \cite{mcadams2009chapter}.
 In this setting, prior knowledge, however accurate, of instrumentation does not suffice to conduct a study.
 Rather, each excerpt must be played back to multiple human listeners.
-Yet, collecting subjective responses to acoustic stimuli is a tedious and unscalable procedure, thus restricting the size of the musical corpus under study.
-Such restriction hampers the applicability of iterative representation learning algorithms, such as stochastic gradient descent in artificial neural networks.
+Yet collecting subjective responses to acoustic stimuli is a tedious and unscalable procedure, restricting the size of the musical corpus under study.
+Such restriction hampers the applicability of iterative representation learning algorithms, such as stochastic gradient descent in deep neural networks.
 Nevertheless, advanced methods in electrophysiology allow to observe the firing patterns of biological neurons in the presence of controlled stimuli.
-This observation, originally carried out on the ferret, has led to a comprehensive mapping of the primary auditory cortex, in terms of its spectrotemporal receptive fields (STRFs) \cite{depireux2001jneur}.
+\ja{This is quite an abrupt transition.
+Why ``nevertheless''?}%
+This observation, originally carried out on the ferret, has led to a comprehensive mapping of the primary auditory cortex in terms of its spectrotemporal receptive fields (STRFs) \cite{depireux2001jneur}.
 The STRF of a neuron is a function of time and frequency which represents the optimal predictor of its post-stimulus time histogram (PSTH) during exposure to a diverse range of auditory stimuli \cite{aertsen1981biolcyb}.
-The simplest method to compute it in practice is by reverse correlation, i.e. by averaging all stimuli that trigger an action potential \cite{deboer1968biomed}.
+The simplest method to compute it in practice is by reverse correlation, i.e.\ by averaging all stimuli that trigger an action potential \cite{deboer1968biomed}.
 Historically, STRFs were defined by their Wigner--Ville distribution \cite{flandrin1998book}, thereby sparing the choice of a tradeoff in time--frequency localization, but eliciting cross-term interferences \cite{eggermont1993hearing}.
 Since then, the STRF of a neuron was redefined as a spectrographic representation of its spike-triggered average \cite{klein2000compneur}.
-Although this new definition is necessarily tied to a choice of spectrogram parameters, it yields more interpretable patterns than a Wigner-Ville distribution.
+Although this new definition is necessarily tied to a choice of spectrogram parameters, it yields more interpretable patterns than a Wigner--Ville distribution.
 In particular, a substantial portion of spectrographic STRFs exhibits a ripple-like response around a given region $(t, \lambda)$ of the time--frequency domain.
+\ja{``Spectrographic''?}
 This response can be approximately described by a pair of scalar values: a temporal modulation rate $\alpha$ in Hertz and a frequential modulation rate $\beta$ in cycles per octave.
 Interestingly, both $\alpha$ and $\beta$ appear to be arranged in a geometric series and independent from the selected center time $t$ and center frequency $\lambda$.
 This observation has led auditory neuroscientists to formulate an idealized computational model for STRF, known as ``full cortical model'' \cite{chi2005jasa}, which densely covers the rate--scale domain $(\alpha, \beta)$.
 
 Over recent years, several publications have employed the full cortical model as a feature extractor for a task of musical instrument classification, both in isolated recordings \cite{patil2012ploscompbiol} and in solo phrases \cite{patil2015eurasip}.
-These biologically inspired features  outperform the state of the art, especially in the small data regime when deep learning is inapplicable.Furthermore, the confusion matrix of the full cortical model in the label space of musical instruments strongly correlates with the confusion matrix between a human listener and the ground truth.
+These biologically inspired features  outperform the state of the art, especially in the small data regime when deep learning is inapplicable.
+Furthermore, the confusion matrix of the full cortical model in the label space of musical instruments strongly correlates with the confusion matrix between a human listener and the ground truth.
 Another appeal of the full cortical model is that the third-order $(\lambda, \alpha, \beta)$ tensor of frequencies, rates, and scales can be segmented into contiguous regions of maximal perceptual relevance for each instrument \cite{thoret2016jasa}.
 This is unlike fully end-to-end learning architectures, whose post hoc interpretability requires advanced techniques for feature inversion \cite{mishra2018ismir}.
 Lastly, beyond the realm of supervised classification, a previous publication \cite{hemery2015frontiers} has shown that query-by-example search with STRFs allows to discriminate categories of environmental soundscapes, even after temporal integration and unsupervised dimensionality reduction.
@@ -298,14 +305,22 @@ Indeed, the full cortical model is usually computed via two-dimensional Fourier 
 On the contrary, joint time--frequency scattering offers a faster extraction of spectrotemporal modulations while preserving properties of differentiability \cite{andreux2019jmlr} and invertibility \cite{lostanlen2019dafx}.
 Such acceleration is made possible by discretizing the wavelet transforms involved in time--frequency scattering according to a multirate scheme, both along the time and the log-frequency variables \cite{anden2019tsp}.
 This multirate scheme also has the benefit of drawing an explicit connection between scattering networks and deep convolutional networks, as both involves numerous convolutions with small kernels, pointwise rectifying nonlinearities, and dyadic pooling operations \cite{mallat2016philtrans}.
-Moreover, a quantitative benchmark over Medley-solos-DB has demonstrated that joint time--frequency scattering, unlike purely temporal scattering, outperforms deep convolutional networks in supervised musical instrument classification, even in a relatively large data regime with 500 to 5k samples per class.
-Recently, Wang et al.~\cite{wang2019ismir} trained a classifier of playing techniques on separable (\ie{} non-joint) time--frequency scattering features, and achieved state-of-the-art results in continuous performance recordings of the Chinese bamboo flute.
-Despite supplying experimental evidence that time--frequency scattering is better suited to playing technique recognition than purely temporal scattering, it remains to be known whether this findings can scale up from a single instrument to an entire orchestra.
+Moreover, a quantitative benchmark over Medley-solos-DB has demonstrated that joint time--frequency scattering, unlike purely temporal scattering, outperforms deep convolutional networks in supervised musical instrument classification, even in a relatively large data regime with 500 to 5k samples per class \cite{anden2019tsp}.
+Recently, Wang et al.~\cite{wang2019ismir} trained a classifier of playing techniques on separable (\ie{} non-joint) time--frequency scattering features \cite{anden2014deep}, and achieved state-of-the-art results in continuous performance recordings of the Chinese bamboo flute.
+Despite supplying experimental evidence that time--frequency scattering is better suited to playing technique recognition than purely temporal scattering, it remains to be seen whether these findings can scale up from a single instrument to an entire orchestra.
 In addition, previous publications in time--frequency scattering, whether separable or joint, lacks a human-centric evaluation, remotely from any classification task.
+\ja{I don't understand this last sentence.
+What does ``remotely'' mean here?}%
 
 The contributions of this paper strive to fill the gap in scholarship between MIR and music cognition approaches to timbre, in the context of computer-assisted spectralist orchestration with extended playing techniques.
-From the standpoint of MIR, the model presented here offers a tractable and generic multidimensional representation for timbre similarity, alongside formal guarantees of robustness to elastic deformations in the time--frequency domain, whether random or adversarial.
+From the standpoint of MIR, the model presented here offers a tractable and generic multidimensional representation for timbre similarity, alongside formal guarantees of robustness to elastic deformations in the time--frequency domain.
 Conversely, from the standpoint of music cognition, our model offers a scalable and biologically plausible surrogate for stimulus-based collection of acoustic dissimilarity judgments, with the potential of being readily tailored to subjective preferences.
+
+\ja{This section is way too long.
+It's important that we situate ourselves with respect to the existing literature, but we don't need to spend 2+ pages doing so.
+This currently reads more like a laundry list of various work related to timbre perception on musical instruments on one hand and a history of STRFs on the other.
+We need to keep in mind what our central themes (wider range of timbre, similarity-based evaluation, simple scattering+linear model) are and link the existing work to them in a concise manner.
+}
 
 % enjoys a thirty-fold reduction in dimensionality, while covering a  time span that is four times larger (1000 ms) and an acoustic bandwidth that is also four times larger (0--16 kHz).
 %We refer to \cite{bellet2015book} for a review of the state of the art in metric learning.
@@ -327,7 +342,11 @@ Second line : perceptual clustering.}
 Same 3 sounds spec + scatt.}
 \end{figure}
 
-Following the above discussed matters, we propose a ranking system that is based on a processing pipeline made of two main components, see Figure \ref{fig:pipeline}. The first component projects the audio signal of the query and the items of the database in a high dimensional timbre space using the scattering transform. The second component further modifies the timbre space by taking into account perceptual judgments represented as a consensus clustering of the items in the dataset, as presented in Section \ref{sec:survey}. It considers the large margin nearest neigbors to learn the weights of the reprojection.
+Following the above discussed matters, we propose a ranking system that is based on a processing pipeline made of two main components, see Figure \ref{fig:pipeline}.
+The first component maps the audio signal of the query and the items of the database into a high-dimensional timbre space using the scattering transform.
+The second component warps this timbre space by taking into account perceptual judgments represented as a consensus clustering of the items in the dataset, as presented in Section \ref{sec:survey}.
+This warping, or reweighting, of the space is performed using LMNN.
+\ja{Again, section numbers are not showing up here.}%
 
 
 
@@ -371,11 +390,14 @@ On the computational side, the critical bandwidth guarantees of wavelet transfor
 The scattering transform also satisfies the aforementioned stability conditions, providing a guarantee that slightly deforming a signal only results in a negligible change in its scattering transform.
 Furthermore, we may calculate the scattering tranforms of several model signals, including amplitude-modulated harmonic sounds and noise excitations \cite{anden2012scattering,anden2014deep}, frequency-modulated sinusoids (e.g., chirps) \cite{anden2012scattering,anden2019tsp}, and beating phenomena \cite{anden2014deep}.
 They have also enjoyed success in several audio classification and similarity retrieval tasks \cite{anden2011multiscale,bauge2013representing,anden2014deep,anden2019tsp,lostanlen2018jasmp,lostanlen2018extended}.
+\ja{Need to flesh out the above with some equations.
+We're no longer talking to biologists, so we don't need to be afraid.}%
 
 \subsection*{Similarity weighting}
 \label{sec:weighting}
 
-The standard Euclidean distance on the raw scattering coefficients  provides some sort universal representation of timbre dissimilarity. Considering some sort of learning to apply further transformations to the scattering coefficients and compute the Euclidean distance on the result.
+The standard Euclidean distance on the raw scattering coefficients provides a universal representation of timbre dissimilarity.
+We now consider a transformation of this distance, in effect warping the timbre space, in order to more closely mimic a particular set of timbre similarity judgments.
 
 Due to the size of corpus, we restrict ourselves to a simple linear transform of the scattering coefficients. More flexible and powerful methods could be brought to bear on this problem, such as deep neural networks, but with their flexibility comes an increase of the needed size of training data.
 
@@ -391,14 +413,17 @@ This approach constructs a positive semi-definite weighting matrix $L$ such that
 \label{sec:survey}
 
 The European symphonic orchestra encompasses four families of instruments: strings, woodwinds, brass, and percussion.
-In this article, we focus on the former three, and leave the question of learning auditory similarities between percussion instruments to future research.
+\ja{European or Western?}%
+In this article, we focus on the first three, and leave the question of learning auditory similarities between percussion instruments to future research.
 The reason behind this choice is that most percussive instruments do not allow much variation in terms of pitch or intensity, if at all; thus reducing the amount of intra-technique variability in the time--frequency domain.
 Furthermore, although percussive instruments certainly exhibit a rich diversity of playing techniques (we refer to \cite{peinkofer1976book} for a survey) these are rarely shared with pitched instruments.
 In comparison, techniques for sustained tones such as \emph{vibrato} or \emph{tremolo} permeate throughout a vast instrumentarium, \eg{} bowed strings and reed alike.
 We refer to \cite{x} and \cite{x} for a review of recent literature on the timbre modeling of percussive sounds, from the standpoints of MIR and music cognition respectively. % TODO VL CITE
+\ja{Is it really necessary to go into such detail only to explain why we're not dealing with percussive sounds?
+One sentence should be enough.}%
 
-We consider a list of 16 instruments: violin (Vn), viola (Va), cello (Vc), contrabass (Cb), concert harp (Hp), Spanish guitar (Gtr), accordion (Acc), flute (Fl), soprano clarinet (BbCl), alto saxophone (ASax), oboe (Ob), bassoon (Bn), trumpet in C (TpC), French horn (Hn), tenor trombone (TTbn), and bass tuba (BBTb).
-Among this list, the former six are strings, the next five are woodwind, and the last five are brass.
+We consider a list of 16 instruments: violin (Vn), viola (Va), cello (Vc), contrabass (Cb), concert harp (Hp), Spanish guitar (Gtr), accordion (Acc), flute (Fl), soprano clarinet (BbCl), alto saxophone (ASax), oboe (Ob), bassoon (Bn), C trumpet (TpC), French horn (Hn), tenor trombone (TTbn), and bass tuba (BBTb).
+Among this list, the first six are string instruments, the next five are woodwinds, and the last five are brass instruments.
 Some of these instruments may be temporarily equipped with timbre-altering mutes, such as a rubber sordina on the bridge of a violin or an aluminium ``wah-wah'' inside in the bell of a trumpet.
 Once augmented with mutes, the list of 16 instruments grows up to X. % TODO complete
 Furthermore, every instrument, whether equipped with a mute or not, affords a panel of playing techniques ranging in size between X (for the X) and Y (for the Y). % TODO update with number.
@@ -411,10 +436,11 @@ In total, the feasible triplets of instrument, mute, and technique amount to a l
 To construct a dataset for exploring the perception of timbre, we conducted a survey on the perceived similarity of a set of sounds.
 The set consists of $78$ recordings of different instrument--PT (IPT) pairs, each played at the same pitch (C4) and nuance \textit{mezzo-forte}. %For more information on the dataset considered in this study, see Section \ref{sec:appendix-dataset}.
 In the survey, the subject is asked to organize dots on a two-dimensional place in a free sorting task.
-Each dot corresponded to a different IPT recording and is moved by the user dragging them with the mouse.
-In addition to spatially arranging the dots, the user is also asked to assign one of $20$ colors to each dot, providing a simple information of clustering of the sounds.
+Each dot corresponds to a different IPT recording and is moved by the user dragging them with the mouse.
+In addition to spatially arranging the dots, the user is also asked to assign one of $20$ colors to each dot, providing a simple measure of clustering of the sounds.
 While both the location and color of each dot was recorded, only the color is used in our subsequent analysis---the spatial arrangement is only used to facilitate the user's ability to organize the sounds.
-More information on the data collection process is available in  Section \ref{sec:subjective}.
+More information on the data collection process is available in Section \ref{sec:subjective}.
+\ja{Missing section number.}%
 
 The above survey was implemented as an interactive website, links to which were sent out on internal mailing lists of the \emph{Conservatoire national sup\'erieur de musique et de danse de Paris} (CNSMDP) and international mailing lists focusing on research in audio and music processing.
 We made the experiment available for two months, during which we obtained results for a total of $31$ subjects.
@@ -423,25 +449,36 @@ The final arrangement and color assignment of one of the subjects is shown in Fi
 \begin{figure}
 \center
 \includegraphics[width = \textwidth]{figures/xp2example1.png}
-\caption{Spatial and group organization provided by subject 1. Contributions of the other subjects are available online \url{https://mathieulagrange.github.io/paperPlayingTechniquesSimilarityLearning/demo}. For each subject, the stimuli can be played back by hovering on the dots.}
+\caption{Spatial and group organization provided by subject 1. Other subjects are available at \url{https://mathieulagrange.github.io/paperPlayingTechniquesSimilarityLearning/demo}. For each subject, the stimuli can be played back by hovering on the dots.}
 \label{fig:xp2display}
 \end{figure}
 
 For each subject, a matrix of size $78 \times 78$ is constructed to represent the similarity judgments for each pair of the $78$ IPTs.
 Specifically, the $(i, j)$th element of the matrix was set to one if the $i$th and $j$th IPT were assigned the same color.
 If not, it is set to zero.
-In other words, the clustering assignment of each subject as a binary similarity matrix. Depending on the application, it may be of interest to condition the timbre space using the information of only one subject. In this case, the corresponding binary similarity matrix may be used and the resulting timbre space is specialized to a given person.
+In other words, the clustering assignment of each subject as a binary similarity matrix.
+Depending on the application, it may be of interest to condition the timbre space using the information of only one subject.
+In this case, the corresponding binary similarity matrix may be used and the resulting timbre space is specialized to a given person.
 
+In this study, we choose to condition the space using the aggregate similarity judgments given by several subjects.
+We found that using a hypergraph partitioning algorithm \cite{kernighan1970efficient,han1997scalable,strehl2002cluster} to produce the consensus similarity matrix performed well.
 
-In this study, we choose to condition the space using the aggregate similarity judgments given by several subjects. We found that using a hypergraph partitioning algorithm \cite{kernighan1970efficient,han1997scalable,strehl2002cluster} to produce the consensus similarity matrix performed well.
+In order to better interpret the information captured by the consensus clustering, we generate two similarity matrices, one for the 15 instruments used (see Figure \ref{fig:consensusVsI}) and one for the 23 PTs used (see Figure \ref{fig:consensusVsPt}).
+For the instrument similarity matrix, the value within each cell counts the number of times two instruments have been grouped in the consensus clustering, normalized by the average number of IPTs that involved the two instruments.
+The PT similarity matrix is computed in the same way.
 
-In order to better interpret the information captured by the consensus clustering, we generate two similarity matrices, one for the 15 instruments used, see Figure \ref{fig:consensusVsI}, and one for the 23 PTs used, see Figure \ref{fig:consensusVsPt}. For the instruments similarity matrix, the value within each cell counts the number of times two instruments have been grouped in the consensus clustering, normalized by the average number of IPTs that considered the two instruments. The PTs similarity matrix is computed in the same way.
-
-The ordering of the instruments or the PTs on the vertical and horizontals axes is chosen according to the ordering given by an agglomerative hierarchical clustering using the ward criterion of the similarity matrix under inspection. This ordering allows us to interpret the similarity matrices more easily compared to an alphabetical ordering while preserving the  similarity values between each pair of instruments or PTs.
+The ordering of the instruments or the PTs on the vertical and horizontals axes is chosen according to the ordering given by an agglomerative hierarchical clustering using the ward criterion of the similarity matrix under inspection.
+This ordering allows us to interpret the similarity matrices more easily compared to an alphabetical ordering while preserving the  similarity values between each pair of instruments or PTs.
+\ja{Do we need to talk about this?
+It's just for visualization.
+If we want to keep it, we should provide references to the methods used.}%
 
 Interestingly, although several sounds pairs were obtained from the same instrument (but different PTs) and others were obtained using the same PT (but different instruments), the consensus clustering did not favor one of these taxonomies over the other.
 
 \ml{vl : je pense qu'il faut remplacer la derniere phrase par quelque chose de plus musicologique, en disant que l'on retrouve bien l'organologie, et montrer certains points d'interet sur les pts pour guider le lecteur.}
+
+\ja{Should we loop back here and explain how the consensus clustering is used as input to the LMNN?
+Feels like we've lost the thread a bit here otherwise.}%
 
 \begin{figure}
 \center
@@ -460,35 +497,69 @@ Interestingly, although several sounds pairs were obtained from the same instrum
 \section*{Results}
 \label{sec:results}
 
-The processing pipeline presented in Figure \ref{fig:pipeline} addresses the problem of conditioning a timbre space using perceptual judgments of timbral similarity. The relevance of the many design choices that had to be made  are addressed in this section using an experimental protocol that considers a dataset of audio that will be given as input to the processing pipeline and one metric used for evaluating its performance under a given experimental setting.
+The processing pipeline presented in Figure \ref{fig:pipeline} addresses the problem of conditioning a timbre space using perceptual judgments of timbral similarity.
+The relevance of the many design choices that had to be made are addressed in this section using an experimental protocol that considers a dataset of audio that will be given as input to the processing pipeline and one metric used for evaluating its performance under a given experimental setting.
+\ja{This last sentence is quite vague.
+What are we trying to say?}%
 
 \subsection*{Data}
 
-The perceptual data gathered during the perceptual experiment considers 78 \ipts each represented by one sound recording that the subject could listen to before clustering the \ipts. For those 78 \ipts, 31 clusterings $C_k, 0<k<31, Card(C_k)=78$ are available, that are our reference in terms of timbre similarity. If \ipt $i$ and \ipt $j$ are clustered together by subject $k$, then $C_k(i)=C_k(j)$. In essence, an effective ranking system should retrieve sounds that belong to \ipts that are clustered together in each of the 31 clusterings. Depending on the preferences of subjects, there may be competition between clusterings that should be mitigated when appreciating quantitatively the ranking performance.
+The perceptual data gathered during the perceptual experiment considers 78 \ipts, each represented by one sound recording that the subject could listen to before clustering the \ipts.
+For those 78 \ipts, 31 clusterings $C_k, 0<k<31, \Card(C_k)=78$ are available, that are our reference in terms of timbre similarity.
+\ja{What is $C_k$ here?
+Also, should it be $0 < k \le 31$?
+Might be more natural to say that $k = 1, 2, \ldots, 31$, in that case.}%
+If \ipt $i$ and \ipt $j$ are clustered together by subject $k$, then $C_k(i)=C_k(j)$.
+In essence, an effective ranking system should retrieve sounds that belong to \ipts that are clustered together in each of the 31 clusterings.
+Depending on the preferences of subjects, there may be competition between clusterings that should be mitigated when appreciating quantitatively the ranking performance.
 
-In order to provide enough data for the numerical analysis described in this section, we assume that the impact of the pitch and nuance on perceptual similarity is much lower than the timbral similarity constraints expressed by the perceptual judgments of the subjects. Assuming invariance to timbre with respect to pitch and nuance is in line with the ansi definition of timbre \ml{vl, citation. reformuler tout le paragraphe}, it is  thus taken in this paper as a reasonable assumption. Quantification of this invariance is left for further study.
+In order to provide enough data for the numerical analysis described in this section, we assume that the impact of the pitch and nuance on perceptual similarity is much lower than the timbral similarity constraints expressed by the perceptual judgments of the subjects.
+Assuming invariance to timbre with respect to pitch and nuance is in line with the ANSI definition of timbre \ml{vl, citation. reformuler tout le paragraphe}, it is thus taken in this work as a reasonable assumption.
+Quantification of this invariance is left for further study.
 
-The whole range of nuance and pitch is thus considered for each of the 78 \ipts, leading to a dataset composed of 9346 sound recordings. The clusterings $C_k$ are propagated to this dataset to produce new reference clusterings $D_k, 0<k<31, Card(D_k)=9346$ using the following scheme. If a sound of this dataset $s_a$ corresponds to \ipt $i$, then $D_k(a) = C_k(i), \forall k$.
+The whole range of nuance and pitch is thus considered for each of the 78 \ipts, leading to a dataset composed of 9346 sound recordings.
+The clusterings $C_k$ are propagated to this dataset to produce new reference clusterings $D_k, 0<k<31, \Card(D_k)=9346$ using the following scheme.
+If a sound of this dataset $s_a$ corresponds to \ipt $i$, then $D_k(a) = C_k(i), \forall k$.
+\ja{What's $s_a$ and $a$ here?
+We need to be explicit about these definitions.}%
 
 \subsection*{Metric}
 
-The metric considered in this paper is the average precision at rank $k=5$ (ap@5). It allows us to evaluate if the outputs of the proposed system are likely to satisfy the user. The ap@5 is computed as follows.
+The metric considered in this work is the average precision at rank $k=5$ (ap@5).
+It allows us to evaluate if the outputs of the proposed system are likely to satisfy the user.
+The ap@5 is computed as follows.
 
 Considering an output of the system, that is a features vector $F_n$ per sound $s_n$, the precision at rank $5$ is computed for each of the $D_k$ clusterings, and the $31$ p@5 are averaged to obtain the ap@5.
 
-For a given reference clustering $D_k$, the p@5 is computed as follows. For each sound $s_q, 0<q<9346$ considered as a query, its 5 nearest neighbors $s_n, 0<n<5$ in the timbre space under evaluation are retrieved using the Euclidean distance between corresponding features vectors. For this query, the precision is defined as:
+For a given reference clustering $D_k$, the p@5 is computed as follows.
+For each sound $s_q, 0<q<9346$ considered as a query, its 5 nearest neighbors $s_n, 0<n<5$ in the timbre space under evaluation are retrieved using the Euclidean distance between corresponding features vectors.
+For this query, the precision is defined as:
 $$
-p@5_q = \frac{\sum_{n=5}^5 D_q==D_n}{5}
+p@5_q = \frac{1}{5} \sum_{n=1}^5 \mathbf{1}_{D_q=D_n}
 $$
 The p@5 is the average $p@5_q$ computed over all queries.
+\ja{This is perhaps better described in reverse, starting with $p@5_q$, then $p@5$, then $ap@5$?
+Also, we define the precisions here as proportions (between zero and one), but later, we present them as percentages (between $0\%$ and $100\%$).}%
 
 \ml{note pour vincent, on a pas de fold, mais on a les resultats par sujet, on peut donc evaluer la dispersion de la p@5 par sujets si cela est utile.}
 
-The choice of the rank is chosen with the application in mind. When searching for sounds that are similar to a query, the listener is likely to listen to up to $5$ proposals, rarely more. For the same reason, more global metrics commonly considered for ranking tasks such as the mean average precision is not considered here.
+The choice of the rank is chosen with the application in mind.
+When searching for sounds that are similar to a query, the listener is likely to listen to up to $5$ proposals, rarely more.
+For the same reason, more global metrics commonly considered for ranking tasks such as the mean average precision are not considered here.
 
 \subsection*{Analysis}
 
-The processing pipeline is composed of 2 main building blocks. The first block $B_1$ takes a digital audio recording as input and outputs one vector of features. For this block, the main factors are the time support $B_1^t$ for computing the features and the type of features $B_1^f$. We considered $B_1^t \in \{ 25, 128, 250, 500, 1000 \}$ ms and $B_1^f \in \{ \text{mfccs}, \text{separable scattering}, \text{joint scattering} \}$. The mfccs are the standard Mel frequency cepstral coefficients with 40 Mel bands and selection of the 13$^\text{th}$ first discrete cosine transform (dct) coefficients.
+The processing pipeline is composed of two main building blocks.
+The first block $B_1$ takes a digital audio recording as input and outputs one vector of features.
+For this block, the main factors are the time support $B_1^t$ for computing the features and the type of features $B_1^f$.
+We considered $B_1^t \in \{ 25, 128, 250, 500, 1000 \}$ ms and $B_1^f \in \{ \text{MFCCs}, \text{separable scattering}, \text{joint scattering} \}$.
+The MFCCs are the standard mel-frequency cepstral coefficients with $40$ coefficients out of which we select the first $13$.
+\ja{I'm not sure I like this notation.
+First, why do we need to label the blocks ($B_1$ and $B_2$)?
+We only have two of them.
+Isn't it more straightforward to just call them ``the unsupervised part'' and ``the learned part'' or something like that?
+We can also replace $B_1^t$ with something more straightforward, like $T$ (otherwise, it's a lot of bits to encode very little information).
+Likewise, instead of $B_1^f$, we can just have $F$.}
 
 \ml{VL. provide parameters for scattering
 \texttt{
@@ -501,37 +572,84 @@ case 'tfscat'
     fr\_filt\_opt.J = 4;}}
 
 As found in many studies, log compression and median processing are beneficial post processing steps for the scattering.
+\ja{References.}
 
-For each sound, a set of features are computed for each time support. This set is averaged over time to give one feature vector per sound.
+For each recording, a set of features are computed for each time frame.
+This set is averaged over time to give one feature vector per recording.
 All features are standardized with zero mean and unit variance across the dataset.
+\ja{Is this the ``per-feature Gaussianization'' we mention in the introduction?
+Should give the reference in that case (and maybe explain a bit more in detail).}%
 
-The second block $B_2$ considers one vector of features and the consensus clustering $D_c$ as inputs and another vector of features as output. For this block, the main factor is the type of projection $B_2^p \in \{ \text{lda}, \text{lmnn} \}$. The lda is the linear discriminant analysis \cite{} and the lmnn is the large margin nearest neighbors algorithm presented in Section \ref{sec:weighting}. For this algorithm the neighborhood is set to $5$.
+The second block $B_2$ considers one vector of features and the consensus clustering $D_c$ as inputs and another vector of features as output.
+For this block, the main factor is the type of projection $B_2^p \in \{ \text{LDA}, \text{LMNN} \}$.
+The LDA is the linear discriminant analysis \cite{} and the LMNN is the algorithm presented in Section \ref{sec:weighting}.
+For this algorithm the neighborhood is set to $5$.
+\ja{Again, I would prefer to ditch this $B_2$ notation.}
 
-The complete experiments with all settings have been computed. For the sake of clarity, only part of the results are discussed here.
+The complete experiments with all settings have been computed.
+For the sake of clarity, only part of the results are discussed here.
+\ja{What does this mean?}%
 
-The best performing system considers the separable scattering computed over $1000$ms time support, projected using the lmnn algorithm. Evaluated over the entire dataset, that is the computation of the projection and the evaluation are performed on the whole dataset, this system reaches the satifactory performance of $99.5\%$ of $ap@5$. That means that, for a given sound dataset of \ipts for which subjective evaluation of similarity between \ipts are available, a very large number of queries would return interesting results to the user using this processing pipeline.
+The best performing system considers the separable scattering computed over $1000~\mathrm{ms}$ time support, projected using the LMNN algorithm.
+\ja{Separable scattering?
+Not the joint?}%
+Evaluated over the entire dataset, that is the computation of the projection and the evaluation are performed on the whole dataset, this system reaches the satifactory performance of $99.5\%$ of $ap@5$.
+That means that, for a given sound dataset of \ipts for which subjective evaluation of similarity between \ipts are available, a very large number of queries would return interesting results to the user using this processing pipeline.
+\ja{What conclusion do we draw from this?}
 
-In order to better understand the benefits of each design choice, an ablation study is now performed using a slightly different protocol. In order to reduce the risk of misleading performance results using learning systems due to overfitting, it common to identify factors of variability that could lead to such problems and mitigate those. In our case, two factors can readily be identified, the variability of the audio data and the one of the perceptual judgments.
+In order to better understand the benefits of each design choice, an ablation study is now performed using a slightly different protocol.
+In order to reduce the risk of misleading performance results using learning systems due to overfitting, we identify factors of variability that could lead to such problems and mitigate those.
+\ja{Is this part of the ablation study or is this a ``meta'' consideration?}
+In our case, two factors can readily be identified, the variability of the audio data and that of the perceptual judgments.
 
-We mitigate the first by considering a random split of the dataset in two halves, one for learning the projection and one for evaluating the performance. The impact of the variability of the perceptual judgments and its impact on machine listening systems such as the one discussed in this paper is not in the scope of this paper and left for further research. By considering this protocol, the proposed system reaches a $ap@5$ of $95.5\%$. If considering the same first half both for learning and evaluation leads to a $ap@5$ of $96.5\%$, indicating a low risk of overfitting.
+We mitigate the first by considering a random split of the dataset in two halves, one for learning the projection and one for evaluating the performance.
+The impact of the variability of the perceptual judgments and its impact on machine listening systems such as the one discussed in this paper is not in the scope of this paper and left for further research.
+By considering this protocol, the proposed system reaches a $ap@5$ of $95.5\%$.
+If considering the same first half both for learning and evaluation leads to a $ap@5$ of $96.5\%$, indicating a low risk of overfitting.
+\ja{We can expect better performance by using larger folds for the training (i.e., not restricting ourselves to 2-fold cross validation).}
 
-Another risk when considering reprojection techniques such as the lmnn may appear when the dimensionality of the features gets closer to the  number of items in the dataset. For example there exists a trivial solution for optimizing the p@1 when the dimensionality of the features is equal to the number of items in the dataset. In this case, no information needs to be carried by the features set to obtain perfect performance.
+Another risk when considering reprojection techniques such as the LMNN may appear when the dimensionality of the features approaches the number of items in the dataset.
+For example, there exists a trivial solution for optimizing $p@1$ when the dimensionality of the features is equal to the number of items in the dataset.
+\ja{What is that trivial solution?}%
+In this case, no information needs to be carried by the features set to obtain perfect performance.
 
-In order to quantify the importance of the information carried by the feature set in the final performance, the numerical values of the features are replaced with random numbers sampled from a uniform distribution. In this case, the performance drops down to $23.6\%$. Not considering the learning block gives a $aP@5$ of $23.8\%$. It can be concluded from these results that the learning block is not able to perform effectively if no information is carried by the input features set.
+In order to quantify the importance of the information carried by the feature set in the final performance, the numerical values of the features are replaced with random numbers sampled from a uniform distribution.
+In this case, the performance drops to $23.6\%$.
+Replacing the learned linear mapping with the identity gives a $ap@5$ of $23.8\%$ for these features.
+It can be concluded that the learning block is not able to perform effectively if no information is carried by the input features.
+The slight decrease of performance when considering LMNN may be explained by the fact that the learning algorithm optimizes the projection using correlations in the training set that are not found in the testing set.
 
-The slight decrease of performance when considering lmnn may be explained by the fact that the learning algorithm optimizes the projection using correlations in the training set that are not found in the testing set.
+The LMNN algorithm is a popular algorithm for solving such a task, but other alternatives can be considered.
+One of those is the linear discriminant analysis (LDA) \ml{vl ref ?}\cite{}.
+When considering LDA in place of LMNN, the performance drops to $81.2\%$.
+The lower performance of LDA may be explained by the fact that the dimensionality of the projected feature set is set to one plus the number of clusters in the reference clustering, which lowers the dimensionality from $1180$ to $20$.
 
-The lmnn algorithm is a popular algorithm for solving such a task, but other alternatives can be considered. One of those is the linear discriminant analysis \ml{vl ref ?}\cite{}. When considering the lda in place of the lmnn algorithm, the performance drops down to $81.2\%$.
+Including a learned block implies some constraints.
+In particular, learning the linear transform on large datasets requires more computational time.
+Moreover, the learned transform must be updated if the reference clustering or the dataset are change significantly.
+It is therefore reasonable to consider the performance of the raw joint time--frequency scattering coefficients without a learned block.
+In this case, the performance reduces to $92.9\% \pm 3$.
+\ja{Why the $\pm$ here and not elsewhere?}%
 
-The lower performance of the lda may be explained by the fact that the dimensionality of the projected feature set is set to one plus the number of clusters in the reference clustering, which lowers the dimensionality from 1180 to 20.
-
-Considering a learning block implies some constraints. Performing the learning on large datasets require some computation. The projection has to be updated if the reference clustering or the dataset are modified significantly. Not considering any learning block reduces the performance to $92.9\% \pm 3$.
-
-Concerning the feature computation block $B_1$, an important factor is the time support. When considering the commonly used duration of 25ms, the performance drop down to $92\% \pm$. This demonstrates that the joint scattering is able to benefit from a larger time support, possibly to capture long term modulations which plays an important part when considering extended playing techniques.
+Concerning the feature computation block $B_1$, an important factor is the time support.
+When considering the commonly used duration of $25~\mathrm{ms}$, the performance drops down to $92\% \pm$.
+\ja{$\pm$ what?}%
+This demonstrates that the joint scattering is able to benefit from a larger time support, possibly to capture longer-term modulations which play an important part when considering extended playing techniques \cite{lostanlen2018extended}.
+\ja{Other references?}%
 
 Considering the separable scattering gives a performance of $93\% \pm 4.2$. \ml{ vl. explain separable vs joint. write details on what is lost here ?}
 
-Simplifying further the feature set by considering the mfccs gives a performance of $82.3\% \pm 7.1$. Considering the mfccs is equivalent to considering the separable scattering at order 1. Compared to the separable scattering, the information captured by the mfccs is considerably reduced. In order to confirm that the additional information captured by the joint scattering is effectively important, another feature set is considered where the mfccs are complemented with monomials in order to reach the dimensionality of the joint scattering. To do so, the 40 features $f_i$ of the mfccs are multiplied together $f_{i, j} = f_i*f_j, i \neq j$. The resulting features set is composed of the 40 mfccs features $f_i$ and the first 1140 $f_{i, j}$. The resulting aP@5 of $81.8\% \pm 7$ indicates that the increase of dimensionality is likely to have no effect, confirming the relevance of the additional information provided by the joint scattering. \ml{vl outro on modulations}
+Further simplifying the feature set by replacing the scattering coefficients with MFCCs gives a performance of $82.3\% \pm 7.1$.
+Note that the MFCCs are equivalent to first-order separable scattering coefficients \cite{anden2014tsp}.
+Compared to the separable scattering (which includes both first- and second-order coefficients), we see that the MFCCs perform markedly worse.
+In order to confirm that the additional information captured by the joint scattering is effectively important, another feature set is considered where the MFCCs are complemented with monomials in order to reach the dimensionality of the joint scattering.
+\ja{Explain why this is necessary.}%
+To do so, the $40$ features $f_i$ of the MFCCs are multiplied together $f_{i, j} = f_i*f_j, i \neq j$.
+\ja{What are the $f_i$ here?
+How are they defined?}%
+The resulting features set consists of the 40 MFCCs features $f_i$ and the $1140$ features $f_{i, j}$.
+The resulting $ap@5$ of $81.8\% \pm 7$ indicates that the increase of dimensionality is has a small effect, confirming the relevance of the additional information provided by the joint scattering.
+\ml{vl outro on modulations}
 
 \section*{Discussion}
 \label{sec:discussion}

@@ -312,17 +312,55 @@ In this article, we focus on the former three, and leave the question of learnin
 The reason behind this choice is that most percussive instruments do not allow much variation in terms of pitch or intensity, if at all; thus reducing the amount of intra-technique variability in the time--frequency domain.
 Furthermore, although percussive instruments certainly exhibit a rich diversity of playing techniques (we refer to \cite{peinkofer1976book} for a survey) these are rarely shared with pitched instruments.
 In comparison, techniques for sustained tones such as \emph{vibrato} or \emph{tremolo} permeate throughout a vast instrumentarium, \eg{} bowed strings and reed alike.
-We refer to \cite{x} and \cite{x} for a review of recent literature on the timbre modeling of percussive sounds, from the standpoints of MIR and music cognition respectively. % TODO VL CITE
+We refer to \cite{x} and \cite{x} for a review of recent literature on the timbre modeling of percussive instruments, from the standpoints of MIR and music cognition respectively. % TODO VL CITE
 
 We consider a list of 16 instruments: violin (Vn), viola (Va), cello (Vc), contrabass (Cb), concert harp (Hp), Spanish guitar (Gtr), accordion (Acc), flute (Fl), soprano clarinet (BbCl), alto saxophone (ASax), oboe (Ob), bassoon (Bn), trumpet in C (TpC), French horn (Hn), tenor trombone (TTbn), and bass tuba (BBTb). 
-Among this list, the former six are strings, the next five are woodwind, and the last five are brass.
-Some of these instruments may be temporarily equipped with timbre-altering mutes, such as a rubber sordina on the bridge of a violin or an aluminium ``wah-wah'' inside in the bell of a trumpet.
+Among this list, the former six are strings, the next six are woodwind, and the last four are brass.
+Some of these instruments may be temporarily equipped with timbre-altering mutes, such as a rubber sordina on the bridge of a violin or an aluminium ``wah-wah'', also known as \emph{harmon}, inside in the bell of a trumpet.
 Once augmented with mutes, the list of 16 instruments grows up to X. % TODO complete
 Furthermore, every instrument, whether equipped with a mute or not, affords a panel of playing techniques ranging in size between X (for the X) and Y (for the Y). % TODO update with number.
-In total, the feasible triplets of instrument, mute, and technique amount to a list of $N=235$ combinations.
+In the rest of this paper, we abbreviate instrument--mute--technique by means of the acronym ``IMT''.
+One example of IMT is \texttt{TpC+S-ord}, \ie{} trumpet in C with a straight mute played in the ordinary technique.
+Another example of IMT is \texttt{Vn-pont}, \ie{} violin without any mute played in the \emph{sul ponticello} (bowing near the bridge) technique.
 
-% TODO explain the conundrum leading to reduce the dataset size.
+Performers can play each IMT at various pitches, according to a tessitura that depends on the instrument but not on the choice of mute.
+Among the 16 instruments in this study, the two instruments with widest and narrowest tessituras, in their respective ordinary techniques, are the X (X semitones) and the Y (Y semitones) respectively. % TODO update with numbers, check the plural of tessitura
+Lastly, each IMT may be played at up to five intensity dynamics, ranging from quietest to loudest as: pianissimo (\emph{pp}), piano (\emph{p}), mezzoforte (\emph{mf}), forte (\emph{f}), and fortissimo (\emph{ff}).
+However, the resort to a non-ordinary playing technique may restrict both the tessitura and the dynamics range of the instrument--mute pair under consideration.
+For example, the pitch of pedal tones in brass instruments is tied to the fundamental mode of the bore, \ie{} usually B-flat or F. % TODO check this, use special package for musical pitches
+Likewise, the intensity of key clicks in the oboe is necessarily \emph{pp}, while the intensity of snap pizzicato \emph{\`a la Bart\'ok} in plucked strings is necessarily \emph{ff}.
 
+In summary, audio signals from isolated musical notes may vary across three categorical variables (instrument, mute, and technique) and two continuous variables (intensity and pitch).
+The set product of all five variables results in a combinatorial explosion of possible timbral sensations. % TODO verify ``set product'' terminology
+The Studio On Line dataset (SOL), recorded at Ircam in 2000, offers a dense sampling of this combinatorial explosion, amounting to X audio signals in total. % TODO check year in which SOL was recorded, update with number
+We should note that this dense sampling comes at the detriment of other factors of acoustic variability, such as identity of performer, identity of instrument manufacturer, audio acquisition equipment, and room response characteristics; which are all restricted to singletons.
+Despite this deliberate restriction, the size of the SOL dataset remains impractically large for collecting human similarity judgments.
+Our protocol addresses this problem by means of three complementary approaches: disentanglement of factors, expert pre-screening, and efficient annotation interface.
+
+First, we purposefully disentangle categorical variables (IMTs) from continuous variables (pitch and intensity) in the SOL dataset.
+Indeed, under first approximation, the perception of timbre is invariant to pitch and intensity.
+Therefore, we select auditory stimuli according to a reference pitch and a reference intensity; in our case, middle C (\ie{} C4) and \emph{mf}. % TODO use pitch spelling package
+After this selection, every IMT triplet contains a single acoustic exemplar, regarded as canonical in the following.
+The number of canonical stimuli for the entire SOL dataset is equal to 235.
+We should note, however, that the proposed pitch--intensity cannot be strictly enforced across all IMTs.
+Indeed, as explained above, a fraction of IMTs can only be achieved at restricted values of pitch and intensity parameters, \eg{} pedal tones or key clicks.
+Therefore, at a small cost of consistency, we only enforce the pitch--intensity reference (\ie{} C4 and \emph{mf}) when practically feasible, and fall back to other pitches and intensities if necessary.
+
+Secondly, we reduce the number of IMTs in our study by focusing on those which are deemed to be most relevant.
+Here, we define the relevance of an IMT as the possibility of imitating it by means of another IMT from a different instrument.
+One example of such imitation is the acoustic similarity between slap tonguing in reed instruments and a snap pizzicato in strings instruments.
+To collect perceptual ratings of relevance, we recruited two professors in music composition at the Paris Conservatory (CNSMDP), and explicitly gave them our definition of relevance.
+Each of them inspected the entire corpus of $235$ IMTs and annotated them in terms of relevance according to a Likert scale with seven ticks.
+In this Likert scale, the value 1 (least relevant) denotes that the IMT under consideration has a timbre that is idiosyncratic of the instrument, and that therefore, it is unlikely that humans will pair it with IMTs from other instruments.
+Conversely, the value 7 (most relevant) denotes that the IMT under consideration has a strong similarity with IMTs from one or several other instruments.
+Once both experts completed their annotation, we retained all IPTs whose average relevance score was judged equal to 3 or higher.
+At the end of this stage of pre-screening, the list of IMT reduces from 235 to 78.
+Tables 1 and 2, in the Appendix section of this paper, give a full list of these 78 highly relevant IMTs.
+% TODO explain that the accordion was judged too idiosyncratic altogether. because it's a free reed with keyboard activation and handheld airflow.
+
+% one paragraph on annotation interface
+Thirdly,
+% in 30 to 60 minutes.
 
 
 To construct a dataset for exploring the perception of timbre, we conducted a survey on the perceived similarity of a set of sounds.
@@ -616,7 +654,7 @@ The Flatiron Institute is a division of the Simons Foundation.
 \label{sec:appendix-dataset}
 
 \begin{table}
-\caption{Full list of audio stimuli (1/2).}
+\caption{Full list of audio stimuli (1/2). In each instrument, a blank space in the rightmost column denotes the ordinary playing technique (\emph{ordinario}).}
       \begin{tabular}{llll}
           name & instrument  & mute   &  playing technique \\ \hline \hline
         \texttt{ASax-key-cl-C4-p} & Alto saxophone & & key click \\
@@ -632,7 +670,7 @@ The Flatiron Institute is a division of the Simons Foundation.
 		\texttt{BBTb-slap-unp-mf-1} & Bass tuba & & unpitched slap tonguing \\ \hline
 		\texttt{Bn-key-cl-C3-mf} & Bassoon & & key click \\
 		\texttt{Bn-ord-C4-mf} & Bassoon & & \\ \hline
-		\texttt{Cb-pizz-bartok-C4-ff-1c} & Contrabass & & pizzicato Bart\'ok (snap) \\
+		\texttt{Cb-pizz-bartok-C4-ff-1c} & Contrabass & & pizzicato \`a la Bart\'ok (snap) \\
 		\texttt{Cb-pizz-lv-C4-mf-1c} & Contrabass & & pizzicato \& \emph{laissez vibrer} \\
         \texttt{Cb-pizz-sec-C4-mf-1c} & Contrabass & & pizzicato secco \\
         \texttt{Cb-pont-C4-mf-1c} & Contrabass & & sul ponticello \\ \hline
@@ -691,7 +729,7 @@ The Flatiron Institute is a division of the Simons Foundation.
 \end{table}
 
 \begin{table*}
-\caption{Full list of audio stimuli (2/2).}
+\caption{Full list of audio stimuli (2/2). In each instrument, a blank space in the rightmost column denotes the ordinary playing technique (\emph{ordinario}).}
 \begin{tabular}{llll}
           name & instrument  & mute   &  playing technique \\ \hline \hline
           \texttt{Vn-art-harm-G5-mf-4c} & Violin & & artificial harmonic \\

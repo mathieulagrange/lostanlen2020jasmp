@@ -223,7 +223,7 @@ Our system composes two stages: unsupervised feature extraction and supervised m
 The feature extraction stage is a nonlinear map which relies on the joint time--frequency scattering transform \cite{anden2015mlsp}, followed by per-feature Gaussianization \cite{lostanlen2018jasmp}.
 It encodes patterns of spectrotemporal modulation in the query while offering numerical guarantees of stability to local deformations.
 The metric learning stage is a linear map, optimized via large-margin nearest neighbors (LMNN) \cite{weinberger2009distance}.
-It recombines scattering coefficients so as to fit a training set of human judgments \cite{mcadams1995psychres}.
+It recombines scattering coefficients so as to fit a training set of human judgments \cite{mcadams1995psychres}, which may either stem from the perceptual idiosyncracies of a single subject or from a collective consensus.
 
 
 This article gathers three novel contributions.
@@ -240,7 +240,7 @@ Section \ref{sec:soa} reviews recent research in the computational modeling of m
 Section \ref{sec:survey} describes our data collection procedure for auditory similarities across playing techniques.
 Section \ref{sec:method} presents the technical components of our machine listening system, namely joint time--frequency scattering and large-margin nearest neighbors.
 Section \ref{sec:results} reports the results of an ablation study of our system.
-Section \ref{sec:discussion} discusses the implications of our findings for future research on timbral similarity.\footnote{Reproducible research statement: the implementation of the proposed model and the experimental protocol used to produce the results discussed in this paper are available alongside the anonymized version of the perceptual data: \url{https://github.com/mathieulagrange/paperPlayingTechniquesSimilarityLearning}}.
+Section \ref{sec:discussion} discusses the implications of our findings for future research on timbral similarity.\footnote{Reproducible research statement: the implementation of the proposed model and the experimental protocol of this paper are available online, alongside anonymized data from human subjects: \url{https://github.com/mathieulagrange/paperPlayingTechniquesSimilarityLearning}} %TODO: simplify this URL to lostanlen2020jasmp
 
 
 \section*{Related work}
@@ -280,7 +280,8 @@ Interestingly, both $\alpha$ and $\beta$ appear to be arranged in a geometric se
 This observation has led auditory neuroscientists to formulate an idealized computational model for STRF, known as ``full cortical model'' \cite{chi2005jasa}, which densely covers the rate--scale domain $(\alpha, \beta)$.
 
 Over recent years, several publications have employed the full cortical model as a feature extractor for a task of musical instrument classification, both in isolated recordings \cite{patil2012ploscompbiol} and in solo phrases \cite{patil2015eurasip}.
-These biologically inspired features  outperform the state of the art, especially in the small data regime when deep learning is inapplicable.Furthermore, the confusion matrix of the full cortical model in the label space of musical instruments strongly correlates with the confusion matrix between a human listener and the ground truth.
+These biologically inspired features  outperform the state of the art, especially in the small data regime where deep learning is inapplicable.
+Furthermore, the confusion matrix of the full cortical model in the label space of musical instruments strongly correlates with the confusion matrix between a human listener and the ground truth.
 Another appeal of the full cortical model is that the third-order $(\lambda, \alpha, \beta)$ tensor of frequencies, rates, and scales can be segmented into contiguous regions of maximal perceptual relevance for each instrument \cite{thoret2016jasa}.
 This is unlike fully end-to-end learning architectures, whose post hoc interpretability requires advanced techniques for feature inversion \cite{mishra2018ismir}.
 Lastly, beyond the realm of supervised classification, a previous publication \cite{hemery2015frontiers} has shown that query-by-example search with STRFs allows to discriminate categories of environmental soundscapes, even after temporal integration and unsupervised dimensionality reduction.
@@ -291,15 +292,14 @@ Indeed, the full cortical model is usually computed via two-dimensional Fourier 
 On the contrary, joint time--frequency scattering offers a faster extraction of spectrotemporal modulations while preserving properties of differentiability \cite{andreux2019jmlr} and invertibility \cite{lostanlen2019dafx}.
 Such acceleration is made possible by discretizing the wavelet transforms involved in time--frequency scattering according to a multirate scheme, both along the time and the log-frequency variables \cite{anden2019tsp}.
 This multirate scheme also has the benefit of drawing an explicit connection between scattering networks and deep convolutional networks, as both involves numerous convolutions with small kernels, pointwise rectifying nonlinearities, and dyadic pooling operations \cite{mallat2016philtrans}.
-Moreover, a quantitative benchmark over Medley-solos-DB has demonstrated that joint time--frequency scattering, unlike purely temporal scattering, outperforms deep convolutional networks in supervised musical instrument classification, even in a relatively large data regime with 500 to 5k samples per class.
-Recently, Wang et al.~\cite{wang2019ismir} trained a classifier of playing techniques on separable (\ie{} non-joint) time--frequency scattering features, and achieved state-of-the-art results in continuous performance recordings of the Chinese bamboo flute.
-Despite supplying experimental evidence that time--frequency scattering is better suited to playing technique recognition than purely temporal scattering, it remains to be known whether this findings can scale up from a single instrument to an entire orchestra.
-In addition, previous publications in time--frequency scattering, whether separable or joint, lacks a human-centric evaluation, remotely from any classification task.
+Moreover, a quantitative benchmark over Medley-solos-DB has demonstrated that joint time--frequency scattering, unlike purely temporal scattering, outperforms deep convolutional networks in supervised musical instrument classification, even in a relatively large data regime with 500 to 5k samples per class \cite{anden2019tsp}.
+Recently, Wang et al.~\cite{wang2019ismir} trained a classifier of playing techniques on separable (\ie{} non-joint) time--frequency scattering features, and achieved state-of-the-art results on a dataset of continuous performance recordings of the Chinese bamboo flute, involving periodic spectrotemporal modulations such as vibratos and trills.
+Despite supplying experimental evidence that time--frequency scattering is better suited to playing technique recognition than purely temporal scattering, it remains to be known whether this finding can scale up from a single instrument to an entire orchestra.
+In addition, all previous publications in time--frequency scattering, whether separable or joint, lack a human-centric evaluation, remotely from any classification task.
 
 The contributions of this paper strive to fill the gap in scholarship between MIR and music cognition approaches to timbre, in the context of computer-assisted spectralist orchestration with extended playing techniques.
 From the standpoint of MIR, the model presented here offers a tractable and generic multidimensional representation for timbre similarity, alongside formal guarantees of robustness to elastic deformations in the time--frequency domain, whether random or adversarial.
-Conversely, from the standpoint of music cognition, our model offers a scalable and biologically plausible surrogate for stimulus-based collection of acoustic dissimilarity judgments, with the potential of being readily tailored to subjective preferences.
-
+Conversely, from the standpoint of music cognition, our model offers a scalable and biologically plausible surrogate \emph{in silico} for stimulus-based collection of acoustic dissimilarity judgments, with the potential of being readily tailored to subjective preferences.
 % enjoys a thirty-fold reduction in dimensionality, while covering a  time span that is four times larger (1000 ms) and an acoustic bandwidth that is also four times larger (0--16 kHz).
 %We refer to \cite{bellet2015book} for a review of the state of the art in metric learning.
 

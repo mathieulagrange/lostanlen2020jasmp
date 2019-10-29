@@ -250,7 +250,7 @@ Section \ref{sec:soa} reviews recent research in the computational modeling of m
 Section \ref{sec:survey} describes our data collection procedure for auditory similarities across playing techniques.
 Section \ref{sec:method} presents the technical components of our machine listening system, namely joint time--frequency scattering and large-margin nearest neighbors.
 Section \ref{sec:results} reports the results of an ablation study of our system.
-Section \ref{sec:discussion} discusses the implications of our findings for future research on timbral similarity.\footnote{Reproducible research statement: the implementation of the proposed model and the experimental protocol of this paper are available online, alongside anonymized data from human subjects: \url{https://github.com/mathieulagrange/paperPlayingTechniquesSimilarityLearning}} %TODO: simplify this URL to lostanlen2020jasmp
+Section \ref{sec:discussion} discusses the implications of our findings for future research on timbral similarity.\footnote{Reproducible research statement: the implementation of the proposed model and the experimental protocol of this paper are available online, alongside anonymized data from human subjects:  \url{https://github.com/mathieulagrange/paperPlayingTechniquesSimilarityLearning}} %TODO: simplify this URL to lostanlen2020jasmp
 
 
 \section*{Related work}
@@ -277,10 +277,8 @@ In this setting, prior knowledge, however accurate, of instrumentation does not 
 Rather, each excerpt must be played back to multiple human listeners.
 Yet collecting subjective responses to acoustic stimuli is a tedious and unscalable procedure, restricting the size of the musical corpus under study.
 Such restriction hampers the applicability of iterative representation learning algorithms, such as stochastic gradient descent in deep neural networks.
-Nevertheless, advanced methods in electrophysiology allow to observe the firing patterns of biological neurons in the presence of controlled stimuli.
-\ja{This is quite an abrupt transition.
-Why ``nevertheless''?}%
-This observation, originally carried out on the ferret, has led to a comprehensive mapping of the primary auditory cortex in terms of its spectrotemporal receptive fields (STRFs) \cite{depireux2001jneur}.
+Nevertheless, while training artificial neurons is prone to statistical overfitting, advanced methods in electrophysiology allow to observe the firing patterns of biological neurons in the presence of controlled stimuli.
+This observation, originally carried out on the ferret, has led to a comprehensive mapping of the primary auditory cortex in terms of its spectrotemporal receptive fields (STRFs) \cite{depireux2001jneur}, thus yielding a useful form of inductive bias for downstream machine listening applications.
 The STRF of a neuron is a function of time and frequency which represents the optimal predictor of its post-stimulus time histogram (PSTH) during exposure to a diverse range of auditory stimuli \cite{aertsen1981biolcyb}.
 The simplest method to compute it in practice is by reverse correlation, i.e.\ by averaging all stimuli that trigger an action potential \cite{deboer1968biomed}.
 Historically, STRFs were defined by their Wigner--Ville distribution \cite{flandrin1998book}, thereby sparing the choice of a tradeoff in time--frequency localization, but eliciting cross-term interferences \cite{eggermont1993hearing}.

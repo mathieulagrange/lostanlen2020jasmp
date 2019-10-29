@@ -284,8 +284,7 @@ The simplest method to compute it in practice is by reverse correlation, i.e.\ b
 Historically, STRFs were defined by their Wigner--Ville distribution \cite{flandrin1998book}, thereby sparing the choice of a tradeoff in time--frequency localization, but eliciting cross-term interferences \cite{eggermont1993hearing}.
 Since then, the STRF of a neuron was redefined as a spectrographic representation of its spike-triggered average \cite{klein2000compneur}.
 Although this new definition is necessarily tied to a choice of spectrogram parameters, it yields more interpretable patterns than a Wigner--Ville distribution.
-In particular, a substantial portion of spectrographic STRFs exhibits a ripple-like response around a given region $(t, \lambda)$ of the time--frequency domain.
-\ja{``Spectrographic''?}
+In particular, a substantial portion of spectrographic STRFs exhibits a ripple-like response around a given region $(t, \lambda)$ of the time--frequency domain \cite{theunissen2000jneur}.
 This response can be approximately described by a pair of scalar values: a temporal modulation rate $\alpha$ in Hertz and a frequential modulation rate $\beta$ in cycles per octave.
 Interestingly, both $\alpha$ and $\beta$ appear to be arranged in a geometric series and independent from the selected center time $t$ and center frequency $\lambda$.
 This observation has led auditory neuroscientists to formulate an idealized computational model for STRF, known as ``full cortical model'' \cite{chi2005jasa}, which densely covers the rate--scale domain $(\alpha, \beta)$.
@@ -304,7 +303,7 @@ On the contrary, joint time--frequency scattering offers a faster extraction of 
 Such acceleration is made possible by discretizing the wavelet transforms involved in time--frequency scattering according to a multirate scheme, both along the time and the log-frequency variables \cite{anden2019tsp}.
 This multirate scheme also has the benefit of drawing an explicit connection between scattering networks and deep convolutional networks, as both involves numerous convolutions with small kernels, pointwise rectifying nonlinearities, and dyadic pooling operations \cite{mallat2016philtrans}.
 Moreover, a quantitative benchmark over Medley-solos-DB has demonstrated that joint time--frequency scattering, unlike purely temporal scattering, outperforms deep convolutional networks in supervised musical instrument classification, even in a relatively large data regime with 500 to 5k samples per class \cite{anden2019tsp}.
-Recently, Wang et al.~\cite{wang2019ismir} trained a classifier of playing techniques on separable (\ie{} non-joint) time--frequency scattering features \cite{anden2014deep}, and achieved state-of-the-art results in continuous performance recordings of the Chinese bamboo flute.
+Recently, Wang et al.~\cite{wang2019ismir} trained a classifier of playing techniques on separable (\ie{} non-joint) time--frequency scattering features \cite{anden2014tsp}, and achieved state-of-the-art results in continuous performance recordings of the Chinese bamboo flute.
 Despite supplying experimental evidence that time--frequency scattering is better suited to playing technique recognition than purely temporal scattering, it remains to be seen whether these findings can scale up from a single instrument to an entire orchestra.
 In addition, previous publications in time--frequency scattering, whether separable or joint, lacks a human-centric evaluation, remotely from any classification task.
 \ja{I don't understand this last sentence.
@@ -356,27 +355,27 @@ This warping, or reweighting, of the space is performed using LMNN.
 While cortical representations have been successful in distinguishing properties of audio recordings (including similarity analysis and classification tasks), they remain models for the electrophysiological signals recorded in the audio cortex.
 As such, their calculation is not always computationally efficient and their mathematical properties may be difficult to analyze directly.
 
-A closely related representation is that of the time scattering transform, introduced by And\'{e}n and Mallat \cite{anden2011multiscale,anden2014deep}.
+A closely related representation is that of the time scattering transform, introduced by And\'{e}n and Mallat \cite{anden2011multiscale,anden2014tsp}.
 Given an audio recording, it decomposes the signal using an analytic wavelet transform and computes the modulus, obtaining the \emph{scalogram} of the signal.
 The scalogram is similar to the spectrogram, but has a time--frequency resolution that varies with frequency: at low frequency, the filters are narrowly tuned in frequency (and hence wide in time), while at high frequency, the filters are wide in frequency (and hence narrowly concentrated in time).
 This representation contains a large amount of information, but not in a form suitable for building statistical models.
 In particular, the scalogram is not \emph{stable} in the sense that small deformations to the original signal may induce large changes to the scalogram.
 It also lacks \emph{invariance} to time-shifting, which does not affect our perception of a sound, and should therefore not affect its timbre model.
 One way to resolve this is to average the scalogram in time to obtain a spectral profile of the signal, yielding the first-order scattering coefficients.
-These possess both invariance to time-shifting and stability to time-warping deformations \cite{anden2014deep}.
+These possess both invariance to time-shifting and stability to time-warping deformations \cite{anden2014tsp}.
 
 Since these first-order coefficients only include spectral information, they cannot accurately characterize more sophisticated structure in the signal.
 One way to augment them is to calculate another wavelet decomposition in time, this time on each frequency channel of the scalogram.
 Again, we compute the modulus of the wavelet coefficients and average in time.
 The resulting coefficients are known as the second-order time scattering coefficients.
-These also possess the desired invariance and stability properties, but capture more information on the temporal structure of the scalogram \cite{anden2014deep}.
+These also possess the desired invariance and stability properties, but capture more information on the temporal structure of the scalogram \cite{anden2014tsp}.
 
 While richer than a simple spectral decomposition, such as MFCCs, the second-order time scattering coefficients described above primarily capture structure in time.
 Indeed, they do not explicitly encode frequency structure in an invariant and stable manner.
 If a signal is transposed or warped in frequency by a small amount, we do not expect its timbre to change significantly.
 We would therefore like our representation to have the same invariance and stability properties along the frequency axis.
 This is achieved by taking first- and second-order scattering coefficients and computing a second scattering transform, this time along the log-frequency axis.
-The resulting coefficients are known as separable time and frequency scattering coefficients \cite{anden2014deep}.
+The resulting coefficients are known as separable time and frequency scattering coefficients \cite{anden2014tsp}.
 
 This representation does possess the desired invariance and stability properties, but its separable nature limits its power to adequately represent time--frequency structures that do not separate cleanly in time and frequency, such as chirps.
 To remedy this, another approach was suggested by And\'{e}n et al. \cite{anden2015mlsp,anden2019tsp} wherein the temporal wavelet decomposition of the scalogram is replaced with a two-dimensional, spectro-temporal decomposition.
@@ -386,8 +385,8 @@ As before, we compute the modulus and average in time, obtaining a set of coeffi
 The definition of the scattering transform in terms of wavelet decompositions and modulus nonlinearities presents several advantages.
 On the computational side, the critical bandwidth guarantees of wavelet transforms allows us to judiciously subsample the output, resulting in a lower-dimensional representation compared to the cortical representations.
 The scattering transform also satisfies the aforementioned stability conditions, providing a guarantee that slightly deforming a signal only results in a negligible change in its scattering transform.
-Furthermore, we may calculate the scattering transforms of several model signals, including amplitude-modulated harmonic sounds and noise excitations \cite{anden2012scattering,anden2014deep}, frequency-modulated sinusoids (e.g., chirps) \cite{anden2012scattering,anden2019tsp}, and beating phenomena \cite{anden2014deep}.
-They have also enjoyed success in several audio classification and similarity retrieval tasks \cite{anden2011multiscale,bauge2013representing,anden2014deep,anden2019tsp,lostanlen2018jasmp,lostanlen2018extended}.
+Furthermore, we may calculate the scattering transforms of several model signals, including amplitude-modulated harmonic sounds and noise excitations \cite{anden2012scattering,anden2014tsp}, frequency-modulated sinusoids (e.g., chirps) \cite{anden2012scattering,anden2019tsp}, and beating phenomena \cite{anden2014tsp}.
+They have also enjoyed success in several audio classification and similarity retrieval tasks \cite{anden2011multiscale,bauge2013representing,anden2014tsp,anden2019tsp,lostanlen2018jasmp,lostanlen2018extended}.
 \ja{Need to flesh out the above with some equations.
 We're no longer talking to biologists, so we don't need to be afraid.}%
 

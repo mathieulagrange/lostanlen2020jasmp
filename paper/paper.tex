@@ -436,6 +436,7 @@ In summary, audio signals from isolated musical notes may vary across three cate
 The set product of all five variables results in a combinatorial explosion of possible timbral sensations. % TODO verify ``set product'' terminology
 The Studio On Line dataset (SOL), recorded at Ircam in 2000, offers a dense sampling of this combinatorial explosion, amounting to X audio signals in total. % TODO check year in which SOL was recorded, update with number
 We should note that this dense sampling comes at the detriment of other factors of acoustic variability, such as identity of performer, identity of instrument manufacturer, audio acquisition equipment, and room response characteristics; which are all restricted to singletons.
+Addressing these factors of variability is besides the scope of this paper, which focuses on the influence of playing technique.
 Despite this deliberate restriction, the size of the SOL dataset remains impractically large for collecting human similarity judgments.
 Our protocol addresses this problem by means of three complementary approaches: disentanglement of factors, expert pre-screening, and efficient annotation interface.
 
@@ -458,7 +459,8 @@ Conversely, the value 7 (most relevant) denotes that the IMT under consideration
 Once both experts completed their annotation, we retained all IPTs whose average relevance score was judged equal to 3 or higher.
 At the end of this stage of pre-screening, the list of IMT reduces from 235 to 78.
 Tables 1 and 2, in the Appendix section of this paper, give a full list of these 78 highly relevant IMTs.
-% TODO explain that the accordion was judged too idiosyncratic altogether. because it's a free reed with keyboard activation and handheld airflow.
+It is worth noting that, according to both experts, the timbre of the accordion was judged too idiosyncratic, regardless of playing technique, to be relevant for this experiment.
+Indeed, the accordion is the only instrument in the aforementioned list of instrument to have free reeds, keyboard-based actuation, or handheld airflow.
 
 % one paragraph on annotation interface
 

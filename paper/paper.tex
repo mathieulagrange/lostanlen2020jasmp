@@ -464,6 +464,7 @@ The need for such an interface arises from the unscalability of Likert scales in
 Assuming that similarity is a symmetric quantity, collecting a dense matrix of continuously valued ratings of similarity among a dataset of $N$ items would require $\frac{1}{2}(N^2-N)$ Likert scales.
 In the case of IMTs, this number would amount to about 3k horizontal sliders or sets of radio buttons.
 This number is
+% TODO explain what C_k is. Equivalence class over the set of IPTs.
 % in 30 to 60 minutes.
 
 
@@ -519,15 +520,24 @@ Interestingly, although several sounds pairs were obtained from the same instrum
 \section*{Results}
 \label{sec:results}
 
+
+
 The processing pipeline presented in Figure \ref{fig:pipeline} addresses the problem of conditioning a timbre space using perceptual judgments of timbral similarity.
 The relevance of the many design choices that had to be made are addressed in this section using an experimental protocol that considers a dataset of audio that will be given as input to the processing pipeline and one metric used for evaluating its performance under a given experimental setting.
 \ja{This last sentence is quite vague.
 What are we trying to say?}%
 
+% TODO VL: organize design choices.
+% (1) temporal support
+% (2) time-frequency scattering / time scattering
+% (3) learning / no learning
+
 \subsection*{Data}
 
 The perceptual data gathered during the perceptual experiment considers 78 \ipts, each represented by one sound recording that the subject could listen to before clustering the \ipts.
 For those 78 \ipts, 31 clusterings $C_k, 0<k<31, \Card(C_k)=78$ are available, that are our reference in terms of timbre similarity.
+%TODO VL update integer range for k.
+% Describe every k as an equivalency class
 \ja{What is $C_k$ here?
 Also, should it be $0 < k \le 31$?
 Might be more natural to say that $k = 1, 2, \ldots, 31$, in that case.}%
@@ -544,8 +554,14 @@ The clusterings $C_k$ are propagated to this dataset to produce new reference cl
 If a sound of this dataset $s_a$ corresponds to \ipt $i$, then $D_k(a) = C_k(i), \forall k$.
 \ja{What's $s_a$ and $a$ here?
 We need to be explicit about these definitions.}%
+% TODO VL: give more detail here. The integer a is a sample index for an IPT.
+% i is the IPT of the sound a.
+% Explain label propagation.
 
-\subsection*{Metric}
+
+\subsection*{Evaluation metric}
+
+% VL TODO: explain that this reflects a use case of browsing.
 
 The metric considered in this work is the average precision at rank $k=5$ (ap@5).
 It allows us to evaluate if the outputs of the proposed system are likely to satisfy the user.
@@ -594,6 +610,7 @@ case 'tfscat'
     fr\_filt\_opt.J = 4;}}
 
 As found in many studies, log compression and median processing are beneficial post processing steps for the scattering.
+% TODO VL: ref. JASMP + DLfM
 \ja{References.}
 
 For each recording, a set of features are computed for each time frame.

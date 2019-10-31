@@ -305,9 +305,7 @@ This multirate scheme also has the benefit of drawing an explicit connection bet
 Moreover, a quantitative benchmark over Medley-solos-DB has demonstrated that joint time--frequency scattering, unlike purely temporal scattering, outperforms deep convolutional networks in supervised musical instrument classification, even in a relatively large data regime with 500 to 5k samples per class \cite{anden2019tsp}.
 Recently, Wang et al.~\cite{wang2019ismir} trained a classifier of playing techniques on separable (\ie{} non-joint) time--frequency scattering features \cite{anden2014tsp}, and achieved state-of-the-art results in continuous performance recordings of the Chinese bamboo flute.
 Despite supplying experimental evidence that time--frequency scattering is better suited to playing technique recognition than purely temporal scattering, it remains to be seen whether these findings can scale up from a single instrument to an entire orchestra.
-In addition, previous publications in time--frequency scattering, whether separable or joint, lacks a human-centric evaluation, remotely from any classification task.
-\ja{I don't understand this last sentence.
-What does ``remotely'' mean here?}%
+In addition, previous publications in time--frequency scattering, whether separable or joint, lacks a human-centric evaluation, independently from any classification task.
 
 The contributions of this paper strive to fill the gap in scholarship between MIR and music cognition approaches to timbre, in the context of computer-assisted spectralist orchestration with extended playing techniques.
 From the standpoint of MIR, the model presented here offers a tractable and generic multidimensional representation for timbre similarity, alongside formal guarantees of robustness to elastic deformations in the time--frequency domain.
@@ -427,13 +425,13 @@ Another example of IMT is \texttt{Vn-pont}, \ie{} violin without any mute played
 
 Performers can play each IMT at various pitches, according to a tessitura that depends on the instrument but not on the choice of mute.
 Among the 16 instruments in this study, the two instruments with widest and narrowest tessituras, in their respective ordinary techniques, are the X (X semitones) and the Y (Y semitones) respectively. % TODO update with numbers, check the plural of tessitura
-Lastly, each IMT may be played at up to five intensity dynamics, ranging from quietest to loudest as: pianissimo (\emph{pp}), piano (\emph{p}), mezzoforte (\emph{mf}), forte (\emph{f}), and fortissimo (\emph{ff}).
+Lastly, each IMT may be played at up to five intensity dynamics, ranging from quietest to loudest as: pianissimo (\emph{pp}), piano (\emph{p}), mezzo forte (\emph{mf}), forte (\emph{f}), and fortissimo (\emph{ff}).
 However, the resort to a non-ordinary playing technique may restrict both the tessitura and the dynamics range of the instrument--mute pair under consideration.
 For example, the pitch of pedal tones in brass instruments is tied to the fundamental mode of the bore, \ie{} usually B-flat or F. % TODO check this, use special package for musical pitches
 Likewise, the intensity of key clicks in the oboe is necessarily \emph{pp}, while the intensity of snap pizzicato \emph{\`a la Bart\'ok} in plucked strings is necessarily \emph{ff}.
 
 In summary, audio signals from isolated musical notes may vary across three categorical variables (instrument, mute, and technique) and two continuous variables (intensity and pitch).
-The set product of all five variables results in a combinatorial explosion of possible timbral sensations. % TODO verify ``set product'' terminology
+The Cartesian product of all five variables results in a combinatorial explosion of possible timbral sensations.
 The Studio On Line dataset (SOL), recorded at Ircam in 2000, offers a dense sampling of this combinatorial explosion, amounting to X audio signals in total. % TODO check year in which SOL was recorded, update with number
 We should note that this dense sampling comes at the detriment of other factors of acoustic variability, such as identity of performer, identity of instrument manufacturer, audio acquisition equipment, and room response characteristics; which are all restricted to singletons.
 Addressing these factors of variability is besides the scope of this paper, which focuses on the influence of playing technique.
@@ -457,19 +455,22 @@ Each of them inspected the entire corpus of $235$ IMTs and annotated them in ter
 In this Likert scale, the value 1 (least relevant) denotes that the IMT under consideration has a timbre that is idiosyncratic of the instrument, and that therefore, it is unlikely that humans will pair it with IMTs from other instruments.
 Conversely, the value 7 (most relevant) denotes that the IMT under consideration has a strong similarity with IMTs from one or several other instruments.
 Once both experts completed their annotation, we retained all IPTs whose average relevance score was judged equal to 3 or higher.
-At the end of this stage of pre-screening, the list of IMT reduces from 235 to 78.
+At the end of this stage of pre-screening, the list of IMT reduces from 235 to $N=78$.
 Tables 1 and 2, in the Appendix section of this paper, give a full list of these 78 highly relevant IMTs.
 It is worth noting that, according to both experts, the timbre of the accordion was judged too idiosyncratic, regardless of playing technique, to be relevant for this experiment.
 Indeed, the accordion is the only instrument in the aforementioned list of instrument to have free reeds, keyboard-based actuation, or handheld airflow.
+%cumbersome
 
-% one paragraph on annotation interface
-
-Thirdly,
+Thirdly, we design a graphical user interface for partitioning a corpus of short audio samples.
+The need for such an interface arises from the unscalability of Likert scales in the context of pairwise similarity judgments.
+Assuming that similarity is a symmetric quantity, collecting a dense matrix of continuously valued ratings of similarity among a dataset of $N$ items would require $\frac{1}{2}(N^2-N)$ Likert scales.
+In the case of IMTs, this number would amount to about 3k horizontal sliders or sets of radio buttons.
+This number is
 % in 30 to 60 minutes.
 
 
 To construct a dataset for exploring the perception of timbre, we conducted a survey on the perceived similarity of a set of sounds.
-The set consists of $78$ recordings of different instrument--PT (IPT) pairs, each played at the same pitch (C4) and nuance \textit{mezzo-forte}. For more information on the dataset considered in this study, see Section \ref{sec:subjective}.
+The set consists of $78$ recordings of different instrument--PT (IPT) pairs, each played at the same pitch (C4) and nuance \textit{mezzo forte}. For more information on the dataset considered in this study, see Section \ref{sec:appendix-dataset}.
 In the survey, the subject is asked to organize dots on a two-dimensional place in a free sorting task.
 Each dot corresponded to a different IPT recording and is moved by the user dragging them with the mouse.
 In addition to spatially arranging the dots, the user is also asked to assign one of $20$ colors to each dot, providing a simple information of clustering of the sounds.

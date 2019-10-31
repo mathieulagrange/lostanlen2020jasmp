@@ -348,9 +348,8 @@ Same 3 sounds spec + scatt.}
 
 Following the above discussed matters, we propose a ranking system that is based on a processing pipeline made of two main components, see Figure \ref{fig:pipeline}.
 The first component maps the audio signal of the query and the items of the database into a high-dimensional timbre space using the scattering transform.
-The second component warps this timbre space by taking into account perceptual judgments represented as a consensus clustering of the items in the dataset, as presented in Section \ref{sec:survey}.
+The second component warps this timbre space by taking into account perceptual judgments represented as a consensus clustering of the items in the dataset, as presented in the \nameref{sec:survey} section.
 This warping, or reweighting, of the space is performed using LMNN.
-\ja{Again, section numbers are not showing up here.}%
 
 
 
@@ -394,8 +393,8 @@ On the computational side, the critical bandwidth guarantees of wavelet transfor
 The scattering transform also satisfies the aforementioned stability conditions, providing a guarantee that slightly deforming a signal only results in a negligible change in its scattering transform.
 Furthermore, we may calculate the scattering transforms of several model signals, including amplitude-modulated harmonic sounds and noise excitations \cite{anden2012scattering,anden2014tsp}, frequency-modulated sinusoids (e.g., chirps) \cite{anden2012scattering,anden2019tsp}, and beating phenomena \cite{anden2014tsp}.
 They have also enjoyed success in several audio classification and similarity retrieval tasks \cite{anden2011multiscale,bauge2013representing,anden2014tsp,anden2019tsp,lostanlen2018jasmp,lostanlen2018extended}.
-\ja{Need to flesh out the above with some equations.
-We're no longer talking to biologists, so we don't need to be afraid.}%
+%\ja{Need to flesh out the above with some equations.
+%We're no longer talking to biologists, so we don't need to be afraid.}% i think we will put equations later, in the methods section, while making sure to re-use the notations lambda, alpha, beta. OK?
 
 \subsection*{Similarity weighting}
 \label{sec:weighting}

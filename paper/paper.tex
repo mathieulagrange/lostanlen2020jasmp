@@ -577,6 +577,7 @@ The metric considered in this work is the average precision at rank $k=5$ (ap@5)
 It allows us to evaluate if the outputs of the proposed system are likely to satisfy the user.
 The ap@5 is computed as follows.
 
+% TODO VL: move the following paragraph down so that we explain: (1) p@5_q, (2) p@5, (3) ap@5.
 Considering an output of the system, that is a features vector $F_n$ per sound $s_n$, the precision at rank $5$ is computed for each of the $D_k$ clusterings, and the $31$ p@5 are averaged to obtain the ap@5.
 
 For a given reference clustering $D_k$, the p@5 is computed as follows.
@@ -588,6 +589,7 @@ $$
 The p@5 is the average $p@5_q$ computed over all queries.
 \ja{This is perhaps better described in reverse, starting with $p@5_q$, then $p@5$, then $ap@5$?
 Also, we define the precisions here as proportions (between zero and one), but later, we present them as percentages (between $0\%$ and $100\%$).}%
+% TODO VL: state that the AP@5 will be reported under the form of percentages throughout the rest of the paper.
 
 \ml{note pour vincent, on a pas de fold, mais on a les resultats par sujet, on peut donc evaluer la dispersion de la p@5 par sujets si cela est utile.}
 
@@ -597,6 +599,7 @@ For the same reason, more global metrics commonly considered for ranking tasks s
 
 \subsection*{Analysis}
 
+% TODO VL: make a block diagram.
 The processing pipeline is composed of two main building blocks.
 The first block $B_1$ takes a digital audio recording as input and outputs one vector of features.
 For this block, the main factors are the time support $B_1^t$ for computing the features and the type of features $B_1^f$.
@@ -635,6 +638,8 @@ The LDA is the linear discriminant analysis \cite{} and the LMNN is the algorith
 For this algorithm the neighborhood is set to $5$.
 \ja{Again, I would prefer to ditch this $B_2$ notation.}
 
+% TODO VL: turn into active present voice.
+% We have an exhaustive benchmark on the Cartesian product of all design choices, but we report results under the form of an ablation study for the sake of conciseness.
 The complete experiments with all settings have been computed.
 For the sake of clarity, only part of the results are discussed here.
 \ja{What does this mean?}%
@@ -645,6 +650,7 @@ Not the joint?}%
 Evaluated over the entire dataset, that is the computation of the projection and the evaluation are performed on the whole dataset, this system reaches the satifactory performance of $99.5\%$ of $ap@5$.
 That means that, for a given sound dataset of \ipts for which subjective evaluation of similarity between \ipts are available, a very large number of queries would return interesting results to the user using this processing pipeline.
 \ja{What conclusion do we draw from this?}
+% TODO VL: draw a big-picture conclusion from this wrt the original motivation of the paper.
 
 In order to better understand the benefits of each design choice, an ablation study is now performed using a slightly different protocol.
 In order to reduce the risk of misleading performance results using learning systems due to overfitting, we identify factors of variability that could lead to such problems and mitigate those.

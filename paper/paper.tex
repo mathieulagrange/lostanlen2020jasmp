@@ -698,18 +698,21 @@ This demonstrates that the joint scattering is able to benefit from a larger tim
 \ja{Other references?}%
 
 Considering the separable scattering gives a performance of $93\% \pm 4.2$. \ml{ vl. explain separable vs joint. write details on what is lost here ?}
+% TODO VL: write about frequency-depedendent time shift. cite IEEE TSP
 
 Further simplifying the feature set by replacing the scattering coefficients with MFCCs gives a performance of $82.3\% \pm 7.1$.
 Note that the MFCCs are equivalent to first-order separable scattering coefficients \cite{anden2014tsp}.
 Compared to the separable scattering (which includes both first- and second-order coefficients), we see that the MFCCs perform markedly worse.
 In order to confirm that the additional information captured by the joint scattering is effectively important, another feature set is considered where the MFCCs are complemented with monomials in order to reach the dimensionality of the joint scattering.
 \ja{Explain why this is necessary.}%
-To do so, the $40$ features $f_i$ of the MFCCs are multiplied together $f_{i, j} = f_i*f_j, i \neq j$.
+To do so, the $40$ features $f_i$ of the MFCCs are multiplied together $f_{i, j} = f_i \times f_j, i \neq j$.
 \ja{What are the $f_i$ here?
 How are they defined?}%
-The resulting features set consists of the 40 MFCCs features $f_i$ and the $1140$ features $f_{i, j}$.
+% TODO VL: give reference to MFCCs.
+The resulting feature set consists of the 40 MFCCs features $f_i$ and the $1140$ features $f_{i, j}$.
 The resulting $ap@5$ of $81.8\% \pm 7$ indicates that the increase of dimensionality is has a small effect, confirming the relevance of the additional information provided by the joint scattering.
 \ml{vl outro on modulations}
+% TODO VL: insist on the role of modulations in playing techniques. 
 
 \section*{\nmu Discussion}
 \label{sec:discussion}

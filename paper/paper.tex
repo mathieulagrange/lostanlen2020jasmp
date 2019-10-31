@@ -580,7 +580,7 @@ The ap@5 is computed as follows.
 Considering an output of the system, that is a features vector $F_n$ per sound $s_n$, the precision at rank $5$ is computed for each of the $D_k$ clusterings, and the $31$ p@5 are averaged to obtain the ap@5.
 
 For a given reference clustering $D_k$, the p@5 is computed as follows.
-For each sound $s_q, 0<q<9346$ considered as a query, its 5 nearest neighbors $s_n, 0<n<5$ in the timbre space under evaluation are retrieved using the Euclidean distance between corresponding features vectors.
+For each sound $s_q, 0<q\leq9346$ considered as a query, its 5 nearest neighbors $s_n, 0<n\leq5$ in the timbre space under evaluation are retrieved using the Euclidean distance between corresponding features vectors.
 For this query, the precision is defined as:
 $$
 p@5_q = \frac{1}{5} \sum_{n=1}^5 \mathbf{1}_{D_q=D_n}

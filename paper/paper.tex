@@ -10,6 +10,16 @@
 % \def\includegraphic[#1]{}
 % \def\includegraphics[#1]{}
 
+\newcommand{\lnameref}[1]{%
+\bgroup
+\let\nmu\MakeLowercase
+\nameref{#1}\egroup}
+\newcommand{\fnameref}[1]{%
+\bgroup
+\def\nmu{\let\nmu\MakeLowercase}%
+\nameref{#1}\egroup}
+
+\newcommand{\nmu}{}
 
 %%% Put your definitions there:
 \startlocaldefs

@@ -650,6 +650,10 @@ That means that, for a given sound dataset of \ipts for which subjective evaluat
 \ja{What conclusion do we draw from this?}
 % TODO VL: draw a big-picture conclusion from this wrt the original motivation of the paper.
 
+% TODO VL: clearly define a second part of the analysis from here onwards.
+% we test the validity of the ablation study itself.
+% we bring up alternate hypotheses and refute them one by one.
+% like i did in ISMIR 2016.
 In order to better understand the benefits of each design choice, an ablation study is now performed using a slightly different protocol.
 In order to reduce the risk of misleading performance results using learning systems due to overfitting, we identify factors of variability that could lead to such problems and mitigate those.
 \ja{Is this part of the ablation study or is this a ``meta'' consideration?}
@@ -659,13 +663,16 @@ We mitigate the first by considering a random split of the dataset in two halves
 The impact of the variability of the perceptual judgments and its impact on machine listening systems such as the one discussed in this paper is not in the scope of this paper and left for further research.
 By considering this protocol, the proposed system reaches a $ap@5$ of $95.5\%$.
 If considering the same first half both for learning and evaluation leads to a $ap@5$ of $96.5\%$, indicating a low risk of overfitting.
-\ja{We can expect better performance by using larger folds for the training (i.e., not restricting ourselves to 2-fold cross validation).}
 
-Another risk when considering reprojection techniques such as the LMNN may appear when the dimensionality of the features approaches the number of items in the dataset.
-For example, there exists a trivial solution for optimizing $p@1$ when the dimensionality of the features is equal to the number of items in the dataset.
-\ja{What is that trivial solution?}%
-In this case, no information needs to be carried by the features set to obtain perfect performance.
+%\ja{We can expect better performance by using larger folds for the training %(i.e., not restricting ourselves to 2-fold cross validation).}
+% VL: hors sujet.
 
+%Another risk when considering reprojection techniques such as the LMNN may appear when the dimensionality of the features approaches the number of items in the dataset.
+%For example, there exists a trivial solution for optimizing $p@1$ when the dimensionality of the features is equal to the number of items in the dataset.
+%\ja{What is that trivial solution?}%
+%In this case, no information needs to be carried by the features set to obtain perfect performance.
+
+% TODO VL: add an introductory sentence here. "Risk of overfitting of reprojection techniques using LMNN"
 In order to quantify the importance of the information carried by the feature set in the final performance, the numerical values of the features are replaced with random numbers sampled from a uniform distribution.
 In this case, the performance drops to $23.6\%$.
 Replacing the learned linear mapping with the identity gives a $ap@5$ of $23.8\%$ for these features.

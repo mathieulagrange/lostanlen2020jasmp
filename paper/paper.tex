@@ -645,7 +645,7 @@ For the sake of clarity, only part of the results are discussed here.
 \ja{What does this mean?}%
 
 The best performing system considers the joint time--frequency scattering computed over $1000~\mathrm{ms}$ time support, projected using the LMNN algorithm.
-Evaluated over the entire dataset, that is the computation of the projection and the evaluation are performed on the whole dataset, this system reaches the satifactory performance of $99.5\%$ of $ap@5$.
+Evaluated over the entire dataset, that is the computation of the projection and the evaluation are performed on the whole dataset, this system reaches the satifactory performance of $99.0\% \pm 0.6$ of $ap@5$.
 That means that, for a given sound dataset of \ipts for which subjective evaluation of similarity between \ipts are available, a very large number of queries would return interesting results to the user using this processing pipeline.
 \ja{What conclusion do we draw from this?}
 % TODO VL: draw a big-picture conclusion from this wrt the original motivation of the paper.
@@ -661,8 +661,8 @@ In our case, two factors can readily be identified, the variability of the audio
 
 We mitigate the first by considering a random split of the dataset in two halves, one for learning the projection and one for evaluating the performance.
 The impact of the variability of the perceptual judgments and its impact on machine listening systems such as the one discussed in this paper is not in the scope of this paper and left for further research.
-By considering this protocol, the proposed system reaches a $ap@5$ of $95.5\%$.
-If considering the same first half both for learning and evaluation leads to a $ap@5$ of $96.5\%$, indicating a low risk of overfitting.
+By considering this protocol, the proposed system reaches a $ap@5$ of $96.2\% \pm 2.0$.
+If considering the same first half both for learning and evaluation leads to a $ap@5$ of $96.5\% \pm 2.0$, indicating a low risk of overfitting.
 
 %\ja{We can expect better performance by using larger folds for the training %(i.e., not restricting ourselves to 2-fold cross validation).}
 % VL: hors sujet.
@@ -674,14 +674,14 @@ If considering the same first half both for learning and evaluation leads to a $
 
 % TODO VL: add an introductory sentence here. "Risk of overfitting of reprojection techniques using LMNN"
 In order to quantify the importance of the information carried by the feature set in the final performance, the numerical values of the features are replaced with random numbers sampled from a uniform distribution.
-In this case, the performance drops to $23.6\%$.
-Replacing the learned linear mapping with the identity gives a $ap@5$ of $23.8\%$ for these features.
+In this case, the performance drops to $23.6\% \pm 10.6$.
+%Replacing the learned linear mapping with the identity gives a $ap@5$ of $23.8\%$ for these features.
 It can be concluded that the learning block is not able to perform effectively if no information is carried by the input features.
 The slight decrease of performance when considering LMNN may be explained by the fact that the learning algorithm optimizes the projection using correlations in the training set that are not found in the testing set.
 
 The LMNN algorithm is a popular algorithm for solving such a task, but other alternatives can be considered.
 One of those is the linear discriminant analysis (LDA) \ml{vl ref ?}\cite{}.
-When considering LDA in place of LMNN, the performance drops to $81.2\%$.
+When considering LDA in place of LMNN, the performance drops to $76.6\% \pm 10.9$.
 The lower performance of LDA may be explained by the fact that the dimensionality of the projected feature set is set to one plus the number of clusters in the reference clustering, which lowers the dimensionality from $1180$ to $20$.
 
 Including a learned block implies some constraints.
@@ -692,15 +692,13 @@ In this case, the performance reduces to $92.9\% \pm 3$.
 \ja{Why the $\pm$ here and not elsewhere?}%
 
 Concerning the feature computation block $B_1$, an important factor is the time support.
-When considering the commonly used duration of $25~\mathrm{ms}$, the performance drops down to $92\% \pm$.
-\ja{$\pm$ what?}%
-This demonstrates that the joint scattering is able to benefit from a larger time support, possibly to capture longer-term modulations which play an important part when considering extended playing techniques \cite{lostanlen2018extended}.
+When considering the commonly used duration of $25~\mathrm{ms}$, the performance drops down to $90.9\% \pm 4$. This demonstrates that the joint scattering is able to benefit from a larger time support, possibly to capture longer-term modulations which play an important part when considering extended playing techniques \cite{lostanlen2018extended}.
 \ja{Other references?}%
 
-Considering the separable scattering gives a performance of $93\% \pm 4.2$. \ml{ vl. explain separable vs joint. write details on what is lost here ?}
+Considering the separable scattering gives a performance of $91\% \pm 4.5$. \ml{ vl. explain separable vs joint. write details on what is lost here ?}
 % TODO VL: write about frequency-depedendent time shift. cite IEEE TSP
 
-Further simplifying the feature set by replacing the scattering coefficients with MFCCs gives a performance of $82.3\% \pm 7.1$.
+Further simplifying the feature set by replacing the scattering coefficients with MFCCs gives a performance of $81.8\% \pm 7.2$.
 Note that the MFCCs are equivalent to first-order separable scattering coefficients \cite{anden2014tsp}.
 Compared to the separable scattering (which includes both first- and second-order coefficients), we see that the MFCCs perform markedly worse.
 In order to confirm that the additional information captured by the joint scattering is effectively important, another feature set is considered where the MFCCs are complemented with monomials in order to reach the dimensionality of the joint scattering.
@@ -710,9 +708,9 @@ To do so, the $40$ features $f_i$ of the MFCCs are multiplied together $f_{i, j}
 How are they defined?}%
 % TODO VL: give reference to MFCCs.
 The resulting feature set consists of the 40 MFCCs features $f_i$ and the $1140$ features $f_{i, j}$.
-The resulting $ap@5$ of $81.8\% \pm 7$ indicates that the increase of dimensionality is has a small effect, confirming the relevance of the additional information provided by the joint scattering.
+The resulting $ap@5$ of $81.5\% \pm 7.3$ indicates that the increase of dimensionality is has a small effect, confirming the relevance of the additional information provided by the joint scattering.
 \ml{vl outro on modulations}
-% TODO VL: insist on the role of modulations in playing techniques. 
+% TODO VL: insist on the role of modulations in playing techniques.
 
 \section*{\nmu Discussion}
 \label{sec:discussion}

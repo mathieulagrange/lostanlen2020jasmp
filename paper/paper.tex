@@ -471,13 +471,16 @@ At the end of this stage of pre-screening, the list of IMT reduces from 235 to $
 Tables 1 and 2, in the Appendix section of this paper, give a full list of these 78 highly relevant IMTs.
 It is worth noting that, according to both experts, the timbre of the accordion was judged too idiosyncratic, regardless of playing technique, to be relevant for this experiment.
 Indeed, the accordion is the only instrument in the aforementioned list of instrument to have free reeds, keyboard-based actuation, or handheld airflow.
-%cumbersome
 
 Thirdly, we design a graphical user interface for partitioning a corpus of short audio samples.
 The need for such an interface arises from the unscalability of Likert scales in the context of pairwise similarity judgments.
 Assuming that similarity is a symmetric quantity, collecting a dense matrix of continuously valued ratings of similarity among a dataset of $N$ items would require $\frac{1}{2}(N^2-N)$ Likert scales.
-In the case of IMTs, this number would amount to about 3k horizontal sliders or sets of radio buttons.
-This number is
+In the case of $N=78$ IMTs, the task would amount to about 3k horizontal sliders, \ie{} several hours of cumbersome work for the human annotator.
+Engaging as many participants as possible in our study called for a more streamlined form of human--computer interaction, even if it sacrificed the availability of continuous ratings.
+To this end, we implemented a web application, named Cyberlioz, in which the user can spontaneously listen and arrange sounds into clusters of timbre similarity\footnote{The Web application for efficient audio annotation, as well as the raw anonymized responses of all $31$ participants to our study, is available at: \url{https://soundthings.org/research/cyberlioz/}}.
+The name Cyberlioz is a portmanteau between the prefix cyber- and the French composer Hector Berlioz, whose \emph{Treatise on Orchestration} (1844) marked a watershed in the history of European classical music, because of its deliberate focus on the role of timbre as a parameter for musical expression.
+Cyberlioz consists of a square panel on which is displayed a collection of circular dots, each of them corresponding to one of the $N=78$ IMTs.
+Hovering the screen pointer onto each dot results in a playback of the representative audio sample of this IMT, \ie{} C4 and \emph{mf} in most cases. % TODO VL: use pitch notation library to express C4
 % TODO explain what C_k is. Equivalence class over the set of IPTs.
 % in 30 to 60 minutes.
 

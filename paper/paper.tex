@@ -479,8 +479,13 @@ In the case of $N=78$ IMTs, the task would amount to about 3k horizontal sliders
 Engaging as many participants as possible in our study called for a more streamlined form of human--computer interaction, even if it sacrificed the availability of continuous ratings.
 To this end, we implemented a web application, named Cyberlioz, in which the user can spontaneously listen and arrange sounds into clusters of timbre similarity\footnote{The Web application for efficient audio annotation, as well as the raw anonymized responses of all $31$ participants to our study, is available at: \url{https://soundthings.org/research/cyberlioz/}}.
 The name Cyberlioz is a portmanteau between the prefix cyber- and the French composer Hector Berlioz, whose \emph{Treatise on Orchestration} (1844) marked a watershed in the history of European classical music, because of its deliberate focus on the role of timbre as a parameter for musical expression.
-Cyberlioz consists of a square panel on which is displayed a collection of circular dots, each of them corresponding to one of the $N=78$ IMTs.
-Hovering the screen pointer onto each dot results in a playback of the representative audio sample of this IMT, \ie{} C4 and \emph{mf} in most cases. % TODO VL: use pitch notation library to express C4
+
+Cyberlioz consists of a square panel on which is displayed a collection of circular grey dots, each of them corresponding to one of the $N=78$ IMTs, and initially distributed uniformly at random.
+Hovering the screen pointer onto each dot results in a playback of a representative audio sample of this IMT, \ie{} C4 and \emph{mf} in most cases. % TODO VL: use pitch notation library to express C4
+Furthermore, each dot can be freely placed on the screen by clicking, dragging, and dropping.
+Lastly, the user can assign a color to each dot by selecting it among a palette of 20 hues.
+The goal of the Cyberlioz interface is to form clusters of timbre similarity between IMTs, expressed by sameness of color.
+In comparison with a traditional Web-based form, Cyberlioz offers a more intuitive and playful user experience, while expediting the obtention of a dense matrix ($N\timesN$) of similarity judgments within a moderate duration of $30$ to $60$ minutes for each participant.
 % TODO explain what C_k is. Equivalence class over the set of IPTs.
 % in 30 to 60 minutes.
 

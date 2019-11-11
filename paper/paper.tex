@@ -487,36 +487,25 @@ Lastly, the user can assign a color to each dot by selecting it among a palette 
 The goal of the Cyberlioz interface is to form clusters of timbre similarity between IMTs, expressed by sameness of color.
 Here, any two audio samples are defined as similar if and only if one can be replaced by the other in a context of spectralist orchestration.
 
-In comparison with a traditional Web-based form, Cyberlioz offers a more intuitive and playful user experience, while expediting the obtention of a dense matrix ($N\timesN$) of similarity judgments within a moderate duration of $30$ to $60$ minutes for each participant.
+In comparison with a traditional Web-based form, Cyberlioz offers a more intuitive and playful user experience, while expediting the obtention of a dense matrix ($N\times N$) of similarity judgments within a moderate duration of $30$ to $60$ minutes for each participant.
 In X 2016, we recruited volunteers to use Cyberlioz on their own computers, via a web browser, and equipped with a pair of earphones. % TODO give the exact two months.
 We publicized this study on international mailing lists for research in music audio processing, such as X and Y. % TODO give mailing lists
-Within two months, $K=31$ subjects accessed Cyberlioz and completed the task. % TODO break down by gender?
+Within two months, $K=31$ subjects accessed Cyberlioz and completed the task. % TODO break down by gender? give age stats? musical experience?
+Figure \ref{fig:xp2display}. % TODO
 
-Once the data collection campaign was complete, we analyzed the color assignments of each subject $k$ and converted them into a similarity graph $\mathcal{G}_k$, where the integer $k$ is an arbitrary subject index between $1$ and $K$.
+Once the data collection campaign was complete, we analyzed the color assignments of each subject $k$ and converted them into a similarity graph $\mathcal{G}_k$, where the integer $k$ is an anonymized subject index, ranging between $1$ and $K$.
 For a given $k$, the graph $\mathcal{G}_k$ contains $N=78$ vertices, each representing a different IMT in the corpus.
 In $\mathcal{G}_k$, an edge connects any two vertices $i$ and $j$ if the corresponding dots in Cyberlioz have the same color.
-% TODO explain what C_k is. Equivalence class over the set of IPTs.
-% in 30 to 60 minutes.
+Otherwise, there is no edge connecting $i$ and $j$.
+This way, $\mathcal{G}_k$ contains as many connected components as the number of similarity clusters for the subject $k$, \ie{} the number of distinct colors on the Cyberlioz interface in the response of $k$.
+
+%Only the clustering given by the subjects using the color labels is considered to estimate the spontaneous judgments of similarity among \ipt. The spatial organization of the dots representing the \ipt could provide information about the similarity, but this would implicitly enforce the fact that the timbral similarity space is two dimensional. We therefore now only study the properties of the clusterings performed by the subject prior to converting them into an overall similarity matrix.
+
+We aggregate the similarity judgments from all $K$ subjects by embedding them into a hypergraph $\mathcal{H}$, that is, a graph whose edges may connect three or more vertices at once.
+Specifically, $\mathcal{H}$ contains $N$ vertices, each representing an IMT; and each ``hyperedge'' in $\mathcal{H}$ corresponds to some connected component in one of the graphs $\mathcal{G}_k$'s among all subject $k$.
+Then, we convert the hypergraph $\mathcal{H}$ back into a conventional graph $\mathcal{G}_0$ by means of a combinatorial optimization algorithm algorithm known as hypergraph partitioning \cite{kernighan1970efficient,han1997scalable,strehl2002cluster}.
 
 
-In the survey, the subject is asked to organize dots on a two-dimensional place in a free sorting task.
-Each dot corresponded to a different IPT recording and is moved by the user dragging them with the mouse.
-In addition to spatially arranging the dots, the user is also asked to assign one of $20$ colors to each dot, providing a simple information of clustering of the sounds.
-While both the location and color of each dot was recorded, only the color is used in our subsequent analysis---the spatial arrangement is only used to facilitate the user's ability to organize the sounds.
-%More information on the data collection process is available in  Section \ref{sec:subjective}.
-
-The final arrangement and color assignment of one of the subjects is shown in Figure \ref{fig:xp2display}.
-
-\begin{figure}
-\center
-\includegraphics[width = \textwidth]{figures/xp2example1.png}
-\caption{Spatial and group organization provided by subject 1.}
-\label{fig:xp2display}
-\end{figure}
-
-For each subject, a matrix of size $78 \times 78$ is constructed to represent the similarity judgments for each pair of the $78$ IPTs.
-Specifically, the $(i, j)$th element of the matrix was set to one if the $i$th and $j$th IPT were assigned the same color.
-If not, it is set to zero.
 In other words, the clustering assignment of each subject as a binary similarity matrix. Depending on the application, it may be of interest to condition the timbre space using the information of only one subject. In this case, the corresponding binary similarity matrix may be used and the resulting timbre space is specialized to a given person.
 
 

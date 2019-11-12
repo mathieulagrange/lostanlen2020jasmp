@@ -166,7 +166,10 @@
 \begin{abstractbox}
 
 \begin{abstract}
-
+Extended playing techniques such as vibratos, glissandos, and trills often denote musical expressivity, both in erudite and folk contexts.
+They affect the spectrotemporal modulations of pitched audio signals, thereby modifying timbre perception systematically.
+However, most existing approaches to music similarity retrieval inadequately reflect this effect, as they fail to describe timbre beyond the so-called ``ordinary'' technique; use instrument identity as a proxy for timbre quality; or do not allow for rapid customization to the perceptual idiosyncracies of a newcoming subject.
+%Our article fills this gap in scholarship by providing a scalable algorithm for measuring the timbre similarity between any two audio samples
 \end{abstract}
 
 %\begin{abstract}
@@ -507,6 +510,8 @@ Then, we convert the hypergraph $\mathcal{H}$ back into a conventional graph $\m
 While the graphs $\mathcal{G}_1 \ldots \mathcal{G}_K$ encode the subjective similarity judgments of participants $1$ to $K$, the graph $\mathcal{G}_0$ represents a form of consensual judgment that is shared across all participants, while discarding intersubjective variability.
 Although the rest of our paper focuses on the consensus $\mathcal{G}_0$, it is worth pointing out that the same technical framework could apply to a single subject $k$, or to a subgroup of the $K=31$ subjects.
 This remark emphasizes the potential of our similarity learning method as a customizable tool for visualizing and extrapolating the timbre similarity space of a newcoming subject, after less than one hour of using Cyberlioz.
+
+%TODO VL: comment on visualization of similarity matrices.
 
 In order to better interpret the information captured by the consensus clustering, we generate two similarity matrices, one for the 15 instruments used, see Figure \ref{fig:consensusVsI}, and one for the 23 PTs used, see Figure \ref{fig:consensusVsPt}. For the instruments similarity matrix, the value within each cell counts the number of times two instruments have been grouped in the consensus clustering, normalized by the average number of IPTs that considered the two instruments. The PTs similarity matrix is computed in the same way.
 

@@ -245,6 +245,7 @@ Following the aesthetic tradition of spectralism in contemporary music creation,
 The outcome of this query is an instrumental audio sample, alongside textual attributes of playing technique.
 In this context, the computer serves as a bridge from the auditory level to the symbolic level, \ie{} from a potentially infinite realm of timbral sensations to a musical score of priorly specified range \cite{caetano2019swarm}.
 
+\subsection*{Goal}
 This article proposes a machine listening system which computes the dissimilarity in timbre between any two audio samples.
 Our system consists of two stages: unsupervised feature extraction and supervised metric learning.
 The feature extraction stage is a nonlinear map which relies on the joint time--frequency scattering transform \cite{anden2015mlsp,anden2019tsp}, followed by per-feature Gaussianization \cite{lostanlen2018jasmp}.
@@ -252,6 +253,7 @@ It encodes patterns of spectrotemporal modulation in the query while offering nu
 The metric learning stage is a linear map, optimized via large-margin nearest neighbors (LMNN) \cite{weinberger2009distance}.
 It recombines scattering coefficients so as to fit a training set of human judgments \cite{mcadams1995psychres}, which may either stem from the perceptual idiosyncracies of a single subject or from a collective consensus.
 
+\subsection*{Contributions}
 This article gathers three novel contributions.
 First, our model encompasses a broad range of extended playing techniques, well beyond the so-called ``ordinary'' mode of acoustic production \cite{lostanlen2018extended}.
 Specifically, we fit pairwise judgments for 78 different techniques arising from 16 instruments, some of which include removable timbre-altering devices such as mutes.
@@ -262,6 +264,7 @@ Thirdly, we supplement our quantitative benchmark with some visualizations of ti
 These visualizations confirm the theoretical predictions of previous research \cite{anden2019tsp}, which were founded on simple synthetic sounds such as exponential chirps.
 They are also in line with visualizations of the modulation power spectrum in auditory neurophysiology \cite{patil2012ploscompbiol}, while offering an accelerated algorithm for scalable feature extraction.
 
+\subsection*{Outline}
 The \lnameref{sec:soa} section reviews recent research in the computational modeling of musical timbre.
 The \lnameref{sec:survey} section describes our data collection procedure for auditory similarities across playing techniques.
 The \lnameref{sec:method} section presents the technical components of our machine listening system, namely joint time--frequency scattering and large-margin nearest neighbors.
@@ -277,6 +280,7 @@ Therefore, computational models of timbre perception must summarize acoustic inf
 Mapping this input to a feature space in which distances denote timbral dissimilarities requires a data-driven stage of dimensionality reduction.
 In this respect, the scientific literature exhibits a methodological divide as regards the collection of human-annotated data \cite{siedenburg2016jnmr}.
 
+\subsection*{Timbre modeling as music information retrieval (MIR)}
 On the one hand, most publications in music information retrieval cast timbre modeling as an audio classification problem  \cite{martin1998asa,brown1999jasa,eronen2000icassp,herrera2003jnmr,wieczorkowska2003jiis,livshin2004dafx,krishna2004icassp,kaminskyj2005jiis,benetos2006icassp,bhalke2016jiis}.
 In this context, the instrumentation of each musical excerpt serves as an unstructured set of ``audio tags,'' encoded as binary outputs within some predefined label space.
 Because such tags often belong to the metadata of music releases, the process of curating a training set for musical instrument classification requires little or no human intervention.
@@ -288,6 +292,7 @@ Over the past decade, the availability of large digital audio collections, toget
 Notwithstanding the growing accuracy of these architectures in the large data regime, it remains unclear how to extend them from musical instrument recognition to playing technique recognition, where labeled samples are considerably scarcer.
 We refer to \cite{han2017taslp} for a recent review of the state of the art in this domain.
 
+\subsection*{Timbre modeling as music cognition research}
 On the other hand, the field of music psychology investigates timbre with the aim of discovering its physiological and behavioral foundations \cite{mcadams2009chapter}.
 In this setting, prior knowledge, however accurate, of instrumentation does not suffice to conduct a study.
 Rather, each excerpt must be played back to multiple human listeners.
@@ -305,6 +310,7 @@ This response can be approximately described by a pair of scalar values: a tempo
 Interestingly, both $\alpha$ and $\beta$ appear to be arranged in a geometric series and independent from the selected center time $t$ and center frequency $\lambda$.
 This observation has led auditory neuroscientists to formulate an idealized computational model for STRF, known as ``full cortical model'' \cite{chi2005jasa}, which densely covers the rate--scale domain $(\alpha, \beta)$.
 
+\subsection*{Spectrotemporal receptive fields (STRF)}
 Over recent years, several publications have employed the full cortical model as a feature extractor for a task of musical instrument classification, both in isolated recordings \cite{patil2012ploscompbiol} and in solo phrases \cite{patil2015eurasip}.
 These biologically inspired features outperform the state of the art, especially in the small data regime where deep learning is inapplicable.
 Furthermore, the confusion matrix of the full cortical model in the label space of musical instruments strongly correlates with the confusion matrix between a human listener and the ground truth.
@@ -323,6 +329,7 @@ Recently, Wang et al.~\cite{wang2019ismir} trained a classifier of playing techn
 Despite supplying experimental evidence that time--frequency scattering is better suited to playing technique recognition than purely temporal scattering, it remains to be seen whether these findings can scale up from a single instrument to an entire orchestra.
 In addition, previous publications in time--frequency scattering, whether separable or joint, lacks a human-centric evaluation, independently from any classification task.
 
+\subsection*{Claim of originality}
 The contributions of this paper strive to fill the gap in scholarship between MIR and music cognition approaches to timbre, in the context of computer-assisted spectralist orchestration with extended playing techniques.
 From the standpoint of MIR, the model presented here offers a tractable and generic multidimensional representation for timbre similarity, alongside formal guarantees of robustness to elastic deformations in the time--frequency domain.
 Conversely, from the standpoint of music cognition, our model offers a scalable and biologically plausible surrogate for stimulus-based collection of acoustic dissimilarity judgments, with the potential of being readily tailored to subjective preferences.
@@ -502,6 +509,7 @@ We publicized this study on international mailing lists for research in music au
 Within two months, $K=31$ subjects accessed Cyberlioz and completed the task. % TODO break down by gender? give age stats? musical experience?
 %Figure \ref{fig:xp2display}. % TODO
 
+\subsection*{Hypergraph partitioning}
 Once the data collection campaign was complete, we analyzed the color assignments of each subject $k$ and converted them into a similarity graph $\mathcal{G}_k$, where the integer $k$ is an anonymized subject index, ranging between $1$ and $K$.
 For a given $k$, the graph $\mathcal{G}_k$ contains $N=78$ vertices, each representing a different IMT in the corpus.
 In $\mathcal{G}_k$, an edge connects any two vertices $i$ and $j$ if the corresponding dots in Cyberlioz have the same color.
@@ -521,6 +529,7 @@ Although the rest of our paper focuses on the consensus $\mathcal{G}_0$, it is w
 This remark emphasizes the potential of our similarity learning method as a customizable tool for visualizing and extrapolating the timbre similarity space of a newcoming subject, after less than one hour of using Cyberlioz.
 
 %TODO VL: comment on visualization of similarity matrices.
+\subsection*{Inter-instrument and inter-technique similarities}
 
 In order to better interpret the information captured by the consensus clustering, we generate two similarity matrices, one for the 15 instruments used, see Figure \ref{fig:consensusVsI}, and one for the 23 PTs used, see Figure \ref{fig:consensusVsPt}. For the instruments similarity matrix, the value within each cell counts the number of times two instruments have been grouped in the consensus clustering, normalized by the average number of IPTs that considered the two instruments. The PTs similarity matrix is computed in the same way.
 

@@ -429,6 +429,7 @@ Furthermore, although percussive instruments certainly exhibit a rich diversity 
 In comparison, techniques for sustained tones such as \emph{vibrato} or \emph{tremolo} permeate throughout a vast instrumentarium, \eg{} bowed strings and reed alike.
 We refer to \cite{wu2018taslp} and \cite{pearce2019appliedsciences} for reviews of the recent literature on the timbre modeling of percussive instruments, from the standpoints of MIR and music cognition respectively.
 
+\subsection*{Dataset}
 We consider a list of 16 instruments: violin (Vn), viola (Va), cello (Vc), contrabass (Cb), concert harp (Hp), Spanish guitar (Gtr), accordion (Acc), flute (Fl), soprano clarinet (BbCl), alto saxophone (ASax), oboe (Ob), bassoon (Bn), trumpet in C (TpC), French horn (Hn), tenor trombone (TTbn), and bass tuba (BBTb).
 Among this list, the former six are strings, the next six are woodwind, and the last four are brass.
 Some of these instruments may be temporarily equipped with timbre-altering mutes, such as a rubber sordina on the bridge of a violin or an aluminium ``wah-wah'', also known as \emph{harmon}, inside in the bell of a trumpet.
@@ -453,6 +454,7 @@ Addressing these factors of variability is besides the scope of this paper, whic
 Despite this deliberate restriction, the size of the SOL dataset remains impractically large for collecting human similarity judgments.
 Our protocol addresses this problem by means of three complementary approaches: disentanglement of factors, expert pre-screening, and efficient annotation interface.
 
+\subsection*{Disentanglement of factors}
 First, we purposefully disentangle categorical variables (IMTs) from continuous variables (pitch and intensity) in the SOL dataset.
 Indeed, under first approximation, the perception of timbre is invariant to pitch and intensity.
 Therefore, we select auditory stimuli according to a reference pitch and a reference intensity; in our case, middle C (\ie{} C4) and \emph{mf}. % TODO use pitch spelling package
@@ -462,6 +464,8 @@ We should note, however, that the proposed pitch--intensity cannot be strictly e
 Indeed, as explained above, a fraction of IMTs can only be achieved at restricted values of pitch and intensity parameters, \eg{} pedal tones or key clicks.
 Therefore, at a small cost of consistency, we only enforce the pitch--intensity reference (\ie{} C4 and \emph{mf}) when practically feasible, and fall back to other pitches and intensities if necessary.
 
+
+\subsection*{Expert pre-screening}
 Secondly, we reduce the number of IMTs in our study by focusing on those which are deemed to be most relevant.
 Here, we define the relevance of an IMT as the possibility of imitating it by means of another IMT from a different instrument.
 One example of such imitation is the acoustic similarity between slap tonguing in reed instruments and a snap pizzicato in strings instruments.
@@ -473,8 +477,10 @@ Once both experts completed their annotation, we retained all IPTs whose average
 At the end of this stage of pre-screening, the list of IMT reduces from 235 to $N=78$.
 Tables 1 and 2, in the Appendix section of this paper, give a full list of these 78 highly relevant IMTs.
 It is worth noting that, according to both experts, the timbre of the accordion was judged too idiosyncratic, regardless of playing technique, to be relevant for this experiment.
-Indeed, the accordion is the only instrument in the aforementioned list of instrument to have free reeds, keyboard-based actuation, or handheld airflow.
+Indeed, the accordion is the only instrument in the aforementioned list of 
+instrument to have free reeds, keyboard-based actuation, or handheld airflow.
 
+\subsection*{Efficient annotation interface}
 Thirdly, we design a graphical user interface for partitioning a corpus of short audio samples.
 The need for such an interface arises from the unscalability of Likert scales in the context of pairwise similarity judgments.
 Assuming that similarity is a symmetric quantity, collecting a dense matrix of continuously valued ratings of similarity among a dataset of $N$ items would require $\frac{1}{2}(N^2-N)$ Likert scales.
@@ -494,7 +500,7 @@ In comparison with a traditional Web-based form, Cyberlioz offers a more intuiti
 In X 2016, we recruited volunteers to use Cyberlioz on their own computers, via a web browser, and equipped with a pair of earphones. % TODO give the exact two months.
 We publicized this study on international mailing lists for research in music audio processing, such as X and Y. % TODO give mailing lists
 Within two months, $K=31$ subjects accessed Cyberlioz and completed the task. % TODO break down by gender? give age stats? musical experience?
-Figure \ref{fig:xp2display}. % TODO
+%Figure \ref{fig:xp2display}. % TODO
 
 Once the data collection campaign was complete, we analyzed the color assignments of each subject $k$ and converted them into a similarity graph $\mathcal{G}_k$, where the integer $k$ is an anonymized subject index, ranging between $1$ and $K$.
 For a given $k$, the graph $\mathcal{G}_k$ contains $N=78$ vertices, each representing a different IMT in the corpus.
@@ -507,6 +513,9 @@ This way, $\mathcal{G}_k$ contains as many connected components as the number of
 We aggregate the similarity judgments from all $K$ subjects by embedding them into a hypergraph $\mathcal{H}$, that is, a graph whose edges may connect three or more vertices at once.
 Specifically, $\mathcal{H}$ contains $N$ vertices, each representing an IMT; and each ``hyperedge'' in $\mathcal{H}$ corresponds to some connected component in one of the graphs $\mathcal{G}_k$'s among all subject $k$.
 Then, we convert the hypergraph $\mathcal{H}$ back into a conventional graph $\mathcal{G}_0$ by means of a combinatorial optimization algorithm algorithm known as hypergraph partitioning \cite{kernighan1970efficient,han1997scalable,strehl2002cluster}. % TODO describe the gist of hypergraph partitioning?
+To construct $G_0$, we select a number of clusters $C=5$ a priori, and run hypergraph partitioning to assign each vertex $i$ to one of these clusters.
+Intuitively, hypergraph partitioning optimizes a tradeoff between two objectives: first, balancing the size of all clusters in terms of their respective numbers of vertices; and secondly, keeping most hyperedges enclosed within as few distinct clusters as possible.
+
 While the graphs $\mathcal{G}_1 \ldots \mathcal{G}_K$ encode the subjective similarity judgments of participants $1$ to $K$, the graph $\mathcal{G}_0$ represents a form of consensual judgment that is shared across all participants, while discarding intersubjective variability.
 Although the rest of our paper focuses on the consensus $\mathcal{G}_0$, it is worth pointing out that the same technical framework could apply to a single subject $k$, or to a subgroup of the $K=31$ subjects.
 This remark emphasizes the potential of our similarity learning method as a customizable tool for visualizing and extrapolating the timbre similarity space of a newcoming subject, after less than one hour of using Cyberlioz.

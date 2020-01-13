@@ -513,8 +513,8 @@ Within two months, $K=31$ subjects accessed Cyberlioz and completed the task. % 
 \subsection*{Hypergraph partitioning}
 Once the data collection campaign was complete, we analyzed the color assignments of each subject $k$ and converted them into a similarity graph $\mathcal{G}_k$, where the integer $k$ is an anonymized subject index, ranging between $1$ and $K$.
 For a given $k$, the graph $\mathcal{G}_k$ contains $N=78$ vertices, each representing a different IMT in the corpus.
-In $\mathcal{G}_k$, an edge connects any two vertices $i$ and $j$ if the corresponding dots in Cyberlioz have the same color.
-Otherwise, there is no edge connecting $i$ and $j$.
+In $\mathcal{G}_k$, an edge connects any two vertices $m$ and $n$ if the corresponding dots in Cyberlioz have the same color.
+Otherwise, there is no edge connecting $m$ and $n$.
 This way, $\mathcal{G}_k$ contains as many connected components as the number of similarity clusters for the subject $k$, \ie{} the number of distinct colors on the Cyberlioz interface in the response of $k$.
 
 %Only the clustering given by the subjects using the color labels is considered to estimate the spontaneous judgments of similarity among \ipt. The spatial organization of the dots representing the \ipt could provide information about the similarity, but this would implicitly enforce the fact that the timbral similarity space is two dimensional. We therefore now only study the properties of the clusterings performed by the subject prior to converting them into an overall similarity matrix.

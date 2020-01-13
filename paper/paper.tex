@@ -529,12 +529,25 @@ While the graphs $\mathcal{G}_1 \ldots \mathcal{G}_K$ encode the subjective simi
 Although the rest of our paper focuses on the consensus $\mathcal{G}_0$, it is worth pointing out that the same technical framework could apply to a single subject $k$, or to a subgroup of the $K=31$ subjects.
 This remark emphasizes the potential of our similarity learning method as a customizable tool for visualizing and extrapolating the timbre similarity space of a newcoming subject, after less than one hour of using Cyberlioz.
 
-%TODO VL: comment on visualization of similarity matrices.
+
 \subsection*{Inter-instrument and inter-technique similarities}
 
-In order to better interpret the information captured by the consensus clustering, we generate two similarity matrices, one for the 15 instruments used, see Figure \ref{fig:consensusVsI}, and one for the 23 PTs used, see Figure \ref{fig:consensusVsPt}. For the instruments similarity matrix, the value within each cell counts the number of times two instruments have been grouped in the consensus clustering, normalized by the average number of IPTs that considered the two instruments. The PTs similarity matrix is computed in the same way.
+Before addressing the question of modeling timbre in the audio domain, we conduct an exploratory study on the structure of similarity judgments themselves.
+Specifically, we ask whether human listeners, when confronted with a diverse corpus of IMT samples, tend to cluster those samples in terms of an organological taxonomy.
+To answer this question, we derive from the consensus clustering graph $\mathcal{G}_0$ an instrument-wise similarity matrix $\mathbf{A}$, containing $I=15$ rows and $I$ columns.
+For every instrumment--instrument pair $(i,j)$, we set the value of $\mathbf{A}}$ at row $i$ and column $j$ equal to the number of pairs in $\mathcal{G}_0$ from instruments $i$ and $j$ respectively, renormalized by the number of IMT samples from either instrument $i$ or instrument $j$:
+\[
+\mathbf{A}(i,j) = \dfrac{
+2 \Card \big\{ m, n \,\vert\, \mathrm{Instrument}(m)=i ; \mathrm{Instrument}(n)=j ; m \overset{\mathcal{G}_0}{\sim} n \big\}
+}{
+\Card \big\{n \,\vert\, \mathrm{Instrument}(n) \in \{ i, j \} \big\}
+}.
+\]
+%In order to better interpret the information captured by the consensus clustering, we generate two similarity matrices, one for the 15 instruments used, see Figure \ref{fig:consensusVsI}, and one for the 23 PTs used, see Figure \ref{fig:consensusVsPt}. For the instruments similarity matrix, the value within each cell counts the number of times two instruments have been grouped in the consensus clustering, normalized by the average number of IPTs that considered the two instruments. The PTs similarity matrix is computed in the same way.
 
-The ordering of the instruments or the PTs on the vertical and horizontals axes is chosen according to the ordering given by an agglomerative hierarchical clustering using the ward criterion of the similarity matrix under inspection. This ordering allows us to interpret the similarity matrices more easily compared to an alphabetical ordering while preserving the  similarity values between each pair of instruments or PTs.
+%Then, we run Ward's minimum variance method to 
+%$\sigma : I \rightarrow I$ 
+%The ordering of the instruments or the PTs on the vertical and horizontal axes is chosen according to the ordering given by an agglomerative hierarchical clustering using the ward criterion of the similarity matrix under inspection. This ordering allows us to interpret the similarity matrices more easily compared to an alphabetical ordering while preserving the  similarity values between each pair of instruments or PTs.
 
 Interestingly, although several sounds pairs were obtained from the same instrument (but different PTs) and others were obtained using the same PT (but different instruments), the consensus clustering did not favor one of these taxonomies over the other.
 

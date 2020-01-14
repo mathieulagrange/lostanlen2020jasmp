@@ -1,10 +1,14 @@
 
-%load ticelJudgments
-%load clusters
+% please load this once
+load ticelJudgments
+load clusters
 
+% instruments names
 ins = unique(instruments);
+% pt names
 mod = unique(modes);
 
+% instruments and pts as numerical indexes
 for k=1:length(instruments)
     in(k) =  find(ismember(ins, instruments{k}));
     mo(k) =  find(ismember(mod, modes{k}));
@@ -15,9 +19,8 @@ min = zeros(length(ins));
 for k=1:length(ins)
     for l=1:length(ins)
         for m=1:length(in)
-            for n=1:length(in)
-                if in(m) == k && l == in(n) && ensemble(m) == ensemble(n)
-                    mi(k, l) = mi(k, l)+1;
+            for n=1:length(in) 
+                if in(m) == k && l == in(n) && ensemble(m) == ensemble(n) % ensemble is the consensus clustering
                     min(k, l) = min(k, l)+1./(sum(in==in(m))+sum(in==in(n)));
                 end
             end
@@ -49,7 +52,6 @@ for k=1:length(mod)
         for m=1:length(mo)
             for n=1:length(mo)
                 if mo(m) == k && l == mo(n) && ensemble(m) == ensemble(n)
-                    moo(k, l) = moo(k, l)+1;
                     moon(k, l) = moon(k, l)+1./(sum(mo==mo(m))+sum(mo==mo(n)));
                 end
             end

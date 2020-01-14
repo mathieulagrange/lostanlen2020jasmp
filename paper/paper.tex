@@ -26,6 +26,8 @@
 
 \newcommand*{\eg}{e.g.,\@\xspace}
 \newcommand*{\ie}{i.e.,\@\xspace}
+\newcommand*{\vs}{vs.\@\xspace}
+
 \newcommand{\ipt}{IPT\xspace}
 \newcommand{\ipts}{IPTs\xspace}
 
@@ -486,7 +488,7 @@ Tables 1 and 2, in the Appendix section of this paper, give a full list of these
 It is worth noting that, according to both experts, the timbre of the accordion was judged too idiosyncratic, regardless of playing technique, to be relevant for this experiment.
 Indeed, the accordion is the only instrument in the aforementioned list of 
 instrument to have free reeds, keyboard-based actuation, or handheld airflow.
-Consequently, regardless of mute and technique, the number of instruments in our study is equal to $I=15$.
+Consequently, regardless of mute and technique, the set of instruments $\mathcal{I}$ in our study contains 15 elements.
 
 \subsection*{Efficient annotation interface}
 Thirdly, we design a graphical user interface for partitioning a corpus of short audio samples.
@@ -530,28 +532,38 @@ Although the rest of our paper focuses on the consensus $\mathcal{G}_0$, it is w
 This remark emphasizes the potential of our similarity learning method as a customizable tool for visualizing and extrapolating the timbre similarity space of a newcoming subject, after less than one hour of using Cyberlioz.
 
 
-\subsection*{Inter-instrument and inter-technique similarities}
+
+\subsection*{Inter-instrument similarity}
 
 Before addressing the question of modeling timbre in the audio domain, we conduct an exploratory study on the structure of similarity judgments themselves.
 Specifically, we ask whether human listeners, when confronted with a diverse corpus of IMT samples, tend to cluster those samples in terms of an organological taxonomy.
-To answer this question, we derive from the consensus clustering graph $\mathcal{G}_0$ an instrument-wise similarity matrix $\mathbf{A}$, containing $I=15$ rows and $I$ columns.
-For every instrumment--instrument pair $(i,j)$, we set the value of $\mathbf{A}}$ at row $i$ and column $j$ equal to the number of pairs in $\mathcal{G}_0$ from instruments $i$ and $j$ respectively, renormalized by the number of IMT samples from either instrument $i$ or instrument $j$:
+To answer this question, we derive from the consensus clustering graph $\mathcal{G}_0$ an instrument-wise similarity matrix $\mathbf{A}_{\mathcal{I}}$ whose rows and columns are defined on the finite set $\mathcal{I}$ of instruments.
+For every instrumment--instrument pair $(i,j)$, we set the value of $\mathbf{A}_{\mathcal{I}}$ at row $i$ and column $j$ equal to the number of pairs in $\mathcal{G}_0$ from instruments $i$ and $j$ respectively, renormalized by the number of IMT samples from either instrument $i$ or instrument $j$:
 \[
-\mathbf{A}(i,j) = \dfrac{
-2 \Card \big\{ m, n \,\vert\, \mathrm{Instrument}(m)=i ; \mathrm{Instrument}(n)=j ; m \overset{\mathcal{G}_0}{\sim} n \big\}
+\mathbf{A}_{\mathcal{I}}(i,j) = \dfrac{
+2\,\Card \big\{ (m, n) \,\vert\, \mathrm{Instrument}(m)=i ; \mathrm{Instrument}(n)=j ; m \overset{\mathcal{G}_0}{\sim} n \big\}
 }{
 \Card \big\{n \,\vert\, \mathrm{Instrument}(n) \in \{ i, j \} \big\}
 }.
+\label{eq:instrument-similarity}
 \]
 %In order to better interpret the information captured by the consensus clustering, we generate two similarity matrices, one for the 15 instruments used, see Figure \ref{fig:consensusVsI}, and one for the 23 PTs used, see Figure \ref{fig:consensusVsPt}. For the instruments similarity matrix, the value within each cell counts the number of times two instruments have been grouped in the consensus clustering, normalized by the average number of IPTs that considered the two instruments. The PTs similarity matrix is computed in the same way.
 
-%Then, we run Ward's minimum variance method to 
+Then, we run Ward's method to cluster instruments in $\mathcal{I}$ according to the similarity matrix $\mathbf{A}_{\mathcal{I}}$.
+This method yields a permutation $\sigma_{\mathcal{I}}: \mathcal{I} \rightarrow \mathcal{I}$ of the rows and columns in $\mathbf{A}_{\mathcal{I}}$.
+Intuitively, for every instrument--instrument pair $(i, j) \in \mathcal{I}^2$, the distance $\vert \sigma_{\mathcal{I}}(i) - \sigma_{\mathcal{I}}(j) \vert$ after permutation is small if and only if the similarity $\mathbf{A}_{\mathcal{I}}(i, j)$ is large.
+Figure \ref{fig:consensusVsI} displays the rearranged similarity matrix $\widetilde{\mathbf{A}}_{\mathcal{I}} : (i,j)\in \mathcal{I}^2 \mapsto \mathbf{A}_{\mathcal{I}}(\sigma_{\mathcal{I}}^{-1}(i), \sigma_{\mathcal{I}}^{-1}(j))$ as a result of such agglomerative hierarchical clustering procedure.
+
+Interestingly, the matrix $\widetilde{\mathbf{A}}_{\mathcal{I}}$ exhibits a block diagonal structure, which roughly reflects the classical taxonomy of musical instruments: four woodwinds (BbCl, Fl, ASax, Ob) are clustered together, followed by a cluster containing one woodwind (Bn) and four brass (BBTb, Hn, TTbn, and TpC), followed by a cluster of all strings (Cb, Va, Vn, Vc, Gtr, Hp).
+Furthermore, the largest cross-instrument similarity arises for the only pair of purely plucked instruments, namely, harp and guitar.
+
+
 %$\sigma : I \rightarrow I$ 
 %The ordering of the instruments or the PTs on the vertical and horizontal axes is chosen according to the ordering given by an agglomerative hierarchical clustering using the ward criterion of the similarity matrix under inspection. This ordering allows us to interpret the similarity matrices more easily compared to an alphabetical ordering while preserving the  similarity values between each pair of instruments or PTs.
 
-Interestingly, although several sounds pairs were obtained from the same instrument (but different PTs) and others were obtained using the same PT (but different instruments), the consensus clustering did not favor one of these taxonomies over the other.
+%Interestingly, although several sounds pairs were obtained from the same instrument (but different PTs) and others were obtained using the same PT (but different instruments), the consensus clustering did not favor one of these taxonomies over the other.
 
-\ml{vl : je pense qu'il faut remplacer la derniere phrase par quelque chose de plus musicologique, en disant que l'on retrouve bien l'organologie, et montrer certains points d'interet sur les pts pour guider le lecteur.}
+%\ml{vl : je pense qu'il faut remplacer la derniere phrase par quelque chose de plus musicologique, en disant que l'on retrouve bien l'organologie, et montrer certains points d'interet sur les pts pour guider le lecteur.}
 
 \begin{figure}
 \center
@@ -560,17 +572,36 @@ Interestingly, although several sounds pairs were obtained from the same instrum
 \label{fig:consensusVsI}
 \end{figure}
 
+
+\subsection*{Inter-technique similarity}
+From the consensus clustering graph $\mathcal{G}_0$, we also derive a technique-wise similarity matrix $\mathbf{A}_{\mathcal{T}}$ whose rows and columns are defined on the finite set $\mathcal{T}$ of playing techniques.
+We define the similarity between any two playing techniques $u$ and $v$ in $\mathcal{T}$ as the following ratio of set cardinals:
+\[
+\mathbf{A}_{\mathcal{T}}(u,v) = \dfrac{
+2\,\Card \big\{ (m, n) \,\vert\, \mathrm{Technique}(m)=u ; \mathrm{Technique}(n)=v ; m \overset{\mathcal{G}_0}{\sim} n \big\}
+}{
+\Card \big\{n \,\vert\, \mathrm{Technique}(n) \in \{ u, v \} \big\}
+},
+\]
+alike the definition of $\mathbf{A}_{\mathcal{I}}$.
+Again, we run Ward's method to cluster playing techniques in $\mathcal{T}$ according to their similarity $\mathbf{A}_{\mathcal{T}}$.
+Figure \ref{fig:consensusVsPt} displays the rearranged similarity matrix $\widetilde{\mathbf{A}}_{\mathcal{T}} : (u,v)\in \mathcal{T}^2 \mapsto \mathbf{A}_{\mathcal{T}}(\sigma_{\mathcal{T}}^{-1}(u), \sigma_{\mathcal{T}}^{-1}(v))$ as a result of such agglomerative hierarchical clustering procedure.
+
+Contrary to inter-instrument similarity (Figure \ref{fig:consensusVsI}), inter-technique similarity does not exhibit a clear segregation of instrument families.
+For example, the first two rows in $\widetilde{\mathbf{A}}_{\mathcal{T}}$ correspond to a oboe sample (\texttt{Ob-blow-no-reed-C4}, \ie{} blowing without the reed) and a cello sample (\texttt{Vc-legno-tratto-C4-mf-1c}, \ie{} drawing the wooden part of the bow across the string) respectively, despite the fact that the oboe is a woodwind instrument whereas the cello is a string instrument.
+More generally, even though the block diagonal structure of the matrix $\widetilde{\mathbf{A}}_{\mathcal{T}}$ is less prevalent than in $\widetilde{\mathbf{A}}_{\mathcal{I}}$, playing technique clusters appear to transcend instrument categories.
+Nevertheless, these clusters correspond to some basic attributes of qualitative timbre, such as percussive \vs sustained and soft \vs rough.
+
 \begin{figure}
 \center
 \includegraphics[width = \textwidth]{figures/consensusVsPt.png}
-\caption{ }
+\caption{A description of the playing technique abbreviations in made available in the Appendix (Tables \ref{tab:list1} and \ref{tab:list2}).}
 \label{fig:consensusVsPt}
 \end{figure}
 
+
 \section*{\nmu Results}
 \label{sec:results}
-
-
 
 The processing pipeline presented in Figure \ref{fig:pipeline} addresses the problem of conditioning a timbre space using perceptual judgments of timbral similarity.
 The relevance of the many design choices that had to be made are addressed in this section using an experimental protocol that considers a dataset of audio that will be given as input to the processing pipeline and one metric used for evaluating its performance under a given experimental setting.

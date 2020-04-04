@@ -224,6 +224,9 @@ However, most existing approaches to music similarity retrieval inadequately ref
 %%                                          %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+
+
 \section*{Introduction}
 \label{sec:intro}
 
@@ -256,6 +259,7 @@ It recombines scattering coefficients so as to fit a training set of human judgm
 
 Figure \ref{fig:pipeline} summarizes our experimental protocol: it illustrates how visual annotations (top) can inform feature extraction (center) to produce a nearest-neighbor search engine which is consistent with timbre similarity judgments (bottom).
 
+
 \subsection*{Contributions}
 This article gathers three novel contributions.
 First, our model encompasses a broad range of extended playing techniques, well beyond the so-called ``ordinary'' mode of acoustic production \cite{lostanlen2018extended}.
@@ -272,7 +276,7 @@ They are also in line with visualizations of the modulation power spectrum in au
 \caption{\csentence{Overview of the proposed approach}}
 \label{fig:pipeline}
 \end{figure}
-
+\clearpage
 
 \subsection*{Outline}
 The \lnameref{sec:soa} section reviews recent research in the computational modeling of musical timbre.
@@ -280,6 +284,9 @@ The \lnameref{sec:survey} section describes our data collection procedure for au
 The \lnameref{sec:method} section presents the technical components of our machine listening system, namely joint time--frequency scattering and large-margin nearest neighbors.
 The \lnameref{sec:results} section conducts an ablation study of our system.
 The \lnameref{sec:discussion} section summarizes the implications of our findings for future research on timbral similarity.\footnote{Reproducible research statement: the implementation of the proposed model and the experimental protocol of this paper are available online, alongside anonymized data from human subjects:  \url{https://github.com/mathieulagrange/paperPlayingTechniquesSimilarityLearning}} %TODO: simplify this URL to lostanlen2020jasmp
+
+
+
 
 
 \section*{\nmu Related work}
@@ -290,17 +297,21 @@ Therefore, computational models of timbre perception must summarize acoustic inf
 Mapping this input to a feature space in which distances denote timbral dissimilarities requires a data-driven stage of dimensionality reduction.
 In this respect, the scientific literature exhibits a methodological divide as regards the collection of human-annotated data \cite{siedenburg2016jnmr}.
 
+
 \subsection*{Timbre modeling as music information retrieval (MIR)}
 On the one hand, most publications in music information retrieval cast timbre modeling as an audio classification problem  \cite{martin1998asa,brown1999jasa,eronen2000icassp,herrera2003jnmr,wieczorkowska2003jiis,livshin2004dafx,krishna2004icassp,kaminskyj2005jiis,benetos2006icassp,bhalke2016jiis}.
 In this context, the instrumentation of each musical excerpt serves as an unstructured set of ``audio tags,'' encoded as binary outputs within some predefined label space.
 Because such tags often belong to the metadata of music releases, the process of curating a training set for musical instrument classification requires little or no human intervention.
 Although scraping user-generated content from online music hosting platforms may not always reflect the true instrumentation with perfect accuracy, it offers a scalable and ecologically valid insight onto the acoustic underpinnings of musical timbre.
+
 Furthermore, supplementing user-generated content with the outcome of a crowdsourced annotation campaign allows an explicit verification of instrument tags.
 For instance, the Open-MIC dataset \cite{humphrey2018ismir}, maintained by the Community for Open and Sustainable Music Information Research (COSMIR) \cite{mcfee2016ismir}, comprises a vast corpus of 20k polyphonic music recordings spanning 20 instruments as a derivative of the Free Music Archive (FMA) dataset \cite{defferrard2017ismir}.
 Another example is the Medley-solos-DB dataset \cite{lostanlen2016ismir}, which comprises 21k monophonic excerpts from 8 instruments as a derivative of the MedleyDB dataset of multitrack music \cite{bittner2014ismir}.
+
 Over the past decade, the availability of large digital audio collections, together with the democratization of high-performance computing on dedicated hardware, has spurred the development of deep learning architectures, and notably deep convolutional networks, in music instrument recognition \cite{mcfee2015ismir,pons2017eusipco,gururani2018ismir}.
 Notwithstanding the growing accuracy of these architectures in the large data regime, it remains unclear how to extend them from musical instrument recognition to playing technique recognition, where labeled samples are considerably scarcer.
 We refer to \cite{han2017taslp} for a recent review of the state of the art in this domain.
+
 
 \subsection*{Timbre modeling as music cognition research}
 On the other hand, the field of music psychology investigates timbre with the aim of discovering its physiological and behavioral foundations \cite{mcadams2009chapter}.
@@ -310,6 +321,7 @@ Yet, collecting subjective responses to acoustic stimuli is a tedious and unscal
 Such restriction hampers the applicability of iterative representation learning algorithms, such as stochastic gradient descent in deep neural networks.
 Nevertheless, while training artificial neurons is prone to statistical overfitting, advanced methods in electrophysiology allow to observe the firing patterns of biological neurons in the presence of controlled stimuli.
 This observation, originally carried out on the ferret, has led to a comprehensive mapping of the primary auditory cortex in terms of its spectrotemporal receptive fields (STRFs) \cite{depireux2001jneur}, thus yielding a useful form of inductive bias for downstream machine listening applications.
+
 The STRF of a neuron is a function of time and frequency which represents the optimal predictor of its post-stimulus time histogram (PSTH) during exposure to a diverse range of auditory stimuli \cite{aertsen1981biolcyb}.
 The simplest method to compute it in practice is by reverse correlation, i.e.\ by averaging all stimuli that trigger an action potential \cite{deboer1968biomed}.
 Historically, STRFs were defined by their Wigner--Ville distribution \cite{flandrin1998book}, thereby sparing the choice of a tradeoff in time--frequency localization, but eliciting cross-term interferences \cite{eggermont1993hearing}.
@@ -317,8 +329,10 @@ Since then, the STRF of a neuron was redefined as a spectrographic representatio
 Although this new definition is necessarily tied to a choice of spectrogram parameters, it yields more interpretable patterns than a Wigner--Ville distribution.
 In particular, a substantial portion of spectrographic STRFs exhibits a ripple-like response around a given region $(t, \lambda)$ of the time--frequency domain \cite{theunissen2000jneur}.
 This response can be approximately described by a pair of scalar values: a temporal modulation rate $\alpha$ in Hertz and a frequential modulation rate $\beta$ in cycles per octave.
+
 Interestingly, both $\alpha$ and $\beta$ appear to be arranged in a geometric series and independent from the selected center time $t$ and center frequency $\lambda$.
 This observation has led auditory neuroscientists to formulate an idealized computational model for STRF, known as ``full cortical model'' \cite{chi2005jasa}, which densely covers the rate--scale domain $(\alpha, \beta)$.
+
 
 \subsection*{Spectrotemporal receptive fields (STRF)}
 Over recent years, several publications have employed the full cortical model as a feature extractor for a task of musical instrument classification, both in isolated recordings \cite{patil2012ploscompbiol} and in solo phrases \cite{patil2015eurasip}.
@@ -349,6 +363,181 @@ Conversely, from the standpoint of music cognition, our model offers a scalable 
 % enjoys a thirty-fold reduction in dimensionality, while covering a  time span that is four times larger (1000 ms) and an acoustic bandwidth that is also four times larger (0--16 kHz).
 %We refer to \cite{bellet2015book} for a review of the state of the art in metric learning.
 
+\section*{\nmu Timbre similarity judgments}
+\label{sec:survey}
+
+The European symphonic orchestra encompasses four families of instruments: strings, woodwinds, brass, and percussion.
+In this article, we focus on the former three, and leave the question of learning auditory similarities between percussion instruments to future research.
+The reason behind this choice is that most percussive instruments do not allow much variation in terms of pitch or intensity, if at all; thus reducing the amount of intra-technique variability in the time--frequency domain.
+Furthermore, although percussive instruments certainly exhibit a rich diversity of playing techniques (we refer to \cite{peinkofer1976book} for a survey) these are rarely shared with pitched instruments.
+In comparison, techniques for sustained tones such as \emph{vibrato} or \emph{tremolo} permeate throughout a vast instrumentarium, \eg{} bowed strings and reed alike.
+We refer to \cite{wu2018taslp} and \cite{pearce2019appliedsciences} for reviews of the recent literature on the timbre modeling of percussive instruments, from the standpoints of MIR and music cognition respectively.
+
+\subsection*{Dataset}
+We consider a list of 16 instruments: violin (Vn), viola (Va), cello (Vc), contrabass (Cb), concert harp (Hp), Spanish guitar (Gtr), accordion (Acc), flute (Fl), soprano clarinet (BbCl), alto saxophone (ASax), oboe (Ob), bassoon (Bn), trumpet in C (TpC), French horn (Hn), tenor trombone (TTbn), and bass tuba (BBTb).
+Among this list, the former six are strings, the next six are woodwind, and the last four are brass.
+Some of these instruments may be temporarily equipped with timbre-altering mutes, such as a rubber sordina on the bridge of a violin or an aluminium ``wah-wah'', also known as \emph{harmon}, inside in the bell of a trumpet.
+Once augmented with mutes, the list of 16 instruments grows up to 33.
+Furthermore, every instrument, whether equipped with a mute or not, affords a panel of playing techniques ranging in size between 11 (for the accordion) and 41 (for the bass tuba).
+In the rest of this paper, we abbreviate instrument--mute--technique by means of the acronym ``IMT''.
+One example of IMT is \texttt{TpC+S-ord}, \ie{} trumpet in C with a straight mute played in the ordinary technique.
+Another example of IMT is \texttt{Vn-pont}, \ie{} violin without any mute played in the \emph{sul ponticello} (bowing near the bridge) technique.
+
+Performers can play each IMT at various pitches, according to a tessitura that depends on the instrument but not on the choice of mute.
+Among the 16 instruments in this study, the two instruments with widest and narrowest tessituras, in their respective ordinary techniques, are the accordion (81 semitones) and the trumpet in C (32 semitones) respectively.
+Lastly, each IMT may be played at up to five intensity dynamics, ranging from quietest to loudest as: pianissimo (\emph{pp}), piano (\emph{p}), mezzo forte (\emph{mf}), forte (\emph{f}), and fortissimo (\emph{ff}).
+However, the resort to a non-ordinary playing technique may restrict both the tessitura and the dynamics range of the instrument--mute pair under consideration.
+For example, the pitch of pedal tones in brass instruments is tied to the fundamental mode of the bore, \ie{} usually B-flat or F. % TODO check this, use special package for musical pitches
+Likewise, the intensity of key clicks in the oboe is necessarily \emph{pp}, while the intensity of snap pizzicato \emph{\`a la Bart\'ok} in plucked strings is necessarily \emph{ff}.
+
+In summary, audio signals from isolated musical notes may vary across three categorical variables (instrument, mute, and technique) and two continuous variables (intensity and pitch).
+The Cartesian product of all five variables results in a combinatorial explosion of possible timbral sensations.
+The Studio On Line dataset (SOL), recorded at Ircam in 1998, offers a dense sampling of this combinatorial explosion, amounting to 25444 audio signals in total.
+We should note that this dense sampling is by no means comprehensive, as it erases other factors of acoustic variability, such as identity of performer, identity of instrument manufacturer, audio acquisition equipment, and room response characteristics; which are all restricted to singletons.
+Addressing these factors of variability is besides the scope of this paper, which focuses on the influence of playing technique.
+Despite this deliberate restriction, the size of the SOL dataset remains impractically large for collecting human similarity judgments.
+Our protocol addresses this problem by means of three complementary approaches: disentanglement of factors, expert pre-screening, and efficient annotation interface.
+
+\subsection*{Disentanglement of factors}
+First, we purposefully disentangle categorical variables (IMTs) from continuous variables (pitch and intensity) in the SOL dataset.
+Indeed, under first approximation, the perception of timbre is invariant to pitch and intensity.
+Therefore, we select auditory stimuli according to a reference pitch and a reference intensity; in our case, middle C (\ie{} C4) and \emph{mf}. % TODO use pitch spelling package
+After this selection, every IMT triplet contains a single acoustic exemplar, regarded as canonical in the following.
+The number of canonical stimuli for the entire SOL dataset is equal to 235.
+We should note, however, that the proposed pitch--intensity cannot be strictly enforced across all IMTs.
+Indeed, as explained above, a fraction of IMTs can only be achieved at restricted values of pitch and intensity parameters, \eg{} pedal tones or key clicks.
+Therefore, at a small cost of consistency, we only enforce the pitch--intensity reference (\ie{} C4 and \emph{mf}) when practically feasible, and fall back to other pitches and intensities if necessary.
+
+
+\subsection*{Expert pre-screening}
+Secondly, we reduce the number of IMTs in our study by focusing on those which are deemed to be most relevant.
+Here, we define the relevance of an IMT as the possibility of imitating it by means of another IMT from a different instrument.
+One example of such imitation is the acoustic similarity between slap tonguing in reed instruments and a snap pizzicato in strings instruments.
+To collect perceptual ratings of relevance, we recruited two professors in music composition at the Paris Conservatory (CNSMDP), and explicitly gave them our definition of relevance.
+Each of them inspected the entire corpus of $235$ IMTs and annotated them in terms of relevance according to a Likert scale with seven ticks.
+In this Likert scale, the value 1 (least relevant) denotes that the IMT under consideration has a timbre that is idiosyncratic of the instrument, and that therefore, it is unlikely that humans will pair it with IMTs from other instruments.
+Conversely, the value 7 (most relevant) denotes that the IMT under consideration has a strong similarity with IMTs from one or several other instruments.
+
+Once both experts completed their annotation, we retained all IPTs whose average relevance score was judged equal to 3 or higher.
+At the end of this stage of pre-screening, the list of IMT reduces from 235 to $N=78$.
+Tables 1 and 2, in the Appendix section of this paper, give a full list of these 78 highly relevant IMTs.
+It is worth noting that, according to both experts, the timbre of the accordion was judged too idiosyncratic, regardless of playing technique, to be relevant for this experiment.
+Indeed, the accordion is the only instrument in the aforementioned list of 
+instrument to have free reeds, keyboard-based actuation, or handheld airflow.
+Consequently, regardless of mute and technique, the set of instruments $\mathcal{I}$ in our study contains 15 elements.
+
+\subsection*{Efficient annotation interface}
+Thirdly, we design a graphical user interface for partitioning a corpus of short audio samples.
+The need for such an interface arises from the unscalability of Likert scales in the context of pairwise similarity judgments.
+Assuming that similarity is a symmetric quantity, collecting a dense matrix of continuously valued ratings of similarity among a dataset of $N$ items would require $\frac{1}{2}(N^2-N)$ Likert scales.
+In the case of $N=78$ IMTs, the task would amount to about 3k horizontal sliders, \ie{} several hours of cumbersome work for the human annotator.
+Engaging as many participants as possible in our study called for a more streamlined form of human--computer interaction, even if it sacrificed the availability of continuous ratings.
+To this end, we implemented a web application, named Cyberlioz, in which the user can spontaneously listen and arrange sounds into clusters of timbre similarity\footnote{The Web application for efficient audio annotation, as well as the raw anonymized responses of all $31$ participants to our study, is available at: \url{https://soundthings.org/research/cyberlioz/}}.
+The name Cyberlioz is a portmanteau between the prefix cyber- and the French composer Hector Berlioz.
+The choice is by no means coincidental: Berlioz is famous for having, in his \emph{Treatise on Orchestration} (1844), shed a particular focus on the role of timbre as a parameter for musical expression.
+ 
+ 
+Cyberlioz consists of a square panel on which is displayed a collection of circular grey dots, each of them corresponding to one of the $N=78$ IMTs, and initially distributed uniformly at random.
+Hovering the screen pointer onto each dot results in a playback of a representative audio sample of this IMT, \ie{} C4 and \emph{mf} in most cases. % TODO VL: use pitch notation library to express C4
+Furthermore, each dot can be freely placed on the screen by clicking, dragging, and dropping.
+Lastly, the user can assign a color to each dot by selecting it among a palette of 20 hues.
+The goal of the Cyberlioz interface is to form clusters of timbre similarity between IMTs, expressed by sameness of color.
+Here, any two audio samples are defined as similar if and only if one can be replaced by the other in a context of spectralist orchestration.
+
+In comparison with a traditional Web-based form, Cyberlioz offers a more intuitive and playful user experience, while expediting the obtention of a dense matrix ($N\times N$) of similarity judgments within a moderate duration of $30$ to $60$ minutes for each participant.
+In X 2016, we recruited volunteers to use Cyberlioz on their own computers, via a web browser, and equipped with a pair of earphones. % TODO give the exact two months.
+We publicized this study on international mailing lists for research in music audio processing, such as X and Y. % TODO give mailing lists
+Within two months, $K=31$ subjects accessed Cyberlioz and completed the task. % TODO break down by gender? give age stats? musical experience?
+%Figure \ref{fig:xp2display}. % TODO
+
+\subsection*{Hypergraph partitioning}
+Once the data collection campaign was complete, we analyzed the color assignments of each subject $k$ and converted them into a similarity graph $\mathcal{G}_k$, where the integer $k$ is an anonymized subject index, ranging between $1$ and $K$.
+For a given $k$, the graph $\mathcal{G}_k$ contains $N=78$ vertices, each representing a different IMT in the corpus.
+In $\mathcal{G}_k$, an edge connects any two vertices $m$ and $n$ if the corresponding dots in Cyberlioz have the same color.
+Otherwise, there is no edge connecting $m$ and $n$.
+This way, $\mathcal{G}_k$ contains as many connected components as the number of similarity clusters for the subject $k$, \ie{} the number of distinct colors on the Cyberlioz interface in the response of $k$.
+
+%Only the clustering given by the subjects using the color labels is considered to estimate the spontaneous judgments of similarity among \ipt. The spatial organization of the dots representing the \ipt could provide information about the similarity, but this would implicitly enforce the fact that the timbral similarity space is two dimensional. We therefore now only study the properties of the clusterings performed by the subject prior to converting them into an overall similarity matrix.
+
+We aggregate the similarity judgments from all $K$ subjects by embedding them into a hypergraph $\mathcal{H}$, that is, a graph whose edges may connect three or more vertices at once.
+Specifically, $\mathcal{H}$ contains $N$ vertices, each representing an IMT; and each ``hyperedge'' in $\mathcal{H}$ corresponds to some connected component in one of the graphs $\mathcal{G}_k$'s among all subject $k$.
+Then, we convert the hypergraph $\mathcal{H}$ back into a conventional graph $\mathcal{G}_0$ by means of a combinatorial optimization algorithm algorithm known as hypergraph partitioning \cite{kernighan1970efficient,han1997scalable,strehl2002cluster}. % TODO describe the gist of hypergraph partitioning?
+To construct $G_0$, we select a number of clusters $C=5$ a priori, and run hypergraph partitioning to assign each vertex $i$ to one of these clusters.
+Intuitively, hypergraph partitioning optimizes a tradeoff between two objectives: first, balancing the size of all clusters in terms of their respective numbers of vertices; and secondly, keeping most hyperedges enclosed within as few distinct clusters as possible.
+
+While the graphs $\mathcal{G}_1 \ldots \mathcal{G}_K$ encode the subjective similarity judgments of participants $1$ to $K$, the graph $\mathcal{G}_0$ represents a form of consensual judgment that is shared across all participants, while discarding intersubjective variability.
+Although the rest of our paper focuses on the consensus $\mathcal{G}_0$, it is worth pointing out that the same technical framework could apply to a single subject $k$, or to a subgroup of the $K=31$ subjects.
+This remark emphasizes the potential of our similarity learning method as a customizable tool for visualizing and extrapolating the timbre similarity space of a newcoming subject, after less than one hour of using Cyberlioz.
+
+
+\subsection*{Inter-instrument similarity}
+
+Before addressing the question of modeling timbre in the audio domain, we conduct an exploratory study on the structure of similarity judgments themselves.
+Specifically, we ask whether human listeners, when confronted with a diverse corpus of IMT samples, tend to cluster those samples in terms of an organological taxonomy.
+To answer this question, we derive from the consensus clustering graph $\mathcal{G}_0$ an instrument-wise similarity matrix $\mathbf{A}_{\mathcal{I}}$ whose rows and columns are defined on the finite set $\mathcal{I}$ of instruments.
+For every instrumment--instrument pair $(i,j)$, we set the value of $\mathbf{A}_{\mathcal{I}}$ at row $i$ and column $j$ equal to the number of pairs in $\mathcal{G}_0$ from instruments $i$ and $j$ respectively, renormalized by the number of IMT samples from either instrument $i$ or instrument $j$:
+\[
+\mathbf{A}_{\mathcal{I}}(i,j) = \dfrac{
+2\,\Card \big\{ (m, n) \,\vert\, \mathrm{Instrument}(m)=i ; \mathrm{Instrument}(n)=j ; m \overset{\mathcal{G}_0}{\sim} n \big\}
+}{
+\Card \big\{n \,\vert\, \mathrm{Instrument}(n) \in \{ i, j \} \big\}
+}.
+\label{eq:instrument-similarity}
+\]
+
+Then, we run Ward's method to cluster instruments in $\mathcal{I}$ according to the similarity matrix $\mathbf{A}_{\mathcal{I}}$.
+This method yields a permutation $\sigma_{\mathcal{I}}: \mathcal{I} \rightarrow \mathcal{I}$ of the rows and columns in $\mathbf{A}_{\mathcal{I}}$.
+Intuitively, for every instrument--instrument pair $(i, j) \in \mathcal{I}^2$, the distance $\vert \sigma_{\mathcal{I}}(i) - \sigma_{\mathcal{I}}(j) \vert$ after permutation is small if and only if the similarity $\mathbf{A}_{\mathcal{I}}(i, j)$ is large.
+Figure \ref{fig:consensusVsI} displays the rearranged similarity matrix $\widetilde{\mathbf{A}}_{\mathcal{I}} : (i,j)\in \mathcal{I}^2 \mapsto \mathbf{A}_{\mathcal{I}}(\sigma_{\mathcal{I}}^{-1}(i), \sigma_{\mathcal{I}}^{-1}(j))$ as a result of such agglomerative hierarchical clustering procedure.
+
+Interestingly, the matrix $\widetilde{\mathbf{A}}_{\mathcal{I}}$ exhibits a block diagonal structure, which roughly reflects the classical taxonomy of musical instruments: four woodwinds (BbCl, Fl, ASax, Ob) are clustered together, followed by a cluster containing one woodwind (Bn) and four brass (BBTb, Hn, TTbn, and TpC), followed by a cluster of all strings (Cb, Va, Vn, Vc, Gtr, Hp).
+Furthermore, the largest cross-instrument similarity arises for the only pair of purely plucked instruments, namely, harp and guitar.
+
+\begin{figure}
+\center
+\includegraphics[width = \textwidth]{figures/consensusVsI.png}
+\caption{
+%TODO caption
+}
+\label{fig:consensusVsI}
+\end{figure}
+
+
+\subsection*{Inter-technique similarity}
+From the consensus clustering graph $\mathcal{G}_0$, we also derive a technique-wise similarity matrix $\mathbf{A}_{\mathcal{T}}$ whose rows and columns are defined on the finite set $\mathcal{T}$ of playing techniques.
+We define the similarity between any two playing techniques $u$ and $v$ in $\mathcal{T}$ as the following ratio of set cardinals:
+\[
+\mathbf{A}_{\mathcal{T}}(u,v) = \dfrac{
+2\,\Card \big\{ (m, n) \,\vert\, \mathrm{Technique}(m)=u ; \mathrm{Technique}(n)=v ; m \overset{\mathcal{G}_0}{\sim} n \big\}
+}{
+\Card \big\{n \,\vert\, \mathrm{Technique}(n) \in \{ u, v \} \big\}
+},
+\]
+alike the definition of $\mathbf{A}_{\mathcal{I}}$.
+Again, we run Ward's method to cluster playing techniques in $\mathcal{T}$ according to their similarity $\mathbf{A}_{\mathcal{T}}$.
+Figure \ref{fig:consensusVsPt} displays the rearranged similarity matrix $\widetilde{\mathbf{A}}_{\mathcal{T}} : (u,v)\in \mathcal{T}^2 \mapsto \mathbf{A}_{\mathcal{T}}(\sigma_{\mathcal{T}}^{-1}(u), \sigma_{\mathcal{T}}^{-1}(v))$ as a result of such agglomerative hierarchical clustering procedure.
+
+Contrary to inter-instrument similarity (Figure \ref{fig:consensusVsI}), inter-technique similarity does not exhibit a clear segregation of instrument families.
+For example, the first two rows in $\widetilde{\mathbf{A}}_{\mathcal{T}}$ correspond to a oboe sample (\texttt{Ob-blow-no-reed-C4}, \ie{} blowing without the reed) and a cello sample (\texttt{Vc-legno-tratto-C4-mf-1c}, \ie{} drawing the wooden part of the bow across the string) respectively, despite the fact that the oboe is a woodwind instrument whereas the cello is a string instrument.
+
+More generally, even though the block diagonal structure of the matrix $\widetilde{\mathbf{A}}_{\mathcal{T}}$ is less prevalent than in $\widetilde{\mathbf{A}}_{\mathcal{I}}$, playing technique clusters appear to transcend instrument categories.
+Nevertheless, these clusters correspond to some basic attributes of qualitative timbre: by and large, the top-left region of the matrix contains sustained sounds whereas the bottom-right region contains percussive sounds.
+Interestingly, the ordinary technique (\texttt{ord}) appears at the center of the matrix, \ie{} at the intersection between sustained sounds and percussive sounds.
+This is because the notion of ``ordinariness'' does not prescribe the same gesture for all instruments: \eg{}, an ordinary guitar sound is expected to be percussive whereas an ordinary flute sound is expected to be sustained.
+
+
+\begin{figure}
+\center
+\includegraphics[width = \textwidth]{figures/consensusVsPt.png}
+\caption{A description of the playing technique abbreviations in made available in the Appendix (Tables \ref{tab:list1} and \ref{tab:list2}).
+%TODO add a double arrow
+% rough <-- soft --> rough
+% sustained <-- "ordinary" --> percussive
+}
+\label{fig:consensusVsPt}
+\end{figure}
+
+
 
 \section*{\nmu Proposed approach}
 \label{sec:method}
@@ -358,10 +547,11 @@ Conversely, from the standpoint of music cognition, our model offers a scalable 
 Same 3 sounds spec + scatt.}
 \end{figure}
 
-Following the above discussed matters, we propose a ranking system that is based on a processing pipeline made of two main components, see Figure \ref{fig:pipeline}.
-The first component maps the audio signal of the query and the items of the database into a high-dimensional timbre space using the scattering transform.
-The second component warps this timbre space by taking into account perceptual judgments represented as a consensus clustering of the items in the dataset, as presented in the \nameref{sec:survey} section.
-This warping, or reweighting, of the space is performed using LMNN.
+
+%Following the above discussed matters, we propose a ranking system that is based on a processing pipeline made of two main components, see Figure \ref{fig:pipeline}.
+%The first component maps the audio signal of the query and the items of the database into a high-dimensional timbre space using the scattering transform.
+%The second component warps this timbre space by taking into account perceptual judgments represented as a consensus clustering of the items in the dataset, as presented in the \nameref{sec:survey} section.
+%This warping, or reweighting, of the space is performed using LMNN.
 
 
 
@@ -424,191 +614,9 @@ For this, we use the \emph{large margin nearest neighbor} (LMNN) metric learning
 This approach constructs a positive semi-definite weighting matrix $L$ such that the distance $\|Lx - Ly\|$ best classifies a set of points into a fixed clustering assignment.
 
 
-\section*{\nmu Timbre similarity judgments}
-\label{sec:survey}
-
-The European symphonic orchestra encompasses four families of instruments: strings, woodwinds, brass, and percussion.
-In this article, we focus on the former three, and leave the question of learning auditory similarities between percussion instruments to future research.
-The reason behind this choice is that most percussive instruments do not allow much variation in terms of pitch or intensity, if at all; thus reducing the amount of intra-technique variability in the time--frequency domain.
-Furthermore, although percussive instruments certainly exhibit a rich diversity of playing techniques (we refer to \cite{peinkofer1976book} for a survey) these are rarely shared with pitched instruments.
-In comparison, techniques for sustained tones such as \emph{vibrato} or \emph{tremolo} permeate throughout a vast instrumentarium, \eg{} bowed strings and reed alike.
-We refer to \cite{wu2018taslp} and \cite{pearce2019appliedsciences} for reviews of the recent literature on the timbre modeling of percussive instruments, from the standpoints of MIR and music cognition respectively.
-
-\subsection*{Dataset}
-We consider a list of 16 instruments: violin (Vn), viola (Va), cello (Vc), contrabass (Cb), concert harp (Hp), Spanish guitar (Gtr), accordion (Acc), flute (Fl), soprano clarinet (BbCl), alto saxophone (ASax), oboe (Ob), bassoon (Bn), trumpet in C (TpC), French horn (Hn), tenor trombone (TTbn), and bass tuba (BBTb).
-Among this list, the former six are strings, the next six are woodwind, and the last four are brass.
-Some of these instruments may be temporarily equipped with timbre-altering mutes, such as a rubber sordina on the bridge of a violin or an aluminium ``wah-wah'', also known as \emph{harmon}, inside in the bell of a trumpet.
-Once augmented with mutes, the list of 16 instruments grows up to 33.
-Furthermore, every instrument, whether equipped with a mute or not, affords a panel of playing techniques ranging in size between 11 (for the accordion) and 41 (for the bass tuba).
-In the rest of this paper, we abbreviate instrument--mute--technique by means of the acronym ``IMT''.
-One example of IMT is \texttt{TpC+S-ord}, \ie{} trumpet in C with a straight mute played in the ordinary technique.
-Another example of IMT is \texttt{Vn-pont}, \ie{} violin without any mute played in the \emph{sul ponticello} (bowing near the bridge) technique.
-
-Performers can play each IMT at various pitches, according to a tessitura that depends on the instrument but not on the choice of mute.
-Among the 16 instruments in this study, the two instruments with widest and narrowest tessituras, in their respective ordinary techniques, are the accordion (81 semitones) and the trumpet in C (32 semitones) respectively.
-Lastly, each IMT may be played at up to five intensity dynamics, ranging from quietest to loudest as: pianissimo (\emph{pp}), piano (\emph{p}), mezzo forte (\emph{mf}), forte (\emph{f}), and fortissimo (\emph{ff}).
-However, the resort to a non-ordinary playing technique may restrict both the tessitura and the dynamics range of the instrument--mute pair under consideration.
-For example, the pitch of pedal tones in brass instruments is tied to the fundamental mode of the bore, \ie{} usually B-flat or F. % TODO check this, use special package for musical pitches
-Likewise, the intensity of key clicks in the oboe is necessarily \emph{pp}, while the intensity of snap pizzicato \emph{\`a la Bart\'ok} in plucked strings is necessarily \emph{ff}.
-
-In summary, audio signals from isolated musical notes may vary across three categorical variables (instrument, mute, and technique) and two continuous variables (intensity and pitch).
-The Cartesian product of all five variables results in a combinatorial explosion of possible timbral sensations.
-The Studio On Line dataset (SOL), recorded at Ircam in 1998, offers a dense sampling of this combinatorial explosion, amounting to 25444 audio signals in total.
-We should note that this dense sampling is by no means comprehensive, as it erases other factors of acoustic variability, such as identity of performer, identity of instrument manufacturer, audio acquisition equipment, and room response characteristics; which are all restricted to singletons.
-Addressing these factors of variability is besides the scope of this paper, which focuses on the influence of playing technique.
-Despite this deliberate restriction, the size of the SOL dataset remains impractically large for collecting human similarity judgments.
-Our protocol addresses this problem by means of three complementary approaches: disentanglement of factors, expert pre-screening, and efficient annotation interface.
-
-\subsection*{Disentanglement of factors}
-First, we purposefully disentangle categorical variables (IMTs) from continuous variables (pitch and intensity) in the SOL dataset.
-Indeed, under first approximation, the perception of timbre is invariant to pitch and intensity.
-Therefore, we select auditory stimuli according to a reference pitch and a reference intensity; in our case, middle C (\ie{} C4) and \emph{mf}. % TODO use pitch spelling package
-After this selection, every IMT triplet contains a single acoustic exemplar, regarded as canonical in the following.
-The number of canonical stimuli for the entire SOL dataset is equal to 235.
-We should note, however, that the proposed pitch--intensity cannot be strictly enforced across all IMTs.
-Indeed, as explained above, a fraction of IMTs can only be achieved at restricted values of pitch and intensity parameters, \eg{} pedal tones or key clicks.
-Therefore, at a small cost of consistency, we only enforce the pitch--intensity reference (\ie{} C4 and \emph{mf}) when practically feasible, and fall back to other pitches and intensities if necessary.
 
 
-\subsection*{Expert pre-screening}
-Secondly, we reduce the number of IMTs in our study by focusing on those which are deemed to be most relevant.
-Here, we define the relevance of an IMT as the possibility of imitating it by means of another IMT from a different instrument.
-One example of such imitation is the acoustic similarity between slap tonguing in reed instruments and a snap pizzicato in strings instruments.
-To collect perceptual ratings of relevance, we recruited two professors in music composition at the Paris Conservatory (CNSMDP), and explicitly gave them our definition of relevance.
-Each of them inspected the entire corpus of $235$ IMTs and annotated them in terms of relevance according to a Likert scale with seven ticks.
-In this Likert scale, the value 1 (least relevant) denotes that the IMT under consideration has a timbre that is idiosyncratic of the instrument, and that therefore, it is unlikely that humans will pair it with IMTs from other instruments.
-Conversely, the value 7 (most relevant) denotes that the IMT under consideration has a strong similarity with IMTs from one or several other instruments.
-Once both experts completed their annotation, we retained all IPTs whose average relevance score was judged equal to 3 or higher.
-At the end of this stage of pre-screening, the list of IMT reduces from 235 to $N=78$.
-Tables 1 and 2, in the Appendix section of this paper, give a full list of these 78 highly relevant IMTs.
-It is worth noting that, according to both experts, the timbre of the accordion was judged too idiosyncratic, regardless of playing technique, to be relevant for this experiment.
-Indeed, the accordion is the only instrument in the aforementioned list of 
-instrument to have free reeds, keyboard-based actuation, or handheld airflow.
-Consequently, regardless of mute and technique, the set of instruments $\mathcal{I}$ in our study contains 15 elements.
-
-\subsection*{Efficient annotation interface}
-Thirdly, we design a graphical user interface for partitioning a corpus of short audio samples.
-The need for such an interface arises from the unscalability of Likert scales in the context of pairwise similarity judgments.
-Assuming that similarity is a symmetric quantity, collecting a dense matrix of continuously valued ratings of similarity among a dataset of $N$ items would require $\frac{1}{2}(N^2-N)$ Likert scales.
-In the case of $N=78$ IMTs, the task would amount to about 3k horizontal sliders, \ie{} several hours of cumbersome work for the human annotator.
-Engaging as many participants as possible in our study called for a more streamlined form of human--computer interaction, even if it sacrificed the availability of continuous ratings.
-To this end, we implemented a web application, named Cyberlioz, in which the user can spontaneously listen and arrange sounds into clusters of timbre similarity\footnote{The Web application for efficient audio annotation, as well as the raw anonymized responses of all $31$ participants to our study, is available at: \url{https://soundthings.org/research/cyberlioz/}}.
-The name Cyberlioz is a portmanteau between the prefix cyber- and the French composer Hector Berlioz.
-The choice is by no means coincidental: Berlioz is famous for having, in his \emph{Treatise on Orchestration} (1844), shed a particular focus on the role of timbre as a parameter for musical expression.
- 
- 
-Cyberlioz consists of a square panel on which is displayed a collection of circular grey dots, each of them corresponding to one of the $N=78$ IMTs, and initially distributed uniformly at random.
-Hovering the screen pointer onto each dot results in a playback of a representative audio sample of this IMT, \ie{} C4 and \emph{mf} in most cases. % TODO VL: use pitch notation library to express C4
-Furthermore, each dot can be freely placed on the screen by clicking, dragging, and dropping.
-Lastly, the user can assign a color to each dot by selecting it among a palette of 20 hues.
-The goal of the Cyberlioz interface is to form clusters of timbre similarity between IMTs, expressed by sameness of color.
-Here, any two audio samples are defined as similar if and only if one can be replaced by the other in a context of spectralist orchestration.
-
-In comparison with a traditional Web-based form, Cyberlioz offers a more intuitive and playful user experience, while expediting the obtention of a dense matrix ($N\times N$) of similarity judgments within a moderate duration of $30$ to $60$ minutes for each participant.
-In X 2016, we recruited volunteers to use Cyberlioz on their own computers, via a web browser, and equipped with a pair of earphones. % TODO give the exact two months.
-We publicized this study on international mailing lists for research in music audio processing, such as X and Y. % TODO give mailing lists
-Within two months, $K=31$ subjects accessed Cyberlioz and completed the task. % TODO break down by gender? give age stats? musical experience?
-%Figure \ref{fig:xp2display}. % TODO
-
-\subsection*{Hypergraph partitioning}
-Once the data collection campaign was complete, we analyzed the color assignments of each subject $k$ and converted them into a similarity graph $\mathcal{G}_k$, where the integer $k$ is an anonymized subject index, ranging between $1$ and $K$.
-For a given $k$, the graph $\mathcal{G}_k$ contains $N=78$ vertices, each representing a different IMT in the corpus.
-In $\mathcal{G}_k$, an edge connects any two vertices $m$ and $n$ if the corresponding dots in Cyberlioz have the same color.
-Otherwise, there is no edge connecting $m$ and $n$.
-This way, $\mathcal{G}_k$ contains as many connected components as the number of similarity clusters for the subject $k$, \ie{} the number of distinct colors on the Cyberlioz interface in the response of $k$.
-
-%Only the clustering given by the subjects using the color labels is considered to estimate the spontaneous judgments of similarity among \ipt. The spatial organization of the dots representing the \ipt could provide information about the similarity, but this would implicitly enforce the fact that the timbral similarity space is two dimensional. We therefore now only study the properties of the clusterings performed by the subject prior to converting them into an overall similarity matrix.
-
-We aggregate the similarity judgments from all $K$ subjects by embedding them into a hypergraph $\mathcal{H}$, that is, a graph whose edges may connect three or more vertices at once.
-Specifically, $\mathcal{H}$ contains $N$ vertices, each representing an IMT; and each ``hyperedge'' in $\mathcal{H}$ corresponds to some connected component in one of the graphs $\mathcal{G}_k$'s among all subject $k$.
-Then, we convert the hypergraph $\mathcal{H}$ back into a conventional graph $\mathcal{G}_0$ by means of a combinatorial optimization algorithm algorithm known as hypergraph partitioning \cite{kernighan1970efficient,han1997scalable,strehl2002cluster}. % TODO describe the gist of hypergraph partitioning?
-To construct $G_0$, we select a number of clusters $C=5$ a priori, and run hypergraph partitioning to assign each vertex $i$ to one of these clusters.
-Intuitively, hypergraph partitioning optimizes a tradeoff between two objectives: first, balancing the size of all clusters in terms of their respective numbers of vertices; and secondly, keeping most hyperedges enclosed within as few distinct clusters as possible.
-
-While the graphs $\mathcal{G}_1 \ldots \mathcal{G}_K$ encode the subjective similarity judgments of participants $1$ to $K$, the graph $\mathcal{G}_0$ represents a form of consensual judgment that is shared across all participants, while discarding intersubjective variability.
-Although the rest of our paper focuses on the consensus $\mathcal{G}_0$, it is worth pointing out that the same technical framework could apply to a single subject $k$, or to a subgroup of the $K=31$ subjects.
-This remark emphasizes the potential of our similarity learning method as a customizable tool for visualizing and extrapolating the timbre similarity space of a newcoming subject, after less than one hour of using Cyberlioz.
-
-
-
-\subsection*{Inter-instrument similarity}
-
-Before addressing the question of modeling timbre in the audio domain, we conduct an exploratory study on the structure of similarity judgments themselves.
-Specifically, we ask whether human listeners, when confronted with a diverse corpus of IMT samples, tend to cluster those samples in terms of an organological taxonomy.
-To answer this question, we derive from the consensus clustering graph $\mathcal{G}_0$ an instrument-wise similarity matrix $\mathbf{A}_{\mathcal{I}}$ whose rows and columns are defined on the finite set $\mathcal{I}$ of instruments.
-For every instrumment--instrument pair $(i,j)$, we set the value of $\mathbf{A}_{\mathcal{I}}$ at row $i$ and column $j$ equal to the number of pairs in $\mathcal{G}_0$ from instruments $i$ and $j$ respectively, renormalized by the number of IMT samples from either instrument $i$ or instrument $j$:
-\[
-\mathbf{A}_{\mathcal{I}}(i,j) = \dfrac{
-2\,\Card \big\{ (m, n) \,\vert\, \mathrm{Instrument}(m)=i ; \mathrm{Instrument}(n)=j ; m \overset{\mathcal{G}_0}{\sim} n \big\}
-}{
-\Card \big\{n \,\vert\, \mathrm{Instrument}(n) \in \{ i, j \} \big\}
-}.
-\label{eq:instrument-similarity}
-\]
-%In order to better interpret the information captured by the consensus clustering, we generate two similarity matrices, one for the 15 instruments used, see Figure \ref{fig:consensusVsI}, and one for the 23 PTs used, see Figure \ref{fig:consensusVsPt}. For the instruments similarity matrix, the value within each cell counts the number of times two instruments have been grouped in the consensus clustering, normalized by the average number of IPTs that considered the two instruments. The PTs similarity matrix is computed in the same way.
-
-Then, we run Ward's method to cluster instruments in $\mathcal{I}$ according to the similarity matrix $\mathbf{A}_{\mathcal{I}}$.
-This method yields a permutation $\sigma_{\mathcal{I}}: \mathcal{I} \rightarrow \mathcal{I}$ of the rows and columns in $\mathbf{A}_{\mathcal{I}}$.
-Intuitively, for every instrument--instrument pair $(i, j) \in \mathcal{I}^2$, the distance $\vert \sigma_{\mathcal{I}}(i) - \sigma_{\mathcal{I}}(j) \vert$ after permutation is small if and only if the similarity $\mathbf{A}_{\mathcal{I}}(i, j)$ is large.
-Figure \ref{fig:consensusVsI} displays the rearranged similarity matrix $\widetilde{\mathbf{A}}_{\mathcal{I}} : (i,j)\in \mathcal{I}^2 \mapsto \mathbf{A}_{\mathcal{I}}(\sigma_{\mathcal{I}}^{-1}(i), \sigma_{\mathcal{I}}^{-1}(j))$ as a result of such agglomerative hierarchical clustering procedure.
-
-Interestingly, the matrix $\widetilde{\mathbf{A}}_{\mathcal{I}}$ exhibits a block diagonal structure, which roughly reflects the classical taxonomy of musical instruments: four woodwinds (BbCl, Fl, ASax, Ob) are clustered together, followed by a cluster containing one woodwind (Bn) and four brass (BBTb, Hn, TTbn, and TpC), followed by a cluster of all strings (Cb, Va, Vn, Vc, Gtr, Hp).
-Furthermore, the largest cross-instrument similarity arises for the only pair of purely plucked instruments, namely, harp and guitar.
-
-
-%$\sigma : I \rightarrow I$ 
-%The ordering of the instruments or the PTs on the vertical and horizontal axes is chosen according to the ordering given by an agglomerative hierarchical clustering using the ward criterion of the similarity matrix under inspection. This ordering allows us to interpret the similarity matrices more easily compared to an alphabetical ordering while preserving the  similarity values between each pair of instruments or PTs.
-
-%Interestingly, although several sounds pairs were obtained from the same instrument (but different PTs) and others were obtained using the same PT (but different instruments), the consensus clustering did not favor one of these taxonomies over the other.
-
-%\ml{vl : je pense qu'il faut remplacer la derniere phrase par quelque chose de plus musicologique, en disant que l'on retrouve bien l'organologie, et montrer certains points d'interet sur les pts pour guider le lecteur.}
-
-\begin{figure}
-\center
-\includegraphics[width = \textwidth]{figures/consensusVsI.png}
-\caption{
-%TODO caption
-}
-\label{fig:consensusVsI}
-\end{figure}
-
-
-\subsection*{Inter-technique similarity}
-From the consensus clustering graph $\mathcal{G}_0$, we also derive a technique-wise similarity matrix $\mathbf{A}_{\mathcal{T}}$ whose rows and columns are defined on the finite set $\mathcal{T}$ of playing techniques.
-We define the similarity between any two playing techniques $u$ and $v$ in $\mathcal{T}$ as the following ratio of set cardinals:
-\[
-\mathbf{A}_{\mathcal{T}}(u,v) = \dfrac{
-2\,\Card \big\{ (m, n) \,\vert\, \mathrm{Technique}(m)=u ; \mathrm{Technique}(n)=v ; m \overset{\mathcal{G}_0}{\sim} n \big\}
-}{
-\Card \big\{n \,\vert\, \mathrm{Technique}(n) \in \{ u, v \} \big\}
-},
-\]
-alike the definition of $\mathbf{A}_{\mathcal{I}}$.
-Again, we run Ward's method to cluster playing techniques in $\mathcal{T}$ according to their similarity $\mathbf{A}_{\mathcal{T}}$.
-Figure \ref{fig:consensusVsPt} displays the rearranged similarity matrix $\widetilde{\mathbf{A}}_{\mathcal{T}} : (u,v)\in \mathcal{T}^2 \mapsto \mathbf{A}_{\mathcal{T}}(\sigma_{\mathcal{T}}^{-1}(u), \sigma_{\mathcal{T}}^{-1}(v))$ as a result of such agglomerative hierarchical clustering procedure.
-
-Contrary to inter-instrument similarity (Figure \ref{fig:consensusVsI}), inter-technique similarity does not exhibit a clear segregation of instrument families.
-For example, the first two rows in $\widetilde{\mathbf{A}}_{\mathcal{T}}$ correspond to a oboe sample (\texttt{Ob-blow-no-reed-C4}, \ie{} blowing without the reed) and a cello sample (\texttt{Vc-legno-tratto-C4-mf-1c}, \ie{} drawing the wooden part of the bow across the string) respectively, despite the fact that the oboe is a woodwind instrument whereas the cello is a string instrument.
-
-More generally, even though the block diagonal structure of the matrix $\widetilde{\mathbf{A}}_{\mathcal{T}}$ is less prevalent than in $\widetilde{\mathbf{A}}_{\mathcal{I}}$, playing technique clusters appear to transcend instrument categories.
-Nevertheless, these clusters correspond to some basic attributes of qualitative timbre: by and large, the top-left region of the matrix contains sustained sounds whereas the bottom-right region contains percussive sounds.
-Interestingly, the ordinary technique (\textt{ord}) appears at the center of the matrix, \ie{} at the intersection between sustained sounds and percussive sounds.
-This is because the notion of ``ordinariness'' does not prescribe the same gesture for all instruments: \eg{}, an ordinary guitar sound is expected to be percussive whereas an ordinary flute sound is expected to be sustained.
-
-
-\begin{figure}
-\center
-\includegraphics[width = \textwidth]{figures/consensusVsPt.png}
-\caption{A description of the playing technique abbreviations in made available in the Appendix (Tables \ref{tab:list1} and \ref{tab:list2}).
-%TODO add a double arrow
-% rough <-- soft --> rough
-% sustained <-- "ordinary" --> percussive
-}
-\label{fig:consensusVsPt}
-\end{figure}
-
-
-\section*{\nmu Results}
+\section*{\nmu Machine listening experiments}
 \label{sec:results}
 
 The processing pipeline presented in Figure \ref{fig:pipeline} addresses the problem of conditioning a timbre space using perceptual judgments of timbral similarity.

@@ -557,11 +557,8 @@ Same 3 sounds spec + scatt.}
 %This warping, or reweighting, of the space is performed using LMNN.
 
 
-
 \subsection*{Scattering transform}
 \label{sec:scattering}
-
-% cite Lostanlen PhD dissertation. classification results on Medley-solos-DB. suggests that JTFS is competitive wrt deep learning techniques even in the large data regime (500-5000 samples per class).
 
 While cortical representations have been successful in distinguishing properties of audio recordings (including similarity analysis and classification tasks), they remain models for the electrophysiological signals recorded in the audio cortex.
 As such, their calculation is not always computationally efficient and their mathematical properties may be difficult to analyze directly.
@@ -600,6 +597,7 @@ Furthermore, we may calculate the scattering transforms of several model signals
 They have also enjoyed success in several audio classification and similarity retrieval tasks \cite{anden2011multiscale,bauge2013representing,anden2014tsp,anden2019tsp,lostanlen2018jasmp,lostanlen2018extended}.
 %\ja{Need to flesh out the above with some equations.
 %We're no longer talking to biologists, so we don't need to be afraid.}
+% TODO: avoid citing the same papers over and over
 
 \subsection*{Similarity weighting}
 \label{sec:weighting}
@@ -615,7 +613,7 @@ We expect the resulting representation $Lx$ to provide a more accurate model for
 We now use the consensus clustering to reweight the similarity between feature vectors (either MFCCs or scattering transforms).
 For this, we use the \emph{large margin nearest neighbor} (LMNN) metric learning algorithm \cite{weinberger2006distance, weinberger2009distance}.
 This approach constructs a positive semi-definite weighting matrix $L$ such that the distance $\|Lx - Ly\|$ best classifies a set of points into a fixed clustering assignment.
-
+% TODO: this section needs more detail. In particular, it is worth discussing the role of Euclidean distances as an "initial guess" for LMNN. (this is unlike MLR, for example).
 
 
 

@@ -634,16 +634,23 @@ In practice, for training and evaluation purposes, the graph $\mathcal{G}_0$ ste
 
 \subsection*{Semi-supervised label propagation}
 
-The perceptual data gathered during the perceptual experiment considers 78 \ipts, each represented by one sound recording that the subject could listen to before clustering the \ipts.
-For those 78 \ipts, 31 clusterings $C_k, 0<k<31, \Card(C_k)=78$ are available, that are our reference in terms of timbre similarity.
+In music information retrieval, the core motivation behind timbre similarity modeling lies in the prospect of navigating an online corpus of digital music.
+The typical size of such a corpus ranges between $N\sim10^3$ and $N\sim10^7$, depending on the use case.
+As of today, the two largest databases of isolated musical notes with extended playing techniques are FullSOL and conTimbre, with $N\sim1.2\cdot10^5$ and $N\sim8.7\cdot10^4$ samples respectively.% TODO cite FullSOL and conTimbre
+In comparison, the instrument--mute--technique (IMT) triplets in the present study on human subjects amount to merely $N=78$ samples, \ie{} three orders of magnitude less than conTimbre.
+%even though there is expert pre-screening, etc.
+% does not reflect the typical scale at which these systems are deployed.
+
+%The perceptual data gathered during the perceptual experiment considers 78 \ipts, each represented by one sound recording that the subject could listen to before clustering the \ipts.
+%For those 78 \ipts, 31 clusterings $C_k, 0<k<31, \Card(C_k)=78$ are available, that are our reference in terms of timbre similarity.
 %TODO VL update integer range for k.
 % Describe every k as an equivalency class
-\ja{What is $C_k$ here?
-Also, should it be $0 < k \le 31$?
-Might be more natural to say that $k = 1, 2, \ldots, 31$, in that case.}%
-If \ipt $i$ and \ipt $j$ are clustered together by subject $k$, then $C_k(i)=C_k(j)$.
-In essence, an effective ranking system should retrieve sounds that belong to \ipts that are clustered together in each of the 31 clusterings.
-Depending on the preferences of subjects, there may be competition between clusterings that should be mitigated when appreciating quantitatively the ranking performance.
+%\ja{What is $C_k$ here?
+%Also, should it be $0 < k \le 31$?
+%Might be more natural to say that $k = 1, 2, \ldots, 31$, in that case.}%
+%If \ipt $i$ and \ipt $j$ are clustered together by subject $k$, then $C_k(i)=C_k(j)$.
+%In essence, an effective ranking system should retrieve sounds that belong to \ipts that are clustered together in each of the 31 clusterings.
+%Depending on the preferences of subjects, there may be competition between clusterings that should be mitigated when appreciating quantitatively the ranking performance.
 
 In order to provide enough data for the numerical analysis described in this section, we assume that the impact of the pitch and nuance on perceptual similarity is much lower than the timbral similarity constraints expressed by the perceptual judgments of the subjects.
 Assuming invariance to timbre with respect to pitch and nuance is in line with the ANSI definition of timbre \ml{vl, citation. reformuler tout le paragraphe}, it is thus taken in this work as a reasonable assumption.

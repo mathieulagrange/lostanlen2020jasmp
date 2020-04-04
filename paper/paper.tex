@@ -622,7 +622,10 @@ This approach constructs a positive semi-definite weighting matrix $L$ such that
 \label{sec:results}
 
 The previous section described our methods for extracting spectrotemporal modulations in audio signals, as well as learning a non-Euclidean similarity metric between them.
-We now turn to apply these methods to the problem of browsing a large-scale digital library of isolated musical notes, involving an extended vocabulary of playing techniques.
+We now turn to apply these methods to the problem of allocating isolated musical notes to clusters of a timbre similarity graph $\mathcal{G}_0$.
+In practice, for training and evaluation purposes, the graph $\mathcal{G}_0$ stems from the consensus of $K=31$ users of the Cyberlioz web application, which was described in the \ref{sec:survey} section.
+% browsing a large-scale digital library of isolated musical notes, involving an extended vocabulary of playing techniques.
+
 % TODO VL: organize design choices.
 % (1) temporal support
 % (2) time-frequency scattering / time scattering

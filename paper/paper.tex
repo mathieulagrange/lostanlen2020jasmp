@@ -254,6 +254,8 @@ It encodes patterns of spectrotemporal modulation in the query while offering nu
 The metric learning stage is a linear map, optimized via large-margin nearest neighbors (LMNN) \cite{weinberger2009distance}.
 It recombines scattering coefficients so as to fit a training set of human judgments \cite{mcadams1995psychres}, which may either stem from the perceptual idiosyncracies of a single subject or from a collective consensus.
 
+Figure \ref{fig:pipeline} summarizes our experimental protocol: it illustrates how visual annotations (top) can inform feature extraction (center) to produce a nearest-neighbor search engine which is consistent with timbre similarity judgments (bottom).
+
 \subsection*{Contributions}
 This article gathers three novel contributions.
 First, our model encompasses a broad range of extended playing techniques, well beyond the so-called ``ordinary'' mode of acoustic production \cite{lostanlen2018extended}.
@@ -264,6 +266,13 @@ A comprehensive ablation study of our system demonstrates that all design choice
 Thirdly, we supplement our quantitative benchmark with some visualizations of time--frequency scattering coefficients in the rate--scale domain, for various typical samples of realistic instrumental playing techniques.
 These visualizations confirm the theoretical predictions of previous research \cite{anden2019tsp}, which were founded on simple synthetic sounds such as exponential chirps.
 They are also in line with visualizations of the modulation power spectrum in auditory neurophysiology \cite{patil2012ploscompbiol}, while offering an accelerated algorithm for scalable feature extraction.
+
+\begin{figure}[h!]
+\includegraphics[width=0.9\textwidth]{figures/lostanlen2020jasmp_fig1_v3.pdf}
+\caption{\csentence{Overview of the proposed approach}}
+\label{fig:pipeline}
+\end{figure}
+
 
 \subsection*{Outline}
 The \lnameref{sec:soa} section reviews recent research in the computational modeling of musical timbre.
@@ -348,12 +357,6 @@ Conversely, from the standpoint of music cognition, our model offers a scalable 
 
 \section*{\nmu Proposed approach}
 \label{sec:method}
-
-\begin{figure}[h!]
-\includegraphics[width=0.9\textwidth]{figures/lostanlen2020jasmp_fig1_v3.pdf}
-\caption{\csentence{Overview of the proposed approach}}
-\label{fig:pipeline}
-\end{figure}
 
 \begin{figure}[h!]
 \caption{\csentence{Sample scattering}

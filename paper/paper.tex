@@ -591,13 +591,21 @@ Figure \ref{fig:consensusVsPt} displays the rearranged similarity matrix $\widet
 
 Contrary to inter-instrument similarity (Figure \ref{fig:consensusVsI}), inter-technique similarity does not exhibit a clear segregation of instrument families.
 For example, the first two rows in $\widetilde{\mathbf{A}}_{\mathcal{T}}$ correspond to a oboe sample (\texttt{Ob-blow-no-reed-C4}, \ie{} blowing without the reed) and a cello sample (\texttt{Vc-legno-tratto-C4-mf-1c}, \ie{} drawing the wooden part of the bow across the string) respectively, despite the fact that the oboe is a woodwind instrument whereas the cello is a string instrument.
+
 More generally, even though the block diagonal structure of the matrix $\widetilde{\mathbf{A}}_{\mathcal{T}}$ is less prevalent than in $\widetilde{\mathbf{A}}_{\mathcal{I}}$, playing technique clusters appear to transcend instrument categories.
-Nevertheless, these clusters correspond to some basic attributes of qualitative timbre, such as percussive \vs sustained and soft \vs rough.
+Nevertheless, these clusters correspond to some basic attributes of qualitative timbre: by and large, the top-left region of the matrix contains sustained sounds whereas the bottom-right region contains percussive sounds.
+Interestingly, the ordinary technique (\textt{ord}) appears at the center of the matrix, \ie{} at the intersection between sustained sounds and percussive sounds.
+This is because the notion of ``ordinariness'' does not prescribe the same gesture for all instruments: \eg{}, an ordinary guitar sound is expected to be percussive whereas an ordinary flute sound is expected to be sustained.
+
 
 \begin{figure}
 \center
 \includegraphics[width = \textwidth]{figures/consensusVsPt.png}
-\caption{A description of the playing technique abbreviations in made available in the Appendix (Tables \ref{tab:list1} and \ref{tab:list2}).}
+\caption{A description of the playing technique abbreviations in made available in the Appendix (Tables \ref{tab:list1} and \ref{tab:list2}).
+%TODO add a double arrow
+% rough <-- soft --> rough
+% sustained <-- "ordinary" --> percussive
+}
 \label{fig:consensusVsPt}
 \end{figure}
 

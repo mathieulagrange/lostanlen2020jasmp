@@ -545,19 +545,13 @@ The previous section described our protocol for collecting timbral similarity ju
 In this section, we aim to recover these similarity judgments from digital audio recording, according to a paradigm of supervised metric learning.
 To this end, we present a new machine listening system, composing joint time--frequency scattering and large-margin nearest neighbors (LMNN).
 
-\begin{figure}[h!]
-\caption{\csentence{Sample scattering}
-Same 3 sounds spec + scatt.}
-\end{figure}
-
-
 %Following the above discussed matters, we propose a ranking system that is based on a processing pipeline made of two main components, see Figure \ref{fig:pipeline}.
 %The first component maps the audio signal of the query and the items of the database into a high-dimensional timbre space using the scattering transform.
 %The second component warps this timbre space by taking into account perceptual judgments represented as a consensus clustering of the items in the dataset, as presented in the \nameref{sec:survey} section.
 %This warping, or reweighting, of the space is performed using LMNN.
 
 
-\subsection*{Scattering transform}
+\subsection*{Joint time--frequency scattering transform}
 \label{sec:scattering}
 
 While cortical representations have been successful in distinguishing properties of audio recordings (including similarity analysis and classification tasks), they remain models for the electrophysiological signals recorded in the audio cortex.
@@ -599,7 +593,14 @@ They have also enjoyed success in several audio classification and similarity re
 %We're no longer talking to biologists, so we don't need to be afraid.}
 % TODO: avoid citing the same papers over and over
 
-\subsection*{Similarity weighting}
+\begin{figure}
+\caption{\csentence{Sample scattering}
+Same 3 sounds spec + scatt.
+% TODO figure + caption
+}
+\end{figure}
+
+\subsection*{Metric learning with large-margin nearest neighbors (LMNN)}
 \label{sec:weighting}
 
 The standard Euclidean distance on the raw scattering coefficients provides a universal representation of timbre dissimilarity.
@@ -617,20 +618,17 @@ This approach constructs a positive semi-definite weighting matrix $L$ such that
 
 
 
-\section*{\nmu Machine listening experiments}
+\section*{\nmu Results}
 \label{sec:results}
 
-The processing pipeline presented in Figure \ref{fig:pipeline} addresses the problem of conditioning a timbre space using perceptual judgments of timbral similarity.
-The relevance of the many design choices that had to be made are addressed in this section using an experimental protocol that considers a dataset of audio that will be given as input to the processing pipeline and one metric used for evaluating its performance under a given experimental setting.
-\ja{This last sentence is quite vague.
-What are we trying to say?}%
-
+This sec
 % TODO VL: organize design choices.
 % (1) temporal support
 % (2) time-frequency scattering / time scattering
 % (3) learning / no learning
 
-\subsection*{Data}
+
+\subsection*{Semi-supervised label propagation}
 
 The perceptual data gathered during the perceptual experiment considers 78 \ipts, each represented by one sound recording that the subject could listen to before clustering the \ipts.
 For those 78 \ipts, 31 clusterings $C_k, 0<k<31, \Card(C_k)=78$ are available, that are our reference in terms of timbre similarity.
@@ -684,6 +682,7 @@ Also, we define the precisions here as proportions (between zero and one), but l
 The choice of the rank is chosen with the application in mind.
 When searching for sounds that are similar to a query, the listener is likely to listen to up to $5$ proposals, rarely more.
 For the same reason, more global metrics commonly considered for ranking tasks such as the mean average precision are not considered here.
+
 
 \subsection*{Analysis}
 
@@ -799,6 +798,7 @@ The resulting feature set consists of the 40 MFCCs features $f_i$ and the $1140$
 The resulting $ap@5$ of $81.5\% \pm 7.3$ indicates that the increase of dimensionality is has a small effect, confirming the relevance of the additional information provided by the joint scattering.
 \ml{vl outro on modulations}
 % TODO VL: insist on the role of modulations in playing techniques.
+
 
 \section*{\nmu Discussion}
 \label{sec:discussion}

@@ -632,39 +632,17 @@ In practice, for training and evaluation purposes, the graph $\mathcal{G}_0$ ste
 % (3) learning / no learning
 
 
+
 \subsection*{Semi-supervised label propagation}
 
-In music information retrieval, the core motivation behind timbre similarity modeling lies in the prospect of navigating an online corpus of digital music.
-The typical size of such a corpus ranges between $N\sim10^3$ and $N\sim10^7$, depending on the use case.
-As of today, the two largest databases of isolated musical notes with extended playing techniques are FullSOL and conTimbre, with $N\sim1.2\cdot10^5$ and $N\sim8.7\cdot10^4$ samples respectively.% TODO cite FullSOL and conTimbre
-In comparison, the instrument--mute--technique (IMT) triplets in the present study on human subjects amount to merely $N=78$ samples, \ie{} three orders of magnitude less than conTimbre.
-%even though there is expert pre-screening, etc.
-% does not reflect the typical scale at which these systems are deployed.
+In order to suit the practical needs of contemporary music composers, computer-assisted orchestration must withdraw from a diverge realm of instruments and techniques.
+Therefore, whereas our data collection procedure for timbre similarity judgments focused on a single pitch (middle C) and a single intensity (\emph{mf}), we formulate our machine listening experiment on an expanded dataset of audio samples, containing variations in pitch and dynamics.
 
-%The perceptual data gathered during the perceptual experiment considers 78 \ipts, each represented by one sound recording that the subject could listen to before clustering the \ipts.
-%For those 78 \ipts, 31 clusterings $C_k, 0<k<31, \Card(C_k)=78$ are available, that are our reference in terms of timbre similarity.
-%TODO VL update integer range for k.
-% Describe every k as an equivalency class
-%\ja{What is $C_k$ here?
-%Also, should it be $0 < k \le 31$?
-%Might be more natural to say that $k = 1, 2, \ldots, 31$, in that case.}%
-%If \ipt $i$ and \ipt $j$ are clustered together by subject $k$, then $C_k(i)=C_k(j)$.
-%In essence, an effective ranking system should retrieve sounds that belong to \ipts that are clustered together in each of the 31 clusterings.
-%Depending on the preferences of subjects, there may be competition between clusterings that should be mitigated when appreciating quantitatively the ranking performance.
-
-%In order to provide enough data for the numerical analysis described in this section, we assume that the impact of the pitch and nuance on perceptual similarity is much lower than the timbral similarity constraints expressed by the perceptual judgments of the subjects.
-%Assuming invariance to timbre with respect to pitch and nuance is in line with the ANSI definition of timbre \ml{vl, citation. reformuler tout le paragraphe}, it is thus taken in this work as a reasonable assumption.
-%Quantification of this invariance is left for further study.
-
-The whole range of nuance and pitch is thus considered for each of the 78 \ipts, leading to a dataset composed of 9346 sound recordings.
-The clusterings $C_k$ are propagated to this dataset to produce new reference clusterings $D_k, 0<k<31, \Card(D_k)=9346$ using the following scheme.
-If a sound of this dataset $s_a$ corresponds to \ipt $i$, then $D_k(a) = C_k(i), \forall k$.
-\ja{What's $s_a$ and $a$ here?
-We need to be explicit about these definitions.}%
-% TODO VL: give more detail here. The integer a is a sample index for an IPT.
-% i is the IPT of the sound a.
-% Explain label propagation.
-
+Given an audio stimulus $n$ from our perceptual study, we seek its position in the cluster graph $\mathcal{G}_0$.
+Then, we identify its instrument--mute--technique (IMT) triplet, scrape for audio samples in SOL matching this triplet, and assign them all to the same cluster as the original audio stimulus.
+We repeat the same procedure for all $N=78$ nodes in $\mathcal{G}_0$, resulting in $N^\prime = 9346$ samples in total.
+This is a form of semi-supervised label propagation: from a limited amount of human annotation, we curate a relatively large subset of SOL (roughly one third of the entire dataset, i.e., $25444$ samples) for which the notion of timbre is perceptually encoded as a discrete category.
+In the case of the consensus cluster graph ($\mathcal{G}_0$), this discrete category takes one of $C=5$ distinct values.
 
 \subsection*{Evaluation metric}
 

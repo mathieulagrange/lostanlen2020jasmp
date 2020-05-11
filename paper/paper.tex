@@ -298,7 +298,7 @@ Mapping this input to a feature space in which distances denote timbral dissimil
 In this respect, the scientific literature exhibits a methodological divide as regards the collection of human-annotated data \cite{siedenburg2016jnmr}.
 
 
-\subsection*{Timbre modeling as music information retrieval (MIR)}
+\subsection*{Timbre modeling in music information retrieval (MIR)}
 On the one hand, most publications in music information retrieval cast timbre modeling as an audio classification problem  \cite{martin1998asa,brown1999jasa,eronen2000icassp,herrera2003jnmr,wieczorkowska2003jiis,livshin2004dafx,krishna2004icassp,kaminskyj2005jiis,benetos2006icassp,bhalke2016jiis}.
 In this context, the instrumentation of each musical excerpt serves as an unstructured set of ``audio tags,'' encoded as binary outputs within some predefined label space.
 Because such tags often belong to the metadata of music releases, the process of curating a training set for musical instrument classification requires little or no human intervention.
@@ -313,7 +313,7 @@ Notwithstanding the growing accuracy of these architectures in the large data re
 We refer to \cite{han2017taslp} for a recent review of the state of the art in this domain.
 
 
-\subsection*{Timbre modeling as music cognition research}
+\subsection*{Timbre modeling in music cognition research}
 On the other hand, the field of music psychology investigates timbre with the aim of discovering its physiological and behavioral foundations \cite{mcadams2009chapter}.
 In this setting, prior knowledge, however accurate, of instrumentation does not suffice to conduct a study.
 Rather, each excerpt must be played back to multiple human listeners.
@@ -603,7 +603,7 @@ Same 3 sounds spec + scatt.
 \subsection*{Metric learning with large-margin nearest neighbors (LMNN)}
 \label{sec:weighting}
 
-The standard Euclidean distance on the raw scattering coefficients provides a universal representation of timbre dissimilarity.
+The standard Euclidean distance on the raw scattering coefficients provides an instrument-agnostic representation of timbre dissimilarity.
 We now consider a transformation of this distance, in effect warping the timbre space, in order to more closely mimic a particular set of timbre similarity judgments.
 
 Due to the size of corpus, we restrict ourselves to a simple linear transform of the scattering coefficients. More flexible and powerful methods could be brought to bear on this problem, such as deep neural networks, but with their flexibility comes an increase of the needed size of training data.
@@ -652,9 +652,9 @@ In comparison, the instrument--mute--technique (IMT) triplets in the present stu
 %In essence, an effective ranking system should retrieve sounds that belong to \ipts that are clustered together in each of the 31 clusterings.
 %Depending on the preferences of subjects, there may be competition between clusterings that should be mitigated when appreciating quantitatively the ranking performance.
 
-In order to provide enough data for the numerical analysis described in this section, we assume that the impact of the pitch and nuance on perceptual similarity is much lower than the timbral similarity constraints expressed by the perceptual judgments of the subjects.
-Assuming invariance to timbre with respect to pitch and nuance is in line with the ANSI definition of timbre \ml{vl, citation. reformuler tout le paragraphe}, it is thus taken in this work as a reasonable assumption.
-Quantification of this invariance is left for further study.
+%In order to provide enough data for the numerical analysis described in this section, we assume that the impact of the pitch and nuance on perceptual similarity is much lower than the timbral similarity constraints expressed by the perceptual judgments of the subjects.
+%Assuming invariance to timbre with respect to pitch and nuance is in line with the ANSI definition of timbre \ml{vl, citation. reformuler tout le paragraphe}, it is thus taken in this work as a reasonable assumption.
+%Quantification of this invariance is left for further study.
 
 The whole range of nuance and pitch is thus considered for each of the 78 \ipts, leading to a dataset composed of 9346 sound recordings.
 The clusterings $C_k$ are propagated to this dataset to produce new reference clusterings $D_k, 0<k<31, \Card(D_k)=9346$ using the following scheme.

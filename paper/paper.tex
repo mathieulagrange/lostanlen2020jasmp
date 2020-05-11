@@ -475,7 +475,7 @@ This remark emphasizes the potential of our similarity learning method as a cust
 Before addressing the question of modeling timbre in the audio domain, we conduct an exploratory study on the structure of similarity judgments themselves.
 Specifically, we ask whether human listeners, when confronted with a diverse corpus of IMT samples, tend to cluster those samples in terms of an organological taxonomy.
 To answer this question, we derive from the consensus clustering graph $\mathcal{G}_0$ an instrument-wise similarity matrix $\mathbf{A}_{\mathcal{I}}$ whose rows and columns are defined on the finite set $\mathcal{I}$ of instruments.
-For every instrumment--instrument pair $(i,j)$, we set the value of $\mathbf{A}_{\mathcal{I}}$ at row $i$ and column $j$ equal to the number of pairs in $\mathcal{G}_0$ from instruments $i$ and $j$ respectively, renormalized by the number of IMT samples from either instrument $i$ or instrument $j$:
+For every instrument--instrument pair $(i,j)$, we set the value of $\mathbf{A}_{\mathcal{I}}$ at row $i$ and column $j$ equal to the number of pairs in $\mathcal{G}_0$ from instruments $i$ and $j$ respectively, renormalized by the number of IMT samples from either instrument $i$ or instrument $j$:
 \[
 \mathbf{A}_{\mathcal{I}}(i,j) = \dfrac{
 2\,\Card \big\{ (m, n) \,\vert\, \mathrm{Instrument}(m)=i ; \mathrm{Instrument}(n)=j ; m \overset{\mathcal{G}_0}{\sim} n \big\}

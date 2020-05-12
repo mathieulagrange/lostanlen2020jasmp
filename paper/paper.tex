@@ -1,12 +1,14 @@
 \documentclass{bmcart}
 
 \usepackage{amsthm,amsmath}
+\usepackage{dsfont}
 \usepackage[utf8]{inputenc}
 \usepackage{url}
 \usepackage{color}
 \usepackage{xspace}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{relsize}
 % \def\includegraphic[#1]{}
 % \def\includegraphics[#1]{}
 
@@ -622,8 +624,9 @@ This approach constructs a positive semi-definite weighting matrix $L$ such that
 \label{sec:results}
 
 The previous section described our methods for extracting spectrotemporal modulations in audio signals, as well as learning a non-Euclidean similarity metric between them.
-We now turn to apply these methods to the problem of allocating isolated musical notes to clusters of a timbre similarity graph $\mathcal{G}_0$.
-In practice, for training and evaluation purposes, the graph $\mathcal{G}_0$ stems from the consensus of $K=31$ users of the Cyberlioz web application, which was described in the \lnameref{sec:survey} section.
+We now turn to apply these methods to the problem of allocating isolated musical notes to clusters of some timbre similarity graph $\mathcal{G}$.
+In practice, for training and evaluation purposes, the cluster graph $\mathcal{G}$ may stem from the consensus of $K=31$ users of the Cyberlioz web application, which was described in the \lnameref{sec:survey} section ($\mathcal{G}=\mathcal{G}_0$).
+Alternatively, it may correspond to the subjective preferences of a single user $k$, in which case we take $\mathcal{G}=\mathcal{G}_k$.
 % browsing a large-scale digital library of isolated musical notes, involving an extended vocabulary of playing techniques.
 
 % TODO VL: organize design choices.
@@ -638,41 +641,46 @@ In practice, for training and evaluation purposes, the graph $\mathcal{G}_0$ ste
 In order to suit the practical needs of contemporary music composers, computer-assisted orchestration must withdraw from a diverge realm of instruments and techniques.
 Therefore, whereas our data collection procedure for timbre similarity judgments focused on a single pitch (middle C) and a single intensity (\emph{mf}), we formulate our machine listening experiment on an expanded dataset of audio samples, containing variations in pitch and dynamics.
 
-Given an audio stimulus $n$ from our perceptual study, we seek its position in the cluster graph $\mathcal{G}_0$.
+Given an audio stimulus $n$ from our perceptual study, we seek its position in the cluster graph $\mathcal{G}$.
 Then, we identify its instrument--mute--technique (IMT) triplet, scrape for audio samples in SOL matching this triplet, and assign them all to the same cluster as the original audio stimulus.
 We repeat the same procedure for all $N=78$ nodes in $\mathcal{G}_0$, resulting in $N^\prime = 9346$ samples in total.
 This is a form of semi-supervised label propagation: from a limited amount of human annotation, we curate a relatively large subset of SOL (roughly one third of the entire dataset, i.e., $25444$ samples) for which the notion of timbre is perceptually encoded as a discrete category.
 In the case of the consensus cluster graph ($\mathcal{G}_0$), this discrete category takes one of $C=5$ distinct values.
 However, for a particular subject $k$, this discrete category takes one of $C_k$ distinct values, where the number of timbre clusters varies between $3$ and $19$ depending on $k$.
 
+
 \subsection*{Evaluation metric}
 
 % VL TODO: explain that this reflects a use case of browsing.
+% let n be a query. (1<= n <= N').
+% R: rank. number of neighbors. R=5. Typical for a user application. (display, attention span ...)
+% K: number of subjects.
 
-The metric considered in this work is the average precision at rank $k=5$ (ap@5).
-It allows us to evaluate if the outputs of the proposed system are likely to satisfy the user.
-The ap@5 is computed as follows.
+\begin{equation}
+p_{\mathbf{\Phi}}(n, k, R) =
+    \dfrac{1}{R}
+    \sum_{r=1}^{R}
+    \mathlarger{\mathds{1}}
+    \lbrace
+        \mathbf{\Phi}(\boldsymbol{x}_n, r)
+        \in
+        \mathcal{G}_k (n)
+    \rbrace
+\end{equation}
 
-% TODO VL: move the following paragraph down so that we explain: (1) p@5_q, (2) p@5, (3) ap@5.
-Considering an output of the system, that is a features vector $F_n$ per sound $s_n$, the precision at rank $5$ is computed for each of the $D_k$ clusterings, and the $31$ p@5 are averaged to obtain the ap@5.
+\begin{equation}
+\mathrm{P}_{\mathbf{\Phi}}(k, R) =
+\dfrac{1}{N^{\prime}}
+\sum_{n=1}^{N^{\prime}}
+p_{\mathbf{\Phi}}(n, k, R)
+\end{equation}
 
-For a given reference clustering $D_k$, the p@5 is computed as follows.
-For each sound $s_q, 0<q\leq9346$ considered as a query, its 5 nearest neighbors $s_n, 0<n\leq5$ in the timbre space under evaluation are retrieved using the Euclidean distance between corresponding features vectors.
-For this query, the precision is defined as:
-$$
-p@5_q = \frac{1}{5} \sum_{n=1}^5 \mathbf{1}_{D_q=D_n}
-$$
-The p@5 is the average $p@5_q$ computed over all queries.
-\ja{This is perhaps better described in reverse, starting with $p@5_q$, then $p@5$, then $ap@5$?
-Also, we define the precisions here as proportions (between zero and one), but later, we present them as percentages (between $0\%$ and $100\%$).}%
-% TODO VL: state that the AP@5 will be reported under the form of percentages throughout the rest of the paper.
-
-\ml{note pour vincent, on a pas de fold, mais on a les resultats par sujet, on peut donc evaluer la dispersion de la p@5 par sujets si cela est utile.}
-
-The choice of the rank is chosen with the application in mind.
-When searching for sounds that are similar to a query, the listener is likely to listen to up to $5$ proposals, rarely more.
-For the same reason, more global metrics commonly considered for ranking tasks such as the mean average precision are not considered here.
-
+\begin{equation}
+\mathrm{AP}_{\mathbf{\Phi}}(R) =
+\dfrac{1}{K}
+\sum_{k=1}^{K}
+\mathrm{P}_{\mathbf{\Phi}}(k, R)
+\end{equation}
 
 \subsection*{Analysis}
 

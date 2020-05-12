@@ -656,18 +656,29 @@ However, for a particular subject $k$, this discrete category takes one of $C_k$
 % R: rank. number of neighbors. R=5. Typical for a user application. (display, attention span ...)
 % K: number of subjects.
 
+Let us denote by $\boldsymbol{x}_1 \ldots \boldsymbol{x}_{{N}^{\prime}}$ the $N^{\prime}=9346$ audio samples associated to our annotated dataset, after semi-supervised label propagation (see subsection above).
+Given a sample $n\leq N^{\prime}$ and a human subject $k\leq K$, we denote by $\mathcal{G}_k$ the cluster graph associated to the subject $k$, and by $\mathcal{G}_k (n)$ the cluster to which the sample $\boldsymbol{x}_{n}$ belongs.
+Our machine listening system takes the waveform $\boldsymbol{x}_{n}$ as input and returns a ranked list of nearest neighbors: $\mathbf{\Phi}_1 (\boldsymbol{x}_n)$, $\mathbf{\Phi}_2 (\boldsymbol{x}_n)$, $\mathbf{\Phi}_3 (\boldsymbol{x}_n)$, and so forth.
+
+In the context of browsing an audio collection by timbre similarity, $\boldsymbol{x}_n$ is a user-defined query while the function $\mathbf{\Phi}$ plays the role of a search engine.
+We consider that the first retrieved sample, $\mathbf{\Phi}_1 (\boldsymbol{x}_n)$, to be relevant to user $k$ if and only if it belongs to the same cluster as $\boldsymbol{x}_n$ in the cluster graph $\mathcal{G}_k$; hence the Boolean condition $\mathbf{\Phi}_{1}(\boldsymbol{x}_{n}) \in \mathcal{G}_k (n)$.
+Likewise, the second retrieved sample is relevant if and only if $\mathbf{\Phi}_{2}(\boldsymbol{x}_{n}) \in \mathcal{G}_k (n)$.
+To evaluate $\mathbf{\Phi}$ on the query $\boldsymbol{x}_n$, we measure the relevance of all nearest neighbors $\mathbf{\Phi}_r (\boldsymbol{x}_n)$ up to some fixed rank $R$, and average the result:
 \begin{equation}
 p_{\mathbf{\Phi}}(n, k, R) =
     \dfrac{1}{R}
     \sum_{r=1}^{R}
     \mathlarger{\mathds{1}}
-    \lbrace
-        \mathbf{\Phi}(\boldsymbol{x}_n, r)
+    \big(
+        \mathbf{\Phi}_r(\boldsymbol{x}_n)
         \in
         \mathcal{G}_k (n)
-    \rbrace
+    \big).
 \end{equation}
+In the equation above, the function $\mathds{1}$ converts Booleans to integers, i.e., $\mathds{1}(b)$ equals $1$ if $b$ is true and return $0$ if $b$ is false.
+Thus, the function $p_{\mathbf{\Phi}}$ takes fractional values between $0$ and $1$, which are typically expressed in percentage points.
 
+The precision at rank $R$ of the system $\mathbf{\Phi}$ is defined as the average value taken by the function $p_{\mathbf{\Phi}}$, for constant $R$, over the entire corpus of $N^{\prime}=9346$ audio samples:
 \begin{equation}
 \mathrm{P}_{\mathbf{\Phi}}(k, R) =
 \dfrac{1}{N^{\prime}}
@@ -675,12 +686,16 @@ p_{\mathbf{\Phi}}(n, k, R) =
 p_{\mathbf{\Phi}}(n, k, R)
 \end{equation}
 
+Lastly, the ``average precision at rank $R$'' (henceforth, AP@$R$) is the average value of $\mathrm{P}_{\mathbf{\Phi}}$, for constant $R$, across all $K=31$ subjects from our perceptual study:
 \begin{equation}
 \mathrm{AP}_{\mathbf{\Phi}}(R) =
 \dfrac{1}{K}
 \sum_{k=1}^{K}
 \mathrm{P}_{\mathbf{\Phi}}(k, R)
 \end{equation}
+In the rest of this paper, we set the constant $R$ to $5$.
+This is in accordance with the protocol of \cite{lostanlen2018extended}, who trained a metric learning algorithm on the SOL dataset to search for similar instruments and playing techniques, yet without the intervention of a human subject.
+
 
 \subsection*{Analysis}
 

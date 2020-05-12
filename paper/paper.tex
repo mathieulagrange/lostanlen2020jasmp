@@ -9,6 +9,7 @@
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{relsize}
+\usepackage{siunitx}
 % \def\includegraphic[#1]{}
 % \def\includegraphics[#1]{}
 
@@ -618,6 +619,31 @@ For this, we use the \emph{large margin nearest neighbor} (LMNN) metric learning
 This approach constructs a positive semi-definite weighting matrix $L$ such that the distance $\|Lx - Ly\|$ best classifies a set of points into a fixed clustering assignment.
 % TODO: this section needs more detail. In particular, it is worth discussing the role of Euclidean distances as an "initial guess" for LMNN. (this is unlike MLR, for example).
 
+$\mathcal{Y}_1 (\boldsymbol{x}) = \mathcal{Y} \backslash \lbrace \boldsymbol{x} \rbrace$.
+
+\begin{equation}
+\mathbf{\Phi}_1 (\boldsymbol{x}) =
+\arg \min_{\boldsymbol{y}\in \mathcal{Y}_1(\boldsymbol{x})}
+\;
+\big\Vert
+\mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{x}
+-
+\mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{y}
+\big\Vert
+\end{equation}
+
+$\mathcal{Y}_{r} (\boldsymbol{x}) = \mathcal{Y}_{(r-1)}(\boldsymbol{x}) \backslash \lbrace \mathbf{\Phi}_r (\boldsymbol{x}) \rbrace$.
+
+\begin{equation}
+\mathbf{\Phi}_r (\boldsymbol{x}) =
+\arg \min_{\boldsymbol{y}\in \mathcal{Y}_r(\boldsymbol{x})}
+\;
+\big\Vert
+\mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{x}
+-
+\mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{y}
+\big\Vert
+\end{equation}
 
 
 \section*{\nmu Results}
@@ -649,12 +675,8 @@ In the case of the consensus cluster graph ($\mathcal{G}_0$), this discrete cate
 However, for a particular subject $k$, this discrete category takes one of $C_k$ distinct values, where the number of timbre clusters varies between $3$ and $19$ depending on $k$.
 
 
-\subsection*{Evaluation metric}
 
-% VL TODO: explain that this reflects a use case of browsing.
-% let n be a query. (1<= n <= N').
-% R: rank. number of neighbors. R=5. Typical for a user application. (display, attention span ...)
-% K: number of subjects.
+\subsection*{Evaluation metric}
 
 Let us denote by $\boldsymbol{x}_1 \ldots \boldsymbol{x}_{{N}^{\prime}}$ the $N^{\prime}=9346$ audio samples associated to our annotated dataset, after semi-supervised label propagation (see subsection above).
 Given a sample $n\leq N^{\prime}$ and a human subject $k\leq K$, we denote by $\mathcal{G}_k$ the cluster graph associated to the subject $k$, and by $\mathcal{G}_k (n)$ the cluster to which the sample $\boldsymbol{x}_{n}$ belongs.
@@ -700,7 +722,27 @@ This is in accordance with the protocol of \cite{lostanlen2018extended}, who tra
 Moreover, note that the value $R=5$ typically reflects the number of virtual panels simultaneously on display in a software environment for computer-assisted orchestration.
 
 
-\subsection*{Analysis}
+\subsection*{Best performing system}
+Our topline system comprises four computational blocks:
+\begin{enumerate}
+\item Joint time--frequency scattering up to a maximal time scale of $T=$\SI{1000}{\milli\second},
+\item Temporal averaging at the scale of the whole musical note,
+\item Median-based logarithmic compression \cite[Equation 1]{lostanlen2018extended}, and
+\item Nearest neighbor search according to priorly learned non-Euclidean metric.
+\end{enumerate}
+
+\section*{Ablation study}
+\subsection*{Is the dataset large enough for evaluation?}
+
+\subsection*{Is metric learning necessary?}
+
+\subsection*{How important is the amount of temporal context $T$?}
+
+\subsection*{Is joint time--frequency scattering necessary?}
+
+\subsection*{How important is feature extraction vs. metric learning?}
+
+\section*{Analysis}
 
 % TODO VL: make a block diagram.
 The processing pipeline is composed of two main building blocks.

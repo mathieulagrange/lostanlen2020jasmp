@@ -693,8 +693,11 @@ Lastly, the ``average precision at rank $R$'' (henceforth, AP@$R$) is the averag
 \sum_{k=1}^{K}
 \mathrm{P}_{\mathbf{\Phi}}(k, R)
 \end{equation}
+It appears from the above that an effective system $\mathbf{\Phi}$ should retrieve sounds whose IMT triplets are similar according to all of the $K=31$ cluster graphs $\mathcal{G}_1 \ldots \mathcal{G}_K$.
+
 In the rest of this paper, we set the constant $R$ to $5$.
 This is in accordance with the protocol of \cite{lostanlen2018extended}, who trained a metric learning algorithm on the SOL dataset to search for similar instruments and playing techniques, yet without the intervention of a human subject.
+Moreover, note that the value $R=5$ typically reflects the number of virtual panels simultaneously on display in a software environment for computer-assisted orchestration.
 
 
 \subsection*{Analysis}

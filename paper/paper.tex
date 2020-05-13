@@ -764,47 +764,16 @@ The previous section described our dataset of audio samples with diverse instrum
 Over a cohort of $K=31$ subjects, we reported a precision at rank five (P@5) of $99.0\% \pm 1$.
 We now turn to alter certain key choices in the design of the above-described computational blocks, and discuss their respective impacts on downstream performance.
 
-\subsection*{Is the dataset large enough for evaluation?}
-
-\subsection*{Is metric learning necessary?}
-
-\subsection*{How important is the amount of temporal context $T$?}
-
-\subsection*{Is joint time--frequency scattering necessary?}
-
-\subsection*{How important is feature extraction vs. metric learning?}
-
-\section*{Analysis}
-
-
-% TODO VL: clearly define a second part of the analysis from here onwards.
-% we test the validity of the ablation study itself.
-% we bring up alternate hypotheses and refute them one by one.
-% like i did in ISMIR 2016.
-In order to better understand the benefits of each design choice, an ablation study is now performed using a slightly different protocol.
-In order to reduce the risk of misleading performance results using learning systems due to overfitting, we identify factors of variability that could lead to such problems and mitigate those.
-\ja{Is this part of the ablation study or is this a ``meta'' consideration?}
-In our case, two factors can readily be identified, the variability of the audio data and that of the perceptual judgments.
+\subsection*{Is the dataset large enough for evaluation? Is the system overfitting?}
 
 We mitigate the first by considering a random split of the dataset in two halves, one for learning the projection and one for evaluating the performance.
 The impact of the variability of the perceptual judgments and its impact on machine listening systems such as the one discussed in this paper is not in the scope of this paper and left for further research.
 By considering this protocol, the proposed system reaches a $ap@5$ of $96.2\% \pm 2.0$.
 If considering the same first half both for learning and evaluation leads to a $ap@5$ of $96.5\% \pm 2.0$, indicating a low risk of overfitting.
 
-%\ja{We can expect better performance by using larger folds for the training %(i.e., not restricting ourselves to 2-fold cross validation).}
-% VL: hors sujet.
 
-%Another risk when considering reprojection techniques such as the LMNN may appear when the dimensionality of the features approaches the number of items in the dataset.
-%For example, there exists a trivial solution for optimizing $p@1$ when the dimensionality of the features is equal to the number of items in the dataset.
-%\ja{What is that trivial solution?}%
-%In this case, no information needs to be carried by the features set to obtain perfect performance.
 
-% TODO VL: add an introductory sentence here. "Risk of overfitting of reprojection techniques using LMNN"
-In order to quantify the importance of the information carried by the feature set in the final performance, the numerical values of the features are replaced with random numbers sampled from a uniform distribution.
-In this case, the performance drops to $23.6\% \pm 10.6$.
-%Replacing the learned linear mapping with the identity gives a $ap@5$ of $23.8\%$ for these features.
-It can be concluded that the learning block is not able to perform effectively if no information is carried by the input features.
-The slight decrease of performance when considering LMNN may be explained by the fact that the learning algorithm optimizes the projection using correlations in the training set that are not found in the testing set.
+\subsection*{Is metric learning necessary?}
 
 The LMNN algorithm is a popular algorithm for solving such a task, but other alternatives can be considered.
 One of those is the linear discriminant analysis (LDA) \ml{vl ref ?}\cite{}.
@@ -818,9 +787,27 @@ It is therefore reasonable to consider the performance of the raw joint time--fr
 In this case, the performance reduces to $92.9\% \pm 3$.
 \ja{Why the $\pm$ here and not elsewhere?}%
 
+%Another risk when considering reprojection techniques such as the LMNN may appear when the dimensionality of the features approaches the number of items in the dataset.
+%For example, there exists a trivial solution for optimizing $p@1$ when the dimensionality of the features is equal to the number of items in the dataset.
+%\ja{What is that trivial solution?}%
+%In this case, no information needs to be carried by the features set to obtain perfect performance.
+
+% TODO VL: add an introductory sentence here. "Risk of overfitting of reprojection techniques using LMNN"
+In order to quantify the importance of the information carried by the feature set in the final performance, the numerical values of the features are replaced with random numbers sampled from a uniform distribution.
+In this case, the performance drops to $23.6\% \pm 10.6$.
+%Replacing the learned linear mapping with the identity gives a $ap@5$ of $23.8\%$ for these features.
+It can be concluded that the learning block is not able to perform effectively if no information is carried by the input features.
+The slight decrease of performance when considering LMNN may be explained by the fact that the learning algorithm optimizes the projection using correlations in the training set that are not found in the testing set.
+
+
+\subsection*{How important is the amount of temporal context $T$?}
+
 Concerning the feature computation block $B_1$, an important factor is the time support.
 When considering the commonly used duration of $25~\mathrm{ms}$, the performance drops down to $90.9\% \pm 4$. This demonstrates that the joint scattering is able to benefit from a larger time support, possibly to capture longer-term modulations which play an important part when considering extended playing techniques \cite{lostanlen2018extended}.
 \ja{Other references?}%
+
+
+\subsection*{Is joint time--frequency scattering necessary?}
 
 Considering the separable scattering gives a performance of $91\% \pm 4.5$. \ml{ vl. explain separable vs joint. write details on what is lost here ?}
 % TODO VL: write about frequency-depedendent time shift. cite IEEE TSP

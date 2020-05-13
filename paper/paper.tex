@@ -777,28 +777,6 @@ We now turn to alter certain key choices in the design of the above-described co
 \section*{Analysis}
 
 
-As found in many studies, log compression and median processing are beneficial post processing steps for the scattering.
-% TODO VL: ref. JASMP + DLfM
-\ja{References.}
-
-For each recording, a set of features are computed for each time frame.
-This set is averaged over time to give one feature vector per recording.
-All features are standardized with zero mean and unit variance across the dataset.
-\ja{Is this the ``per-feature Gaussianization'' we mention in the introduction?
-Should give the reference in that case (and maybe explain a bit more in detail).}%
-
-The second block $B_2$ considers one vector of features and the consensus clustering $D_c$ as inputs and another vector of features as output.
-For this block, the main factor is the type of projection $B_2^p \in \{ \text{LDA}, \text{LMNN} \}$.
-The LDA is the linear discriminant analysis \cite{} and the LMNN is the algorithm presented in Section \ref{sec:weighting}.
-For this algorithm the neighborhood is set to $5$.
-\ja{Again, I would prefer to ditch this $B_2$ notation.}
-
-% TODO VL: turn into active present voice.
-% We have an exhaustive benchmark on the Cartesian product of all design choices, but we report results under the form of an ablation study for the sake of conciseness.
-The complete experiments with all settings have been computed.
-For the sake of clarity, only part of the results are discussed here.
-\ja{What does this mean?}%
-
 % TODO VL: clearly define a second part of the analysis from here onwards.
 % we test the validity of the ablation study itself.
 % we bring up alternate hypotheses and refute them one by one.

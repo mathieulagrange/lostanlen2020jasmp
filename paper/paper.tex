@@ -542,8 +542,8 @@ This is because the notion of ``ordinariness'' does not prescribe the same gestu
 
 
 
-\section*{\nmu Proposed approach}
-\label{sec:method}
+\section*{\nmu Methods}
+\label{sec:methods}
 The previous section described our protocol for collecting timbral similarity judgments between instrumental playing techniques at scale.
 In this section, we aim to recover these similarity judgments from digital audio recording, according to a paradigm of supervised metric learning.
 To this end, we present a new machine listening system, composing joint time--frequency scattering and large-margin nearest neighbors (LMNN).
@@ -618,6 +618,7 @@ We now use the consensus clustering to reweight the similarity between feature v
 For this, we use the \emph{large margin nearest neighbor} (LMNN) metric learning algorithm \cite{weinberger2006distance, weinberger2009distance}.
 This approach constructs a positive semi-definite weighting matrix $L$ such that the distance $\|Lx - Ly\|$ best classifies a set of points into a fixed clustering assignment.
 % TODO: this section needs more detail. In particular, it is worth discussing the role of Euclidean distances as an "initial guess" for LMNN. (this is unlike MLR, for example).
+% cite Musgrave et al. Metric learning reality check
 
 $\mathcal{Y}_1 (\boldsymbol{x}) = \mathcal{Y} \backslash \lbrace \boldsymbol{x} \rbrace$.
 
@@ -651,8 +652,8 @@ $\mathcal{Y}_{r} (\boldsymbol{x}) = \mathcal{Y}_{(r-1)}(\boldsymbol{x}) \backsla
 
 The previous section described our methods for extracting spectrotemporal modulations in audio signals, as well as learning a non-Euclidean similarity metric between them.
 We now turn to apply these methods to the problem of allocating isolated musical notes to clusters of some timbre similarity graph $\mathcal{G}$.
-In practice, for training and evaluation purposes, the cluster graph $\mathcal{G}$ may stem from the consensus of $K=31$ users of the Cyberlioz web application, which was described in the \lnameref{sec:survey} section ($\mathcal{G}=\mathcal{G}_0$).
-Alternatively, it may correspond to the subjective preferences of a single user $k$, in which case we take $\mathcal{G}=\mathcal{G}_k$.
+In practice, for training purposes, the cluster graph $\mathcal{G}$ stems from the consensus of $K=31$ users of the Cyberlioz web application, which was described in the \lnameref{sec:survey} section ($\mathcal{G}=\mathcal{G}_0$).
+However, for evaluation purposes, this cluster graph corrsponds to the subjective preferences of a single user $k$, in which case we take $\mathcal{G}=\mathcal{G}_k$.
 % browsing a large-scale digital library of isolated musical notes, involving an extended vocabulary of playing techniques.
 
 % TODO VL: organize design choices.
@@ -723,13 +724,21 @@ Moreover, note that the value $R=5$ typically reflects the number of virtual pan
 
 
 \subsection*{Best performing system}
-Our topline system comprises four computational blocks:
+Our topline system comprises five computational blocks:
 \begin{enumerate}
 \item Joint time--frequency scattering up to a maximal time scale of $T=$\SI{1000}{\milli\second},
 \item Temporal averaging at the scale of the whole musical note,
-\item Median-based logarithmic compression \cite[Equation 1]{lostanlen2018extended}, and
+\item Median-based logarithmic compression \cite[Equation 1]{lostanlen2018extended},
+\item Per-feature affine scaling so that the dataset has null mean and unit variance,
 \item Nearest neighbor search according to priorly learned non-Euclidean metric.
 \end{enumerate}
+Note that the non-Euclidean metric is learned via large-margin nearest neighbors (LMNN, see \lnameref{sec:methods} section) on the ``consensus'' cluster graph $\mathcal{G}_0$.
+Therefore, the system $\mathbf{\Phi}$ performs timbre similarity retrieval in a user-agnostic way, and can serve as a convenient default algorithm for newcoming users.
+That being said, it is conceivable to replicate the five-stage protocol above on the cluster graph $\mathcal{G}_k$ of a specific user $k$, instead of the cluster graph $\mathcal{G}_0$.
+This operation would lead to a new configuration of the search engine $\mathbf{\Phi}$ that is better tailored to the perceptual idiosyncrasy of user $k$ in terms of timbre similarity, in comparison with the default setting $\mathcal{G}_0$.
+
+For composers to personalize their search engine $\mathbf{\Phi}$, the quid pro quo is to define manually a cluster graph among $N=78$ audio samples, by means of the Cyberlioz annotation interface (see \lnameref{sec:survey} section).
+This preliminary annotation lasts $30$ to $60$ minutes, which is relatively short in comparison with the duration of the $N^\prime = 9346$ audio samples in $\mathcal{G}_k$ after label propagation: i.e., roughly three hours of audio.
 
 \section*{Ablation study}
 \subsection*{Is the dataset large enough for evaluation?}
@@ -744,7 +753,6 @@ Our topline system comprises four computational blocks:
 
 \section*{Analysis}
 
-% TODO VL: make a block diagram.
 The processing pipeline is composed of two main building blocks.
 The first block $B_1$ takes a digital audio recording as input and outputs one vector of features.
 For this block, the main factors are the time support $B_1^t$ for computing the features and the type of features $B_1^f$.

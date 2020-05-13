@@ -677,7 +677,7 @@ However, for evaluation purposes, this cluster graph corrsponds to the subjectiv
 \subsection*{Semi-supervised label propagation}
 
 In order to suit the practical needs of contemporary music composers, computer-assisted orchestration must withdraw from a diverge realm of instruments and techniques.
-Therefore, whereas our data collection procedure for timbre similarity judgments focused on a single pitch (middle C) and a single intensity (\emph{mf}), we formulate our machine listening experiment on an expanded dataset of audio samples, containing variations in pitch and dynamics.
+Therefore, whereas our data collection procedure for timbre similarity judgments focused on a single pitch (middle C) and a single intensity level (\emph{mf}), we formulate our machine listening experiment on an expanded dataset of audio samples, containing variations in pitch and dynamics.
 
 Given an audio stimulus $n$ from our perceptual study, we seek its position in the cluster graph $\mathcal{G}$.
 Then, we identify its instrument--mute--technique (IMT) triplet, scrape for audio samples in SOL matching this triplet, and assign them all to the same cluster as the original audio stimulus.
@@ -760,17 +760,27 @@ In particular, it does not assume the ``metadata'' (instrument, mute, technique,
 
 
 \section*{Ablation study}
-The previous section described our dataset of audio samples with diverse instruments, mutes, and playing techniques ($N^{\prime}=9346$ isolated notes), as well as the method we adopt to evaluate a given system for timbre similarity retrieval.
+The previous section described our dataset of audio samples with diverse instruments, mutes, and playing techniques, as well as the method we adopt to evaluate a given system for timbre similarity retrieval.
 Over a cohort of $K=31$ subjects, we reported a precision at rank five (P@5) of $99.0\% \pm 1$.
 We now turn to alter certain key choices in the design of the above-described computational blocks, and discuss their respective impacts on downstream performance.
 
 \subsection*{Is the dataset large enough for evaluation? Is the system overfitting?}
+First of all, it is worth noting that the presented P@5 figure of $99.0\% \pm 1$ does not abide to a conventional training set vs. test set paradigm, as is most often done in machine learning research.
+Rather, the LMNN algorithm is trained on all available samples ($N^{\prime}=9346$ isolated notes) with the ``consensus'' cluster graph as training objective ($\mathcal{G}=\mathcal{G}_0$).
+Then, it is evaluated on the same samples with individual cluster graphs as ground truth ($\mathcal{G}=\mathcal{G}_k$ for $k>0$).
+The reason behind this choice is that, in the context of computer-assisted orchestration, the collection of audio samples has a fixed size, as it is shipped alongside the software itself.
+This is the case, for example, of Orchidea\footnote{Link to Orchidea software and OrchideaSOL dataset: \url{www.orch-idea.org}}, which comes paired with its own version of SOL, named OrchideaSOL \cite{cella2020icmc}.
 
-We mitigate the first by considering a random split of the dataset in two halves, one for learning the projection and one for evaluating the performance.
-The impact of the variability of the perceptual judgments and its impact on machine listening systems such as the one discussed in this paper is not in the scope of this paper and left for further research.
-By considering this protocol, the proposed system reaches a $ap@5$ of $96.2\% \pm 2.0$.
-If considering the same first half both for learning and evaluation leads to a $ap@5$ of $96.5\% \pm 2.0$, indicating a low risk of overfitting.
+Henceforth, our main goal was to evaluate the generalization ability of our metric learning algorithm beyond the restricted set of samples for which human annotations are directly available ($N=78$, see \lnameref{sec:survey} section); that is, beyond one pitch class (middle C) and one intensity level (\emph{mf}).
+That being said, a potential future application of our work would be to use the pre-trained metric learning system $\mathbf{\Phi}$ to approximate out-of-sample targets \cite{carpentier2012cmj}.
+One of such target could be a vocal sketch \cite{cartwright2015acm}, a sound event recorded from the environment, or a computer-generated waveform \cite{lemaitre2016plosone}.
+However, evaluating the accuracy of a query-by-singing system for audio retrieval is incompatible with the clustering paradigm of the Cyberlioz annotation interface, in which all audio samples are assumed to be recorded ahead of human--computer interaction.
+Therefore, we focus on modeling similarity in timbre across instruments and playing techniques, and leave the study of non-instrumental targets to future work.
 
+Despite this caveat, we may adopt a ``query-by-example'' (QbE) paradigm by  partitioning the database and audio samples in half ($\frac{1}{2}N^{\prime}=4673$), training the LMNN algorithm on the first half, and querying it with samples from the other half.
+In this evaluation framework, our system reaches a P@5 of $96.2\% \pm 2$.
+Interestingly, querying the system with samples from the training set leads to a P@5 of $96.5\% \pm 2$, i.e., roughly on par with the test set.
+%Thus, it appears that 
 
 
 \subsection*{Is metric learning necessary?}

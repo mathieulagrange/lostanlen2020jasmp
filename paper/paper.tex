@@ -784,18 +784,18 @@ Thus it appears that the gap in performance between the evaluation presented in 
 
 
 \subsection*{Is metric learning necessary?}
+Replacing the large-margin nearest neighbors (LMNN) metric learning algorithm by linear discriminant analysis (LDA) leads to a P@5 of $\textbf{76.6}\% \pm 11$.
+However, we should note that, from a computational standpoint, the nearest-neighbor search $\mathbf{\Phi}_r (\boldsymbol{x}_n)$ is considerably faster with LDA than with LMNN.
+Indeed, while LMNN operates in the original dimensionality of joint time--frequency scattering features ($d=1180$), LDA projects these features onto a subspace whose dimensionality is equal to $(C+1)$, where $C$ is the number of clusters in the cluster graph $\mathcal{G}$.
+% TODO complete this paragraph. 1180/20 ^2 = 59^2 = 3481
 
-The LMNN algorithm is a popular algorithm for solving such a task, but other alternatives can be considered.
-One of those is the linear discriminant analysis (LDA) \ml{vl ref ?}\cite{}.
-When considering LDA in place of LMNN, the performance drops to $76.6\% \pm 10.9$.
-The lower performance of LDA may be explained by the fact that the dimensionality of the projected feature set is set to one plus the number of clusters in the reference clustering, which lowers the dimensionality from $1180$ to $20$.
-
-Including a learned block implies some constraints.
-In particular, learning the linear transform on large datasets requires more computational time.
-Moreover, the learned transform must be updated if the reference clustering or the dataset are change significantly.
-It is therefore reasonable to consider the performance of the raw joint time--frequency scattering coefficients without a learned block.
-In this case, the performance reduces to $92.9\% \pm 3$.
-\ja{Why the $\pm$ here and not elsewhere?}%
+Moreover, we evaluate the nearest neighbor algorithm $\mathbf{\Phi}$ in the absence of any metric learning at all.
+This corresponds to using a Euclidean distance to compare scattering coefficients, i.e., to set $\mathbf{L}$ to the identity matrix.
+%Including a learned block implies some constraints.
+%In particular, learning the linear transform on large datasets requires more computational time.
+%Moreover, the learned transform must be updated if the reference clustering or the dataset are change significantly.
+%It is therefore reasonable to consider the performance of the raw joint time--frequency scattering coefficients without a learned block.
+%In this case, the performance reduces to $92.9\% \pm 3$.
 
 %Another risk when considering reprojection techniques such as the LMNN may appear when the dimensionality of the features approaches the number of items in the dataset.
 %For example, there exists a trivial solution for optimizing $p@1$ when the dimensionality of the features is equal to the number of items in the dataset.
@@ -803,11 +803,11 @@ In this case, the performance reduces to $92.9\% \pm 3$.
 %In this case, no information needs to be carried by the features set to obtain perfect performance.
 
 % TODO VL: add an introductory sentence here. "Risk of overfitting of reprojection techniques using LMNN"
-In order to quantify the importance of the information carried by the feature set in the final performance, the numerical values of the features are replaced with random numbers sampled from a uniform distribution.
-In this case, the performance drops to $23.6\% \pm 10.6$.
+%In order to quantify the importance of the information carried by the feature set in the final performance, the numerical values of the features are replaced with random numbers sampled from a uniform distribution.
+%In this case, the performance drops to $23.6\% \pm 10.6$.
 %Replacing the learned linear mapping with the identity gives a $ap@5$ of $23.8\%$ for these features.
-It can be concluded that the learning block is not able to perform effectively if no information is carried by the input features.
-The slight decrease of performance when considering LMNN may be explained by the fact that the learning algorithm optimizes the projection using correlations in the training set that are not found in the testing set.
+%It can be concluded that the learning block is not able to perform effectively if no information is carried by the input features.
+%The slight decrease of performance when considering LMNN may be explained by the fact that the learning algorithm optimizes the projection using correlations in the training set that are not found in the testing set.
 
 
 \subsection*{How important is the amount of temporal context $T$?}

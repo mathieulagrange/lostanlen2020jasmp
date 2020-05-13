@@ -596,6 +596,17 @@ They have also enjoyed success in several audio classification and similarity re
 %We're no longer talking to biologists, so we don't need to be afraid.}
 % TODO: avoid citing the same papers over and over
 
+
+\ml{VL. provide parameters for scattering
+\texttt{
+case 'scat'
+    filt\_opt.Q = [12 1];
+    filt\_opt.J = T\_to\_J(sr*setting.sct/1000, filt\_opt);
+case 'tfscat'
+    tm\_filt\_opt.Q = [12 1];
+    tm\_filt\_opt.J = T\_to\_J(sr*setting.sct/1000, tm\_filt\_opt);
+    fr\_filt\_opt.J = 4;}}
+
 \begin{figure}
 \caption{\csentence{Sample scattering}
 Same 3 sounds spec + scatt.
@@ -765,27 +776,6 @@ We now turn to alter certain key choices in the design of the above-described co
 
 \section*{Analysis}
 
-The processing pipeline is composed of two main building blocks.
-The first block $B_1$ takes a digital audio recording as input and outputs one vector of features.
-For this block, the main factors are the time support $B_1^t$ for computing the features and the type of features $B_1^f$.
-We considered $B_1^t \in \{ 25, 128, 250, 500, 1000 \}$ ms and $B_1^f \in \{ \text{MFCCs}, \text{separable scattering}, \text{joint scattering} \}$.
-The MFCCs are the standard mel-frequency cepstral coefficients with $40$ coefficients out of which we select the first $13$.
-\ja{I'm not sure I like this notation.
-First, why do we need to label the blocks ($B_1$ and $B_2$)?
-We only have two of them.
-Isn't it more straightforward to just call them ``the unsupervised part'' and ``the learned part'' or something like that?
-We can also replace $B_1^t$ with something more straightforward, like $T$ (otherwise, it's a lot of bits to encode very little information).
-Likewise, instead of $B_1^f$, we can just have $F$.}
-
-\ml{VL. provide parameters for scattering
-\texttt{
-case 'scat'
-    filt\_opt.Q = [12 1];
-    filt\_opt.J = T\_to\_J(sr*setting.sct/1000, filt\_opt);
-case 'tfscat'
-    tm\_filt\_opt.Q = [12 1];
-    tm\_filt\_opt.J = T\_to\_J(sr*setting.sct/1000, tm\_filt\_opt);
-    fr\_filt\_opt.J = 4;}}
 
 As found in many studies, log compression and median processing are beneficial post processing steps for the scattering.
 % TODO VL: ref. JASMP + DLfM
@@ -808,12 +798,6 @@ For this algorithm the neighborhood is set to $5$.
 The complete experiments with all settings have been computed.
 For the sake of clarity, only part of the results are discussed here.
 \ja{What does this mean?}%
-
-The best performing system considers the joint time--frequency scattering computed over $1000~\mathrm{ms}$ time support, projected using the LMNN algorithm.
-Evaluated over the entire dataset, that is the computation of the projection and the evaluation are performed on the whole dataset, this system reaches the satifactory performance of $99.0\% \pm 0.6$ of $ap@5$.
-That means that, for a given sound dataset of \ipts for which subjective evaluation of similarity between \ipts are available, a very large number of queries would return interesting results to the user using this processing pipeline.
-\ja{What conclusion do we draw from this?}
-% TODO VL: draw a big-picture conclusion from this wrt the original motivation of the paper.
 
 % TODO VL: clearly define a second part of the analysis from here onwards.
 % we test the validity of the ablation study itself.

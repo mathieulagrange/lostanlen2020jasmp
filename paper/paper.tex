@@ -826,7 +826,8 @@ This gap in performance extends the findings of a previous publication \cite{los
 Lastly, we consider the impact of alternative choices for feature extraction.
 Let us recall the full definition of joint time--frequency scattering:
 \begin{equation}
-\mathbf{S_2}\boldsymbol{x}(t,\lambda,\alpha,\beta) = 
+\mathbf{S_2^{\mathrm{joint}}}\boldsymbol{x}(t,\lambda,\alpha,\beta) = 
+\left(
 \Big\vert
 \big\vert
 \boldsymbol{x} \overset{t}{\ast} \boldsymbol{\psi}_{\lambda}
@@ -837,9 +838,31 @@ Let us recall the full definition of joint time--frequency scattering:
 \boldsymbol{\psi}_{\beta}
 \Big\vert
 \overset{t}{\ast} \boldsymbol{\phi}_{T}
-\overset{\log \lambda}{\ast} \boldsymbol{\phi}_{F},
+\overset{\log \lambda}{\ast} \boldsymbol{\phi}_{F}\right)(t),
 \end{equation}
 where the symbol $\boldsymbol{\psi}_{\lambda}$ (resp. $\boldsymbol{\phi}_T$) denotes a Morlet wavelet of center frequency $\lambda$ (resp. a Gaussian low-pass filter of scale $T$).
+
+% as a point of comparison
+% complex modulus between alpha and beta
+
+\begin{equation}
+\mathbf{S_2^{\mathrm{sep}}}\boldsymbol{x}(t,\lambda,\alpha,\beta) = 
+\left(
+\bigg\vert
+\Big\vert
+\big\vert
+\boldsymbol{x} \overset{t}{\ast} \boldsymbol{\psi}_{\lambda}
+\big\vert
+\overset{t}{\ast}
+\boldsymbol{\psi}_{\alpha}
+\Big\vert
+\overset{t}{\ast} \boldsymbol{\phi}_{T}
+\overset{\log_2 \lambda}{\ast}
+\boldsymbol{\psi}_{\beta}
+\bigg\vert
+\overset{\log \lambda}{\ast} \boldsymbol{\phi}_{F}
+\right)(t),
+\end{equation}
 
 Considering the separable scattering gives a performance of $91\% \pm 4.5$.
 % TODO VL: write about frequency-depedendent time shift. cite IEEE TSP

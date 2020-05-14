@@ -800,7 +800,6 @@ Note that the runtime complexity of Euclidean nearest-neighbor search is identic
 Over our cohort of $K=31$ subjects, we reported a precision at rank five (P@5) of $\textbf{92.9\%} \pm 3$, which is noticeably worse than the best performing system.
 This gap in performance demonstrates the importance of complementing unsupervised feature extraction by supervised metric learning in the design  of computational models for timbre similarity between instrumental playing techniques.
 
-
 % TODO VL: add an introductory sentence here. "Risk of overfitting of reprojection techniques using LMNN"
 %In order to quantify the importance of the information carried by the feature set in the final performance, the numerical values of the features are replaced with random numbers sampled from a uniform distribution.
 %In this case, the performance drops to $23.6\% \pm 10.6$.
@@ -811,7 +810,10 @@ This gap in performance demonstrates the importance of complementing unsupervise
 
 \subsection*{How important is the amount of temporal context $T$?}
 
-Our 
+Our best performing system operates with joint time--frequency scattering coefficients as spectrotemporal modulation features.
+These features are extracted within a temporal context of duration equal to $T=\SI{1000}{\milli\second}$.
+This value is considerably larger than the frame size of purely spectral features, such as spectral centroid, spectral flux, or mel-frequency cepstral coefficients (MFCC).
+
 When considering the commonly used duration of $25~\mathrm{ms}$, the performance drops down to $\textbf{90.9\%} \pm 4$. This demonstrates that the joint scattering is able to benefit from a larger time support, possibly to capture longer-term modulations which play an important part when considering extended playing techniques \cite{lostanlen2018extended}.
 
 

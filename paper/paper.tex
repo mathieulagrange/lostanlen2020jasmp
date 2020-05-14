@@ -802,13 +802,6 @@ Note that the runtime complexity of Euclidean nearest-neighbor search is identic
 Over our cohort of $K=31$ subjects, we report a precision at rank five (P@5) of $\textbf{92.9\%} \pm 3$, which is noticeably worse than the best performing system.
 This gap in performance demonstrates the importance of complementing unsupervised feature extraction by supervised metric learning in the design  of computational models for timbre similarity between instrumental playing techniques.
 
-% TODO VL: add an introductory sentence here. "Risk of overfitting of reprojection techniques using LMNN"
-%In order to quantify the importance of the information carried by the feature set in the final performance, the numerical values of the features are replaced with random numbers sampled from a uniform distribution.
-%In this case, the performance drops to $23.6\% \pm 10.6$.
-%Replacing the learned linear mapping with the identity gives a $ap@5$ of $23.8\%$ for these features.
-%It can be concluded that the learning block is not able to perform effectively if no information is carried by the input features.
-%The slight decrease of performance when considering LMNN may be explained by the fact that the learning algorithm optimizes the projection using correlations in the training set that are not found in the testing set.
-
 
 \subsection*{How important is the amount of temporal context $T$?}
 
@@ -840,12 +833,10 @@ Let us recall the full definition of joint time--frequency scattering:
 \Big\vert
 \overset{t}{\ast} \boldsymbol{\phi}_{T}
 \overset{\log \lambda}{\ast} \boldsymbol{\phi}_{F}\right)(t),
+\label{eq:joint-scattering}
 \end{equation}
 where the symbol $\boldsymbol{\psi}_{\lambda}$ (resp. $\boldsymbol{\phi}_T$) denotes a Morlet wavelet of center frequency $\lambda$ (resp. a Gaussian low-pass filter of scale $T$).
-
-% as a point of comparison
-% complex modulus between alpha and beta
-
+Besides the \emph{joint} time--frequency scattering transform, the generative grammar of scattering transforms \cite{lostanlen2019chapter} also encompasses the \emph{separable} time--frequency scattering transform:
 \begin{equation}
 \mathbf{S_2^{\mathrm{sep}}}\boldsymbol{x}(t,\lambda,\alpha,\beta) = 
 \left(
@@ -863,11 +854,22 @@ where the symbol $\boldsymbol{\psi}_{\lambda}$ (resp. $\boldsymbol{\phi}_T$) den
 \bigg\vert
 \overset{\log \lambda}{\ast} \boldsymbol{\phi}_{F}
 \right)(t),
+\label{eq:separable-scattering}
 \end{equation}
+which has been applied successfully to classify environmental sounds \cite{bauge2013icassp} as well as playing techniques involving periodic modulations \cite{wang2019ismir}.
 
-Considering the separable scattering gives a performance of $91\% \pm 4.5$.
+In comparison with its joint counterpart, separable time--frequency scattering contains about half as many coefficients.
+This is because the temporal wavelet transform with $\boldsymbol{\psi}_\alpha$ and the frequential wavelet transform with $\boldsymbol{\psi}_\beta$ are separated by an operation of complex modulus.
+Hence, $\boldsymbol{\psi}_\beta$ operates on a real-valued input, and flipping the sign of the scale variable $\beta$ is no longer necessary.
+Moreover, separable time--frequency scattering has a lower algorithmic complexity than joint time--frequency scattering.
+Indeed, in Equation \ref{eq:separable-scattering}, the frequential wavelet transform with $\boldsymbol{\psi}_{\beta}$ operates on a tensor whose time axis is subsampled at a fixed rate $T^{-1}$, thus allowing vectorized computations.
+Conversely, in Equation \ref{eq:joint-scattering}, the frequential wavelet transform must operate on a multiresolution input, whose sample rate varies  depending on $\alpha$: it ranges between $T^{-1}$ and the sample rate of $\boldsymbol{x}$ itself.
+
+Considering the separable scattering gives a performance of $\textbf{91\%} \pm 4.5$.
 % TODO VL: write about frequency-depedendent time shift. cite IEEE TSP
+% TODO VL: insist on the role of modulations in playing techniques.
 
+\subsection*{What is the baseline performance?}
 Further simplifying the feature set by replacing the scattering coefficients with MFCCs gives a performance of $81.8\% \pm 7.2$.
 Compared to the separable scattering (which includes both first- and second-order coefficients), we see that the MFCCs perform markedly worse.
 In order to confirm that the additional information captured by the joint scattering is effectively important, another feature set is considered where the MFCCs are complemented with monomials in order to reach the dimensionality of the joint scattering.
@@ -877,7 +879,14 @@ How are they defined?}%
 % TODO VL: give reference to MFCCs.
 The resulting feature set consists of the 40 MFCCs features $f_i$ and the $1140$ features $f_{i, j}$.
 The resulting $ap@5$ of $81.5\% \pm 7.3$ indicates that the increase of dimensionality is has a small effect, confirming the relevance of the additional information provided by the joint scattering.
-% TODO VL: insist on the role of modulations in playing techniques.
+
+% TODO VL: add an introductory sentence here. "Risk of overfitting of reprojection techniques using LMNN"
+%In order to quantify the importance of the information carried by the feature set in the final performance, the numerical values of the features are replaced with random numbers sampled from a uniform distribution.
+%In this case, the performance drops to $23.6\% \pm 10.6$.
+%Replacing the learned linear mapping with the identity gives a $ap@5$ of $23.8\%$ for these features.
+%It can be concluded that the learning block is not able to perform effectively if no information is carried by the input features.
+%The slight decrease of performance when considering LMNN may be explained by the fact that the learning algorithm optimizes the projection using correlations in the training set that are not found in the testing set.
+
 
 
 \section*{\nmu Conclusion}
@@ -885,7 +894,7 @@ The resulting $ap@5$ of $81.5\% \pm 7.3$ indicates that the increase of dimensio
 
 We see from the ablation study conducted above that each step of the proposed model is necessary for its high performance.
 Among other things, it indicates the joint time--frequency scattering transform itself should not be used directly for similarity comparisons, but is best augmented by a learned stage.
-This explains the relative success over such models \cite{lostanlen2018jasmp,lostanlen2018extended} over others where distances on raw scattering coefficients were used for judging audio similarity \cite{bauge2013representing}.
+This explains the relative success over such models \cite{lostanlen2018jasmp,lostanlen2018extended} over others where distances on raw scattering coefficients were used for judging audio similarity.
 
 On the other hand, we note that the complexity of the learned model does not have to be high.
 Indeed, for this task, a linear model on the scattering coefficients is sufficient.

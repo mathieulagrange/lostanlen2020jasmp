@@ -464,8 +464,15 @@ This way, $\mathcal{G}_k$ contains as many connected components as the number of
 
 We aggregate the similarity judgments from all $K$ subjects by embedding them into a hypergraph $\mathcal{H}$, that is, a graph whose edges may connect three or more vertices at once.
 Specifically, $\mathcal{H}$ contains $N$ vertices, each representing an IMT; and each ``hyperedge'' in $\mathcal{H}$ corresponds to some connected component in one of the graphs $\mathcal{G}_k$'s among all subject $k$.
-Then, we convert the hypergraph $\mathcal{H}$ back into a conventional graph $\mathcal{G}_0$ by means of a combinatorial optimization algorithm algorithm known as hypergraph partitioning \cite{kernighan1970efficient,han1997scalable,strehl2002cluster}. % TODO describe the gist of hypergraph partitioning?
-To construct $G_0$, we select a number of clusters $C=5$ a priori, and run hypergraph partitioning to assign each vertex $i$ to one of these clusters.
+Then, we convert the hypergraph $\mathcal{H}$ back into a conventional graph $\mathcal{G}_0$ by means of a combinatorial optimization algorithm algorithm known as hypergraph partitioning \cite{kernighan1970efficient,han1997scalable,strehl2002cluster}.
+
+For a particular subject $k$, let us denote by $C_k$ the number of clusters in the graph $\mathcal{G}_k$.
+Across all $K=31$ subjects, the value of $C_k$ varies between $3$ and $19$, with a median value of $10$.
+To construct $\mathcal{G}_0$, we select a number of clusters $C_0$ that is equal to the maximal value of the $C_k$'s; that is,
+\begin{equation}
+C_0 = \max_{1\leq k \leq K} C_k = 19
+\end{equation}
+Then, we run hypergraph partitioning on $\mathcal{H}$ to assign each vertex $i$ to one of the $C_0$ clusters in $\mathcal{G}_0$.
 Intuitively, hypergraph partitioning optimizes a tradeoff between two objectives: first, balancing the size of all clusters in terms of their respective numbers of vertices; and secondly, keeping most hyperedges enclosed within as few distinct clusters as possible.
 
 While the graphs $\mathcal{G}_1 \ldots \mathcal{G}_K$ encode the subjective similarity judgments of participants $1$ to $K$, the graph $\mathcal{G}_0$ represents a form of consensual judgment that is shared across all participants, while discarding intersubjective variability.
@@ -683,8 +690,6 @@ Given an audio stimulus $n$ from our perceptual study, we seek its position in t
 Then, we identify its instrument--mute--technique (IMT) triplet, scrape for audio samples in SOL matching this triplet, and assign them all to the same cluster as the original audio stimulus.
 We repeat the same procedure for all $N=78$ nodes in $\mathcal{G}_0$, resulting in $N^\prime = 9346$ samples in total.
 This is a form of semi-supervised label propagation: from a limited amount of human annotation, we curate a relatively large subset of SOL (roughly one third of the entire dataset, i.e., $25444$ samples) for which the notion of timbre is perceptually encoded as a discrete category.
-In the case of the consensus cluster graph ($\mathcal{G}_0$), this discrete category takes one of $C=5$ distinct values.
-However, for a particular subject $k$, this discrete category takes one of $C_k$ distinct values, where the number of timbre clusters varies between $3$ and $19$ depending on $k$.
 
 
 
@@ -786,21 +791,15 @@ Thus it appears that the gap in performance between the evaluation presented in 
 \subsection*{Is metric learning necessary?}
 Replacing the large-margin nearest neighbors (LMNN) metric learning algorithm by linear discriminant analysis (LDA) leads to a P@5 of $\textbf{76.6}\% \pm 11$.
 However, we should note that, from a computational standpoint, the nearest-neighbor search $\mathbf{\Phi}_r (\boldsymbol{x}_n)$ is considerably faster with LDA than with LMNN.
-Indeed, while LMNN operates in the original dimensionality of joint time--frequency scattering features ($d=1180$), LDA projects these features onto a subspace whose dimensionality is equal to $(C+1)$, where $C$ is the number of clusters in the cluster graph $\mathcal{G}$.
-% TODO complete this paragraph. 1180/20 ^2 = 59^2 = 3481
+Indeed, while LMNN operates in the original dimensionality of joint time--frequency scattering features ($d=1180$), LDA projects these features onto a subspace whose dimensionality is equal to $d_0 = (C_0+1)$, where $C_0 = 19$ is the number of clusters in the consensus cluster graph $\mathcal{G}_0$.
+Because the runtime complexity of nearest-neighbor search grows quadratically with the dimensionality, i.e., is $O(d^2)$, replacing LMNN by LDA accelerates the system by a factor $(d/d_0)^2 \approx 3 \cdot 10^3$.
 
 Moreover, we evaluate the nearest neighbor algorithm $\mathbf{\Phi}$ in the absence of any metric learning at all.
 This corresponds to using a Euclidean distance to compare scattering coefficients, i.e., to set $\mathbf{L}$ to the identity matrix.
-%Including a learned block implies some constraints.
-%In particular, learning the linear transform on large datasets requires more computational time.
-%Moreover, the learned transform must be updated if the reference clustering or the dataset are change significantly.
-%It is therefore reasonable to consider the performance of the raw joint time--frequency scattering coefficients without a learned block.
-%In this case, the performance reduces to $92.9\% \pm 3$.
+Note that the runtime complexity of Euclidean nearest-neighbor search is identical to LMNN search.
+Over our cohort of $K=31$ subjects, we reported a precision at rank five (P@5) of $\textbf{92.9\%} \pm 3$, which is noticeably worse than the best performing system.
+This gap in performance demonstrates the importance of complementing unsupervised feature extraction by supervised metric learning in the design  of computational models for timbre similarity between instrumental playing techniques.
 
-%Another risk when considering reprojection techniques such as the LMNN may appear when the dimensionality of the features approaches the number of items in the dataset.
-%For example, there exists a trivial solution for optimizing $p@1$ when the dimensionality of the features is equal to the number of items in the dataset.
-%\ja{What is that trivial solution?}%
-%In this case, no information needs to be carried by the features set to obtain perfect performance.
 
 % TODO VL: add an introductory sentence here. "Risk of overfitting of reprojection techniques using LMNN"
 %In order to quantify the importance of the information carried by the feature set in the final performance, the numerical values of the features are replaced with random numbers sampled from a uniform distribution.
@@ -812,9 +811,8 @@ This corresponds to using a Euclidean distance to compare scattering coefficient
 
 \subsection*{How important is the amount of temporal context $T$?}
 
-Concerning the feature computation block $B_1$, an important factor is the time support.
-When considering the commonly used duration of $25~\mathrm{ms}$, the performance drops down to $90.9\% \pm 4$. This demonstrates that the joint scattering is able to benefit from a larger time support, possibly to capture longer-term modulations which play an important part when considering extended playing techniques \cite{lostanlen2018extended}.
-\ja{Other references?}%
+Our 
+When considering the commonly used duration of $25~\mathrm{ms}$, the performance drops down to $\textbf{90.9\%} \pm 4$. This demonstrates that the joint scattering is able to benefit from a larger time support, possibly to capture longer-term modulations which play an important part when considering extended playing techniques \cite{lostanlen2018extended}.
 
 
 \subsection*{Is joint time--frequency scattering necessary?}

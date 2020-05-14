@@ -283,12 +283,11 @@ They are also in line with visualizations of the modulation power spectrum in au
 
 \subsection*{Outline}
 The \lnameref{sec:soa} section reviews recent research in the computational modeling of musical timbre.
-The \lnameref{sec:survey} section describes our data collection procedure for auditory similarities across playing techniques.
-The \lnameref{sec:method} section presents the technical components of our machine listening system, namely joint time--frequency scattering and large-margin nearest neighbors.
-The \lnameref{sec:results} section conducts an ablation study of our system.
-The \lnameref{sec:discussion} section summarizes the implications of our findings for future research on timbral similarity.\footnote{Reproducible research statement: the implementation of the proposed model and the experimental protocol of this paper are available online, alongside anonymized data from human subjects:  \url{https://github.com/mathieulagrange/paperPlayingTechniquesSimilarityLearning}} %TODO: simplify this URL to lostanlen2020jasmp
-
-
+The \lnameref{sec:survey} section describes our computer--human interface for annotating auditory similarities across playing techniques.
+The \lnameref{sec:methods} section presents the technical components of our machine listening system, namely joint time--frequency scattering and large-margin nearest neighbors.
+The \lnameref{sec:results} section describes our experimental benchmark.
+The \lnameref{sec:discussion} section conducts an ablation study of our best performing system.
+The \lnameref{sec:conclusion} summarizes the implications of our findings for future research in music information retrieval.\footnote{Reproducible research statement: the implementation of the proposed model and the experimental protocol of this paper are available online, alongside anonymized data from human subjects:  \url{https://github.com/mathieulagrange/paperPlayingTechniquesSimilarityLearning}} %TODO: simplify this URL to lostanlen2020jasmp
 
 
 
@@ -366,7 +365,7 @@ Conversely, from the standpoint of music cognition, our model offers a scalable 
 % enjoys a thirty-fold reduction in dimensionality, while covering a  time span that is four times larger (1000 ms) and an acoustic bandwidth that is also four times larger (0--16 kHz).
 %We refer to \cite{bellet2015book} for a review of the state of the art in metric learning.
 
-\section*{\nmu Timbre similarity judgments}
+\section*{\nmu Data collection}
 \label{sec:survey}
 
 The European symphonic orchestra encompasses four families of instruments: strings, woodwinds, brass, and percussion.
@@ -764,7 +763,9 @@ In particular, it does not assume the ``metadata'' (instrument, mute, technique,
 
 
 
-\section*{Ablation study}
+\section*{\nmu Discussion}
+\label{sec:discussion}
+
 The previous section described our dataset of audio samples with diverse instruments, mutes, and playing techniques, as well as the method we adopt to evaluate a given system for timbre similarity retrieval.
 Over a cohort of $K=31$ subjects, we reported a precision at rank five (P@5) of $99.0\% \pm 1$.
 We now turn to alter certain key choices in the design of the above-described computational blocks, and discuss their respective impacts on downstream performance.
@@ -879,8 +880,8 @@ The resulting $ap@5$ of $81.5\% \pm 7.3$ indicates that the increase of dimensio
 % TODO VL: insist on the role of modulations in playing techniques.
 
 
-\section*{\nmu Discussion}
-\label{sec:discussion}
+\section*{\nmu Conclusion}
+\label{sec:conclusion}
 
 We see from the ablation study conducted above that each step of the proposed model is necessary for its high performance.
 Among other things, it indicates the joint time--frequency scattering transform itself should not be used directly for similarity comparisons, but is best augmented by a learned stage.

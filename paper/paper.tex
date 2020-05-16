@@ -273,7 +273,7 @@ These visualizations confirm the theoretical predictions of previous research \c
 They are also in line with visualizations of the modulation power spectrum in auditory neurophysiology \cite{patil2012ploscompbiol}, while offering an accelerated algorithm for scalable feature extraction.
 
 \subsection*{Outline}
-The \lnameref{sec:soa} section reviews recent research in the computational modeling of musical timbre.
+The \lnameref{sec:related-work} section reviews recent research in the computational modeling of musical timbre.
 The \lnameref{sec:survey} section describes our computer--human interface for annotating auditory similarities across playing techniques.
 The \lnameref{sec:methods} section presents the technical components of our machine listening system, namely joint time--frequency scattering and large-margin nearest neighbors.
 The \lnameref{sec:results} section describes our experimental benchmark.
@@ -283,7 +283,7 @@ The \lnameref{sec:conclusion} summarizes the implications of our findings for fu
 
 
 \section*{\nmu Related work}
-\label{sec:soa}
+\label{sec:related-work}
 
 Timbre involves multiple time scales in conjunction, from a few microseconds for an attack transient to several seconds for a sustained tone.
 Therefore, computational models of timbre perception must summarize acoustic information over a long analysis window, typically amounting to $10^{4}$ digital audio samples or more \cite{joder2009taslp}.
@@ -586,9 +586,9 @@ Moreover, we discretize the frequency variable $\lambda$ according to a geometri
 Thus, the base-two logarithm of center frequency, denoted by $\log_2 \lambda$, follows an arithmetic progression.
 We set the constant quality factor of the wavelet filterbank $(\boldsymbol{\psi}_\lambda)_\lambda$ to $Q=12$, thus matching twelve-tone equal temperament in music.
 
-Convolving the wavelets in this filterbank with an input waveform $\boldsymbol{x}\in\mathbf{L}^2(\mathbb{R}$, followed by an application of the pointwise complex modulus, yields the wavelet scalogram
+Convolving the wavelets in this filterbank with an input waveform $\boldsymbol{x}\in\mathbf{L}^2(\mathbb{R})$, followed by an application of the pointwise complex modulus, yields the wavelet scalogram
 \begin{equation}
-\mathbf{U_1}\boldsymbol{x}(t,\log_2\lambda) =
+\mathbf{U_1}\boldsymbol{x}(t,\lambda) =
 \big\vert
 \boldsymbol{x}
 \ast
@@ -604,28 +604,36 @@ Convolving the wavelets in this filterbank with an input waveform $\boldsymbol{x
 \mathrm{d}{t^\prime}
 \right\vert,
 \end{equation}
-indexed by time $t$ and log-frequency $\log_2\lambda$.
-Then, we define a two-dimensional Morlet wavelet $\boldsymbol{\Psi}$, taking a spectrotemporal pair $(t, \log_2 \lambda)$ as input:
+which is discretized according to a dyadic multirate scheme, similarly to the constant-$Q$ transform of \cite{schorkhuber2010smc}.
+Then, we define a two-dimensional Morlet wavelet $\boldsymbol{\Psi}$ of the form
 \begin{equation}
-\Psi : (t,\log_2 \lambda) \longmapsto 
-\exp\left(-\dfrac{t^2+(\log_2 \lambda)^2}{2\sigma_{\Psi}^2}\right) 
-\Big[ \exp\big(2\pi \mathrm{i} (t + \log_2 \lambda)\big) - \kappa_{\Psi} \Big].
+\Psi : (t, u) \longmapsto 
+\exp\left(-\dfrac{t^2+u^2}{2\sigma_{\Psi}^2}\right) 
+\Big[ \exp\big(2\pi \mathrm{i} (t + u)\big) - \kappa_{\Psi} \Big],
 \end{equation}
+taking two real variables $t$ and $u$ as input.
+The former is the time variable while the latter is the base-two logarithm of frequency: $u = \log_2 \lambda$.
+Note that $u$ roughly corresponds to the human perception of relative pitch \cite{lostanlen2020icassp}.
+
 In the equation above, the Gaussian width $\sigma_{\Psi}$ is chosen so that the quality factor of the Morlet wavelet $\Psi$ is equal to $1$, both over the time dimension and over the log-frequency dimension.
 Furthermore, the corrective term $\kappa_{\Psi}$ ensures that $\boldsymbol{\Psi}$ has a null average over $\mathbb{R}^2$, similarly to Equation \ref{eq:psi}.
-Following the terminology of spectrotemporal receptive fields (STRF, see \lnameref{sec:soa} section), we define a two-dimensional wavelet filterbank of the form:
+From $\mathbf{\Psi}$, we define a two-dimensional wavelet filterbank of the form:
 \begin{equation}
 \mathbf{\Psi}_{\alpha,\beta} : (t, \log_2 \lambda) \longmapsto
-\mathbf{\Psi}\big(\alpha t, \beta \log_2 \lambda \big),
+\alpha \, \beta \, \mathbf{\Psi}(\alpha t, \beta \log_2 \lambda).
 \end{equation}
-where $\alpha$ is a temporal modulation rate and $\beta$ is a temporal modulation scale.
-
+In the equation above, $\alpha$ is a temporal modulation rate and $\beta$ is a temporal modulation scale, following the terminology of spectrotemporal receptive fields (STRF, see \lnameref{sec:related-work} section).
 While $\alpha$ is measured in Hertz and is strictly positive, $\beta$ is measured in cycles per octaves and may take positive as well as negative values.
 Both $\alpha$ and $\beta$ are discretized by geometric progressions of common ratio equal to $2$.
 Furthermore, the edge case $\beta=0$ corresponds to $\mathbf{\Psi}_{\alpha,\beta}$ being a Gaussian low-pass filter over the log-frequency dimension, while remaining a Morlet band-pass filter of center frequency $\alpha$ over the time dimension.
 
-% TODO define U2.
-% Briefly define S2.
+\begin{equation}
+\mathbf{U_2}\boldsymbol{x} (t, \lambda, \alpha, \beta) =
+\left\vert
+\iint_{\mathbb{R}^2}
+\mathrm{d}t^\prime \, \mathrm{d}u^\prime
+\right\vert
+\end{equation}
 
 In comparison with the representation known as ``full cortical model'' \cite{patil2012ploscompbiol}, joint time--frequency scattering enjoys a thirty-fold reduction in dimensionality while covering a time span that is four times larger (1000 ms) and an acoustic bandwidth that is also four times larger (0--16 kHz).
 We refer to \cite{anden2019tsp} for more details on the implementation of joint time--frequency scattering.
@@ -873,7 +881,7 @@ For this reason, separable time--frequency scattering coefficients can only serv
 The same observation was made by \cite{schadler2015jasa} in the case of separable Gabor filterbank features (GBFB), which bear some resemblance with separable time--frequency scattering.
 
 Over our cohort of $K=31$ subjects, separable time--frequency scattering achieves a precision at rank five (P@5) of $\textbf{91.9\%} \pm 4$. This figure is noticeably worse than joint time--frequency scattering ($99.0\% \pm 1$), all other things being equal.
-This gap in performance, together with the theory of spectrotemporal receptive fields (STRF) in auditory neuroscience (see \lnameref{sec:soa} section), demonstrates the importance of joint spectrotemporal modulations in the modeling of timbre similarity across instrumental playing techniques.
+This gap in performance, together with the theory of spectrotemporal receptive fields (STRF) in auditory neuroscience (see \lnameref{sec:related-work} section), demonstrates the importance of joint spectrotemporal modulations in the modeling of timbre similarity across instrumental playing techniques.
 
 
 \subsection*{What is the baseline performance?}

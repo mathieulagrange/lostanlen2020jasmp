@@ -613,6 +613,22 @@ Then, we define a two-dimensional Morlet wavelet $\boldsymbol{\Psi}$, taking a s
 \end{equation}
 In the equation above, the Gaussian width $\sigma_{\Psi}$ is chosen so that the quality factor of the Morlet wavelet $\Psi$ is equal to $1$, both over the time dimension and over the log-frequency dimension.
 Furthermore, the corrective term $\kappa_{\Psi}$ ensures that $\boldsymbol{\Psi}$ has a null average over $\mathbb{R}^2$, similarly to Equation \ref{eq:psi}.
+Following the terminology of spectrotemporal receptive fields (STRF, see \lnameref{sec:soa} section), we define a two-dimensional wavelet filterbank of the form:
+\begin{equation}
+\mathbf{\Psi}_{\alpha,\beta} : (t, \log_2 \lambda) \longmapsto
+\mathbf{\Psi}\big(\alpha t, \beta \log_2 \lambda \big),
+\end{equation}
+where $\alpha$ is a temporal modulation rate and $\beta$ is a temporal modulation scale.
+
+While $\alpha$ is measured in Hertz and is strictly positive, $\beta$ is measured in cycles per octaves and may take positive as well as negative values.
+Both $\alpha$ and $\beta$ are discretized by geometric progressions of common ratio equal to $2$.
+Furthermore, the edge case $\beta=0$ corresponds to $\mathbf{\Psi}_{\alpha,\beta}$ being a Gaussian low-pass filter over the log-frequency dimension, while remaining a Morlet band-pass filter of center frequency $\alpha$ over the time dimension.
+
+% TODO define U2.
+% Briefly define S2.
+
+In comparison with the representation known as ``full cortical model'' \cite{patil2012ploscompbiol}, joint time--frequency scattering enjoys a thirty-fold reduction in dimensionality while covering a time span that is four times larger (1000 ms) and an acoustic bandwidth that is also four times larger (0--16 kHz).
+We refer to \cite{anden2019tsp} for more details on the implementation of joint time--frequency scattering.
 
 
 \subsection*{Metric learning with large-margin nearest neighbors (LMNN)}

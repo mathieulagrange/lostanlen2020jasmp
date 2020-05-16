@@ -877,22 +877,31 @@ This gap in performance, together with the theory of spectrotemporal receptive f
 
 
 \subsection*{What is the baseline performance?}
-Lastly, we consider the impact of alternative choices for feature extraction.
+Lastly, we train a baseline system in which joint time--frequency scattering coefficients are replaced by mel-frequency cepstral coefficients (MFCC).
+Specifically, we extract a 40-band mel-frequency spectrogram by means of the RASTAMAT library; apply the pointwise logarithm; and compute a discrete cosine transform (DCT) over the mel-frequency axis\footnote{Link to RASTAMAT library: \url{http://www.ee.columbia.edu/~dpwe/resources/matlab/rastamat/}}.
+This operation results in a 40-dimensional feature vector over frames of duration $T=\SI{25}{\milli\second}$.
+Over our cohort of $K=31$ subjects, we report a precision at rank five (P@5) of $\textbf{81.8\%} \pm 7$.
 
-$81.8\% \pm 7.2$
+Arguably, this figure is not directly comparable with our best performing system (P@5 of $99.0\%\pm 1$), due to the mismatch in dimensionality between MFCC and joint time--frequency scattering coefficients.
+In order to clarify the role of feature dimensionality in our computational pipeline, we apply a feature engineering technique involving multiplicative combinations of MFCC.
+We construct the following Gram matrix:
+\begin{equation}
+\mathbf{G} \boldsymbol{x}(\alpha, \beta) =
+\int_0^{+\infty}
+\mathrm{MFCC}(\boldsymbol{x})(t, \alpha)
+\times
+\mathrm{MFCC}(\boldsymbol{x})(t, \beta)
+\;\mathrm{d}t,
+\end{equation}
+where $\alpha$ and $\beta$ represent different dimensions (``quefrencies'') of the MFCC feature vector.
+The symmetric matrix $\mathbf{G}\boldsymbol{x}$ contains $40$ rows and $40$ columns, hence $800$ unique coefficients.
+Concatenating these coefficients to the $40$ averaged MFCC features results in a feature vector of $840$ coefficients.
+This dimension is of the same order of magnitude as the dimension of our joint time--frequency scattering representation ($d=1180$, see \lnameref{sec:methods} section).
 
-Arguably, this figure is not directly comparable with our best performing system, since
-
-To disprove this hypothesis, 
-Further simplifying the feature set by replacing the scattering coefficients with MFCCs gives a performance of $81.8\% \pm 7.2$.
-Compared to the separable scattering (which includes both first- and second-order coefficients), we see that the MFCCs perform markedly worse.
-In order to confirm that the additional information captured by the joint scattering is effectively important, another feature set is considered where the MFCCs are complemented with monomials in order to reach the dimensionality of the joint scattering.
-To do so, the $40$ features $f_i$ of the MFCCs are multiplied together $f_{i, j} = f_i \times f_j, i \neq j$.
-\ja{What are the $f_i$ here?
-How are they defined?}%
-% TODO VL: give reference to MFCCs.
-The resulting feature set consists of the 40 MFCCs features $f_i$ and the $1140$ features $f_{i, j}$.
-The resulting $ap@5$ of $81.5\% \pm 7.3$ indicates that the increase of dimensionality is has a small effect, confirming the relevance of the additional information provided by the joint scattering.
+Training the LMNN algorithm on this 840-dimensional representation is analogous to a ``kernel trick'' in support vector machines \cite{chang2010jmlr}.
+In our case, the implicit similarity kernel is a homogeneous quadratic kernel.
+Despite this increase in representational power, we obtain a P@5 of $81.5\% \pm 7.3$, i.e. essentially the same as MFCC under a linear kernel.
+Therefore, it appears that the gap in performance between MFCC ($81.8\%\pm 7$) and joint time--frequency scattering ($99.0\% \pm 1$) is primarily attributable to the multiscale extraction of joint spectrotemporal modulations, whereas high-dimensional embedding likely plays a minor role.
 
 % TODO VL: add an introductory sentence here. "Risk of overfitting of reprojection techniques using LMNN"
 %In order to quantify the importance of the information carried by the feature set in the final performance, the numerical values of the features are replaced with random numbers sampled from a uniform distribution.

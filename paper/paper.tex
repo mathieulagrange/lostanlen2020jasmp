@@ -13,16 +13,6 @@
 % \def\includegraphic[#1]{}
 % \def\includegraphics[#1]{}
 
-\newcommand{\lnameref}[1]{%
-\bgroup
-\let\nmu\MakeLowercase
-\nameref{#1}\egroup}
-\newcommand{\fnameref}[1]{%
-\bgroup
-\def\nmu{\let\nmu\MakeLowercase}%
-\nameref{#1}\egroup}
-
-\newcommand{\nmu}{}
 
 %%% Put your definitions there:
 \startlocaldefs
@@ -41,6 +31,17 @@
 \newcommand{\ml}[1]{\textcolor{blue}{ML: #1}\xspace}
 \newcommand{\vl}[1]{\textcolor{red}{VL: #1}\xspace}
 \newcommand{\ja}[1]{\textcolor{purple}{JA: #1}\xspace}
+
+\newcommand{\lnameref}[1]{%
+\bgroup
+\let\nmu\MakeLowercase
+\nameref{#1}\egroup}
+\newcommand{\fnameref}[1]{%
+\bgroup
+\def\nmu{\let\nmu\MakeLowercase}%
+\nameref{#1}\egroup}
+
+\newcommand{\nmu}{}
 
 \endlocaldefs
 
@@ -171,24 +172,16 @@
 \begin{abstractbox}
 
 \begin{abstract}
-Extended playing techniques such as vibratos, glissandos, and trills often denote musical expressivity, both in erudite and folk contexts.
-They affect the spectrotemporal modulations of pitched audio signals, thereby modifying timbre perception systematically.
-However, most existing approaches to music similarity retrieval inadequately reflect this effect, as they fail to describe timbre beyond the so-called ``ordinary'' technique; use instrument identity as a proxy for timbre quality; or do not allow for rapid customization to the perceptual idiosyncracies of a newcoming subject.
-%Our article fills this gap in scholarship by providing a scalable algorithm for measuring the timbre similarity between any two audio samples
+Instrumental playing techniques such as vibratos, glissandos, and trills often denote musical expressivity, both in erudite and folk contexts.
+However, most existing approaches to music similarity retrieval fail to describe timbre beyond the so-called ``ordinary'' technique; use instrument identity as a proxy for timbre quality; and do not allow for rapid customization to the perceptual idiosyncracies of a newcoming subject.
+In this article, we ask 31 human subjects to organize 78 isolated notes into an unconstrained number of timbre clusters.
+Analyzing their responses suggests that timbre perception operates within a more flexible taxonomy than those provided by instruments or playing techniques alone.
+In addition, we propose a machine listening model to recover the cluster graph of auditory similarities across instruments, mutes, and techniques.
+Our model relies on joint time--frequency scattering features to extract spectrotemporal modulations at multiple scales and rates.
+Furthermore, it minimizes triplet loss in the cluster graph by means of the large-margin nearest neighbor (LMNN) metric learning algorithm.
+Over a dataset of 9346 isolated notes, we report a state-of-the-art precision at rank five (P@5) of $99.0\%\pm 1$.
+An ablation study demonstrates that removing either the joint time--frequency scattering transform or the metric learning algorithm noticeably degrades performance.
 \end{abstract}
-
-%\begin{abstract}
-%The timbre of a sound is an important factor in determining its identity and source.
-%One successful means of exploring the timbre space has been the construction of computational models to analyze datasets of musical instrument recordings.
-%However, these datasets have typically only included a limited set of instruments played with standard playing techniques, limiting the timbral range.
-%For these datasets, models based on static spectral descriptors, such as mel-frequency cepstral coefficients (MFCCs), have enjoyed excellent performance.
-%However, with richer datasets containing a wider array of instruments played with a variety of playing techniques, more sophisticated models which incorporate dynamic large-scale signal structure are needed.
-%To this end, we propose a simple but rich model based on joint time--frequency scattering transforms followed by a linear mapping.
-%The linear part is learned from human similarity judgments obtained in a crowdsourced free sorting task, so the resulting descriptor provides a perceptually motivated characterization of timbre.
-%We show that this proposed computational model accurately reproduces the human similarity judgments to $99\%$ accuracy.
-%In addition, we perform an ablation study demonstrating the necessity of various components in this model.
-%\end{abstract}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                          %%
 %% The keywords begin here                  %%
@@ -355,7 +348,7 @@ Such acceleration is made possible by discretizing the wavelet transforms involv
 This multirate scheme also has the benefit of drawing an explicit connection between scattering networks and deep convolutional networks, as both involves numerous convolutions with small kernels, pointwise rectifying nonlinearities, and dyadic pooling operations \cite{mallat2016philtrans}.
 
 Moreover, a quantitative benchmark over Medley-solos-DB has demonstrated that joint time--frequency scattering, unlike purely temporal scattering, outperforms deep convolutional networks in supervised musical instrument classification, even in a relatively large data regime with 500 to 5k samples per class \cite{anden2019tsp}.
-Recently, Wang et al.~\cite{wang2019ismir} trained a classifier of playing techniques on separable (\ie{} non-joint) time--frequency scattering features \cite{anden2014tsp}, and achieved state-of-the-art results in continuous performance recordings of the Chinese bamboo flute. % TODO cite wang 2020 icassp
+The authors of a recent publication \cite{wang2019ismir} trained a classifier of playing techniques on separable (\ie{} non-joint) time--frequency scattering features \cite{anden2014tsp}, and achieved state-of-the-art results in continuous performance recordings of the Chinese bamboo flute. 
 Despite supplying experimental evidence that time--frequency scattering is better suited to playing technique recognition than purely temporal scattering, it remains to be seen whether these findings can scale up from a single instrument to an entire orchestra.
 In addition, previous publications in time--frequency scattering, whether separable or joint, lack a human-centric evaluation, independently from any classification task.
 
@@ -638,7 +631,6 @@ We now use the consensus clustering to reweight the similarity between feature v
 For this, we use the \emph{large margin nearest neighbor} (LMNN) metric learning algorithm \cite{weinberger2006distance, weinberger2009distance}.
 This approach constructs a positive semi-definite weighting matrix $L$ such that the distance $\|Lx - Ly\|$ best classifies a set of points into a fixed clustering assignment.
 % TODO: this section needs more detail. In particular, it is worth discussing the role of Euclidean distances as an "initial guess" for LMNN. (this is unlike MLR, for example).
-% cite Musgrave et al. Metric learning reality check
 
 $\mathcal{Y}_1 (\boldsymbol{x}) = \mathcal{Y} \backslash \lbrace \boldsymbol{x} \rbrace$.
 
@@ -674,13 +666,6 @@ The previous section described our methods for extracting spectrotemporal modula
 We now turn to apply these methods to the problem of allocating isolated musical notes to clusters of some timbre similarity graph $\mathcal{G}$.
 In practice, for training purposes, the cluster graph $\mathcal{G}$ stems from the consensus of $K=31$ users of the Cyberlioz web application, which was described in the \lnameref{sec:survey} section ($\mathcal{G}=\mathcal{G}_0$).
 However, for evaluation purposes, this cluster graph corrsponds to the subjective preferences of a single user $k\geq 1$, in which case we take $\mathcal{G}=\mathcal{G}_k$.
-% browsing a large-scale digital library of isolated musical notes, involving an extended vocabulary of playing techniques.
-
-% TODO VL: organize design choices.
-% (1) temporal support
-% (2) time-frequency scattering / time scattering
-% (3) learning / no learning
-
 
 
 \subsection*{Semi-supervised label propagation}
@@ -903,13 +888,11 @@ In our case, the implicit similarity kernel is a homogeneous quadratic kernel.
 Despite this increase in representational power, we obtain a P@5 of $81.5\% \pm 7.3$, i.e. essentially the same as MFCC under a linear kernel.
 Therefore, it appears that the gap in performance between MFCC ($81.8\%\pm 7$) and joint time--frequency scattering ($99.0\% \pm 1$) is primarily attributable to the multiscale extraction of joint spectrotemporal modulations, whereas high-dimensional embedding likely plays a minor role.
 
-% TODO VL: add an introductory sentence here. "Risk of overfitting of reprojection techniques using LMNN"
 %In order to quantify the importance of the information carried by the feature set in the final performance, the numerical values of the features are replaced with random numbers sampled from a uniform distribution.
 %In this case, the performance drops to $23.6\% \pm 10.6$.
 %Replacing the learned linear mapping with the identity gives a $ap@5$ of $23.8\%$ for these features.
 %It can be concluded that the learning block is not able to perform effectively if no information is carried by the input features.
 %The slight decrease of performance when considering LMNN may be explained by the fact that the learning algorithm optimizes the projection using correlations in the training set that are not found in the testing set.
-
 
 
 \section*{\nmu Conclusion}
@@ -1024,47 +1007,45 @@ The Flatiron Institute is a division of the Simons Foundation.
 % \ml{Tu voudrais ca pour la base SOL complete ou les données considérées dans l'étude ?}
 % \vl{Les donn\'{e} de l'\'{e}tude, relatives aux Figures 5 et 6.}
 
-\section*{\nmu Human timbre judgments}
-\label{sec:subjective}
+%\section*{\nmu Human timbre judgments}
+%\label{sec:subjective}
 
-The dataset considered in this study is taken
-from the studio-on-line (SOL) music library  \cite{peeters2000instrument}.
-It has audio recordings of 16 different musical instruments played
-with different playing techniques,
-which leads to $235$ different couples of instrument / playing technique.
-For each couple, the pitch and intonation is varied leading to $25444$ recordings.
+%The dataset considered in this study is taken
+%from the studio-on-line (SOL) music library  \cite{peeters2000instrument}.
+%It has audio recordings of 16 different musical instruments played
+%with different playing techniques,
+%which leads to $235$ different couples of instrument / playing technique.
+%For each couple, the pitch and intonation is varied leading to $25444$ recordings.
 %The way the dataset is structured is explained in more details in Appendix \ref{sec:appendix-dataset}.
 
-Gathering the similarity judgments between each pair of samples would be a daunting task. Indeed, studies about perceptual similarity are hindered with a dimensional problem as the number of pairs to be evaluated grows with the square of the number of items considered.
+%Gathering the similarity judgments between each pair of samples would be a daunting task. Indeed, studies about perceptual similarity are hindered with a dimensional problem as the number of pairs to be evaluated grows with the square of the number of items considered.
 
-One reasonable assumption that we choose to consider here is that the pitch and nuance do not alter significantly the perception of timbral similarity. This is in line with the ANSI negative definition of timbre \vl{expliquer, citer, et modérer le propos en donnant des exemples dans lequel le pitch ou la nuance change le timbre}.
+%One reasonable assumption that we choose to consider here is that the pitch and nuance do not alter significantly the perception of timbral similarity. This is in line with the ANSI negative definition of timbre \vl{expliquer, citer, et modérer le propos en donnant des exemples dans lequel le pitch ou la nuance change le timbre}.
 
 
-\section*{\nmu Reducing Expert judgments of technique peculiarities}
+%\section*{\nmu Reducing Expert judgments of technique peculiarities}
 
-\ja{This needs to be summarized (possible in the previous section).
-I'm copying two sentences in here that I had in the Timbre similarity judgments section.}%
-These IPTs were selected from a larger set of $235$ IPTs by two experts at the \emph{Conservatoire national sup\'erieur de musique et de danse de Paris} (CNSMDP).
-The selection criteria were based on the likelihood of an IPT being similar to some other IPT, ensuring that IPTs that were too singular were excluded from the survey.
+%These IPTs were selected from a larger set of $235$ IPTs by two experts at the \emph{Conservatoire national sup\'erieur de musique et de danse de Paris} (CNSMDP).
+%The selection criteria were based on the likelihood of an IPT being similar to some other IPT, ensuring that IPTs that were too singular were excluded from the survey.
 
-Even so, considering every pairs of IPTs is not practical. A selection
-experiment is thus conducted where the subject is asked to give his opinion on which
-\ipts are relevant to study. More precisely, an \ipt is said to be relevant to study
-if it is likely to be associated to another \ipt of another instrument.
-Interest is rated on a 7 ticks scale. The subject can listen to all the different
-nuance and pitch samples of each \ipt. The experiment is over when all the
-\ipts are rated.
+%Even so, considering every pairs of IPTs is not practical. A selection
+%experiment is thus conducted where the subject is asked to give his opinion on which
+%\ipts are relevant to study. More precisely, an \ipt is said to be relevant to study
+%if it is likely to be associated to another \ipt of another instrument.
+%Interest is rated on a 7 ticks scale. The subject can listen to all the different
+%nuance and pitch samples of each \ipt. The experiment is over when all the
+%\ipts are rated.
 
-Rating guidelines are provided :
-\begin{itemize}
-  \item One star: this \ipt is singular, it is not useful to compare it with another \ipt of another instrument.
-  \item Four stars: there is a proximity on one aspect of the sound between this
-  \ipt and of an \ipt of another instrument,
-  but this one is neither decisive nor obvious.
-  \item Seven stars: there is a large similarity between this \ipt and an \ipt of another instrument.
-\end{itemize}
+%Rating guidelines are provided :
+%\begin{itemize}
+%  \item One star: this \ipt is singular, it is not useful to compare it with another \ipt of another instrument.
+%  \item Four stars: there is a proximity on one aspect of the sound between this
+%  \ipt and of an \ipt of another instrument,
+%  but this one is neither decisive nor obvious.
+%  \item Seven stars: there is a large similarity between this \ipt and an \ipt of another instrument.
+%\end{itemize}
 
-Two music composition professors of the CNSMDP performed the test, that is rating each $235$ \ipt.
+%Two music composition professors of the CNSMDP performed the test, that is rating each $235$ \ipt.
 
 \begin{table}
 \caption{Full list of audio stimuli (1/2). In each instrument, a blank space in the rightmost column denotes the ordinary playing technique (\emph{ordinario}).}
@@ -1160,36 +1141,34 @@ Two music composition professors of the CNSMDP performed the test, that is ratin
 \end{tabular}
 \end{table*}
 
-Even if the hypothesis that the distributions of ratings comes from independent random samples from normal distributions with equal means and equal but unknown variances, is verified using the two-sample t-test, inspection of the respective histograms reveals that averaging the ratings of the two raters is reasonable.
+%Even if the hypothesis that the distributions of ratings comes from independent random samples from normal distributions with equal means and equal but unknown variances, is verified using the two-sample t-test, inspection of the respective histograms reveals that averaging the ratings of the two raters is reasonable.
 
-Keeping in mind that the gathering of the perceptual judgments of \ipt similarities shall remain practical, the number of \ipts considered shall be lower than $100$. We thus select the \ipts with an average rating higher than three, which brings us 78 \ipts to study which are listed in Tables \ref{tab:list1} and \ref{tab:list2}.
+%Keeping in mind that the gathering of the perceptual judgments of \ipt similarities shall remain practical, the number of \ipts considered shall be lower than $100$. We thus select the \ipts with an average rating higher than three, which brings us 78 \ipts to study which are listed in Tables \ref{tab:list1} and \ref{tab:list2}.
 
 %%%%%%%%%%%%%% CROWDSOURCED JUDGMENTS OF PAIRWISE SIMILARITY %%%%%%%%%%%%%%%%%%%%
-\section*{\nmu Crowdsourced judgments of pairwise similarity}
+%\section*{\nmu Crowdsourced judgments of pairwise similarity}
 
-\ja{A lot of this is covered in the main text.
-Not sure what we need to add in the appendix.}
+%\ja{A lot of this is covered in the main text.
+%Not sure what we need to add in the appendix.}
 
-The second experiment aims at gathering spontaneous judgment of similarity for those 78 \ipts using a canonical free sorting task. This type of task is chosen among others for two main reasons. First, it gives the ability to the subject to listen to the whole set of \ipts before performing the task. Second, it gives more freedom to the subject, thus potentially more interest to perform the task than a lengthy series of XXY dissimilarity ratings.
+%The second experiment aims at gathering spontaneous judgment of similarity for those 78 \ipts using a canonical free sorting task. This type of task is chosen among others for two main reasons. First, it gives the ability to the subject to listen to the whole set of \ipts before performing the task. Second, it gives more freedom to the subject, thus potentially more interest to perform the task than a lengthy series of XXY dissimilarity ratings.
 
-31 subjects completed the experiment. An example of resulting organization of \ipt is given on Figure \ref{fig:xp2display}. \footnote{The resulting organization for each subject are available for reader's inspection using the full feature interface provided to the subjects for performing the experiment \url{https://mathieulagrange.github.io/paperSpontaneousSimilarity/demo}}.
+%31 subjects completed the experiment. An example of resulting organization of \ipt is given on Figure \ref{fig:xp2display}. \footnote{The resulting organization for each subject are available for reader's inspection using the full feature interface provided to the subjects for performing the experiment \url{https://mathieulagrange.github.io/paperSpontaneousSimilarity/demo}}.
 
-Only the clustering given by the subjects using the color labels is considered to estimate the spontaneous judgments of similarity among \ipt. The spatial organization of the dots representing the \ipt could provide information about the similarity, but this would implicitly enforce the fact that the timbral similarity space is two dimensional. We therefore now only study the properties of the clusterings performed by the subject prior to converting them into an overall similarity matrix.
+%Only the clustering given by the subjects using the color labels is considered to estimate the spontaneous judgments of similarity among \ipt. The spatial organization of the dots representing the \ipt could provide information about the similarity, but this would implicitly enforce the fact that the timbral similarity space is two dimensional. We therefore now only study the properties of the clusterings performed by the subject prior to converting them into an overall similarity matrix.
 
-This results in $31$ clusterings that can be considered for defining a perceptual timbre space of \ipts. Among the 20 colors available, the subjects used on average $10.2 \pm  4.1$ different colors to group \ipts. The distribution of the number of groups can be seen on Figure \ref{fig:xp2nbSize}(a). The size of the groups is on average $7.7 \pm   7.2$. The distribution of the size of groups can be seen on Figure \ref{fig:xp2nbSize}(b). The large number of small groups indicates that many subjects considered that a few of the \ipt were very different from all the remaining \ipt.
+%This results in $31$ clusterings that can be considered for defining a perceptual timbre space of \ipts. Among the 20 colors available, the subjects used on average $10.2 \pm  4.1$ different colors to group \ipts. The distribution of the number of groups can be seen on Figure \ref{fig:xp2nbSize}(a). The size of the groups is on average $7.7 \pm   7.2$. The distribution of the size of groups can be seen on Figure \ref{fig:xp2nbSize}(b). The large number of small groups indicates that many subjects considered that a few of the \ipt were very different from all the remaining \ipt.
 
-\begin{figure}
-\center
-\begin{tabular}{cc}
-  (a) & (b) \\
-  \includegraphics[width = \textwidth]{figures/nbc.png} &
-  \includegraphics[width = \textwidth]{figures/sbc.png}
-\end{tabular}
-\caption{Histogram of the number of clusters (a) and the size of the clusters (b) defined by the $31$ subjects.}
-\label{fig:xp2nbSize}
-\end{figure}
-
-
+%\begin{figure}
+%\center
+%\begin{tabular}{cc}
+%  (a) & (b) \\
+%  \includegraphics[width = \textwidth]{figures/nbc.png} &
+%  \includegraphics[width = \textwidth]{figures/sbc.png}
+%\end{tabular}
+%\caption{Histogram of the number of clusters (a) and the size of the clusters (b) defined by the $31$ subjects.}
+%\label{fig:xp2nbSize}
+%\end{figure}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1232,14 +1211,14 @@ This results in $31$ clusterings that can be considered for defining a perceptua
 %%                               %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section*{Additional Files}
-  \subsection*{Additional file 1 --- Sample additional file title}
-    Additional file descriptions text (including details of how to
-    view the file, if it is in a non-standard format or the file extension).  This might
-    refer to a multi-page table or a figure.
+%\section*{Additional Files}
+%  \subsection*{Additional file 1 --- Sample additional file title}
+%    Additional file descriptions text (including details of how to
+%    view the file, if it is in a non-standard format or the file extension).  This might
+%    refer to a multi-page table or a figure.
 
-  \subsection*{Additional file 2 --- Sample additional file title}
-    Additional file descriptions text.
+%  \subsection*{Additional file 2 --- Sample additional file title}
+%    Additional file descriptions text.
 
 \end{backmatter}
 

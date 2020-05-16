@@ -702,7 +702,7 @@ Given a sample $n\leq N^{\prime}$ and a human subject $k\leq K$, we denote by $\
 Our machine listening system takes the waveform $\boldsymbol{x}_{n}$ as input and returns a ranked list of nearest neighbors: $\mathbf{\Phi}_1 (\boldsymbol{x}_n)$, $\mathbf{\Phi}_2 (\boldsymbol{x}_n)$, $\mathbf{\Phi}_3 (\boldsymbol{x}_n)$, and so forth.
 
 In the context of browsing an audio collection by timbre similarity, $\boldsymbol{x}_n$ is a user-defined query while the function $\mathbf{\Phi}$ plays the role of a search engine.
-We consider that the first retrieved sample, $\mathbf{\Phi}_1 (\boldsymbol{x}_n)$, to be relevant to user $k$ if and only if it belongs to the same cluster as $\boldsymbol{x}_n$ in the cluster graph $\mathcal{G}_k$; hence the Boolean condition $\mathbf{\Phi}_{1}(\boldsymbol{x}_{n}) \in \mathcal{G}_k (n)$.
+We consider the first retrieved sample, $\mathbf{\Phi}_1 (\boldsymbol{x}_n)$, to be relevant to user $k$ if and only if it belongs to the same cluster as $\boldsymbol{x}_n$ in the cluster graph $\mathcal{G}_k$; hence the Boolean condition $\mathbf{\Phi}_{1}(\boldsymbol{x}_{n}) \in \mathcal{G}_k (n)$.
 Likewise, the second retrieved sample is relevant if and only if $\mathbf{\Phi}_{2}(\boldsymbol{x}_{n}) \in \mathcal{G}_k (n)$.
 To evaluate $\mathbf{\Phi}$ on the query $\boldsymbol{x}_n$, we measure the relevance of all nearest neighbors $\mathbf{\Phi}_r (\boldsymbol{x}_n)$ up to some fixed rank $R$, and average the result:
 \begin{equation}

@@ -777,7 +777,7 @@ We now turn to alter certain key choices in the design of the above-described co
 \subsection*{Is the dataset large enough for evaluation? Is the system overfitting?}
 First of all, it is worth noting that the presented P@5 figure of $99.0\% \pm 1$ does not abide to a conventional training set vs. test set paradigm, as is most often done in machine learning research.
 Rather, the LMNN algorithm is trained on all available samples ($N^{\prime}=9346$ isolated notes) with the ``consensus'' cluster graph as training objective ($\mathcal{G}=\mathcal{G}_0$).
-Then, it is evaluated on the same samples with individual cluster graphs as ground truth ($\mathcal{G}=\mathcal{G}_k$ for $k>0$).
+Then, it is evaluated on the same samples with individual cluster graphs as ground truth ($\mathcal{G}=\mathcal{G}_k$ for $k\geq1$).
 The reason behind this choice is that, in the context of computer-assisted orchestration, the collection of audio samples has a fixed size, as it is shipped alongside the software itself.
 This is the case, for example, of Orchidea\footnote{Link to Orchidea software and OrchideaSOL dataset: \url{www.orch-idea.org}}, which comes paired with its own version of SOL, named OrchideaSOL \cite{cella2020icmc}.
 

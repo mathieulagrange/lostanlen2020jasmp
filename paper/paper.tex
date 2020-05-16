@@ -533,45 +533,82 @@ To this end, we present a new machine listening system, composing joint time--fr
 \subsection*{Joint time--frequency scattering transform}
 \label{sec:scattering}
 
-While cortical representations have been successful in distinguishing properties of audio recordings (including similarity analysis and classification tasks), they remain models for the electrophysiological signals recorded in the audio cortex.
-As such, their calculation is not always computationally efficient and their mathematical properties may be difficult to analyze directly.
+%While cortical representations have been successful in distinguishing properties of audio recordings (including similarity analysis and classification tasks), they remain models for the electrophysiological signals recorded in the audio cortex.
+%As such, their calculation is not always computationally efficient and their mathematical properties may be difficult to analyze directly.
 
-A closely related representation is that of the time scattering transform, introduced by And\'{e}n and Mallat \cite{anden2011multiscale,anden2014tsp}.
-Given an audio recording, it decomposes the signal using an analytic wavelet transform and computes the modulus, obtaining the \emph{scalogram} of the signal.
-The scalogram is similar to the spectrogram, but has a time--frequency resolution that varies with frequency: at low frequency, the filters are narrowly tuned in frequency (and hence wide in time), while at high frequency, the filters are wide in frequency (and hence narrowly concentrated in time).
-This representation contains a large amount of information, but not in a form suitable for building statistical models.
-In particular, the scalogram is not \emph{stable} in the sense that small deformations to the original signal may induce large changes to the scalogram.
-It also lacks \emph{invariance} to time-shifting, which does not affect our perception of a sound, and should therefore not affect its timbre model.
-One way to resolve this is to average the scalogram in time to obtain a spectral profile of the signal, yielding the first-order scattering coefficients.
-These possess both invariance to time-shifting and stability to time-warping deformations \cite{anden2014tsp}.
+%A closely related representation is that of the time scattering transform, introduced by And\'{e}n and Mallat \cite{anden2011multiscale,anden2014tsp}.
+%Given an audio recording, it decomposes the signal using an analytic wavelet transform and computes the modulus, obtaining the \emph{scalogram} of the signal.
+%The scalogram is similar to the spectrogram, but has a time--frequency resolution that varies with frequency: at low frequency, the filters are narrowly tuned in frequency (and hence wide in time), while at high frequency, the filters are wide in frequency (and hence narrowly concentrated in time).
+%This representation contains a large amount of information, but not in a form suitable for building statistical models.
+%In particular, the scalogram is not \emph{stable} in the sense that small deformations to the original signal may induce large changes to the scalogram.
+%It also lacks \emph{invariance} to time-shifting, which does not affect our perception of a sound, and should therefore not affect its timbre model.
+%One way to resolve this is to average the scalogram in time to obtain a spectral profile of the signal, yielding the first-order scattering coefficients.
+%These possess both invariance to time-shifting and stability to time-warping deformations \cite{anden2014tsp}.
 
-Since these first-order coefficients only include spectral information, they cannot accurately characterize more sophisticated structure in the signal.
-One way to augment them is to calculate another wavelet decomposition in time, this time on each frequency channel of the scalogram.
-Again, we compute the modulus of the wavelet coefficients and average in time.
-The resulting coefficients are known as the second-order time scattering coefficients.
-These also possess the desired invariance and stability properties, but capture more information on the temporal structure of the scalogram \cite{anden2014tsp}.
+%Since these first-order coefficients only include spectral information, they cannot accurately characterize more sophisticated structure in the signal.
+%One way to augment them is to calculate another wavelet decomposition in time, this time on each frequency channel of the scalogram.
+%Again, we compute the modulus of the wavelet coefficients and average in time.
+%The resulting coefficients are known as the second-order time scattering coefficients.
+%These also possess the desired invariance and stability properties, but capture more information on the temporal structure of the scalogram \cite{anden2014tsp}.
 
-While richer than a simple spectral decomposition, such as MFCCs, the second-order time scattering coefficients described above primarily capture structure in time.
-Indeed, they do not explicitly encode frequency structure in an invariant and stable manner.
-If a signal is transposed or warped in frequency by a small amount, we do not expect its timbre to change significantly.
-We would therefore like our representation to have the same invariance and stability properties along the frequency axis.
-This is achieved by taking first- and second-order scattering coefficients and computing a second scattering transform, this time along the log-frequency axis.
-The resulting coefficients are known as separable time and frequency scattering coefficients \cite{anden2014tsp}.
+%While richer than a simple spectral decomposition, such as MFCCs, the second-order time scattering coefficients described above primarily capture structure in time.
+%Indeed, they do not explicitly encode frequency structure in an invariant and stable manner.
+%If a signal is transposed or warped in frequency by a small amount, we do not expect its timbre to change significantly.
+%We would therefore like our representation to have the same invariance and stability properties along the frequency axis.
+%This is achieved by taking first- and second-order scattering coefficients and computing a second scattering transform, this time along the log-frequency axis.
+%The resulting coefficients are known as separable time and frequency scattering coefficients \cite{anden2014tsp}.
 
-This representation does possess the desired invariance and stability properties, but its separable nature limits its power to adequately represent time--frequency structures that do not separate cleanly in time and frequency, such as chirps.
-To remedy this, another approach was suggested by And\'{e}n et al. \cite{anden2015mlsp,anden2019tsp} wherein the temporal wavelet decomposition of the scalogram is replaced with a two-dimensional, spectro-temporal decomposition.
-Similarly to the cortical representation, the result is a four-dimensional array indexed by time, acoustic frequency, modulation frequency (or \emph{rate}), and spectral modulation frequency, known as \emph{quefrency} (or \emph{scale}).
-As before, we compute the modulus and average in time, obtaining a set of coefficients known as second-order joint time--frequency scattering coefficients.
+%This representation does possess the desired invariance and stability properties, but its separable nature limits its power to adequately represent time--frequency structures that do not separate cleanly in time and frequency, such as chirps.
+%To remedy this, another approach was suggested by And\'{e}n et al. \cite{anden2015mlsp,anden2019tsp} wherein the temporal wavelet decomposition of the scalogram is replaced with a two-dimensional, spectro-temporal decomposition.
+%Similarly to the cortical representation, the result is a four-dimensional array indexed by time, acoustic frequency, modulation frequency (or \emph{rate}), and spectral modulation frequency, known as \emph{quefrency} (or \emph{scale}).
+%As before, we compute the modulus and average in time, obtaining a set of coefficients known as second-order joint time--frequency scattering coefficients.
 
-The definition of the scattering transform in terms of wavelet decompositions and modulus nonlinearities presents several advantages.
-On the computational side, the critical bandwidth guarantees of wavelet transforms allows us to judiciously subsample the output, resulting in a lower-dimensional representation compared to the cortical representations.
-The scattering transform also satisfies the aforementioned stability conditions, providing a guarantee that slightly deforming a signal only results in a negligible change in its scattering transform.
-Furthermore, we may calculate the scattering transforms of several model signals, including amplitude-modulated harmonic sounds and noise excitations \cite{anden2012scattering,anden2014tsp}, frequency-modulated sinusoids (e.g., chirps) \cite{anden2012scattering,anden2019tsp}, and beating phenomena \cite{anden2014tsp}.
-They have also enjoyed success in several audio classification and similarity retrieval tasks \cite{anden2011multiscale,anden2014tsp,anden2019tsp,lostanlen2018jasmp,lostanlen2018extended}.
+%The definition of the scattering transform in terms of wavelet decompositions and modulus nonlinearities presents several advantages.
+%On the computational side, the critical bandwidth guarantees of wavelet transforms allows us to judiciously subsample the output, resulting in a lower-dimensional representation compared to the cortical representations.
+%The scattering transform also satisfies the aforementioned stability conditions, providing a guarantee that slightly deforming a signal only results in a negligible change in its scattering transform.
+%Furthermore, we may calculate the scattering transforms of several model signals, including amplitude-modulated harmonic sounds and noise excitations \cite{anden2012scattering,anden2014tsp}, frequency-modulated sinusoids (e.g., chirps) \cite{anden2012scattering,anden2019tsp}, and beating phenomena \cite{anden2014tsp}.
+%They have also enjoyed success in several audio classification and similarity retrieval tasks \cite{anden2011multiscale,anden2014tsp,anden2019tsp,lostanlen2018jasmp,lostanlen2018extended}.
 %\ja{Need to flesh out the above with some equations.
 %We're no longer talking to biologists, so we don't need to be afraid.}
 % TODO: avoid citing the same papers over and over
 
+Let $\boldsymbol{\psi} \in \mathbf{L}^2(\mathbb{R}, \mathbb{C})$ a Hilbert-analytic filter with null average, unit dimensionless center frequency, and an equivalent rectangular bandwidth (ERB) equal to $1/Q$.
+We define a constant-$Q$ wavelet filterbank as the family $\boldsymbol{\psi}_{\lambda} : t \mapsto \lambda \boldsymbol{\psi}(\lambda t)$.
+Each wavelet $\boldsymbol{\psi}_{\lambda}$ has a center frequency of $\lambda$, an ERB of $\lambda/Q$, and an effective receptive field of $(2\pi Q/\lambda)$ in the time domain.
+In practice, we define $\boldsymbol{\psi}$ as a Morlet wavelet:
+\begin{equation}
+\boldsymbol{\psi}:t \longmapsto \exp\left(-\dfrac{t^2}{2\sigma_{\psi}^2}\right) 
+\big[ \exp\left(2\pi \mathrm{i}t\right) - \kappa_{\psi} \big],
+\end{equation}
+where the Gaussian width $\sigma_{\psi}$ grows in proportion with the quality factor $Q$ and the corrective term $\kappa_{\psi}$ ensures that $\boldsymbol{\psi}$ has a null average over $\mathbb{R}$.
+Moreover, we discretize the frequency variable $\lambda$ according to a geometric progression of common ratio $2^{\frac{1}{Q}}$.
+
+We set the constant quality factor of the wavelet filterbank $(\boldsymbol{\psi}_\lambda)_\lambda$ to $Q=12$, thus matching twelve-tone equal temperament in music.
+Convolving the wavelets in this filterbank with an input waveform $\boldsymbol{x}\in\mathbf{L}^2(\mathbb{R}$, followed by an application of the pointwise complex modulus, yields the wavelet scalogram
+\begin{equation}
+\mathbf{U_1}\boldsymbol{x}(t,\lambda) =
+\big\vert
+\boldsymbol{x}
+\ast
+\boldsymbol{\psi}_{\lambda}
+\big\vert(t)
+=
+\left\vert
+\int_{\mathbb{R}}
+\boldsymbol{x}(t^{\prime})
+\,
+\boldsymbol{\psi}_{\lambda} (t - t^{\prime})
+\;
+\mathrm{d}{t^\prime}
+\right\vert,
+\end{equation}
+indexed by time $t$ and frequency $\lambda$.
+
+\begin{equation}
+\Psi : (t,\log_2 \lambda) \longmapsto 
+\exp\left(-\dfrac{t^2+(\log_2 \lambda)^2}{2\sigma^2}\right) 
+\Big[ \exp\big(2\pi \mathrm{i} (t + \log_2 \lambda)\big) - \kappa \Big]
+\end{equation}
 
 \ml{VL. provide parameters for scattering
 \texttt{

@@ -579,14 +579,16 @@ In practice, we define $\boldsymbol{\psi}$ as a Morlet wavelet:
 \begin{equation}
 \boldsymbol{\psi}:t \longmapsto \exp\left(-\dfrac{t^2}{2\sigma_{\psi}^2}\right) 
 \big[ \exp\left(2\pi \mathrm{i}t\right) - \kappa_{\psi} \big],
+\label{eq:psi}
 \end{equation}
 where the Gaussian width $\sigma_{\psi}$ grows in proportion with the quality factor $Q$ and the corrective term $\kappa_{\psi}$ ensures that $\boldsymbol{\psi}$ has a null average over $\mathbb{R}$.
 Moreover, we discretize the frequency variable $\lambda$ according to a geometric progression of common ratio $2^{\frac{1}{Q}}$.
-
+Thus, the base-two logarithm of center frequency, denoted by $\log_2 \lambda$, follows an arithmetic progression.
 We set the constant quality factor of the wavelet filterbank $(\boldsymbol{\psi}_\lambda)_\lambda$ to $Q=12$, thus matching twelve-tone equal temperament in music.
+
 Convolving the wavelets in this filterbank with an input waveform $\boldsymbol{x}\in\mathbf{L}^2(\mathbb{R}$, followed by an application of the pointwise complex modulus, yields the wavelet scalogram
 \begin{equation}
-\mathbf{U_1}\boldsymbol{x}(t,\lambda) =
+\mathbf{U_1}\boldsymbol{x}(t,\log_2\lambda) =
 \big\vert
 \boldsymbol{x}
 \ast
@@ -602,21 +604,16 @@ Convolving the wavelets in this filterbank with an input waveform $\boldsymbol{x
 \mathrm{d}{t^\prime}
 \right\vert,
 \end{equation}
-indexed by time $t$ and frequency $\lambda$.
-
+indexed by time $t$ and log-frequency $\log_2\lambda$.
+Then, we define a two-dimensional Morlet wavelet $\boldsymbol{\Psi}$, taking a spectrotemporal pair $(t, \log_2 \lambda)$ as input:
 \begin{equation}
 \Psi : (t,\log_2 \lambda) \longmapsto 
-\exp\left(-\dfrac{t^2+(\log_2 \lambda)^2}{2\sigma^2}\right) 
-\Big[ \exp\big(2\pi \mathrm{i} (t + \log_2 \lambda)\big) - \kappa \Big]
+\exp\left(-\dfrac{t^2+(\log_2 \lambda)^2}{2\sigma_{\Psi}^2}\right) 
+\Big[ \exp\big(2\pi \mathrm{i} (t + \log_2 \lambda)\big) - \kappa_{\Psi} \Big].
 \end{equation}
+In the equation above, the Gaussian width $\sigma_{\Psi}$ is chosen so that the quality factor of the Morlet wavelet $\Psi$ is equal to $1$, both over the time dimension and over the log-frequency dimension.
+Furthermore, the corrective term $\kappa_{\Psi}$ ensures that $\boldsymbol{\Psi}$ has a null average over $\mathbb{R}^2$, similarly to Equation \ref{eq:psi}.
 
-\ml{VL. provide parameters for scattering
-\texttt{
-case 'tfscat'
-    tm\_filt\_opt.Q = [12 1];
-    tm\_filt\_opt.J = T\_to\_J(sr*setting.sct/1000, tm\_filt\_opt);
-    fr\_filt\_opt.J = 4;}}
-    
 
 \subsection*{Metric learning with large-margin nearest neighbors (LMNN)}
 \label{sec:weighting}

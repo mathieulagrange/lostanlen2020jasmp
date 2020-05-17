@@ -868,24 +868,23 @@ This gap in performance extends the findings of a previous publication \cite{los
 
 \subsection*{Is joint time--frequency scattering necessary?}
 
-Let us recall the full definition of joint time--frequency scattering:
+Let us recall the full definition of joint time--frequency scattering (see \lnameref{sec:methods} section):
 \begin{equation}
-\mathbf{S_2^{\mathrm{joint}}}\boldsymbol{x}(t,\lambda,\alpha,\beta) = 
+\mathbf{S_2}\boldsymbol{x}(t,\lambda,\alpha,\beta) = 
 \left(
 \Big\vert
 \big\vert
 \boldsymbol{x} \overset{t}{\ast} \boldsymbol{\psi}_{\lambda}
 \big\vert
-\overset{t}{\ast}
-\boldsymbol{\psi}_{\alpha}
-\overset{\log_2 \lambda}{\ast}
-\boldsymbol{\psi}_{\beta}
+\circledast
+\boldsymbol{\Psi}_{\alpha,\beta}
 \Big\vert
-\overset{t}{\ast} \boldsymbol{\phi}_{T}
-\overset{\log \lambda}{\ast} \boldsymbol{\phi}_{F}\right)(t),
+\circledast
+\big(\boldsymbol{\phi}_{T} \otimes \boldsymbol{\phi}_{F})
+\right)(t,\lambda),
 \label{eq:joint-scattering}
 \end{equation}
-where the symbol $\boldsymbol{\psi}_{\lambda}$ (resp. $\boldsymbol{\phi}_T$) denotes a Morlet wavelet of center frequency $\lambda$ (resp. a Gaussian low-pass filter of scale $T$).
+where the $\boldsymbol{\psi}_{\lambda}$ denotes a Morlet wavelet of center frequency $\lambda$ and resp. $\boldsymbol{\phi}_T$ denotes a Gaussian low-pass filter of width $T$.
 Besides the \emph{joint} time--frequency scattering transform, the generative grammar of scattering transforms \cite{lostanlen2019chapter} also encompasses the \emph{separable} time--frequency scattering transform:
 \begin{equation}
 \mathbf{S_2^{\mathrm{sep}}}\boldsymbol{x}(t,\lambda,\alpha,\beta) = 
@@ -895,15 +894,15 @@ Besides the \emph{joint} time--frequency scattering transform, the generative gr
 \big\vert
 \boldsymbol{x} \overset{t}{\ast} \boldsymbol{\psi}_{\lambda}
 \big\vert
-\overset{t}{\ast}
+\ast
 \boldsymbol{\psi}_{\alpha}
 \Big\vert
-\overset{t}{\ast} \boldsymbol{\phi}_{T}
-\overset{\log_2 \lambda}{\ast}
-\boldsymbol{\psi}_{\beta}
+\circledast
+\big(\boldsymbol{\phi}_{T} \otimes \boldsymbol{\psi}_{\beta}\big)
 \bigg\vert
-\overset{\log \lambda}{\ast} \boldsymbol{\phi}_{F}
-\right)(t),
+\circledast
+\big(\boldsymbol{\phi}_{T} \otimes \boldsymbol{\phi}_F\big)
+\right)(t, \lambda),
 \label{eq:separable-scattering}
 \end{equation}
 which has been applied successfully to classify environmental sounds \cite{bauge2013icassp} as well as playing techniques involving periodic modulations \cite{wang2019ismir}.

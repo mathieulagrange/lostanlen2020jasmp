@@ -626,14 +626,23 @@ In the equation above, $\alpha$ is a temporal modulation rate and $\beta$ is a t
 While $\alpha$ is measured in Hertz and is strictly positive, $\beta$ is measured in cycles per octaves and may take positive as well as negative values.
 Both $\alpha$ and $\beta$ are discretized by geometric progressions of common ratio equal to $2$.
 Furthermore, the edge case $\beta=0$ corresponds to $\mathbf{\Psi}_{\alpha,\beta}$ being a Gaussian low-pass filter over the log-frequency dimension, while remaining a Morlet band-pass filter of center frequency $\alpha$ over the time dimension.
+We set the width of this low-pass filter to $F=2$ octaves.
 
-\begin{equation}
-\mathbf{U_2}\boldsymbol{x} (t, \lambda, \alpha, \beta) =
+\begin{align}
+\mathbf{U_2}\boldsymbol{x} (t, \lambda, \alpha, \beta)
+&=&
+\big \vert
+\mathbf{U_1}\boldsymbol{x} \circledast \boldsymbol{\Psi}_{\alpha,\beta}
+\big \vert (t, \lambda)
+\nonumber \\
+&=&
 \left\vert
 \iint_{\mathbb{R}^2}
+\mathbf{U_1}\boldsymbol{x}(t - t^\prime, \log \lambda - u^\prime)\,
+\boldsymbol{\Psi}_{\alpha,\beta}(t^\prime, u^\prime)\,
 \mathrm{d}t^\prime \, \mathrm{d}u^\prime
 \right\vert
-\end{equation}
+\end{align}
 
 In comparison with the representation known as ``full cortical model'' \cite{patil2012ploscompbiol}, joint time--frequency scattering enjoys a thirty-fold reduction in dimensionality while covering a time span that is four times larger (1000 ms) and an acoustic bandwidth that is also four times larger (0--16 kHz).
 We refer to \cite{anden2019tsp} for more details on the implementation of joint time--frequency scattering.

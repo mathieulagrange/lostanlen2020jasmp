@@ -619,8 +619,8 @@ In the equation above, the Gaussian width $\sigma_{\Psi}$ is chosen so that the 
 Furthermore, the corrective term $\kappa_{\Psi}$ ensures that $\boldsymbol{\Psi}$ has a null average over $\mathbb{R}^2$, similarly to Equation \ref{eq:psi}.
 From $\mathbf{\Psi}$, we define a two-dimensional wavelet filterbank of the form:
 \begin{equation}
-\mathbf{\Psi}_{\alpha,\beta} : (t, \log_2 \lambda) \longmapsto
-\alpha \, \beta \, \mathbf{\Psi}(\alpha t, \beta \log_2 \lambda).
+\mathbf{\Psi}_{\alpha,\beta} : (t, u) \longmapsto
+\alpha \, \beta \, \mathbf{\Psi}(\alpha t, \beta u).
 \end{equation}
 In the equation above, $\alpha$ is a temporal modulation rate and $\beta$ is a temporal modulation scale, following the terminology of spectrotemporal receptive fields (STRF, see \lnameref{sec:related-work} section).
 While $\alpha$ is measured in Hertz and is strictly positive, $\beta$ is measured in cycles per octaves and may take positive as well as negative values.

@@ -603,6 +603,7 @@ Convolving the wavelets in this filterbank with an input waveform $\boldsymbol{x
 \;
 \mathrm{d}{t^\prime}
 \right\vert,
+\label{eq:U1}
 \end{equation}
 which is discretized according to a dyadic multirate scheme, similarly to the constant-$Q$ transform of \cite{schorkhuber2010smc}.
 Then, we define a two-dimensional Morlet wavelet $\boldsymbol{\Psi}$ of the form
@@ -610,12 +611,13 @@ Then, we define a two-dimensional Morlet wavelet $\boldsymbol{\Psi}$ of the form
 \Psi : (t, u) \longmapsto 
 \exp\left(-\dfrac{t^2+u^2}{2\sigma_{\Psi}^2}\right) 
 \Big[ \exp\big(2\pi \mathrm{i} (t + u)\big) - \kappa_{\Psi} \Big],
+\label{eq:Psi}
 \end{equation}
 taking two real variables $t$ and $u$ as input.
 The former is the time variable while the latter is the base-two logarithm of frequency: $u = \log_2 \lambda$.
 Note that $u$ roughly corresponds to the human perception of relative pitch \cite{lostanlen2020icassp}.
 
-In the equation above, the Gaussian width $\sigma_{\Psi}$ is chosen so that the quality factor of the Morlet wavelet $\Psi$ is equal to $1$, both over the time dimension and over the log-frequency dimension.
+We choose the Gaussian width $\sigma_{\Psi}$ in Equation \ref{eq:Psi} such that the quality factor of the Morlet wavelet $\Psi$ is equal to $1$, both over the time dimension and over the log-frequency dimension.
 Furthermore, the corrective term $\kappa_{\Psi}$ ensures that $\boldsymbol{\Psi}$ has a null average over $\mathbb{R}^2$, similarly to Equation \ref{eq:psi}.
 From $\mathbf{\Psi}$, we define a two-dimensional wavelet filterbank of the form:
 \begin{equation}
@@ -626,25 +628,54 @@ In the equation above, $\alpha$ is a temporal modulation rate and $\beta$ is a t
 While $\alpha$ is measured in Hertz and is strictly positive, $\beta$ is measured in cycles per octaves and may take positive as well as negative values.
 Both $\alpha$ and $\beta$ are discretized by geometric progressions of common ratio equal to $2$.
 Furthermore, the edge case $\beta=0$ corresponds to $\mathbf{\Psi}_{\alpha,\beta}$ being a Gaussian low-pass filter over the log-frequency dimension, while remaining a Morlet band-pass filter of center frequency $\alpha$ over the time dimension.
-We set the width of this low-pass filter to $F=2$ octaves.
+We denote this low-pass filter by $\boldsymbol{\phi}_F$ and set its width to $F=2$ octaves.
 
+Then, we convolve the scalogram $\mathbf{U_1}$ with all time--frequency wavelets $\mathbf{\Psi}_{\alpha,\beta}$ and apply the complex modulus, yielding the four-way tensor
 \begin{align}
 \mathbf{U_2}\boldsymbol{x} (t, \lambda, \alpha, \beta)
-&=&
+=&
 \big \vert
 \mathbf{U_1}\boldsymbol{x} \circledast \boldsymbol{\Psi}_{\alpha,\beta}
 \big \vert (t, \lambda)
 \nonumber \\
-&=&
+=&
 \left\vert
 \iint_{\mathbb{R}^2}
 \mathbf{U_1}\boldsymbol{x}(t - t^\prime, \log \lambda - u^\prime)\,
-\boldsymbol{\Psi}_{\alpha,\beta}(t^\prime, u^\prime)\,
+\boldsymbol{\Psi}_{\alpha,\beta}(t^\prime, u^\prime)\;
 \mathrm{d}t^\prime \, \mathrm{d}u^\prime
-\right\vert
+\right\vert,
+\label{eq:U2}
 \end{align}
+where the circled asterisk operator $\circledast$ denotes a joint convolution over time and log-frequency.
+In the equation above, the sample rate of time $t$ is proportional to $\alpha$.
+Conversely, the sample rate of log-frequency $u = \log_2 \lambda$ is proportional to $\vert\beta\vert$ if $\beta \neq 0$ and proportional to $F^{-1}$ otherwise.
 
-In comparison with the representation known as ``full cortical model'' \cite{patil2012ploscompbiol}, joint time--frequency scattering enjoys a thirty-fold reduction in dimensionality while covering a time span that is four times larger (1000 ms) and an acoustic bandwidth that is also four times larger (0--16 kHz).
+Let $\boldsymbol{\phi}_T$ be a Gaussian low-pass filter.
+We define the joint time--frequency scattering coefficients of the signal $\boldsymbol{x}$ as the four-way tensor
+\begin{align}
+\mathbf{S_2}(t, \lambda, \alpha, \beta)
+=&
+\mathbf{U_2}\boldsymbol{x}
+\circledast
+\big(\boldsymbol{\phi}_T  \otimes \boldsymbol{\phi}_F\big)
+(t, \lambda)
+\nonumber \\
+=&
+\iint_{\mathbb{R}^2}
+\mathbf{U_1}\boldsymbol{x}(t - t^\prime, \log \lambda - u^\prime, \alpha, \beta)
+\,\boldsymbol{\phi}_T (t^\prime)
+\,\boldsymbol{\phi}_F (u^\prime)
+\;\mathrm{d}t^\prime \, \mathrm{d}u^\prime,
+\end{align}
+where the symbol $\otimes$ denotes an outer product between two vectors.
+In the equation above, the sample rate of time $t$ is proportional to $T^{-1}$ and the sample rate of log-frequency $u=\log_2 \lambda$ is proportional to $F^{-1}$.
+Furthermore, the rate $\alpha$ spans along a geometric progression ranging from $T^{-1}$ to $\lambda/Q$.
+In the following, we set the time constant to $T=\SI{1000}{\milli\second}$ unless specified otherwise.
+
+The tensor $\mathbf{S_2}$ bears a strong resemblance with the idealized response of a spectrotemporal receptive field (STRF) at the rate $\alpha$ and the scale $\beta$.
+Nevertheless, in comparison with the representation known as ``full cortical model'' \cite{patil2012ploscompbiol}, joint time--frequency scattering enjoys a thirty-fold reduction in dimensionality while covering a time span that is four times larger (1000 ms) and an acoustic bandwidth that is also four times larger (0--16 kHz).
+This is due to the multirate discretization scheme applied throughout the application of wavelet convolutions and pointwise modulus nonlinearities.
 We refer to \cite{anden2019tsp} for more details on the implementation of joint time--frequency scattering.
 
 

@@ -353,9 +353,6 @@ From the standpoint of MIR, the model presented here offers a tractable and gene
 Conversely, from the standpoint of music cognition, our model offers a scalable and biologically plausible surrogate for stimulus-based collection of acoustic dissimilarity judgments, with the potential of being readily tailored to subjective preferences.
 
 
-% enjoys a thirty-fold reduction in dimensionality, while covering a  time span that is four times larger (1000 ms) and an acoustic bandwidth that is also four times larger (0--16 kHz).
-%We refer to \cite{bellet2015book} for a review of the state of the art in metric learning.
-
 \section*{\nmu Data collection}
 \label{sec:survey}
 
@@ -667,6 +664,7 @@ We define the joint time--frequency scattering coefficients of the signal $\bold
 \,\boldsymbol{\phi}_T (t^\prime)
 \,\boldsymbol{\phi}_F (u^\prime)
 \;\mathrm{d}t^\prime \, \mathrm{d}u^\prime,
+\label{eq:S2}
 \end{align}
 where the symbol $\otimes$ denotes an outer product between two vectors.
 In the equation above, the sample rate of time $t$ is proportional to $T^{-1}$ and the sample rate of log-frequency $u=\log_2 \lambda$ is proportional to $F^{-1}$.
@@ -676,6 +674,32 @@ In the following, we set the time constant to $T=\SI{1000}{\milli\second}$ unles
 The tensor $\mathbf{S_2}$ bears a strong resemblance with the idealized response of a spectrotemporal receptive field (STRF) at the rate $\alpha$ and the scale $\beta$.
 Nevertheless, in comparison with the representation known as ``full cortical model'' \cite{patil2012ploscompbiol}, joint time--frequency scattering enjoys a thirty-fold reduction in dimensionality while covering a time span that is four times larger (1000 ms) and an acoustic bandwidth that is also four times larger (0--16 kHz).
 This is due to the multirate discretization scheme applied throughout the application of wavelet convolutions and pointwise modulus nonlinearities.
+
+In addition to second-order scattering coefficients (Equation \ref{eq:S2}), we compute joint time--frequency scattering at the first order by convolving the scalogram $\mathbf{U_1 \boldsymbol{x}}$ (Equation \ref{eq:U1}) with the low-pass filter $\boldsymbol{\phi}_T$ over the time dimension, with wavelets $\boldsymbol{\psi}_{\beta}$ ($\beta \geq0$) over the log-frequency dimension, and by applying the complex modulus:
+\begin{align}
+\mathbf{S_1}\boldsymbol{x}(t, \lambda, \alpha=0, \beta) &=
+\big\vert
+\mathbf{U_1}\boldsymbol{x} \circledast
+\big(\boldsymbol{\phi}_T \otimes \boldsymbol{\psi}_{\beta} \big)
+\big\vert (t, \lambda)
+\nonumber \\
+&=
+\left \vert
+\iint_{\mathbb{R}^2}
+\mathbf{U_1}\boldsymbol{x}(t - t^\prime, \log \lambda - u^\prime)
+\,\boldsymbol{\phi}_T (t^\prime)
+\,\boldsymbol{\psi}_{\beta} (u^\prime)
+\;\mathrm{d}t^\prime \, \mathrm{d}u^\prime
+\right \vert,
+\label{eq:S1}
+\end{align}
+where the time constant $T$ is the same as in Equation $\ref{eq:S2}$, \ie{} $T=\SI{1000}{\milli\second}$ by default.
+Over the time variable, we set the modulation rate $\alpha$ of $\mathbf{S_1}$ to zero in the equation above.
+Conversely, over the log-frequency variable, the edge case $\beta=0$ corresponds to replacing the wavelet $\boldsymbol{\psi}_{\beta}$ by the low-pass filter $\boldsymbol{\psi}_F$, comparably to Equation $\ref{eq:Psi}$.
+Lastly, we concatenate 
+\begin{equation}
+    \mathbf{S}\boldsymbol{x}(t, p) 
+\end{equation}
 We refer to \cite{anden2019tsp} for more details on the implementation of joint time--frequency scattering.
 
 
@@ -694,6 +718,9 @@ We now use the consensus clustering to reweight the similarity between feature v
 For this, we use the \emph{large margin nearest neighbor} (LMNN) metric learning algorithm \cite{weinberger2006distance, weinberger2009distance}.
 This approach constructs a positive semi-definite weighting matrix $L$ such that the distance $\|Lx - Ly\|$ best classifies a set of points into a fixed clustering assignment.
 % TODO: this section needs more detail. In particular, it is worth discussing the role of Euclidean distances as an "initial guess" for LMNN. (this is unlike MLR, for example).
+
+%We refer to \cite{bellet2015book} for a review of the state of the art in metric learning.
+
 
 $\mathcal{Y}_1 (\boldsymbol{x}) = \mathcal{Y} \backslash \lbrace \boldsymbol{x} \rbrace$.
 
@@ -905,7 +932,8 @@ Besides the \emph{joint} time--frequency scattering transform, the generative gr
 \right)(t, \lambda),
 \label{eq:separable-scattering}
 \end{equation}
-which has been applied successfully to classify environmental sounds \cite{bauge2013icassp} as well as playing techniques involving periodic modulations \cite{wang2019ismir}.
+where the wavelet $\boldsymbol{\psi}_{\lambda}$ has a quality factor of $Q=12$ whereas the wavelets $\boldsymbol{\psi}_{\alpha}$ and $\boldsymbol{\psi}_{\beta}$ have a quality factor of one.
+Previous publications have successfully applied separable time--frequency scattering in order to classify environmental sounds \cite{bauge2013icassp} as well as playing techniques involving periodic modulations \cite{wang2019ismir}.
 
 In comparison with its joint counterpart, separable time--frequency scattering contains about half as many coefficients.
 This is because the temporal wavelet transform with $\boldsymbol{\psi}_\alpha$ and the frequential wavelet transform with $\boldsymbol{\psi}_\beta$ are separated by an operation of complex modulus.

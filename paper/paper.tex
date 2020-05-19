@@ -19,6 +19,8 @@
 %%% Put your definitions there:
 \startlocaldefs
 
+\DeclareMathOperator*{\median}{median}
+
 \newcommand*{\eg}{e.g.,\@\xspace}
 \newcommand*{\ie}{i.e.,\@\xspace}
 \newcommand*{\vs}{vs.\@\xspace}
@@ -714,11 +716,21 @@ Given an input waveform $\boldsymbol{x}$, we denote by $\mathbf{S}\boldsymbol{x}
 \end{array}\right.
 \end{equation}
 
-% TODO declare new math operator
+Given a collection of $N$ such waveforms, we number them arbitrarily from $\boldsymbol{x}_1$ to $\boldsymbol{x}_N$. Then, for every path $p$ in the joint time--frequency scattering transform operator $\mathbf{S}$, we measure the median value taken by the average response of $\mathbf{S}\boldsymbol{x}_n$ across all samples $n$ from $1$ to $N$:
 \begin{equation}
 \boldsymbol{\mu}(p) =
-\mathrm{median}
-\int_{\mathbb{R}} \mathbf{S}\boldsymbol{x}_n(t, p) \;\mathrm{d}t
+\median_{1\leq n \leq N}
+\int_{\mathbb{R}} \mathbf{S}\boldsymbol{x}_n(t, p) \;\mathrm{d}t.
+\end{equation}
+
+\begin{equation}
+\mathbf{\widetilde{S}}\boldsymbol{x}_n (p) =
+\log \left(
+1 +
+\dfrac{
+\int_\mathbb{R} \mathbf{S}\boldsymbol{x}_n (t, p) \;\mathrm{d}t
+}{\varepsilon \times \boldsymbol{\mu}(p)}
+\right)
 \end{equation}
 
 

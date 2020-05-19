@@ -799,7 +799,7 @@ Let $P$ be the number of scattering paths in the operator $\mathbf{S}$. The larg
 \begin{equation}
 \mathcal{E}(\mathbf{L}) = \frac{1}{2} \mathcal{E}_{\textrm{pull}} (\mathbf{L}) + \frac{1}{2} \mathcal{E}_{\textrm{push}} (\mathbf{L})
 \end{equation}
-Intuitively, the term $\mathcal{E}_{\textrm{pull}}$ tends to shrink local Euclidean neighborhoods in feature space. Crucially, in the case of time--frequency scattering coefficients, these ``Euclidean neighborhoods'' corresponds to Wasserstein neighborhoods in the scalogram domain (see previous subsection).
+Intuitively, the term $\mathcal{E}_{\textrm{pull}}$ tends to shrink local Euclidean neighborhoods in feature space. Crucially, in the case of time--frequency scattering coefficients, these Euclidean neighborhoods corresponds to Wasserstein neighborhoods in the scalogram domain (see previous subsection).
 The definition of $\mathcal{E}_{\textrm{pull}}$ is:
 \begin{equation}
 \mathcal{E}_{\textrm{pull}} (\mathbf{L}) =
@@ -810,15 +810,17 @@ The definition of $\mathcal{E}_{\textrm{pull}}$ is:
 \big\Vert^2,
 \end{equation}
 Note that the error term $\mathcal{E}_\textrm{pull}$ is unsupervised, in the sense that it does not depend on the cluster assignments of $\boldsymbol{x}$ and $\boldsymbol{y}$ in $\mathcal{G}$.
-for pairs of samples belonging to the same cluster, while the term $\mathcal{E}_{\textrm{push}}$ tends to ensure that the distance between 
 
-
-
+Conversely, the term $\mathcal{E}_{\textrm{push}}$ tends to penalize small distances between samples that belong to different clusters in $\mathcal{G}$.
+More precisely, consider three samples $\boldsymbol{x}$, $\boldsymbol{y}$ and $\boldsymbol{z}$ in $\mathcal{X}$.
+Assume that the former belongs to the Euclidean neighborhood of $\boldsymbol{x}$ (i.e., $\boldsymbol{y} \in \mathcal{Y}_R (\boldsymbol{x})$) while the latter belongs to a different cluster as $\boldsymbol{x}$ (i.e., $\boldsymbol{z}\not\in\mathcal{G}(\boldsymbol{x}$)).
+The term $\mathcal{E}_{\textrm{push}}$ penalizes $\mathbf{L}$ unless the distance between $\mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{x}$ and $\mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{y}$ is smaller than the distance between $\mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{x}$ and $\mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{z}$ by a margin of at least $1$.
+The definition of $\mathcal{E}_{\textrm{push}}$ is:
 \begin{equation}
 \mathcal{E}_{\textrm{push}} (\mathbf{L}) =
 \sum_{\boldsymbol{x}\in\mathcal{X}}
 \sum_{\boldsymbol{y}\in\mathcal{Y}_R (\boldsymbol{x})}
-\sum_{\substack{\boldsymbol{z}\in\mathcal{Y}_R (\boldsymbol{x}) \\ \boldsymbol{z}\not\in\mathcal{G}(\boldsymbol{x})}}
+\sum_{\boldsymbol{z}\not\in\mathcal{G}(\boldsymbol{x})}
 \rho
 \Big(
 1 +
@@ -831,7 +833,8 @@ for pairs of samples belonging to the same cluster, while the term $\mathcal{E}_
 \big\Vert^2
 \Big),
 \end{equation}
-where the function $\rho : u \mapsto \max (0, u)$ denotes the activation function of the rectified linear unit (ReLU).
+where the function $\rho : u \mapsto \max (0, u)$ denotes the activation function of the rectified linear unit (ReLU), also known as hinge loss.
+The cost function described in the equation above is known in deep learning as ``triplet loss'', and has recently been applied to train large-vocabulary audio classifiers in an unsupervised way \cite{jansen2018icassp}.
 
 
 

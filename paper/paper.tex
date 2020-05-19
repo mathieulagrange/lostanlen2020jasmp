@@ -20,6 +20,7 @@
 \startlocaldefs
 
 \DeclareMathOperator*{\median}{median}
+\DeclareMathOperator*{\card}{card}
 
 \newcommand*{\eg}{e.g.,\@\xspace}
 \newcommand*{\ie}{i.e.,\@\xspace}
@@ -256,7 +257,7 @@ Thus, following the aesthetic tradition of spectralism in contemporary music cre
 This article proposes a machine listening system which computes the dissimilarity in timbre between any two audio samples.
 Our system consists of two stages: unsupervised feature extraction and supervised metric learning.
 The feature extraction stage is a nonlinear map which relies on the joint time--frequency scattering transform \cite{anden2015mlsp}, followed by per-feature Gaussianization \cite{lostanlen2018jasmp}.
-It encodes patterns of spectrotemporal modulation in the query while offering numerical guarantees of stability to local deformations.
+It encodes patterns of spectrotemporal modulation in the query while offering numerical guarantees of stability to local deformations \cite{anden2012scattering}.
 The metric learning stage is a linear map, optimized via large-margin nearest neighbors (LMNN) \cite{weinberger2009distance}.
 It recombines scattering coefficients so as to fit a training set of human judgments \cite{mcadams1995psychres}, which may either stem from the perceptual idiosyncracies of a single subject or from a collective consensus.
 
@@ -276,7 +277,7 @@ They are also in line with visualizations of the modulation power spectrum in au
 
 \subsection*{Outline}
 The \lnameref{sec:related-work} section reviews recent research in the computational modeling of musical timbre.
-The \lnameref{sec:survey} section describes our computer--human interface for annotating auditory similarities across playing techniques.
+The \lnameref{sec:data-collection} section describes our computer--human interface for annotating auditory similarities across playing techniques.
 The \lnameref{sec:methods} section presents the technical components of our machine listening system, namely joint time--frequency scattering and large-margin nearest neighbors.
 The \lnameref{sec:results} section describes our experimental benchmark.
 The \lnameref{sec:discussion} section conducts an ablation study of our best performing system.
@@ -304,7 +305,7 @@ For instance, the Open-MIC dataset \cite{humphrey2018ismir}, maintained by the C
 Another example is the Medley-solos-DB dataset \cite{lostanlen2016ismir}, which comprises 21k monophonic excerpts from 8 instruments as a derivative of the MedleyDB dataset of multitrack music \cite{bittner2014ismir}.
 
 Over the past decade, the availability of large digital audio collections, together with the democratization of high-performance computing on dedicated hardware, has spurred the development of deep learning architectures, and notably deep convolutional networks, in music instrument recognition \cite{mcfee2015ismir,pons2017eusipco,gururani2018ismir}.
-Notwithstanding the growing accuracy of these architectures in the large data regime, it remains unclear how to extend them from musical instrument recognition to playing technique recognition, where labeled samples are considerably scarcer.
+Notwithstanding the growing accuracy of these architectures in the large data regime, it remains unclear how to extend them from musical instrument recognition to playing technique recognition, where labeled samples are considerably scarcer \cite{loureiro2004ismir}.
 We refer to \cite{han2017taslp} for a recent review of the state of the art in this domain.
 
 
@@ -356,7 +357,7 @@ Conversely, from the standpoint of music cognition, our model offers a scalable 
 
 
 \section*{\nmu Data collection}
-\label{sec:survey}
+\label{sec:data-collection}
 
 The European symphonic orchestra encompasses four families of instruments: strings, woodwinds, brass, and percussion.
 In this article, we focus on the former three, and leave the question of learning auditory similarities between percussion instruments to future research.
@@ -525,7 +526,7 @@ To this end, we present a new machine listening system, composing joint time--fr
 
 %Following the above discussed matters, we propose a ranking system that is based on a processing pipeline made of two main components, see Figure \ref{fig:pipeline}.
 %The first component maps the audio signal of the query and the items of the database into a high-dimensional timbre space using the scattering transform.
-%The second component warps this timbre space by taking into account perceptual judgments represented as a consensus clustering of the items in the dataset, as presented in the \nameref{sec:survey} section.
+%The second component warps this timbre space by taking into account perceptual judgments represented as a consensus clustering of the items in the dataset, as presented in the \nameref{sec:data-collection} section.
 %This warping, or reweighting, of the space is performed using LMNN.
 
 
@@ -701,9 +702,6 @@ Over the time variable, we set the modulation rate $\alpha$ of $\mathbf{S_1}$ to
 Conversely, over the log-frequency variable, the edge case $\beta=0$ corresponds to replacing the wavelet $\boldsymbol{\psi}_{\beta}$ by the low-pass filter $\boldsymbol{\psi}_F$, comparably to Equation $\ref{eq:Psi}$.
 We refer to \cite{anden2019tsp} for more details on the implementation of joint time--frequency scattering.
 
-
-\subsection*{Per-feature Gaussianization with median-based logarithmic compression}
-\label{sec:gaussianization}
 We adopt the multiindex notation $p = (\lambda, \alpha, \beta)$ as a shorthand for the tuple of frequency, rate, and scale.
 The tuple $p$ is known as a scattering path (see \cite{mallat2012cpam}), and may apply to index both first-order ($\mathbf{S_1}$) or second-order ($\mathbf{S_2}$) coefficients.
 Given an input waveform $\boldsymbol{x}$, we denote by $\mathbf{S}\boldsymbol{x}$ the feature vector resulting from the concatenation of $\mathbf{S_1}\boldsymbol{x}$ and $\mathbf{S_2}\boldsymbol{x}$:
@@ -716,7 +714,38 @@ Given an input waveform $\boldsymbol{x}$, we denote by $\mathbf{S}\boldsymbol{x}
 \end{array}\right.
 \end{equation}
 
-Given a collection of $N$ such waveforms, we number them arbitrarily from $\boldsymbol{x}_1$ to $\boldsymbol{x}_N$. Then, for every path $p$ in the joint time--frequency scattering transform operator $\mathbf{S}$, we measure the median value taken by the average response of $\mathbf{S}\boldsymbol{x}_n$ across all samples $n$ from $1$ to $N$:
+An important theorem by Mallat \cite{mallat2012cpam} states that, if $\boldsymbol{y}$ can be obtained from $\boldsymbol{x}$ via the action of some differentiable elastic deformation $\boldsymbol{\tau} \in \mathrm{Diff}(\mathbb{R})$, then the Euclidean norm between $\mathbf{S}\boldsymbol{x}$ and $\mathbf{S}\boldsymbol{y} = \mathbf{S}(\boldsymbol{\tau}\circ\boldsymbol{x})$ can be bounded as follows:
+\begin{equation}
+\big\Vert \mathbf{S}\boldsymbol{x} - \mathbf{S}(\boldsymbol{\tau}\circ\boldsymbol{x}) \big\Vert^2
+\leq
+\kappa_{\mathbf{S}} \times
+\Vert \boldsymbol{x} \Vert^2 \times
+\Vert \boldsymbol{\dot{\tau}} \Vert_{\infty},
+\label{eq:lipschitz}
+\end{equation}
+where the notation $\Vert \boldsymbol{x} \Vert^2$ indicates the squared Euclidean norm, $\Vert \boldsymbol{x} \Vert_{\infty}$ indicates the supremum norm over $\mathbb{R}$, and $\boldsymbol{\dot{\tau}}$ is the derivative of the diffeomorphism $\boldsymbol{\tau}$.
+In the equation above, the scalar $\kappa_{\mathbf{S}}$ plays the role of a Lipschitz constant: it depends exclusively on the design choices underlying the scattering operator $\mathbf{S}$ (\eg{} the quality factor $Q$), yet remains independent of the input signal $\boldsymbol{x}$ as well as the diffeomorphism $\boldsymbol{\tau}$ yielding $\boldsymbol{y} = (\boldsymbol{\tau}\circ\boldsymbol{x})$.
+In other words, the Euclidean distance between the scattering transform of $\boldsymbol{x}$ and a deformed version of the same signal is bounded from above by the maximal extent of such deformation.
+
+Although the inequality in Equation \ref{eq:lipschitz} was originally formulated for temporal scattering, it recursively generalizes to multivariable scattering operators \cite{oyallon2014iclr}, including joint time--frequency scattering.
+In this context, the appeal behind joint time--frequency scattering is that the deformation $\boldsymbol{\tau}$ may be defined in the scalogram domain $\mathbf{U_1}\boldsymbol{x}$, instead of being constrained to the time domain $\boldsymbol{x}$.
+Therefore, joint time--frequency scattering coefficients linearize and disentangle small elastic deformations in the time--frequency domain, and represent them activations from a dictionary of multiscale spectrotemporal modulations $\boldsymbol{\Psi}_{\alpha, \beta}$.
+
+
+
+\subsection*{Median-based logarithmic compression and affine standardization}
+\label{sec:gaussianization}
+
+It stems from the above that comparing Euclidean distances in the feature space of time--frequency scattering coefficients may serve as a computationally efficient surrogate for comparing Wasserstein distances in the scalogram, without need for solving an optimal transport problem.
+However, this surrogate is only valid if the underlying transport plan $\boldsymbol{\tau}$ is relatively small  in terms of supremum norm (see Equation \ref{eq:lipschitz}).
+This assumption may be true for certain local deformation of the time-frequency domain, \eg{} causing a pitch shift or a change in vibrato rate while leaving the instrument unchanged \cite{anden2012scattering}.
+However, it does not suffice in order to represent timbre similarity across multiple instruments and playing techniques.
+Indeed, the perception of timbre for extended playing techniques often involves long-range interactions in the time--frequency domain, which are not amenable to a local elastic deformation \cite{lostanlen2018extended}.
+
+To address this issue, we apply a metric learning algorithm, named large-margin nearest neighbors (LMNN), whose goal is to reweight and recombine scattering paths $p$ such that certain factors of variability in feature space $\mathbf{S}$ are enhanced while others are discarded.
+Before training this algorithm, we apply a pointwise nonlinear transformation on averaged joint time-frequency scattering coefficients. The role of this transformation, which is adapted to the dataset in an unsupervised way, is to Gaussianize the histogram of activations of each scattering path $p$.
+
+We consider a collection $\mathcal{X}$ of $N$ waveforms, numbered them arbitrarily from $\boldsymbol{x}_1$ to $\boldsymbol{x}_N$. For every path $p$ in the joint time--frequency scattering transform operator $\mathbf{S}$, we measure the median value taken by the average response of $\mathbf{S}\boldsymbol{x}_n$ across all samples $n$ from $1$ to $N$:
 \begin{equation}
 \boldsymbol{\mu}(p) =
 \median_{1\leq n \leq N}
@@ -740,55 +769,112 @@ The offset of $1$ before the application of the pointwise logarithm ensures that
 Furthermore, a previous publication has shown empirically that Equation \ref{eq:S_tilde} brings, on environmental audio recordings, the histogram of $\mathbf{\widetilde{S}}\boldsymbol{x}_n (p)$ closer to a statistical Gaussianization of every feature $p$ \cite{lostanlen2018jasmp}.
 Since then, this finding has been confirmed in the case of musical sounds \cite{lostanlen2018extended}.
 
-Lastly, we standardize every feature $\mathbf{\widetilde{S}}\boldsymbol{x}_n$ to null mean and unit variance, across all $N$ samples $\boldsymbol{x}_1 \ldots \boldsymbol{x}_N$, independently for each scattering path $p$.
-Again, in cases where the dataset is split between training and test sets, we measure means and variances over the test set and propagate them as constants to the test set.
+Lastly, we standardize every feature $\mathbf{\widetilde{S}}\boldsymbol{x}_n$ to null mean and unit variance, across the dataset $\mathcal{X} = \{\boldsymbol{x}_1 \ldots \boldsymbol{x}_N\}$, independently for each scattering path $p$.
+Again, if $\mathcal{X}$ is split between training and test sets, we measure means and variances over the training set only and propagate them as constants to the test set.
 With a slight abuse of notation, we still denote by $\mathbf{\widetilde{S}}\boldsymbol{x}_n (p)$ the standardized log-scattering features at path $p$ for sample $n$, even though its value differs from Equation \ref{eq:S_tilde} by an affine transformation.
 
 
+
 \subsection*{Metric learning with large-margin nearest neighbors (LMNN)}
-\label{sec:weighting}
+Let $\boldsymbol{x}$ some arbitrary audio sample in the dataset $\mathcal{X}$.
+Let $\mathcal{G}$ a cluster graph with $N = \card \mathcal{X}$ vertices and $C$ clusters in total.
+We denote by $\mathcal{G}(\boldsymbol{x})$ the cluster index to which the sample $\boldsymbol{x}$ belongs.
+Given another sample $\boldsymbol{y}$ in $\mathcal{X}$, $\boldsymbol{y}$ is similar to $\boldsymbol{x}$ if and only if belongs to the cluster $\mathcal{G}(\boldsymbol{x})$.
+Because $\mathcal{G}$ is a disjoint union of complete graphs, this relation is symmetric: $\boldsymbol{x} \in \mathcal{G}(\boldsymbol{y})$ is equivalent to $\boldsymbol{y} \in \mathcal{G}(\boldsymbol{x})$.
 
-The standard Euclidean distance on the raw scattering coefficients provides an instrument-agnostic representation of timbre dissimilarity.
-We now consider a transformation of this distance, in effect warping the timbre space, in order to more closely mimic a particular set of timbre similarity judgments.
+In our protocol, $\boldsymbol{x}$ contains the sound of an isolated musical note and the cluster graph $\mathcal{G}$ encodes auditory similarities within the dataset $\mathcal{X}$.
+Moreover, we take $\mathcal{G}$ to be the equal to the ``consensus'' cluster graph $\mathcal{G}_0$, i.e., arising from the partition of a hypergraph $\mathcal{H}$ which contains the judgments of all $K=31$ subjects from our perceptual study (see \lnameref{sec:data-collection} section).
+%write on multiple subjects?
 
-Due to the size of corpus, we restrict ourselves to a simple linear transform of the scattering coefficients. More flexible and powerful methods could be brought to bear on this problem, such as deep neural networks, but with their flexibility comes an increase of the needed size of training data.
+%Furthermore, let us denote by $\mathcal{Y}_1 (\boldsymbol{x}) = \mathcal{X} \backslash \lbrace \boldsymbol{x} \rbrace$ the dataset of $(N-1)$ audio samples obtained from $\mathcal{X}$ after subtracting the singleton $\{\boldsymbol{x}\}$.
 
-Specifically, we construct a positive semidefinite matrix $L$ that we apply to the scattering coefficients $x$ so that the Euclidean distance between $Lx$ and $Ly$ best approximates the consensus clustering obtained above.
-We expect the resulting representation $Lx$ to provide a more accurate model for timbre perception.
+We denote by $\mathbf{\widetilde{S}}\boldsymbol{x}$ the feature vector of joint time--frequency scattering resulting from $\boldsymbol{x}$.
+This vector includes both first-order and second-order scattering coefficients, after median-based logarithmic compression and affine standardization (see subsections above).
+Furthermore, we denote by $\mathcal{Y}_R (\boldsymbol{x})$ the list of $R$ nearest neighbors to $\mathbf{\widetilde{S}}\boldsymbol{x}$ in the feature space of joint time--frequency scattering coefficients, according to the Euclidean metric.
+Unlike cluster similarity, this relationship is not symmetric: $\boldsymbol{y}\in\mathcal{Y}_R (\boldsymbol{x})$ does not necessarily imply $\boldsymbol{x}\in\mathcal{Y}_R (\boldsymbol{y})$.
+Note that the dependency of $\mathcal{Y}_R (\boldsymbol{x})$ upon the operator $\mathbf{S}$ is left implicit.
+In all of the following, we set the constant $R$ to $5$; this is in accordance with our chosen evaluation metric, i.e., average precision at rank 5 (AP@5, see \lnameref{sec:results} section).
 
-We now use the consensus clustering to reweight the similarity between feature vectors (either MFCCs or scattering transforms).
-For this, we use the \emph{large margin nearest neighbor} (LMNN) metric learning algorithm \cite{weinberger2006distance, weinberger2009distance}.
-This approach constructs a positive semi-definite weighting matrix $L$ such that the distance $\|Lx - Ly\|$ best classifies a set of points into a fixed clustering assignment.
+Let $P$ be the number of scattering paths in the operator $\mathbf{S}$. The large-margin nearest neighbor (LMNN) algorithm learns a matrix $\mathbf{L}$ with $P$ rows and $P$ columns by minimizing an error function of the form:
+\begin{equation}
+\mathcal{E}(\mathbf{L}) = \frac{1}{2} \mathcal{E}_{\textrm{pull}} (\mathbf{L}) + \frac{1}{2} \mathcal{E}_{\textrm{push}} (\mathbf{L})
+\end{equation}
+Intuitively, the term $\mathcal{E}_{\textrm{pull}}$ tends to shrink local Euclidean neighborhoods in feature space. Crucially, in the case of time--frequency scattering coefficients, these ``Euclidean neighborhoods'' corresponds to Wasserstein neighborhoods in the scalogram domain (see previous subsection).
+The definition of $\mathcal{E}_{\textrm{pull}}$ is:
+\begin{equation}
+\mathcal{E}_{\textrm{pull}} (\mathbf{L}) =
+\sum_{\boldsymbol{x}\in\mathcal{X}}
+\sum_{\boldsymbol{y}\in\mathcal{Y}_R (\boldsymbol{x})}
+\big\Vert
+\mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{x} - \mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{y}
+\big\Vert^2,
+\end{equation}
+Note that the error term $\mathcal{E}_\textrm{pull}$ is unsupervised, in the sense that it does not depend on the cluster assignments of $\boldsymbol{x}$ and $\boldsymbol{y}$ in $\mathcal{G}$.
+for pairs of samples belonging to the same cluster, while the term $\mathcal{E}_{\textrm{push}}$ tends to ensure that the distance between 
+
+
+
+\begin{equation}
+\mathcal{E}_{\textrm{push}} (\mathbf{L}) =
+\sum_{\boldsymbol{x}\in\mathcal{X}}
+\sum_{\boldsymbol{y}\in\mathcal{Y}_R (\boldsymbol{x})}
+\sum_{\substack{\boldsymbol{z}\in\mathcal{Y}_R (\boldsymbol{x}) \\ \boldsymbol{z}\not\in\mathcal{G}(\boldsymbol{x})}}
+\rho
+\Big(
+1 +
+\big\Vert
+\mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{x} - \mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{y}
+\big\Vert^2
+-
+\big\Vert
+\mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{x} - \mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{z}
+\big\Vert^2
+\Big),
+\end{equation}
+where the function $\rho : u \mapsto \max (0, u)$ denotes the activation function of the rectified linear unit (ReLU).
+
+
+
+%\begin{equation}
+%\mathbf{\Phi}_1 (\boldsymbol{x}) =
+%\arg \min_{\boldsymbol{y}\in \mathcal{Y}_1(\boldsymbol{x})}
+%\;
+%\big\Vert
+%\mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{x}
+%-
+%\mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{y}
+%\big\Vert
+%\end{equation}
+% reference triplet loss audioset
+
+
+%The standard Euclidean distance on the raw scattering coefficients provides an instrument-agnostic representation of timbre dissimilarity.
+%We now consider a transformation of this distance, in effect warping the timbre space, in order to more closely mimic a particular set of timbre similarity judgments.
+
+%Due to the size of corpus, we restrict ourselves to a simple linear transform of the scattering coefficients. More flexible and powerful methods could be brought to bear on this problem, such as deep neural networks, but with their flexibility comes an increase of the needed size of training data.
+
+%Specifically, we construct a positive semidefinite matrix $L$ that we apply to the scattering coefficients $x$ so that the Euclidean distance between $Lx$ and $Ly$ best approximates the consensus clustering obtained above.
+%We expect the resulting representation $Lx$ to provide a more accurate model for timbre perception.
+
+%We now use the consensus clustering to reweight the similarity between feature vectors (either MFCCs or scattering transforms).
+%For this, we use the \emph{large margin nearest neighbor} (LMNN) metric learning algorithm \cite{weinberger2006distance, weinberger2009distance}.
+%This approach constructs a positive semi-definite weighting matrix $L$ such that the distance $\|Lx - Ly\|$ best classifies a set of points into a fixed clustering assignment.
 % TODO: this section needs more detail. In particular, it is worth discussing the role of Euclidean distances as an "initial guess" for LMNN. (this is unlike MLR, for example).
-
 %We refer to \cite{bellet2015book} for a review of the state of the art in metric learning.
 
 
-$\mathcal{Y}_1 (\boldsymbol{x}) = \mathcal{Y} \backslash \lbrace \boldsymbol{x} \rbrace$.
+%$\mathcal{Y}_{r} (\boldsymbol{x}) = \mathcal{Y}_{(r-1)}(\boldsymbol{x}) \backslash \lbrace \mathbf{\Phi}_r (\boldsymbol{x}) \rbrace$.
 
-\begin{equation}
-\mathbf{\Phi}_1 (\boldsymbol{x}) =
-\arg \min_{\boldsymbol{y}\in \mathcal{Y}_1(\boldsymbol{x})}
-\;
-\big\Vert
-\mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{x}
--
-\mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{y}
-\big\Vert
-\end{equation}
-
-$\mathcal{Y}_{r} (\boldsymbol{x}) = \mathcal{Y}_{(r-1)}(\boldsymbol{x}) \backslash \lbrace \mathbf{\Phi}_r (\boldsymbol{x}) \rbrace$.
-
-\begin{equation}
-\mathbf{\Phi}_r (\boldsymbol{x}) =
-\arg \min_{\boldsymbol{y}\in \mathcal{Y}_r(\boldsymbol{x})}
-\;
-\big\Vert
-\mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{x}
--
-\mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{y}
-\big\Vert
-\end{equation}
+%\begin{equation}
+%\mathbf{\Phi}_r (\boldsymbol{x}) =
+%\arg \min_{\boldsymbol{y}\in \mathcal{Y}_r(\boldsymbol{x})}
+%\;
+%\big\Vert
+%\mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{x}
+%-
+%\mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{y}
+%\big\Vert
+%\end{equation}
 
 
 \section*{\nmu Results}
@@ -796,7 +882,7 @@ $\mathcal{Y}_{r} (\boldsymbol{x}) = \mathcal{Y}_{(r-1)}(\boldsymbol{x}) \backsla
 
 The previous section described our methods for extracting spectrotemporal modulations in audio signals, as well as learning a non-Euclidean similarity metric between them.
 We now turn to apply these methods to the problem of allocating isolated musical notes to clusters of some timbre similarity graph $\mathcal{G}$.
-In practice, for training purposes, the cluster graph $\mathcal{G}$ stems from the consensus of $K=31$ users of the Cyberlioz web application, which was described in the \lnameref{sec:survey} section ($\mathcal{G}=\mathcal{G}_0$).
+In practice, for training purposes, the cluster graph $\mathcal{G}$ stems from the consensus of $K=31$ users of the Cyberlioz web application, which was described in the \lnameref{sec:data-collection} section ($\mathcal{G}=\mathcal{G}_0$).
 However, for evaluation purposes, this cluster graph corrsponds to the subjective preferences of a single user $k\geq 1$, in which case we take $\mathcal{G}=\mathcal{G}_k$.
 
 
@@ -805,7 +891,7 @@ However, for evaluation purposes, this cluster graph corrsponds to the subjectiv
 In order to suit the practical needs of contemporary music composers, computer-assisted orchestration must withdraw from a diverse realm of instruments and techniques.
 Therefore, whereas our data collection procedure for timbre similarity judgments focused on a single pitch (middle C) and a single intensity level (\emph{mf}), we formulate our machine listening experiment on an expanded dataset of audio samples, containing variations in pitch and dynamics.
 
-Given an audio stimulus $n$ from our perceptual study, we seek its position in the cluster graph $\mathcal{G}$.
+Given an audio stimulus $\boldsymbol{x}_n$ from our perceptual study, we seek its position in the cluster graph $\mathcal{G}_0$.
 Then, we identify its instrument--mute--technique (IMT) triplet, scrape for audio samples in SOL matching this triplet, and assign them all to the same cluster as the original audio stimulus.
 We repeat the same procedure for all $N=78$ nodes in $\mathcal{G}_0$, resulting in $N^\prime = 9346$ samples in total.
 This is a form of semi-supervised label propagation: from a limited amount of human annotation, we curate a relatively large subset of SOL (roughly one third of the entire dataset, i.e., $25444$ samples) for which the notion of timbre is perceptually encoded as a discrete category.
@@ -864,7 +950,7 @@ Our topline system comprises five computational blocks:
 \item Joint time--frequency scattering up to a maximal time scale of $T=$\SI{1000}{\milli\second},
 \item Temporal averaging at the scale of the whole musical note,
 \item Median-based logarithmic compression \cite[Equation 1]{lostanlen2018extended},
-\item Per-feature affine scaling so that the dataset has null mean and unit variance,
+\item Affine standardization so that each feature has null mean and unit variance,
 \item Nearest-neighbor search according to priorly learned non-Euclidean metric.
 \end{enumerate}
 Note that the non-Euclidean metric is learned via large-margin nearest neighbors (LMNN, see \lnameref{sec:methods} section) on the ``consensus'' cluster graph $\mathcal{G}_0$.
@@ -872,7 +958,7 @@ Therefore, the system $\mathbf{\Phi}$ performs timbre similarity retrieval in a 
 That being said, it is conceivable to replicate the five-stage protocol above on the cluster graph $\mathcal{G}_k$ of a specific user $k$, instead of the cluster graph $\mathcal{G}_0$.
 This operation would lead to a new configuration of the search engine $\mathbf{\Phi}$ that is better tailored to the perceptual idiosyncrasy of user $k$ in terms of timbre similarity, in comparison with the default setting $\mathcal{G}_0$.
 
-For composers to personalize their search engine $\mathbf{\Phi}$, the quid pro quo is to define manually a cluster graph among $N=78$ audio samples, by means of the Cyberlioz annotation interface (see \lnameref{sec:survey} section).
+For composers to personalize their search engine $\mathbf{\Phi}$, the quid pro quo is to define manually a cluster graph among $N=78$ audio samples, by means of the Cyberlioz annotation interface (see \lnameref{sec:data-collection} section).
 This preliminary annotation lasts $30$ to $60$ minutes, which is relatively short in comparison with the duration of the $N^\prime = 9346$ audio samples in $\mathcal{G}_k$ after label propagation: i.e., roughly three hours of audio.
 
 Within the default setting ($\mathcal{G}=\mathcal{G}_0$), our system $\mathbf{\Phi}$ achieves an average precision at rank five (AP@5) of $\textbf{99.0\%}$, with a standard deviation across $K=31$ subjects of the order of $1\%$.
@@ -898,7 +984,7 @@ Then, it is evaluated on the same samples with individual cluster graphs as grou
 The reason behind this choice is that, in the context of computer-assisted orchestration, the collection of audio samples has a fixed size, as it is shipped alongside the software itself.
 This is the case, for example, of Orchidea\footnote{Link to Orchidea software and OrchideaSOL dataset: \url{www.orch-idea.org}}, which comes paired with its own version of SOL, named OrchideaSOL \cite{cella2020icmc}.
 
-Henceforth, our main goal was to evaluate the generalization ability of our metric learning algorithm beyond the restricted set of samples for which human annotations are directly available ($N=78$, see \lnameref{sec:survey} section); that is, beyond one pitch class (middle C) and one intensity level (\emph{mf}).
+Henceforth, our main goal was to evaluate the generalization ability of our metric learning algorithm beyond the restricted set of samples for which human annotations are directly available ($N=78$, see \lnameref{sec:data-collection} section); that is, beyond one pitch class (middle C) and one intensity level (\emph{mf}).
 That being said, a potential future application of our work would be to use the pre-trained metric learning system $\mathbf{\Phi}$ to approximate out-of-sample targets \cite{carpentier2012cmj}.
 One of such target could be a vocal sketch \cite{cartwright2015acm}, a sound event recorded from the environment, or a computer-generated waveform \cite{lemaitre2016plosone}.
 However, evaluating the accuracy of a query-by-singing system for audio retrieval is incompatible with the clustering paradigm of the Cyberlioz annotation interface, in which all audio samples are assumed to be recorded ahead of human--computer interaction.

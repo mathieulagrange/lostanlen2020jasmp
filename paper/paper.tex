@@ -694,13 +694,32 @@ In addition to second-order scattering coefficients (Equation \ref{eq:S2}), we c
 \label{eq:S1}
 \end{align}
 where the time constant $T$ is the same as in Equation $\ref{eq:S2}$, \ie{} $T=\SI{1000}{\milli\second}$ by default.
+
 Over the time variable, we set the modulation rate $\alpha$ of $\mathbf{S_1}$ to zero in the equation above.
 Conversely, over the log-frequency variable, the edge case $\beta=0$ corresponds to replacing the wavelet $\boldsymbol{\psi}_{\beta}$ by the low-pass filter $\boldsymbol{\psi}_F$, comparably to Equation $\ref{eq:Psi}$.
-Lastly, we concatenate 
-\begin{equation}
-    \mathbf{S}\boldsymbol{x}(t, p) 
-\end{equation}
 We refer to \cite{anden2019tsp} for more details on the implementation of joint time--frequency scattering.
+
+
+\subsection*{Per-feature Gaussianization with median-based logarithmic compression}
+\label{sec:gaussianization}
+We adopt the multiindex notation $p = (\lambda, \alpha, \beta)$ as a shorthand for the tuple of frequency, rate, and scale.
+The tuple $p$ is known as a scattering path (see \cite{mallat2012cpam}), and may apply to index both first-order ($\mathbf{S_1}$) or second-order ($\mathbf{S_2}$) coefficients.
+Given an input waveform $\boldsymbol{x}$, we denote by $\mathbf{S}\boldsymbol{x}$ the feature vector resulting from the concatenation of $\mathbf{S_1}\boldsymbol{x}$ and $\mathbf{S_2}\boldsymbol{x}$:
+\begin{equation}
+\mathbf{S}\boldsymbol{x}\big(t, p=(\lambda, \alpha, \beta)\big)
+=\left\{
+\begin{array}{ll}
+\mathbf{S_{1}}\boldsymbol{x}(t,\lambda,\alpha,\beta) & \textrm{if }\alpha\neq0,\\
+\mathbf{S_{2}}\boldsymbol{x}(t,\lambda,\alpha,\beta) & \textrm{otherwise.}
+\end{array}\right.
+\end{equation}
+
+% TODO declare new math operator
+\begin{equation}
+\boldsymbol{\mu}(p) =
+\mathrm{median}
+\int_{\mathbb{R}} \mathbf{S}\boldsymbol{x}_n(t, p) \;\mathrm{d}t
+\end{equation}
 
 
 \subsection*{Metric learning with large-margin nearest neighbors (LMNN)}

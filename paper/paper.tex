@@ -722,7 +722,9 @@ Given a collection of $N$ such waveforms, we number them arbitrarily from $\bold
 \median_{1\leq n \leq N}
 \int_{\mathbb{R}} \mathbf{S}\boldsymbol{x}_n(t, p) \;\mathrm{d}t.
 \end{equation}
+If the collection is split between a training set and a test set (see \lnameref{sec:discussion} section), we compute $\boldsymbol{\mu}$ on the training set only, and re-apply it as a constant value on the test set.
 
+Then, to match a decibel-like perception of loudness, we apply the following adaptive transformation, which composes a median-based renormalization and a logarithmic compression:
 \begin{equation}
 \mathbf{\widetilde{S}}\boldsymbol{x}_n (p) =
 \log \left(
@@ -731,7 +733,16 @@ Given a collection of $N$ such waveforms, we number them arbitrarily from $\bold
 \int_\mathbb{R} \mathbf{S}\boldsymbol{x}_n (t, p) \;\mathrm{d}t
 }{\varepsilon \times \boldsymbol{\mu}(p)}
 \right)
+\label{eq:S_tilde}
 \end{equation}
+where $\varepsilon$ is a predefined constant.
+The offset of $1$ before the application of the pointwise logarithm ensures that the transformation is nonexpansive in the sense of Lipschitzian maps.
+Furthermore, a previous publication has shown empirically that Equation \ref{eq:S_tilde} brings, on environmental audio recordings, the histogram of $\mathbf{\widetilde{S}}\boldsymbol{x}_n (p)$ closer to a statistical Gaussianization of every feature $p$ \cite{lostanlen2018jasmp}.
+Since then, this finding has been confirmed in the case of musical sounds \cite{lostanlen2018extended}.
+
+Lastly, we standardize every feature $\mathbf{\widetilde{S}}\boldsymbol{x}_n$ to null mean and unit variance, across all $N$ samples $\boldsymbol{x}_1 \ldots \boldsymbol{x}_N$, independently for each scattering path $p$.
+Again, in cases where the dataset is split between training and test sets, we measure means and variances over the test set and propagate them as constants to the test set.
+With a slight abuse of notation, we still denote by $\mathbf{\widetilde{S}}\boldsymbol{x}_n (p)$ the standardized log-scattering features at path $p$ for sample $n$, even though its value differs from Equation \ref{eq:S_tilde} by an affine transformation.
 
 
 \subsection*{Metric learning with large-margin nearest neighbors (LMNN)}

@@ -250,16 +250,16 @@ The task of simulating this cognitive process amounts to the design of a multidi
 Rather than to merely discriminate instruments as mutually exclusive categories, this function must reflect a consensus of quantitative judgments of acoustic dissimilarity, all other parameters---duration, pitch, and intensity---being equal \cite{thoret2018jasa}.
 
 Behind the overarching challenge of coming up with a robust predictive model for listening behaviors in humans, the main practical application of timbre similarity retrieval lies in the emerging topic of computer-assisted orchestration \cite{maresz2013cmr}.
-In such a software environment, the composer queries the machine with an arbitrary audio signal; the outcome of this query is an instrumental audio sample, alongside textual attributes of playing technique.
+In such context, the composer queries the software with an arbitrary audio signal; the outcome of this query is an instrumental audio sample, alongside textual attributes of playing technique.
 Thus, following the aesthetic tradition of spectralism in contemporary music creation, the computer serves as a bridge from the auditory level to the symbolic level, \ie{} from a potentially infinite realm of timbral sensations to a musical score of priorly specified range \cite{caetano2019swarm}.
 
 \subsection*{Goal}
 This article proposes a machine listening system which computes the dissimilarity in timbre between any two audio samples.
 Our system consists of two stages: unsupervised feature extraction and supervised metric learning.
 The feature extraction stage is a nonlinear map which relies on the joint time--frequency scattering transform \cite{anden2015mlsp}, followed by per-feature Gaussianization \cite{lostanlen2018jasmp}.
-It encodes patterns of spectrotemporal modulation in the query while offering numerical guarantees of stability to local deformations \cite{anden2012scattering}.
+It encodes patterns of spectrotemporal modulation in the acoustic query while offering numerical guarantees of stability to local deformations \cite{anden2012scattering}.
 The metric learning stage is a linear map, optimized via large-margin nearest neighbors (LMNN) \cite{weinberger2009distance}.
-It recombines scattering coefficients so as to fit a training set of human judgments \cite{mcadams1995psychres}, which may either stem from the perceptual idiosyncracies of a single subject or from a collective consensus.
+It recombines scattering coefficients so as to fit a training set of human judgments \cite{mcadams1995psychres}, which may either stem from the perceptual idiosyncracies of a single subject or from an intersubjective consensus.
 
 Figure \ref{fig:pipeline} summarizes our experimental protocol: it illustrates how visual annotations (top) can inform feature extraction (center) to produce a nearest-neighbor search engine which is consistent with timbre similarity judgments (bottom).
 
@@ -298,7 +298,7 @@ In this respect, the scientific literature exhibits a methodological divide as r
 On the one hand, most publications in music information retrieval cast timbre modeling as an audio classification problem  \cite{martin1998asa,brown1999jasa,eronen2000icassp,herrera2003jnmr,wieczorkowska2003jiis,livshin2004dafx,krishna2004icassp,kaminskyj2005jiis,benetos2006icassp,bhalke2016jiis}.
 In this context, the instrumentation of each musical excerpt serves as an unstructured set of ``audio tags,'' encoded as binary outputs within some predefined label space.
 Because such tags often belong to the metadata of music releases, the process of curating a training set for musical instrument classification requires little or no human intervention.
-Although scraping user-generated content from online music hosting platforms may not always reflect the true instrumentation with perfect accuracy, it offers a scalable and ecologically valid insight onto the acoustic underpinnings of musical timbre.
+Although scraping user-generated content from online music platforms may not always reflect the true instrumentation with perfect accuracy, it offers a scalable and ecologically valid insight onto the acoustic underpinnings of musical timbre.
 
 Furthermore, supplementing user-generated content with the outcome of a crowdsourced annotation campaign allows an explicit verification of instrument tags.
 For instance, the Open-MIC dataset \cite{humphrey2018ismir}, maintained by the Community for Open and Sustainable Music Information Research (COSMIR) \cite{mcfee2016ismir}, comprises a vast corpus of 20k polyphonic music recordings spanning 20 instruments as a derivative of the Free Music Archive (FMA) dataset \cite{defferrard2017ismir}.
@@ -313,8 +313,8 @@ We refer to \cite{han2017taslp} for a recent review of the state of the art in t
 On the other hand, the field of music psychology investigates timbre with the aim of discovering its physiological and behavioral foundations \cite{mcadams2009chapter}.
 In this setting, prior knowledge, however accurate, of instrumentation does not suffice to conduct a study.
 Rather, each excerpt must be played back to multiple human listeners.
-Yet, collecting subjective responses to acoustic stimuli is a tedious and unscalable procedure, restricting the size of the musical corpus under study.
-Such restriction hampers the applicability of iterative representation learning algorithms, such as stochastic gradient descent in deep neural networks.
+Yet, collecting subjective responses to acoustic stimuli is a tedious and unscalable procedure, therefore restricting the size of the musical corpus under study.
+Such restriction hampers the applicability of iterative algorithms for representation learning, such as stochastic gradient descent in deep neural networks.
 Nevertheless, while training artificial neurons is prone to statistical overfitting, advanced methods in electrophysiology allow to observe the firing patterns of biological neurons in the presence of controlled stimuli.
 This observation, originally carried out on the ferret, has led to a comprehensive mapping of the primary auditory cortex in terms of its spectrotemporal receptive fields (STRFs) \cite{depireux2001jneur}, thus yielding a useful form of inductive bias for downstream machine listening applications.
 
@@ -334,7 +334,7 @@ This observation has led auditory neuroscientists to formulate an idealized comp
 Over recent years, several publications have employed the full cortical model as a feature extractor for a task of musical instrument classification, both in isolated recordings \cite{patil2012ploscompbiol} and in solo phrases \cite{patil2015eurasip}.
 These biologically inspired features outperform the state of the art, especially in the small data regime where deep learning is inapplicable.
 Furthermore, the confusion matrix of the full cortical model in the label space of musical instruments strongly correlates with the confusion matrix between a human listener and the ground truth.
-Another appeal of the full cortical model is that the third-order $(\lambda, \alpha, \beta)$ tensor of frequencies, rates, and scales can be segmented into contiguous regions of maximal perceptual relevance for each instrument \cite{thoret2016jasa}.
+Another appeal of the full cortical model is that the three-way tensor of frequency $\lambda$, rate $\alpha$, and scale $\beta$ can be segmented into contiguous regions of maximal perceptual relevance for each instrument \cite{thoret2016jasa}.
 This is unlike fully end-to-end learning architectures, whose post hoc interpretability requires advanced techniques for feature inversion \cite{mishra2018ismir}.
 Lastly, beyond the realm of supervised classification, a previous publication \cite{hemery2015frontiers} has shown that query-by-example search with STRFs allows to discriminate categories of environmental soundscapes, even after temporal integration and unsupervised dimensionality reduction.
 
@@ -362,7 +362,7 @@ Conversely, from the standpoint of music cognition, our model offers a scalable 
 The European symphonic orchestra encompasses four families of instruments: strings, woodwinds, brass, and percussion.
 In this article, we focus on the former three, and leave the question of learning auditory similarities between percussion instruments to future research.
 The reason behind this choice is that most percussive instruments do not allow much variation in terms of pitch or intensity, if at all; thus reducing the amount of intra-technique variability in the time--frequency domain.
-Furthermore, although percussive instruments certainly exhibit a rich diversity of playing techniques (we refer to \cite{peinkofer1976book} for a survey) these are rarely shared with pitched instruments.
+Furthermore, although percussive instruments certainly exhibit a rich diversity of playing techniques (we refer to \cite{peinkofer1976book} for a survey), these are rarely shared with pitched instruments.
 In comparison, techniques for sustained tones such as \emph{vibrato} or \emph{tremolo} permeate throughout a vast instrumentarium, \eg{} bowed strings and reed alike.
 We refer to \cite{wu2018taslp} and \cite{pearce2019appliedsciences} for reviews of the recent literature on the timbre modeling of percussive instruments, from the standpoints of MIR and music cognition respectively.
 
@@ -411,7 +411,7 @@ Each of them inspected the entire corpus of $235$ IMTs and annotated them in ter
 In this Likert scale, the value 1 (least relevant) denotes that the IMT under consideration has a timbre that is idiosyncratic of the instrument, and that therefore, it is unlikely that humans will pair it with IMTs from other instruments.
 Conversely, the value 7 (most relevant) denotes that the IMT under consideration has a strong similarity with IMTs from one or several other instruments.
 
-Once both experts completed their annotation, we retained all IMTs whose average relevance score was judged equal to 3 or higher.
+Once both experts completed their annotations, we retained all IMTs whose average relevance score was judged equal to 3 or higher.
 At the end of this stage of pre-screening, the list of IMT reduces from 235 to $N=78$.
 Tables 1 and 2, in the Appendix section of this paper, give a full list of these 78 highly relevant IMTs.
 It is worth noting that, according to both experts, the timbre of the accordion was judged too idiosyncratic, regardless of playing technique, to be relevant for this experiment.
@@ -424,6 +424,7 @@ Thirdly, we design a graphical user interface for partitioning a corpus of short
 The need for such an interface arises from the unscalability of Likert scales in the context of pairwise similarity judgments.
 Assuming that similarity is a symmetric quantity, collecting a dense matrix of continuously valued ratings of similarity among a dataset of $N$ items would require $\frac{1}{2}(N^2-N)$ Likert scales.
 In the case of $N=78$ IMTs, the task would amount to about 3k horizontal sliders, \ie{} several hours of cumbersome work for the human annotator.
+
 Engaging as many participants as possible in our study called for a more streamlined form of human--computer interaction, even if it sacrificed the availability of continuous ratings.
 To this end, we implemented a web application, named Cyberlioz, in which the user can spontaneously listen and arrange sounds into clusters of timbre similarity\footnote{The Web application for efficient audio annotation, as well as the raw anonymized responses of all $31$ participants to our study, is available at: \url{https://soundthings.org/research/cyberlioz/}}.
 The name Cyberlioz is a portmanteau between the prefix cyber- and the French composer Hector Berlioz.
@@ -444,17 +445,17 @@ Within two months, $K=31$ subjects accessed Cyberlioz and completed the task. % 
 %Figure \ref{fig:xp2display}. % TODO
 
 \subsection*{Hypergraph partitioning}
-Once the data collection campaign was complete, we analyzed the color assignments of each subject $k$ and converted them into a similarity graph $\mathcal{G}_k$, where the integer $k$ is an anonymized subject index, ranging between $1$ and $K$.
+Once the data collection campaign was complete, we analyzed the color assignments of each subject $k$ and converted them into a cluster graph $\mathcal{G}_k$, where the integer $k$ is an anonymized subject index, ranging between $1$ and $K$.
 For a given $k$, the graph $\mathcal{G}_k$ contains $N=78$ vertices, each representing a different IMT in the corpus.
 In $\mathcal{G}_k$, an edge connects any two vertices $m$ and $n$ if the corresponding dots in Cyberlioz have the same color.
 Otherwise, there is no edge connecting $m$ and $n$.
-This way, $\mathcal{G}_k$ contains as many connected components as the number of similarity clusters for the subject $k$, \ie{} the number of distinct colors on the Cyberlioz interface in the response of $k$.
+Thus, $\mathcal{G}_k$ contains as many connected components as the number of similarity clusters for the subject $k$, \ie{} the number of distinct colors on the Cyberlioz interface in the response of $k$.
 
 %Only the clustering given by the subjects using the color labels is considered to estimate the spontaneous judgments of similarity among \ipt. The spatial organization of the dots representing the \ipt could provide information about the similarity, but this would implicitly enforce the fact that the timbral similarity space is two dimensional. We therefore now only study the properties of the clusterings performed by the subject prior to converting them into an overall similarity matrix.
 
 We aggregate the similarity judgments from all $K$ subjects by embedding them into a hypergraph $\mathcal{H}$, that is, a graph whose edges may connect three or more vertices at once.
 Specifically, $\mathcal{H}$ contains $N$ vertices, each representing an IMT; and each ``hyperedge'' in $\mathcal{H}$ corresponds to some connected component in one of the graphs $\mathcal{G}_k$'s among all subject $k$.
-Then, we convert the hypergraph $\mathcal{H}$ back into a conventional graph $\mathcal{G}_0$ by means of a combinatorial optimization algorithm algorithm known as hypergraph partitioning \cite{kernighan1970efficient,han1997scalable,strehl2002cluster}.
+Then, we convert the hypergraph $\mathcal{H}$ back into a conventional graph $\mathcal{G}_0$ by means of a combinatorial optimization algorithm algorithm known as hypergraph partitioning \cite{kernighan1970efficient}.
 
 For a particular subject $k$, let us denote by $C_k$ the number of clusters in the graph $\mathcal{G}_k$.
 Across all $K=31$ subjects, the value of $C_k$ varies between $3$ and $19$, with a median value of $10$.
@@ -463,7 +464,7 @@ To construct $\mathcal{G}_0$, we select a number of clusters $C_0$ that is equal
 C_0 = \max_{1\leq k \leq K} C_k = 19
 \end{equation}
 Then, we run hypergraph partitioning on $\mathcal{H}$ to assign each vertex $i$ to one of the $C_0$ clusters in $\mathcal{G}_0$.
-Intuitively, hypergraph partitioning optimizes a tradeoff between two objectives: first, balancing the size of all clusters in terms of their respective numbers of vertices; and secondly, keeping most hyperedges enclosed within as few distinct clusters as possible.
+Intuitively, hypergraph partitioning optimizes a tradeoff between two objectives: first, balancing the size of all clusters in terms of their respective numbers of vertices; and secondly, keeping most hyperedges enclosed within as few distinct clusters as possible \cite{han1997scalable,strehl2002cluster}.
 
 While the graphs $\mathcal{G}_1 \ldots \mathcal{G}_K$ encode the subjective similarity judgments of participants $1$ to $K$, the graph $\mathcal{G}_0$ represents a form of consensual judgment that is shared across all participants, while discarding intersubjective variability.
 Although the rest of our paper focuses on the consensus $\mathcal{G}_0$, it is worth pointing out that the same technical framework could apply to a single subject $k$, or to a subgroup of the $K=31$ subjects.
@@ -709,7 +710,7 @@ Given an input waveform $\boldsymbol{x}$, we denote by $\mathbf{S}\boldsymbol{x}
 \mathbf{S}\boldsymbol{x}\big(t, p=(\lambda, \alpha, \beta)\big)
 =\left\{
 \begin{array}{ll}
-\mathbf{S_{1}}\boldsymbol{x}(t,\lambda,\alpha,\beta) & \textrm{if }\alpha\neq0,\\
+\mathbf{S_{1}}\boldsymbol{x}(t,\lambda,\alpha,\beta) & \textrm{if }\alpha=0,\\
 \mathbf{S_{2}}\boldsymbol{x}(t,\lambda,\alpha,\beta) & \textrm{otherwise.}
 \end{array}\right.
 \end{equation}
@@ -745,7 +746,7 @@ Indeed, the perception of timbre for extended playing techniques often involves 
 To address this issue, we apply a metric learning algorithm, named large-margin nearest neighbors (LMNN), whose goal is to reweight and recombine scattering paths $p$ such that certain factors of variability in feature space $\mathbf{S}$ are enhanced while others are discarded.
 Before training this algorithm, we apply a pointwise nonlinear transformation on averaged joint time-frequency scattering coefficients. The role of this transformation, which is adapted to the dataset in an unsupervised way, is to Gaussianize the histogram of activations of each scattering path $p$.
 
-We consider a collection $\mathcal{X}$ of $N$ waveforms, numbered them arbitrarily from $\boldsymbol{x}_1$ to $\boldsymbol{x}_N$. For every path $p$ in the joint time--frequency scattering transform operator $\mathbf{S}$, we measure the median value taken by the average response of $\mathbf{S}\boldsymbol{x}_n$ across all samples $n$ from $1$ to $N$:
+We consider a collection $\mathcal{X}$ of $N$ waveforms, numbered arbitrarily from $\boldsymbol{x}_1$ to $\boldsymbol{x}_N$. For every path $p$ in the joint time--frequency scattering transform operator $\mathbf{S}$, we measure the median value taken by the average response of $\mathbf{S}\boldsymbol{x}_n$ across all samples $n$ from $1$ to $N$:
 \begin{equation}
 \boldsymbol{\mu}(p) =
 \median_{1\leq n \leq N}
@@ -799,7 +800,8 @@ Let $P$ be the number of scattering paths in the operator $\mathbf{S}$. The larg
 \begin{equation}
 \mathcal{E}(\mathbf{L}) = \frac{1}{2} \mathcal{E}_{\textrm{pull}} (\mathbf{L}) + \frac{1}{2} \mathcal{E}_{\textrm{push}} (\mathbf{L})
 \end{equation}
-Intuitively, the term $\mathcal{E}_{\textrm{pull}}$ tends to shrink local Euclidean neighborhoods in feature space. Crucially, in the case of time--frequency scattering coefficients, these Euclidean neighborhoods corresponds to Wasserstein neighborhoods in the scalogram domain (see previous subsection).
+where, intuitively, $\mathcal{E}_{\textrm{pull}}$ tends to shrink local Euclidean neighborhoods in feature space while $\mathcal{E}_{\textrm{push}}$ tends to penalize small distances between samples that belong to different clusters in $\mathcal{G}$.
+
 The definition of $\mathcal{E}_{\textrm{pull}}$ is:
 \begin{equation}
 \mathcal{E}_{\textrm{pull}} (\mathbf{L}) =
@@ -809,12 +811,15 @@ The definition of $\mathcal{E}_{\textrm{pull}}$ is:
 \mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{x} - \mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{y}
 \big\Vert^2,
 \end{equation}
+Crucially, in the feature space of time--frequency scattering coefficients, the Euclidean neighborhood $\mathcal{Y}_R (\boldsymbol{x})$ corresponds to a Wasserstein neighborhood in the scalogram domain (see previous subsection).
 Note that the error term $\mathcal{E}_\textrm{pull}$ is unsupervised, in the sense that it does not depend on the cluster assignments of $\boldsymbol{x}$ and $\boldsymbol{y}$ in $\mathcal{G}$.
 
-Conversely, the term $\mathcal{E}_{\textrm{push}}$ tends to penalize small distances between samples that belong to different clusters in $\mathcal{G}$.
-More precisely, consider three samples $\boldsymbol{x}$, $\boldsymbol{y}$ and $\boldsymbol{z}$ in $\mathcal{X}$.
-Assume that the former belongs to the Euclidean neighborhood of $\boldsymbol{x}$ (i.e., $\boldsymbol{y} \in \mathcal{Y}_R (\boldsymbol{x})$) while the latter belongs to a different cluster as $\boldsymbol{x}$ (i.e., $\boldsymbol{z}\not\in\mathcal{G}(\boldsymbol{x}$)).
-The term $\mathcal{E}_{\textrm{push}}$ penalizes $\mathbf{L}$ unless the distance between $\mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{x}$ and $\mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{y}$ is smaller than the distance between $\mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{x}$ and $\mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{z}$ by a margin of at least $1$.
+While the the term $\mathcal{E}_{\textrm{pull}}$ operates on pairs of samples, the term $\mathcal{E}_{\textrm{push}}$, operates on triplets $(\boldsymbol{x}, \boldsymbol{y}, \boldsymbol{z})\in\mathcal{X}^3$.
+The first sample, $\boldsymbol{x}$, is known as an ``anchor''.
+The second sample, $\boldsymbol{y}$, is known as a ``positive'', and is assumed to belong to the Euclidean neighborhood of the anchor: $\boldsymbol{y} \in \mathcal{Y}_R (\boldsymbol{x})$.
+The third sample, $\boldsymbol{z}$, is known as a ``negative'', and is assumed to belong to a different similarity cluster as the anchor: $\boldsymbol{z}\not\in\mathcal{G}(\boldsymbol{x})$.
+The term $\mathcal{E}_{\textrm{push}}$ penalizes $\mathbf{L}$ unless the positive-to-anchor distance is smaller than the negative-to-anchor distance by a margin of at least $1$.
+
 The definition of $\mathcal{E}_{\textrm{push}}$ is:
 \begin{equation}
 \mathcal{E}_{\textrm{push}} (\mathbf{L}) =
@@ -1106,7 +1111,7 @@ This dimension is of the same order of magnitude as the dimension of our joint t
 
 Training the LMNN algorithm on this 840-dimensional representation is analogous to a ``kernel trick'' in support vector machines \cite{chang2010jmlr}.
 In our case, the implicit similarity kernel is a homogeneous quadratic kernel.
-Despite this increase in representational power, we obtain a P@5 of $81.5\% \pm 7.3$, i.e. essentially the same as MFCC under a linear kernel.
+Despite this increase in representational power, we obtain a P@5 of $81.5\% \pm 7$, i.e. essentially the same as MFCC under a linear kernel.
 Therefore, it appears that the gap in performance between MFCC ($81.8\%\pm 7$) and joint time--frequency scattering ($99.0\% \pm 1$) is primarily attributable to the multiscale extraction of joint spectrotemporal modulations, whereas high-dimensional embedding likely plays a minor role.
 
 %In order to quantify the importance of the information carried by the feature set in the final performance, the numerical values of the features are replaced with random numbers sampled from a uniform distribution.

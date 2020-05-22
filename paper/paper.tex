@@ -244,10 +244,10 @@ On the one hand, adjectives such as \emph{bright} or \emph{rough} are prone to m
 On the other hand, the sole mention of a playing technique does not determine any intended effect; as a result, it does not generalize to the entire instrumentarium \cite{kolozali2011ismir}.
 For instance, although the term \emph{breathy} alludes to a playing technique that is peculiar to wind instruments, a cellist may accomplish a seemingly breathy timbre by bowing near the fingerboard, i.e., \emph{sul tasto} in the classical terminology.
 
-The prospect of modeling timbre perception thus necessarily exceeds the symbolic domain.
+The prospect of modeling timbre perception thus necessarily exceeds the symbolic domain. \ml{even if research about its notation is of interest}
 Instead, it involves a cognitive process which arises from the subjective experience of listening \cite{erickson1975book}.
 The task of simulating this cognitive process amounts to the design of a multidimensional feature space wherein some distance function evaluates arbitrary pairs of stimuli.
-Rather than to merely discriminate instruments as mutually exclusive categories, this function must reflect a consensus of quantitative judgments of acoustic dissimilarity, all other parameters---duration, pitch, and intensity---being equal \cite{thoret2018jasa}.
+Rather than merely discriminating instruments as mutually exclusive categories, this function must reflect a consensus of quantitative judgments of acoustic dissimilarity, all other parameters---duration, pitch, and intensity---being equal \cite{thoret2018jasa}.
 
 Behind the overarching challenge of coming up with a robust predictive model for listening behaviors in humans, the main practical application of timbre similarity retrieval lies in the emerging topic of computer-assisted orchestration \cite{maresz2013cmr}.
 In such context, the composer queries the software with an arbitrary audio signal; the outcome of this query is an instrumental audio sample, alongside textual attributes of playing technique.
@@ -281,9 +281,7 @@ The \lnameref{sec:data-collection} section describes our computer--human interfa
 The \lnameref{sec:methods} section presents the technical components of our machine listening system, namely joint time--frequency scattering and large-margin nearest neighbors.
 The \lnameref{sec:results} section describes our experimental benchmark.
 The \lnameref{sec:discussion} section conducts an ablation study of our best performing system.
-The \lnameref{sec:conclusion} summarizes the implications of our findings for future research in music information retrieval.\footnote{For the sake of research reproducibility, the source code for the experimental protocol of this paper is available online, alongside anonymized data from human subjects:  \url{https://github.com/mathieulagrange/paperPlayingTechniquesSimilarityLearning}} %TODO: simplify this URL to lostanlen2020jasmp
-
-
+The \lnameref{sec:conclusion} summarizes the implications of our findings for future research in music information retrieval.\footnote{For the sake of research reproducibility, the source code for the experimental protocol of this paper is available online, alongside anonymized data from human subjects:  \url{https://github.com/mathieulagrange/lostanlen2020jasmp}}
 
 \section*{\nmu Related work}
 \label{sec:related-work}
@@ -307,7 +305,6 @@ Another example is the Medley-solos-DB dataset \cite{lostanlen2016ismir}, which 
 Over the past decade, the availability of large digital audio collections, together with the democratization of high-performance computing on dedicated hardware, has spurred the development of deep learning architectures, and notably deep convolutional networks, in music instrument recognition \cite{mcfee2015ismir,pons2017eusipco,gururani2018ismir}.
 Notwithstanding the growing accuracy of these architectures in the large data regime, it remains unclear how to extend them from musical instrument recognition to playing technique recognition, where labeled samples are considerably scarcer \cite{loureiro2004ismir}.
 We refer to \cite{han2017taslp} for a recent review of the state of the art in this domain.
-
 
 \subsection*{Timbre modeling in music cognition research}
 On the other hand, the field of music psychology investigates timbre with the aim of discovering its physiological and behavioral foundations \cite{mcadams2009chapter}.
@@ -346,7 +343,7 @@ Such acceleration is made possible by discretizing the wavelet transforms involv
 This multirate scheme also has the benefit of drawing an explicit connection between scattering networks and deep convolutional networks, as both involves numerous convolutions with small kernels, pointwise rectifying nonlinearities, and dyadic pooling operations \cite{mallat2016philtrans}.
 
 Moreover, a quantitative benchmark over Medley-solos-DB has demonstrated that joint time--frequency scattering, unlike purely temporal scattering, outperforms deep convolutional networks in supervised musical instrument classification, even in a relatively large data regime with 500 to 5k samples per class \cite{anden2019tsp}.
-The authors of a recent publication \cite{wang2019ismir} trained a classifier of playing techniques on separable (\ie{} non-joint) time--frequency scattering features \cite{anden2014tsp}, and achieved state-of-the-art results in continuous performance recordings of the Chinese bamboo flute. 
+The authors of a recent publication \cite{wang2019ismir} trained a classifier of playing techniques on separable (\ie{} non-joint) time--frequency scattering features \cite{anden2014tsp}, and achieved state-of-the-art results in continuous performance recordings of the Chinese bamboo flute.
 Despite supplying experimental evidence that time--frequency scattering is better suited to playing technique recognition than purely temporal scattering, it remains to be seen whether these findings can scale up from a single instrument to an entire orchestra.
 In addition, previous publications in time--frequency scattering, whether separable or joint, lack a human-centric evaluation, independently from any classification task.
 
@@ -361,8 +358,8 @@ Conversely, from the standpoint of music cognition, our model offers a scalable 
 
 The European symphonic orchestra encompasses four families of instruments: strings, woodwinds, brass, and percussion.
 In this article, we focus on the former three, and leave the question of learning auditory similarities between percussion instruments to future research.
-The reason behind this choice is that most percussive instruments do not allow much variation in terms of pitch or intensity, if at all; thus reducing the amount of intra-technique variability in the time--frequency domain.
-Furthermore, although percussive instruments certainly exhibit a rich diversity of playing techniques (we refer to \cite{peinkofer1976book} for a survey), these are rarely shared with pitched instruments.
+The reason behind this choice is that most percussive instruments do not allow much variation in terms of pitch or intensity, if at all; thus reducing the amount of intra-technique variability in the time--frequency domain. \ml{preciser le contexte, un joueur de tabla ne serait pas d'accord, j'enleverai ces 2  phrases, ... and refer to ...}
+Furthermore, although percussive instruments certainly exhibit a rich diversity of playing techniques (we refer to \cite{peinkofer1976book} for a survey) these are rarely shared with pitched instruments.
 In comparison, techniques for sustained tones such as \emph{vibrato} or \emph{tremolo} permeate throughout a vast instrumentarium, \eg{} bowed strings and reed alike.
 We refer to \cite{wu2018taslp} and \cite{pearce2019appliedsciences} for reviews of the recent literature on the timbre modeling of percussive instruments, from the standpoints of MIR and music cognition respectively.
 
@@ -385,11 +382,11 @@ Likewise, the intensity of key clicks in the oboe is necessarily \emph{pp}, whil
 
 In summary, audio signals from isolated musical notes may vary across three categorical variables (instrument, mute, and technique) and two continuous variables (intensity and pitch).
 The Cartesian product of all five variables results in a combinatorial explosion of possible timbral sensations.
-The Studio On Line dataset (SOL), recorded at Ircam in 1998, offers a dense sampling of this combinatorial explosion, amounting to 25444 audio signals in total.
+The Studio On Line dataset (SOL), recorded at Ircam in 1998, offers a dense sampling of this \ml{repetition : combinatorial explosion, what would be the complete, give the percent achieved of SOL}, amounting to 25444 audio signals in total.
 We should note that this dense sampling is by no means comprehensive, as it erases other factors of acoustic variability, such as identity of performer, identity of instrument manufacturer, audio acquisition equipment, and room response characteristics; which are all restricted to singletons.
 Addressing these factors of variability is besides the scope of this paper, which focuses on the influence of playing technique.
 Despite this deliberate restriction, the size of the SOL dataset remains impractically large for collecting human similarity judgments.
-Our protocol addresses this problem by means of three complementary approaches: disentanglement of factors, expert pre-screening, and efficient annotation interface.
+Our protocol addresses this problem by means of three complementary approaches: disentanglement of factors, expert pre-screening, and the use of an efficient annotation interface.
 
 \subsection*{Disentanglement of factors}
 First, we purposefully disentangle categorical variables (IMTs) from continuous variables (pitch and intensity) in the SOL dataset.
@@ -409,13 +406,13 @@ One example of such imitation is the acoustic similarity between slap tonguing i
 To collect perceptual ratings of relevance, we recruited two professors in music composition at the Paris Conservatory (CNSMDP), and explicitly gave them our definition of relevance.
 Each of them inspected the entire corpus of $235$ IMTs and annotated them in terms of relevance according to a Likert scale with seven ticks.
 In this Likert scale, the value 1 (least relevant) denotes that the IMT under consideration has a timbre that is idiosyncratic of the instrument, and that therefore, it is unlikely that humans will pair it with IMTs from other instruments.
-Conversely, the value 7 (most relevant) denotes that the IMT under consideration has a strong similarity with IMTs from one or several other instruments.
+Conversely, the value 7 (most relevant) denotes that the IMT under consideration has a strong similarity with IMTs from one or several other instruments \ml{available in the database}.
 
-Once both experts completed their annotations, we retained all IMTs whose average relevance score was judged equal to 3 or higher.
+Once both experts completed their annotation, we retained all IMTs whose \ml{relevance score averaged over experts} was judged equal to 3 or higher.
 At the end of this stage of pre-screening, the list of IMT reduces from 235 to $N=78$.
 Tables 1 and 2, in the Appendix section of this paper, give a full list of these 78 highly relevant IMTs.
 It is worth noting that, according to both experts, the timbre of the accordion was judged too idiosyncratic, regardless of playing technique, to be relevant for this experiment.
-Indeed, the accordion is the only instrument in the aforementioned list of 
+Indeed, the accordion is the only instrument in the aforementioned list of
 instrument to have free reeds, keyboard-based actuation, or handheld airflow.
 Consequently, regardless of mute and technique, the set of instruments $\mathcal{I}$ in our study contains 15 elements.
 
@@ -429,8 +426,8 @@ Engaging as many participants as possible in our study called for a more streaml
 To this end, we implemented a web application, named Cyberlioz, in which the user can spontaneously listen and arrange sounds into clusters of timbre similarity\footnote{The Web application for efficient audio annotation, as well as the raw anonymized responses of all $31$ participants to our study, is available at: \url{https://soundthings.org/research/cyberlioz/}}.
 The name Cyberlioz is a portmanteau between the prefix cyber- and the French composer Hector Berlioz.
 The choice is by no means coincidental: Berlioz is famous for having, in his \emph{Treatise on Orchestration} (1844), shed a particular focus on the role of timbre as a parameter for musical expression.
- 
- 
+
+
 Cyberlioz consists of a square panel on which is displayed a collection of circular grey dots, each of them corresponding to one of the $N=78$ IMTs, and initially distributed uniformly at random.
 Hovering the screen pointer onto each dot results in a playback of a representative audio sample of this IMT, \ie{} C4 and \emph{mf} in most cases. % TODO VL: use pitch notation library to express C4
 Furthermore, each dot can be freely placed on the screen by clicking, dragging, and dropping.
@@ -439,9 +436,9 @@ The goal of the Cyberlioz interface is to form clusters of timbre similarity bet
 Here, any two audio samples are defined as similar if and only if one can be replaced by the other in a context of spectralist orchestration.
 
 In comparison with a traditional Web-based form, Cyberlioz offers a more intuitive and playful user experience, while expediting the obtention of a dense matrix ($N\times N$) of similarity judgments within a moderate duration of $30$ to $60$ minutes for each participant.
-In X 2016, we recruited volunteers to use Cyberlioz on their own computers, via a web browser, and equipped with a pair of earphones. % TODO give the exact two months.
-We publicized this study on international mailing lists for research in music audio processing, such as X and Y. % TODO give mailing lists
-Within two months, $K=31$ subjects accessed Cyberlioz and completed the task. % TODO break down by gender? give age stats? musical experience?
+In May and June 2016, we recruited volunteers to use Cyberlioz on their own computers, via a web browser, and equipped with a pair of earphones. % TODO give the exact two months.
+We publicized this study on \ml{internal student mailing list of the cnsmdp} international mailing lists for research in music audio processing, such as Auditory and Music-IR. % TODO give mailing lists
+Within two months, $K=31$ subjects accessed Cyberlioz and completed the task. % TODO break down by gender? give age stats? musical experience? did not kept this info sorry
 %Figure \ref{fig:xp2display}. % TODO
 
 \subsection*{Hypergraph partitioning}
@@ -469,7 +466,6 @@ Intuitively, hypergraph partitioning optimizes a tradeoff between two objectives
 While the graphs $\mathcal{G}_1 \ldots \mathcal{G}_K$ encode the subjective similarity judgments of participants $1$ to $K$, the graph $\mathcal{G}_0$ represents a form of consensual judgment that is shared across all participants, while discarding intersubjective variability.
 Although the rest of our paper focuses on the consensus $\mathcal{G}_0$, it is worth pointing out that the same technical framework could apply to a single subject $k$, or to a subgroup of the $K=31$ subjects.
 This remark emphasizes the potential of our similarity learning method as a customizable tool for visualizing and extrapolating the timbre similarity space of a newcoming subject, after less than one hour of using Cyberlioz.
-
 
 \subsection*{Inter-instrument similarity}
 
@@ -516,8 +512,6 @@ More generally, even though the block diagonal structure of the matrix $\widetil
 Nevertheless, these clusters correspond to some basic attributes of qualitative timbre: by and large, the top-left region of the matrix contains sustained sounds whereas the bottom-right region contains percussive sounds.
 Interestingly, the ordinary technique (\texttt{ord}) appears at the center of the matrix, \ie{} at the intersection between sustained sounds and percussive sounds.
 This is because the notion of ``ordinariness'' does not prescribe the same gesture for all instruments: \eg{} an ordinary guitar sound is expected to be percussive whereas an ordinary flute sound is expected to be sustained.
-
-
 
 \section*{\nmu Methods}
 \label{sec:methods}
@@ -578,7 +572,7 @@ We define a constant-$Q$ wavelet filterbank as the family $\boldsymbol{\psi}_{\l
 Each wavelet $\boldsymbol{\psi}_{\lambda}$ has a center frequency of $\lambda$, an ERB of $\lambda/Q$, and an effective receptive field of $(2\pi Q/\lambda)$ in the time domain.
 In practice, we define $\boldsymbol{\psi}$ as a Morlet wavelet:
 \begin{equation}
-\boldsymbol{\psi}:t \longmapsto \exp\left(-\dfrac{t^2}{2\sigma_{\psi}^2}\right) 
+\boldsymbol{\psi}:t \longmapsto \exp\left(-\dfrac{t^2}{2\sigma_{\psi}^2}\right)
 \big[ \exp\left(2\pi \mathrm{i}t\right) - \kappa_{\psi} \big],
 \label{eq:psi}
 \end{equation}
@@ -609,8 +603,8 @@ Convolving the wavelets in this filterbank with an input waveform $\boldsymbol{x
 which is discretized according to a dyadic multirate scheme, similarly to the constant-$Q$ transform of \cite{schorkhuber2010smc}.
 Then, we define a two-dimensional Morlet wavelet $\boldsymbol{\Psi}$ of the form
 \begin{equation}
-\Psi : (t, u) \longmapsto 
-\exp\left(-\dfrac{t^2+u^2}{2\sigma_{\Psi}^2}\right) 
+\Psi : (t, u) \longmapsto
+\exp\left(-\dfrac{t^2+u^2}{2\sigma_{\Psi}^2}\right)
 \Big[ \exp\big(2\pi \mathrm{i} (t + u)\big) - \kappa_{\Psi} \Big],
 \label{eq:Psi}
 \end{equation}
@@ -732,7 +726,7 @@ Although the inequality in Equation \ref{eq:lipschitz} was originally formulated
 In this context, the appeal behind joint time--frequency scattering is that the deformation $\boldsymbol{\tau}$ may be defined in the scalogram domain $\mathbf{U_1}\boldsymbol{x}$, instead of being constrained to the time domain $\boldsymbol{x}$.
 Therefore, joint time--frequency scattering coefficients linearize and disentangle small elastic deformations in the time--frequency domain, and represent them activations from a dictionary of multiscale spectrotemporal modulations $\boldsymbol{\Psi}_{\alpha, \beta}$.
 
-
+\ml{c'est bien ecrit, mais peut etre un peu trop detaillé, a voir avec Joakim}
 
 \subsection*{Median-based logarithmic compression and affine standardization}
 \label{sec:gaussianization}
@@ -790,7 +784,7 @@ Moreover, we take $\mathcal{G}$ to be the equal to the ``consensus'' cluster gra
 %Furthermore, let us denote by $\mathcal{Y}_1 (\boldsymbol{x}) = \mathcal{X} \backslash \lbrace \boldsymbol{x} \rbrace$ the dataset of $(N-1)$ audio samples obtained from $\mathcal{X}$ after subtracting the singleton $\{\boldsymbol{x}\}$.
 
 We denote by $\mathbf{\widetilde{S}}\boldsymbol{x}$ the feature vector of joint time--frequency scattering resulting from $\boldsymbol{x}$.
-This vector includes both first-order and second-order scattering coefficients, after median-based logarithmic compression and affine standardization (see subsections above).
+This vector includes both first-order and second-order scattering coefficients, after median-based logarithmic compression and affine standardization (see subsectio\ml{s} above).
 Furthermore, we denote by $\mathcal{Y}_R (\boldsymbol{x})$ the list of $R$ nearest neighbors to $\mathbf{\widetilde{S}}\boldsymbol{x}$ in the feature space of joint time--frequency scattering coefficients, according to the Euclidean metric.
 Unlike cluster similarity, this relationship is not symmetric: $\boldsymbol{y}\in\mathcal{Y}_R (\boldsymbol{x})$ does not necessarily imply $\boldsymbol{x}\in\mathcal{Y}_R (\boldsymbol{y})$.
 Note that the dependency of $\mathcal{Y}_R (\boldsymbol{x})$ upon the operator $\mathbf{S}$ is left implicit.
@@ -891,7 +885,7 @@ The cost function described in the equation above is known in deep learning as `
 The previous section described our methods for extracting spectrotemporal modulations in audio signals, as well as learning a non-Euclidean similarity metric between them.
 We now turn to apply these methods to the problem of allocating isolated musical notes to clusters of some timbre similarity graph $\mathcal{G}$.
 In practice, for training purposes, the cluster graph $\mathcal{G}$ stems from the consensus of $K=31$ users of the Cyberlioz web application, which was described in the \lnameref{sec:data-collection} section ($\mathcal{G}=\mathcal{G}_0$).
-However, for evaluation purposes, this cluster graph corrsponds to the subjective preferences of a single user $k\geq 1$, in which case we take $\mathcal{G}=\mathcal{G}_k$.
+However, for evaluation purposes, this cluster graph corresponds to the subjective preferences of a single user $k\geq 1$, in which case we take $\mathcal{G}=\mathcal{G}_k$.
 
 
 \subsection*{Semi-supervised label propagation}
@@ -971,7 +965,7 @@ This preliminary annotation lasts $30$ to $60$ minutes, which is relatively shor
 
 Within the default setting ($\mathcal{G}=\mathcal{G}_0$), our system $\mathbf{\Phi}$ achieves an average precision at rank five (AP@5) of $\textbf{99.0\%}$, with a standard deviation across $K=31$ subjects of the order of $1\%$.
 This favorable result suggests that joint time--frequency scattering provides a useful feature map for learning similarities between instrumental playing techniques.
-In doing so, it is in line with a recent publication \cite{wang2020icassp}, in which the authors successfully trained a supervised classifier on joint time--frequency scattering features in order to detect and classify playing techniques from the Chinese bambooo flute (\emph{dizi}).
+In doing so, it is in line with a recent publication \cite{wang2020icassp}, in which the authors successfully trained a supervised classifier on joint time--frequency scattering features in order to detect and classify playing techniques from the Chinese bambooo flute (\emph{dizi}). \ml{limiter les self citations a une occurence}
 However, the originality of our work is that $\mathbf{\Phi}$ relies purely on auditory information (i.e., timbre similarity judgments), and does not require any supervision from the symbolic domain.
 In particular, it does not assume the ``metadata'' (instrument, mute, technique, pitch, dynamics, and so forth) of any musical sample $\boldsymbol{x}_n$ to be observable, in part or in full, at training time.
 
@@ -993,22 +987,25 @@ The reason behind this choice is that, in the context of computer-assisted orche
 This is the case, for example, of Orchidea\footnote{Link to Orchidea software and OrchideaSOL dataset: \url{www.orch-idea.org}}, which comes paired with its own version of SOL, named OrchideaSOL \cite{cella2020icmc}.
 
 Henceforth, our main goal was to evaluate the generalization ability of our metric learning algorithm beyond the restricted set of samples for which human annotations are directly available ($N=78$, see \lnameref{sec:data-collection} section); that is, beyond one pitch class (middle C) and one intensity level (\emph{mf}).
-That being said, a potential future application of our work would be to use the pre-trained metric learning system $\mathbf{\Phi}$ to approximate out-of-sample targets \cite{carpentier2012cmj}.
+\ml{a deplacer ou a enlever : That being said, a potential future application of our work would be to use the pre-trained metric learning system $\mathbf{\Phi}$ to approximate out-of-sample targets \cite{carpentier2012cmj}.
 One of such target could be a vocal sketch \cite{cartwright2015acm}, a sound event recorded from the environment, or a computer-generated waveform \cite{lemaitre2016plosone}.
 However, evaluating the accuracy of a query-by-singing system for audio retrieval is incompatible with the clustering paradigm of the Cyberlioz annotation interface, in which all audio samples are assumed to be recorded ahead of human--computer interaction.
-Therefore, we focus on modeling similarity in timbre across instruments and playing techniques, and leave the study of non-instrumental targets to future work.
+Therefore, we focus on modeling similarity in timbre across instruments and playing techniques, and leave the study of non-instrumental targets to future work.}
 
 Despite this caveat, we may adopt a ``query-by-example'' (QbE) paradigm by  partitioning the database and audio samples in half ($\frac{1}{2}N^{\prime}=4673$), training the LMNN algorithm on the first half, and querying it with samples from the other half.
 In this evaluation framework, our system reaches a P@5 of $\textbf{96.2\%} \pm 2$.
 Interestingly, querying the system with samples from the training set leads to a P@5 of $\textbf{96.5\%} \pm 2$, i.e., roughly on par with the test set.
 Thus, it appears that the gap in performance between the evaluation presented in the \lnameref{sec:results} section ($99.0\%\pm 1$) and query-by-example evaluation ($96.2\% \pm 2$) is primarily attributable to a reduction of the size of training set by half, whereas statistical overfitting of the training set with respect to the test set likely plays a minor role.
 
+\ml{as the learned layer is relatively thin}
 
 \subsection*{Is metric learning necessary?}
 Replacing the large-margin nearest neighbors (LMNN) metric learning algorithm by linear discriminant analysis (LDA) leads to a P@5 of $\textbf{76.6}\% \pm 11$.
 However, we should note that, from a computational standpoint, the nearest-neighbor search $\mathbf{\Phi}_r (\boldsymbol{x}_n)$ is considerably faster with LDA than with LMNN.
 Indeed, while LMNN operates in the original dimensionality of joint time--frequency scattering features ($d=1180$), LDA projects these features onto a subspace whose dimensionality is equal to $d_0 = (C_0+1)$, where $C_0 = 19$ is the number of clusters in the consensus cluster graph $\mathcal{G}_0$.
 Because the runtime complexity of nearest-neighbor search grows quadratically with the dimensionality, i.e., is $O(d^2)$, replacing LMNN by LDA accelerates the system by a factor $(d/d_0)^2 \approx 3 \cdot 10^3$.
+
+\ml{I do not understand the coplexity argument here, not using anything is better, right ? Start with nothing then show lda, explain by reduced dimensionality of the lda output}
 
 Moreover, we evaluate the nearest neighbor algorithm $\mathbf{\Phi}$ in the absence of any metric learning at all.
 This corresponds to using a Euclidean distance to compare scattering coefficients, i.e., to set $\mathbf{L}$ to the identity matrix.
@@ -1033,7 +1030,7 @@ This gap in performance extends the findings of a previous publication \cite{los
 
 Let us recall the full definition of joint time--frequency scattering (see \lnameref{sec:methods} section):
 \begin{equation}
-\mathbf{S_2}\boldsymbol{x}(t,\lambda,\alpha,\beta) = 
+\mathbf{S_2}\boldsymbol{x}(t,\lambda,\alpha,\beta) =
 \left(
 \Big\vert
 \big\vert
@@ -1050,7 +1047,7 @@ Let us recall the full definition of joint time--frequency scattering (see \lnam
 where the $\boldsymbol{\psi}_{\lambda}$ denotes a Morlet wavelet of center frequency $\lambda$ and resp. $\boldsymbol{\phi}_T$ denotes a Gaussian low-pass filter of width $T$.
 Besides the \emph{joint} time--frequency scattering transform, the generative grammar of scattering transforms \cite{lostanlen2019chapter} also encompasses the \emph{separable} time--frequency scattering transform:
 \begin{equation}
-\mathbf{S_2^{\mathrm{sep}}}\boldsymbol{x}(t,\lambda,\alpha,\beta) = 
+\mathbf{S_2^{\mathrm{sep}}}\boldsymbol{x}(t,\lambda,\alpha,\beta) =
 \left(
 \bigg\vert
 \Big\vert
@@ -1089,7 +1086,7 @@ This gap in performance, together with the theory of spectrotemporal receptive f
 
 \subsection*{What is the baseline performance?}
 Lastly, we train a baseline system in which joint time--frequency scattering coefficients are replaced by mel-frequency cepstral coefficients (MFCC).
-Specifically, we extract a 40-band mel-frequency spectrogram by means of the RASTAMAT library; apply the pointwise logarithm; and compute a discrete cosine transform (DCT) over the mel-frequency axis\footnote{Link to RASTAMAT library: \url{http://www.ee.columbia.edu/~dpwe/resources/matlab/rastamat/}}.
+Specifically, we extract a 40-band mel-frequency spectrogram by means of the RASTAMAT library; apply the pointwise logarithm; and compute a discrete cosine transform (DCT) over the mel-frequency axis\footnote{Link to RASTAMAT library: \url{http://www.ee.columbia.edu/~dpwe/resources/matlab/rastamat}}.
 This operation results in a 40-dimensional feature vector over frames of duration $T=\SI{25}{\milli\second}$.
 Over our cohort of $K=31$ subjects, we report a precision at rank five (P@5) of $\textbf{81.8\%} \pm 7$.
 
@@ -1124,7 +1121,7 @@ Therefore, it appears that the gap in performance between MFCC ($81.8\%\pm 7$) a
 \section*{\nmu Conclusion}
 \label{sec:conclusion}
 
-We see from the ablation study conducted above that each step of the proposed model is necessary for its high performance.
+We see from the ablation study conducted above that each step of the proposed model is necessary for its satisfactory performance.
 Among other things, it indicates the joint time--frequency scattering transform itself should not be used directly for similarity comparisons, but is best augmented by a learned stage.
 This explains the relative success over such models \cite{lostanlen2018jasmp,lostanlen2018extended} over others where distances on raw scattering coefficients were used for judging audio similarity.
 
@@ -1158,10 +1155,8 @@ First, it is only applied to instrumental sounds.
 While this has the advantage of simplifying the interpretation of the results, the range of timbre under consideration is necessarily limited (although less restricted than only considering \emph{ordinario} PTs).
 This also makes applications such as \emph{query-by-humming} difficult, since we cannot guarantee that the timbral similarity measure is accurate for such sounds.
 
-\ml{je reecrirai le par du dessus en positif future work (TODO VL).}
-
 That being said, the above model is general enough to encompass a wide variety of recordings, not just instrumental sounds.
-Indeed, the tools used (scattering transforms and LMNN weighting matrices) do not depend on the type of sound being processed and work for more general classes of sounds.
+Indeed, \ml{we have strong assumptions} that the tools used (scattering transforms and LMNN weighting matrices) do not depend on the type of sound being processed. \ml{Though, future work should demonstrate that they} work for more general classes of sounds.
 To extend the model, it is only necessary to retrain the LMNN weighting matrix by supplying it with new cluster assignments.
 These can again be obtained by performing a new clustering experiment with one or more human subjects.
 
@@ -1170,6 +1165,8 @@ In the above method, we have used \emph{hard} clustering assignments to build ou
 A more nuanced similarity judgment would ask users to rate the similarity of a pair of IPTs on a more graduated scale, which would yield a finer, or \emph{soft}, assignment.
 This however, comes with additional difficulties in providing a consistent scale across subjects, but could be feasible if the goal is to only adapt the timbral space to a single individual.
 An approach not based on clustering would also have to replace the LMNN algorithm with one that accounts for such soft assigments.
+
+\ml{recaler ici la out of database query}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                          %%

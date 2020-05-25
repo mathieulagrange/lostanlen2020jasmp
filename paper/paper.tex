@@ -348,6 +348,7 @@ Moreover, a quantitative benchmark over Medley-solos-DB has demonstrated that jo
 The authors of a recent publication \cite{wang2019ismir} trained a classifier of playing techniques on separable (\ie{} non-joint) time--frequency scattering features \cite{anden2014tsp}, and achieved state-of-the-art results in continuous performance recordings of the Chinese bamboo flute.
 Despite supplying experimental evidence that time--frequency scattering is better suited to playing technique recognition than purely temporal scattering, it remains to be seen whether these findings can scale up from a single instrument to an entire orchestra.
 In addition, previous publications in time--frequency scattering, whether separable or joint, lack a human-centric evaluation, independently from any classification task.
+%TODO VL remove double citations to wang
 
 \subsection*{Claim of originality}
 The contributions of this paper strive to fill the gap in scholarship between MIR and music cognition approaches to timbre, in the context of computer-assisted spectralist orchestration with extended playing techniques.
@@ -379,6 +380,8 @@ However, the resort to a non-ordinary playing technique may restrict both the te
 For example, the pitch of pedal tones in brass instruments is tied to the fundamental mode of the bore, \ie{} usually B-flat or F. % TODO check this, use special package for musical pitches
 Likewise, the intensity of key clicks in the oboe is necessarily \emph{pp}, while the intensity of snap pizzicato \emph{\`a la Bart\'ok} in plucked strings is necessarily \emph{ff}.
 
+%TODO VL: eviter la repetition combinatorial explosion
+%
 In summary, audio signals from isolated musical notes may vary across three categorical variables (instrument, mute, and technique) and two continuous variables (intensity and pitch).
 The Cartesian product of all five variables results in a combinatorial explosion of possible timbral sensations.
 The Studio On Line dataset (SOL), recorded at Ircam in 1998, offers a dense sampling of this \ml{repetition : combinatorial explosion, what would be the complete, give the percent achieved of SOL}, amounting to 25444 audio signals in total.
@@ -406,7 +409,9 @@ To collect perceptual ratings of relevance, we recruited two professors in music
 Each of them inspected the entire corpus of $235$ IMTs and annotated them in terms of relevance according to a Likert scale with seven ticks.
 In this Likert scale, the value 1 (least relevant) denotes that the IMT under consideration has a timbre that is idiosyncratic of the instrument, and that therefore, it is unlikely that humans will pair it with IMTs from other instruments.
 Conversely, the value 7 (most relevant) denotes that the IMT under consideration has a strong similarity with IMTs from one or several other instruments \ml{available in the database}.
+% TODO VL explain that the "other" instruments must be in the corpus!
 
+% TODO VL explain that we average across two experts
 Once both experts completed their annotation, we retained all IMTs whose \ml{relevance score averaged over experts} was judged equal to 3 or higher.
 At the end of this stage of pre-screening, the list of IMT reduces from 235 to $N=78$.
 Tables 1 and 2, in the Appendix section of this paper, give a full list of these 78 highly relevant IMTs.

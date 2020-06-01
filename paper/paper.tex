@@ -984,13 +984,7 @@ Rather, the LMNN algorithm is trained on all available samples ($N^{\prime}=9346
 Then, it is evaluated on the same samples with individual cluster graphs as ground truth ($\mathcal{G}=\mathcal{G}_k$ for $k\geq1$).
 The reason behind this choice is that, in the context of computer-assisted orchestration, the collection of audio samples has a fixed size, as it is shipped alongside the software itself.
 This is the case, for example, of Orchidea\footnote{Link to Orchidea software and OrchideaSOL dataset: \url{www.orch-idea.org}}, which comes paired with its own version of SOL, named OrchideaSOL \cite{cella2020icmc}.
-
 Henceforth, our main goal was to evaluate the generalization ability of our metric learning algorithm beyond the restricted set of samples for which human annotations are directly available ($N=78$, see \lnameref{sec:data-collection} section); that is, beyond one pitch class (middle C) and one intensity level (\emph{mf}).
-\ml{a deplacer ou a enlever : That being said, a potential future application of our work would be to use the pre-trained metric learning system $\mathbf{\Phi}$ to approximate out-of-sample targets \cite{carpentier2012cmj}.
-One of such target could be a vocal sketch \cite{cartwright2015acm}, a sound event recorded from the environment, or a computer-generated waveform \cite{lemaitre2016plosone}.
-However, evaluating the accuracy of a query-by-singing system for audio retrieval is incompatible with the clustering paradigm of the Cyberlioz annotation interface, in which all audio samples are assumed to be recorded ahead of human--computer interaction.
-Therefore, we focus on modeling similarity in timbre across instruments and playing techniques, and leave the study of non-instrumental targets to future work.}
-%TODO move to conclusion
 
 Despite this caveat, we may adopt a ``query-by-example'' (QbE) paradigm by  partitioning the database and audio samples in half ($\frac{1}{2}N^{\prime}=4673$), training the LMNN algorithm on the first half, and querying it with samples from the other half.
 In this evaluation framework, our system reaches a P@5 of $\textbf{96.2\%} \pm 2$.
@@ -1122,6 +1116,15 @@ Therefore, it appears that the gap in performance between MFCC ($81.8\%\pm 7$) a
 
 \section*{\nmu Conclusion}
 \label{sec:conclusion}
+
+
+%\ml{a deplacer ou a enlever : That being said, a potential future application of our work would be to use the pre-trained metric learning system $\mathbf{\Phi}$ to approximate out-of-sample targets \cite{carpentier2012cmj}.
+%One of such target could be a vocal sketch \cite{cartwright2015acm}, a sound event recorded from the environment, or a computer-generated waveform \cite{lemaitre2016plosone}.
+%However, evaluating the accuracy of a query-by-singing system for audio retrieval is incompatible with the clustering paradigm of the Cyberlioz annotation interface, in which all audio samples are assumed to be recorded ahead of human--computer interaction.
+%Therefore, we focus on modeling similarity in timbre across instruments and playing techniques, and leave the study of non-instrumental targets to future work.}
+%TODO move to conclusion
+
+
 
 We see from the ablation study conducted above that each step of the proposed model is necessary for its satisfactory performance.
 Among other things, it indicates the joint time--frequency scattering transform itself should not be used directly for similarity comparisons, but is best augmented by a learned stage.

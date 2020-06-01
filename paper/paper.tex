@@ -440,7 +440,7 @@ In May and June 2016, we recruited volunteers to use Cyberlioz on their own comp
 To this end, we publicized this study on the internal mailing list of the Paris Conservatoire (CNSMDP) students, as well as two international mailing lists for research in music audio processing: ``AUDITORY''  and ``ISMIR Community''\footnote{
 For more information about these mailing lists, please visit:
 \url{http://www.auditory.org/} and \url{http://ismir.net/}}.
-Within two months, $K=31$ subjects accessed Cyberlioz and completed the task.%Figure \ref{fig:xp2display}. % TODO
+Within two months, $K=31$ subjects accessed Cyberlioz and completed the task.%Figure \ref{fig:xp2display}. 
 
 \subsection*{Hypergraph partitioning}
 Once the data collection campaign was complete, we analyzed the color assignments of each subject $k$ and converted them into a cluster graph $\mathcal{G}_k$, where the integer $k$ is an anonymized subject index, ranging between $1$ and $K$.
@@ -474,14 +474,14 @@ Before addressing the question of modeling timbre in the audio domain, we conduc
 Specifically, we ask whether human listeners, when confronted with a diverse corpus of IMT samples, tend to cluster those samples in terms of an organological taxonomy.
 To answer this question, we derive from the consensus clustering graph $\mathcal{G}_0$ an instrument-wise similarity matrix $\mathbf{A}_{\mathcal{I}}$ whose rows and columns are defined on the finite set $\mathcal{I}$ of instruments.
 For every instrument--instrument pair $(i,j)$, we set the value of $\mathbf{A}_{\mathcal{I}}$ at row $i$ and column $j$ equal to the number of pairs in $\mathcal{G}_0$ from instruments $i$ and $j$ respectively, renormalized by the number of IMT samples from either instrument $i$ or instrument $j$:
-\[
+\begin{equation}
 \mathbf{A}_{\mathcal{I}}(i,j) = \dfrac{
 2\,\Card \big\{ (m, n) \,\vert\, \mathrm{Instrument}(m)=i ; \mathrm{Instrument}(n)=j ; m \overset{\mathcal{G}_0}{\sim} n \big\}
 }{
 \Card \big\{n \,\vert\, \mathrm{Instrument}(n) \in \{ i, j \} \big\}
 }.
 \label{eq:instrument-similarity}
-\]
+\end{equation}
 
 Then, we run Ward's method to cluster instruments in $\mathcal{I}$ according to the similarity matrix $\mathbf{A}_{\mathcal{I}}$.
 This method yields a permutation $\sigma_{\mathcal{I}}: \mathcal{I} \rightarrow \mathcal{I}$ of the rows and columns in $\mathbf{A}_{\mathcal{I}}$.
@@ -495,13 +495,13 @@ Furthermore, the largest cross-instrument similarity arises for the only pair of
 \subsection*{Inter-technique similarity}
 From the consensus clustering graph $\mathcal{G}_0$, we also derive a technique-wise similarity matrix $\mathbf{A}_{\mathcal{T}}$ whose rows and columns are defined on the finite set $\mathcal{T}$ of playing techniques.
 We define the similarity between any two playing techniques $u$ and $v$ in $\mathcal{T}$ as the following ratio of set cardinals:
-\[
+\begin{equation}
 \mathbf{A}_{\mathcal{T}}(u,v) = \dfrac{
 2\,\Card \big\{ (m, n) \,\vert\, \mathrm{Technique}(m)=u ; \mathrm{Technique}(n)=v ; m \overset{\mathcal{G}_0}{\sim} n \big\}
 }{
 \Card \big\{n \,\vert\, \mathrm{Technique}(n) \in \{ u, v \} \big\}
 },
-\]
+\end{equation}
 alike the definition of $\mathbf{A}_{\mathcal{I}}$.
 Again, we run Ward's method to cluster playing techniques in $\mathcal{T}$ according to their similarity $\mathbf{A}_{\mathcal{T}}$.
 Figure \ref{fig:consensusVsPt} displays the rearranged similarity matrix $\widetilde{\mathbf{A}}_{\mathcal{T}} : (u,v)\in \mathcal{T}^2 \mapsto \mathbf{A}_{\mathcal{T}}(\sigma_{\mathcal{T}}^{-1}(u), \sigma_{\mathcal{T}}^{-1}(v))$ as a result of such agglomerative hierarchical clustering procedure.

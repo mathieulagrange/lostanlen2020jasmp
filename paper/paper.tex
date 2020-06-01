@@ -501,6 +501,7 @@ We define the similarity between any two playing techniques $u$ and $v$ in $\mat
 }{
 \Card \big\{n \,\vert\, \mathrm{Technique}(n) \in \{ u, v \} \big\}
 },
+\label{eq:technique-similarity}
 \end{equation}
 alike the definition of $\mathbf{A}_{\mathcal{I}}$.
 Again, we run Ward's method to cluster playing techniques in $\mathcal{T}$ according to their similarity $\mathbf{A}_{\mathcal{T}}$.
@@ -1422,7 +1423,11 @@ The Flatiron Institute is a division of the Simons Foundation.
 \center
 \includegraphics[width = \textwidth]{figures/consensusVsI.png}
 \caption{
-%TODO caption
+Matrix $\mathbf{\widetilde{A}}_{\mathcal{I}}$ of perceived timbre similarities between instruments from our dataset of $N=78$. samples.
+Darker shades indicate higher frequencies of co-occurrence in the cluster graph $\mathcal{G}_0$ (see Equation \ref{eq:instrument-similarity}), obtained from a consensus of $K=31$ subjects.
+The rows and columns in $\mathbf{\widetilde{A}}_{\mathcal{I}}$ were re-arranged according to Ward's minimum variance method.
+Observe that the block diagonal structure in $\mathbf{\widetilde{A}}_{\mathcal{I}}$ reflects an organological taxonomy of musical instruments: woodwinds, brass, and strings.
+See \lnameref{sec:data-collection} section for details, including the meaning of each instrument abbreviation.
 }
 \label{fig:consensusVsI}
 \end{figure}
@@ -1430,8 +1435,13 @@ The Flatiron Institute is a division of the Simons Foundation.
 \begin{figure}
 \center
 \includegraphics[width = \textwidth]{figures/consensusVsPt.png}
-\caption{A description of the playing technique abbreviations in made available in the Appendix (Tables \ref{tab:list1} and \ref{tab:list2}).
-%TODO add a double arrow
+\caption{
+Matrix $\mathbf{\widetilde{A}}_{\mathcal{T}}$ of perceived timbre similarities between playing techniques from our dataset of $N=78$ samples.
+Darker shades indicate higher frequencies of co-occurrence in the cluster graph $\mathcal{G}_0$ (see Equation \ref{eq:technique-similarity}), obtained from a consensus of $K=31$ subjects.
+The rows and columns in $\mathbf{\widetilde{A}}_{\mathcal{T}}$ were re-arranged according to Ward's minimum variance method.
+See \lnameref{sec:data-collection} section for details,.
+See Tables \ref{tab:list1} and \ref{tab:list2} for an English description of each playing technique abbreviation.
+%TODO add a double arrow?
 % rough <-- soft --> rough
 % sustained <-- "ordinary" --> percussive
 }

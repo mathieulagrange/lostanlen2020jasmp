@@ -246,10 +246,7 @@ On the one hand, adjectives such as \emph{bright} or \emph{rough} are prone to m
 On the other hand, the sole mention of a playing technique does not determine any intended effect; as a result, it does not generalize to the entire instrumentarium \cite{kolozali2011ismir}.
 For instance, although the term \emph{breathy} alludes to a playing technique that is peculiar to wind instruments, a cellist may accomplish a seemingly breathy timbre by bowing near the fingerboard, i.e., \emph{sul tasto} in the classical terminology.
 
-% Le numerique permet d'approcher la question de la notation de facon implicite
-% Cela ne retire pas l'interet de l'etude des graphemes ou du texte (glissando vs slide)
-
-The prospect of modeling timbre perception thus necessarily exceeds the symbolic domain. \ml{even if research about its notation is of interest}
+Although a graphemic study of playing techniques in music has research potential in music information retrieval \cite{calvo2020acm}, the prospect of modeling timbre perception necessarily exceeds the symbolic domain.
 Instead, it involves a cognitive process which arises from the subjective experience of listening \cite{erickson1975book}.
 The task of simulating this cognitive process amounts to the design of a multidimensional feature space wherein some distance function evaluates arbitrary pairs of stimuli.
 Rather than merely discriminating instruments as mutually exclusive categories, this function must reflect a consensus of quantitative judgments of acoustic dissimilarity, all other parameters---duration, pitch, and intensity---being equal \cite{thoret2018jasa}.
@@ -1064,7 +1061,7 @@ Besides the \emph{joint} time--frequency scattering transform, the generative gr
 \label{eq:separable-scattering}
 \end{equation}
 where the wavelet $\boldsymbol{\psi}_{\lambda}$ has a quality factor of $Q=12$ whereas the wavelets $\boldsymbol{\psi}_{\alpha}$ and $\boldsymbol{\psi}_{\beta}$ have a quality factor of one.
-Previous publications have successfully applied separable time--frequency scattering in order to classify environmental sounds \cite{bauge2013icassp} as well as playing techniques involving periodic modulations \cite{wang2019ismir}.
+Previous publications have successfully applied separable time--frequency scattering in order to classify environmental sounds \cite{bauge2013icassp} as well as playing techniques from the Chinese bamboo flute \cite{wang2019ismir}.
 
 In comparison with its joint counterpart, separable time--frequency scattering contains about half as many coefficients.
 This is because the temporal wavelet transform with $\boldsymbol{\psi}_\alpha$ and the frequential wavelet transform with $\boldsymbol{\psi}_\beta$ are separated by an operation of complex modulus.
@@ -1075,8 +1072,8 @@ Conversely, in Equation \ref{eq:joint-scattering}, the frequential wavelet trans
 
 Yet, despite its greater simplicity, separable time--frequency scattering suffers from known weaknesses in its ability to represent spectrotemporal modulations.
 In particular, a previous publication has shown that frequency-dependent time shifts affect joint time--frequency scattering coefficients while leaving separable time--frequency scattering coefficients almost unchanged \cite{anden2019tsp}.
-For this reason, separable time--frequency scattering coefficients can only serve to recognize periodic modulations (e.g. vibrato), but joint time--frequency scattering is required to recognize pitch evolution-based techniques (PETs, e.g. glissando) \cite{wang2020icassp}.
-The same observation was made by \cite{schadler2015jasa} in the case of separable Gabor filterbank features (GBFB), which bear some resemblance with separable time--frequency scattering.
+%For this reason, separable time--frequency scattering coefficients can only serve to recognize periodic modulations (e.g. vibrato), but joint time--frequency scattering is required to recognize pitch evolution-based techniques (PETs, e.g. glissando) \cite{wang2020icassp}.
+The same observation was made by \cite{schadler2015jasa} in the case of joint and separable Gabor filterbank features (GBFB), which bear some resemblance with joint and separable time--frequency scattering coefficients respectively.
 
 Over our cohort of $K=31$ subjects, separable time--frequency scattering achieves a precision at rank five (P@5) of $\textbf{91.9\%} \pm 4$. This figure is noticeably worse than joint time--frequency scattering ($99.0\% \pm 1$), all other things being equal.
 This gap in performance, together with the theory of spectrotemporal receptive fields (STRF) in auditory neuroscience (see \lnameref{sec:related-work} section), demonstrates the importance of joint spectrotemporal modulations in the modeling of timbre similarity across instrumental playing techniques.

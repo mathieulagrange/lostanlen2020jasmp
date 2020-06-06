@@ -988,24 +988,15 @@ In this evaluation framework, our system reaches a P@5 of $\textbf{96.2\%} \pm 2
 Interestingly, querying the system with samples from the training set leads to a P@5 of $\textbf{96.5\%} \pm 2$, i.e., roughly on par with the test set.
 Thus, it appears that the gap in performance between the evaluation presented in the \lnameref{sec:results} section ($99.0\%\pm 1$) and query-by-example evaluation ($96.2\% \pm 2$) is primarily attributable to a reduction of the size of training set by half, whereas statistical overfitting of the training set with respect to the test set likely plays a minor role.
 
-%\ml{as the learned layer is relatively thin}
-
+%ML: as the learned layer is relatively thin
 
 \subsection*{Is metric learning necessary?}
 Replacing the large-margin nearest neighbors (LMNN) metric learning algorithm by linear discriminant analysis (LDA) leads to a P@5 of $\textbf{76.6}\% \pm 11$.
-However, we should note that, from a computational standpoint, the nearest-neighbor search $\mathbf{\Phi}_r (\boldsymbol{x}_n)$ is considerably faster with LDA than with LMNN.
-Indeed, while LMNN operates in the original dimensionality of joint time--frequency scattering features ($d=1180$), LDA projects these features onto a subspace whose dimensionality is equal to $d_0 = (C_0+1)$, where $C_0 = 19$ is the number of clusters in the consensus cluster graph $\mathcal{G}_0$.
-Because the runtime complexity of nearest-neighbor search grows quadratically with the dimensionality, i.e., is $O(d^2)$, replacing LMNN by LDA accelerates the system by a factor $(d/d_0)^2 \approx 3 \cdot 10^3$.
-
-\ml{I do not understand the coplexity argument here, not using anything is better, right ? Start with nothing then show lda, explain by reduced dimensionality of the lda output}
-% Move the part about complexity to the conclusion. Runtime complexity. How to scale this?
-
 Moreover, we evaluate the nearest neighbor algorithm $\mathbf{\Phi}$ in the absence of any metric learning at all.
 This corresponds to using a Euclidean distance to compare scattering coefficients, i.e., to set $\mathbf{L}$ to the identity matrix.
 Note that the runtime complexity of Euclidean nearest-neighbor search is identical to LMNN search.
 Over our cohort of $K=31$ subjects, we report a precision at rank five (P@5) of $\textbf{92.9\%} \pm 3$, which is noticeably worse than the best performing system.
 This gap in performance demonstrates the importance of complementing unsupervised feature extraction by supervised metric learning in the design  of computational models for timbre similarity between instrumental playing techniques.
-
 
 \subsection*{How important is the amount of temporal context $T$?}
 
@@ -1114,15 +1105,6 @@ Therefore, it appears that the gap in performance between MFCC ($81.8\%\pm 7$) a
 \section*{\nmu Conclusion}
 \label{sec:conclusion}
 
-
-%\ml{a deplacer ou a enlever : That being said, a potential future application of our work would be to use the pre-trained metric learning system $\mathbf{\Phi}$ to approximate out-of-sample targets \cite{carpentier2012cmj}.
-%One of such target could be a vocal sketch \cite{cartwright2015acm}, a sound event recorded from the environment, or a computer-generated waveform \cite{lemaitre2016plosone}.
-%However, evaluating the accuracy of a query-by-singing system for audio retrieval is incompatible with the clustering paradigm of the Cyberlioz annotation interface, in which all audio samples are assumed to be recorded ahead of human--computer interaction.
-%Therefore, we focus on modeling similarity in timbre across instruments and playing techniques, and leave the study of non-instrumental targets to future work.}
-%TODO move to conclusion
-
-
-
 We see from the ablation study conducted above that each step of the proposed model is necessary for its satisfactory performance.
 Among other things, it indicates the joint time--frequency scattering transform itself should not be used directly for similarity comparisons, but is best augmented by a learned stage.
 This explains the relative success over such models \cite{lostanlen2018jasmp,lostanlen2018extended} over others where distances on raw scattering coefficients were used for judging audio similarity.
@@ -1168,7 +1150,20 @@ A more nuanced similarity judgment would ask users to rate the similarity of a p
 This however, comes with additional difficulties in providing a consistent scale across subjects, but could be feasible if the goal is to only adapt the timbral space to a single individual.
 An approach not based on clustering would also have to replace the LMNN algorithm with one that accounts for such soft assigments.
 
-\ml{recaler ici la out of database query}
+%ML: recaler ici la out of database query}
+%That being said, a potential future application of our work would be to use the pre-trained metric learning system $\mathbf{\Phi}$ to approximate out-of-sample targets \cite{carpentier2012cmj}.
+%One of such target could be a vocal sketch \cite{cartwright2015acm}, a sound event recorded from the environment, or a computer-generated waveform \cite{lemaitre2016plosone}.
+%However, evaluating the accuracy of a query-by-singing system for audio retrieval is incompatible with the clustering paradigm of the Cyberlioz annotation interface, in which all audio samples are assumed to be recorded ahead of human--computer interaction.
+%Therefore, we focus on modeling similarity in timbre across instruments and playing techniques, and leave the study of non-instrumental targets to future work.}
+
+
+% Move the part about complexity to the conclusion. Runtime complexity. How to scale this?
+%However, we should note that, from a computational standpoint, the nearest-neighbor search $\mathbf{\Phi}_r (\boldsymbol{x}_n)$ is considerably faster with LDA than with LMNN.
+%Indeed, while LMNN operates in the original dimensionality of joint time--frequency scattering features ($d=1180$), LDA projects these features onto a subspace whose dimensionality is equal to $d_0 = (C_0+1)$, where $C_0 = 19$ is the number of clusters in the consensus cluster graph $\mathcal{G}_0$.
+%Because the runtime complexity of nearest-neighbor search grows quadratically with the dimensionality, i.e., is $O(d^2)$, replacing LMNN by LDA accelerates the system by a factor $(d/d_0)^2 \approx 3 \cdot 10^3$.
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                          %%

@@ -972,7 +972,7 @@ In particular, it does not assume the ``metadata'' (instrument, mute, technique,
 
 The previous section described our dataset of audio samples with diverse instruments, mutes, and playing techniques, as well as the method we adopt to evaluate a given system for timbre similarity retrieval.
 Over a cohort of $K=31$ subjects, we reported a precision at rank five (P@5) of $99.0\% \pm 1$.
-We now turn to alter certain key choices in the design of the above-described computational blocks, and discuss their respective impacts on downstream performance.
+We now turn to alter certain key choices in the design of the above-described computational blocks, and discuss their respective impacts on downstream performance. Results of this ablation study is summarized in Figure \ref{fig:ablation}, where performance achieved for each reference clustering is depicted by a losange whose color is chosen arbitrarily but consistently across conditions. It appears that the ranking over testing conditions is not strongly modified,  which demonstrate that for all conditions the reference clusterings which are hard to model (depicted by blue losanges) are hard to model for each conditions whereas the reference clusterings which are easier to model (depicted by yellow losanges) are easier to model for each conditions.
 
 
 \subsection*{Is the dataset large enough for evaluation? Is the system overfitting?}
@@ -1544,7 +1544,7 @@ Darker shades denote greater values of acoustic energy.}
 
 \begin{figure}[h!]
 \includegraphics[width=0.9\textwidth]{figures/ablationStudy}
-\caption{\csentence{Performance analysis.}}
+\caption{\csentence{Impact of different processing architecture or protocol designs. For each condition, the central mark indicates the median, and the bottom and top edges of the box indicate the 25th and 75th percentiles, respectively. The whiskers extend to the most extreme data points not considered outliers. Performance achieved for each reference clustering is depicted by a losange whose color is chosen arbitrarily but consistently across conditions.}}
 \label{fig:ablation}
 \end{figure}
 

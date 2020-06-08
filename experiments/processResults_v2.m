@@ -1,5 +1,6 @@
+addpath('libs/export_fig')
 clear all
-captions = {'full', 'split', 'random', 'lda', 'nolearning', '25ms', 'separable', 'mfcc', 'monomials'}
+captions = {'Proposed', 'train/test validation', 'randomized features', 'lda', 'no learning', 'reduce T to 25ms', 'separable scattering', 'mfcc', 'mfcc monomials'};
 ind = 1;
 
 iaInd = 2;
@@ -18,7 +19,10 @@ for k=1:length(captions)
     ind = ind+1;
 end
 
-
+reorder = [9 8 1 7 6 5 4 3 2];
+[~, reorder] = sort(reorder);
+p=p(reorder, :);
+captions = captions(reorder);
 clf();
 
 hold on;
@@ -40,7 +44,12 @@ xticks(-log10(custom_xticks(end:-1:1)));
 xticklabels(100-100*custom_xticks(end:-1:1))
 set(gca(), 'XGrid', 'on');
 
+set(gca, 'fontsize', 16)
 
-axis([-log10(custom_xticks(end)) -log10(custom_xticks(1)) 0.5 8.5])
+axis([-log10(custom_xticks(end)) -log10(custom_xticks(1)) 1.5 9.5])
 hold off;
+
+set(gcf, 'Color', 'None')
+savefig('../paper/figures/ablationStudyNoRand.fig')
+export_fig('../paper/figures/ablationStudyNoRand.png', '-transparent')
 

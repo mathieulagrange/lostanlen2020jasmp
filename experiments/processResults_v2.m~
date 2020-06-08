@@ -1,5 +1,5 @@
 clear all
-captions = {'full', 'split', 'random', 'lda', 'nolearning', '25ms', 'separable', 'mfcc', 'monomials'}
+captions = {'full corpus', 'train/test split', 'randomized features', 'lda', 'no learning', 'reduce T to 25ms', 'separable time?frequency scattering', 'mfcc', 'mfcc monomials'};
 ind = 1;
 
 iaInd = 2;
@@ -18,7 +18,9 @@ for k=1:length(captions)
     ind = ind+1;
 end
 
-
+reorder = [9 8 _ _ 7 6];
+%p=p(reorder, :);
+%captions = captions(reorder);
 clf();
 
 hold on;
@@ -40,7 +42,8 @@ xticks(-log10(custom_xticks(end:-1:1)));
 xticklabels(100-100*custom_xticks(end:-1:1))
 set(gca(), 'XGrid', 'on');
 
+set(gca, 'fontsize', 16)
 
-axis([-log10(custom_xticks(end)) -log10(custom_xticks(1)) 0.5 8.5])
+axis([-log10(custom_xticks(end)) -log10(custom_xticks(1)) 0.5 9.5])
 hold off;
 

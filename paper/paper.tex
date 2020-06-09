@@ -972,7 +972,13 @@ In particular, it does not assume the ``metadata'' (instrument, mute, technique,
 
 The previous section described our dataset of audio samples with diverse instruments, mutes, and playing techniques, as well as the method we adopt to evaluate a given system for timbre similarity retrieval.
 Over a cohort of $K=31$ subjects, we reported a precision at rank five (P@5) of $99.0\% \pm 1$.
-We now turn to alter certain key choices in the design of the above-described computational blocks, and discuss their respective impacts on downstream performance. Results of this ablation study is summarized in Figure \ref{fig:ablation}, where performance achieved for each reference clustering is depicted by a losange whose color is chosen arbitrarily but consistently across conditions. It appears that the ranking over testing conditions is not strongly modified,  which demonstrate that for all conditions the reference clusterings which are hard to model (depicted by blue losanges) are hard to model for each conditions whereas the reference clusterings which are easier to model (depicted by yellow losanges) are easier to model for each conditions.
+We now turn to alter certain key choices in the design of the above-described computational blocks, and discuss their respective impacts on downstream performance. 
+
+Figure \ref{fig:ablation} summarizes our results.
+Interestingly, the system $\boldsymbol{\Phi}$ is not only best on average, but also best for every subject in the cohort: altering any design choice in $\boldsymbol{\Phi}$ (see subsections below) results in a P@5 below $\mathrm{P}_{\mathbf{\Phi}}(k, R)$ for every $k$.
+Borrowing from the terminology of welfare economics, $\boldsymbol{\Phi}$ can be said to be uniquely Pareto-efficient.
+This observation suggests that the increase in performance afforded by the state-of-the-art model with respect to the baseline does not come at the detriment of user fairness.
+%Results of this ablation study is summarized in Figure , where performance achieved for each reference clustering is depicted by a losange whose color is chosen arbitrarily but consistently across conditions. It appears that the ranking over testing conditions is not strongly modified,  which demonstrate that for all conditions the reference clusterings which are hard to model (depicted by blue losanges) are hard to model for each conditions whereas the reference clusterings which are easier to model (depicted by yellow losanges) are easier to model for each conditions.
 
 
 \subsection*{Is the dataset large enough for evaluation? Is the system overfitting?}

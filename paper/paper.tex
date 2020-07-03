@@ -750,8 +750,23 @@ However, the visualization of musical sounds has been restricted to some of most
 Furthermore, prior publications on time--frequency scattering have displayed slices of $\mathbf{S_2}\boldsymbol{x}$ in the case of synthetic signals; but there is a gap in literature as regards the interpretability of the scale--rate domain in the case of real-world signals.
 
 To remedy this gap, we select twelve isolated notes from the SOL dataset from two instruments: violin (Figure \ref{fig:violin-scattering}) and flute (Figure \ref{fig:flute-scattering}).
+By and large, we find that joint time--frequency scattering produces comparable patterns in the scale--rate domain as the ``cortical output'' of the STRF.
+For example, Figure \ref{fig:violin-scattering} (a) shows that a violin note played in the \emph{ordinario} technique has a local energy maximum at the rate $\alpha = \SI{6}{\hertz}$.
+A visual inspection of $\mathbf{U_1}$ demonstrates that this rate coincides with the rate of vibrato of the left hand in the violin note.
+As seen in Figure \ref{fig:violin-scattering} (b), this local energy maximum is absent when the playing technique is denoted as \emph{nonvibrato}.
+Furthermore, Figure \ref{fig:violin-scattering} (c) shows that the local energy maximum is displaced to a higher rate ($\alpha = \SI{12}{\hertz}$) when the vibrato is replaced by a tremolo.
 
+The visual interpretation of playing techniques in terms of their joint time--frequency scattering coefficients is not restricted to periodic modulation, such as vibrato or tremolo: rather, it also encompasses the analysis of attack transients.
+Figures \ref{fig:violin-scattering} (d), (e), and (f) show the matrix $\mathbf{V}\boldsymbol{x}$ for three instances of impulsive violin sounds: sforzando, pizzicato, and staccato respectively.
+These three techniques create ridges in the scale--rate domain $(\alpha, \beta)$, where the cutoff rate $\alpha$ is lowest with sforzando and highest with staccato.
+These variations in cutoff rate coincide with perceptual variations in ``hardness'', i.e. impulsivity, of the violin sound.
+Moreover, in the case of staccato, we observe a slight asymmetry in the frequential scale parameter $\beta$.
+This asymmetry could be due to the fact that higher-order harmonics decay faster than the fundamental, thus yielding a triangular shape in the time--frequency domain.
 
+Figure \ref{fig:flute-scattering} shows six playing techniques of the flute.
+Similarly to the violin (Figure \ref{fig:violin-scattering}), we observe that periodic modulations, such as a trill (Figure \ref{fig:flute-scattering} b) or a beating tone (c), cause local energy maxima whose rate $\alpha$ is physically interpretable.
+Likewise, impulsive flute sounds such as sforzando (Figure \ref{fig:flute-scattering} d), key click (e), and vibrato (f) create ridges in the scale--rate domain of varying cutoff rates $\alpha$.
+We distribute the implementation of these figures as part of the MATLAB library \emph{scattering.m}, which is released under the MIT license\footnote{Link to download the \emph{scattering.m} library: \url{https://github.com/lostanlen/scattering.m}}.
 
 \subsection*{Median-based logarithmic compression and affine standardization}
 \label{sec:gaussianization}

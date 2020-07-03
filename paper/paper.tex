@@ -723,7 +723,32 @@ Although the inequality in Equation \ref{eq:lipschitz} was originally formulated
 In this context, the appeal behind joint time--frequency scattering is that the deformation $\boldsymbol{\tau}$ may be defined in the scalogram domain $\mathbf{U_1}\boldsymbol{x}$, instead of being constrained to the time domain $\boldsymbol{x}$.
 Therefore, joint time--frequency scattering coefficients linearize and disentangle small elastic deformations in the time--frequency domain, and represent them activations from a dictionary of multiscale spectrotemporal modulations $\boldsymbol{\Psi}_{\alpha, \beta}$.
 
-%ML : c'est bien ecrit, mais peut etre un peu trop detaillé, a voir avec Joakim
+
+
+\subsection*{Visualization}
+\label{sec:visualization}
+
+At the second order, joint time--frequency scattering coefficients depend upon four variables: time $t$, log-frequency $\lambda$, temporal modulation rate $\alpha$ in Hertz, and frequential modulation rate $\beta$ in cycles per octave.
+From a data visualization standpoint, rendering the four-dimensional tensor $\mathbf{S_2}\boldsymbol{x}(t, \lambda, \alpha, \beta)$ is impossible.
+To address this limitation, a recent publication has projected this tensor into a two-dimensional ``slice'', thus yielding an image raster \cite{anden2019tsp}.
+In accordance with their protocol, we compute the following matrix:
+
+\begin{equation}
+\mathbf{V}\boldsymbol{x}(\alpha, \beta) =
+\iint_{\mathbb{R}^2}
+\mathbf{U_2}\boldsymbol{x}(t - t^\prime, \log \lambda - u^\prime)
+\;\mathrm{d}t^\prime \, \mathrm{d}u^\prime,
+\end{equation}
+
+Observe that the equation above is a limit case of $\mathbf{S_2}$ (Equation \ref{eq:S2}) in which the constants $T$ and $F$ tend towards infinity.
+As a result, $\mathbf{V}\boldsymbol{x}$ depends solely upon scale $\alpha$ and rate $\beta$.
+In the scientific literature on spectrotemporal receptive fields (STRF), the matrix $\mathbf{V}\boldsymbol{x}$ is called ``cortical output collapsed on the rate-scale axes'' \cite{elhilali2002speechcomm}.
+
+Previous publications on STRF have focused on the visualization of synthetic stimuli and speech. % refs?
+%Although one publication has turned to the visualization of isolated musical notes, the scope of discussion on the effect of technique is 
+
+Figures \ref{fig:violin-scattering} and \ref{fig:flute-scattering}.
+
 
 \subsection*{Median-based logarithmic compression and affine standardization}
 \label{sec:gaussianization}
@@ -961,7 +986,7 @@ This preliminary annotation lasts $30$ to $60$ minutes, which is relatively shor
 
 Within the default setting ($\mathcal{G}=\mathcal{G}_0$), our system $\mathbf{\Phi}$ achieves an average precision at rank five (AP@5) of $\textbf{99.0\%}$, with a standard deviation across $K=31$ subjects of the order of $1\%$.
 This favorable result suggests that joint time--frequency scattering provides a useful feature map for learning similarities between instrumental playing techniques.
-In doing so, it is in line with a recent publication \cite{wang2020icassp}, in which the authors successfully trained a supervised classifier on joint time--frequency scattering features in order to detect and classify playing techniques from the Chinese bamboo flute (\emph{dizi}).
+In doing so, it is in line with a recent publication \cite{wang2020icassp}, in which the authors successfully trained a supervised classifier on joint time--frequency scattering features in order to detect and classify playing techniques from the Chinese bamboo flute \emph{(dizi)}.
 However, the originality of our work is that $\mathbf{\Phi}$ relies purely on auditory information (i.e., timbre similarity judgments), and does not require any supervision from the symbolic domain.
 In particular, it does not assume the ``metadata'' (instrument, mute, technique, pitch, dynamics, and so forth) of any musical sample $\boldsymbol{x}_n$ to be observable, in part or in full, at training time.
 
@@ -1551,7 +1576,7 @@ In each subfigure, the top image shows the wavelet scalogram as a function of ti
 Conversely, the bottom image shows the average time--frequency scattering coefficients, as a function of temporal modulation rate $\alpha$ (in Hertz) and frequential modulation scale $\beta$ (in cycles per octave).
 Darker shades denote greater values of acoustic energy.
 See \lnameref{sec:methods} section for details.}
-\label{fig:flute}
+\label{fig:flute-scattering}
 \end{figure}
 
 \begin{figure}[h!]

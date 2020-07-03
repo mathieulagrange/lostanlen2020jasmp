@@ -7,7 +7,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{url}
 \usepackage{color}
-\usepackage{xspace} 
+\usepackage{xspace}
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{musicography}
@@ -68,7 +68,7 @@
 %%                                          %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Learning Auditory Similarities Between Instrumental Playing Techniques}
+\title{Time--Frequency Scattering Accurately Models Auditory Similarities Between Instrumental Playing Techniques}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                          %%
@@ -562,8 +562,7 @@ To this end, we present a new machine listening system, composing joint time--fr
 %The scattering transform also satisfies the aforementioned stability conditions, providing a guarantee that slightly deforming a signal only results in a negligible change in its scattering transform.
 %Furthermore, we may calculate the scattering transforms of several model signals, including amplitude-modulated harmonic sounds and noise excitations \cite{anden2012scattering,anden2014tsp}, frequency-modulated sinusoids (e.g., chirps) \cite{anden2012scattering,anden2019tsp}, and beating phenomena \cite{anden2014tsp}.
 %They have also enjoyed success in several audio classification and similarity retrieval tasks \cite{anden2011multiscale,anden2014tsp,anden2019tsp,lostanlen2018jasmp,lostanlen2018extended}.
-%\ja{Need to flesh out the above with some equations.
-%We're no longer talking to biologists, so we don't need to be afraid.}
+
 
 Let $\boldsymbol{\psi} \in \mathbf{L}^2(\mathbb{R}, \mathbb{C})$ a Hilbert-analytic filter with null average, unit dimensionless center frequency, and an equivalent rectangular bandwidth (ERB) equal to $1/Q$.
 We define a constant-$Q$ wavelet filterbank as the family $\boldsymbol{\psi}_{\lambda} : t \mapsto \lambda \boldsymbol{\psi}(\lambda t)$.
@@ -1014,7 +1013,7 @@ In particular, it does not assume the ``metadata'' (instrument, mute, technique,
 
 The previous section described our dataset of audio samples with diverse instruments, mutes, and playing techniques, as well as the method we adopt to evaluate a given system for timbre similarity retrieval.
 Over a cohort of $K=31$ subjects, we reported a precision at rank five (P@5) of $99.0\% \pm 1$.
-We now turn to alter certain key choices in the design of the above-described computational blocks, and discuss their respective impacts on downstream performance. 
+We now turn to alter certain key choices in the design of the above-described computational blocks, and discuss their respective impacts on downstream performance.
 
 Figure \ref{fig:ablation} summarizes our results.
 Interestingly, the system $\boldsymbol{\Phi}$ is not only best on average, but also best for every subject in the cohort: altering any design choice in $\boldsymbol{\Phi}$ (see subsections below) results in a P@5 below $\mathrm{P}_{\mathbf{\Phi}}(k, R)$ for every $k$.

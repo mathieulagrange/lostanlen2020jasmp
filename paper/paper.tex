@@ -8,6 +8,7 @@
 \usepackage{url}
 \usepackage{color}
 \usepackage{xspace}
+\usepackage{xspace} 
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{musicography}
@@ -257,6 +258,7 @@ Thus, following the aesthetic tradition of spectralism in contemporary music cre
 
 \subsection*{Goal}
 This article proposes a machine listening system which computes the dissimilarity in timbre between any two audio samples.
+Crucially, this dissimilarity is not evaluated in terms of acoustic tags, but in terms of \emph{ad hoc} clusters, as defined by a human consensus of auditory judgments.
 Our system consists of two stages: unsupervised feature extraction and supervised metric learning.
 The feature extraction stage is a nonlinear map which relies on the joint time--frequency scattering transform \cite{anden2015mlsp}, followed by per-feature Gaussianization \cite{lostanlen2018jasmp}.
 It encodes patterns of spectrotemporal modulation in the acoustic query while offering numerical guarantees of stability to local deformations \cite{anden2012scattering}.

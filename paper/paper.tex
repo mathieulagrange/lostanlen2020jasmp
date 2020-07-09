@@ -186,7 +186,7 @@ Analyzing their responses suggests that timbre perception operates within a more
 In addition, we propose a machine listening model to recover the cluster graph of auditory similarities across instruments, mutes, and techniques.
 Our model relies on joint time--frequency scattering features to extract spectrotemporal modulations as acoustic features.
 Furthermore, it minimizes triplet loss in the cluster graph by means of the large-margin nearest neighbor (LMNN) metric learning algorithm. % \ja: "what?". VL: leaving it as is. i think it's important to use the words "triplet loss" in the abstract
-Over a dataset of 9346 isolated notes, we report a state-of-the-art precision at rank five (P@5) of 99.0\%\pm 1.
+Over a dataset of 9346 isolated notes, we report a state-of-the-art precision at rank five (P@5) of $\mathsf{99.0\%\pm1}$.
 An ablation study demonstrates that removing either the joint time--frequency scattering transform or the metric learning algorithm noticeably degrades performance.
 \end{abstract}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -237,16 +237,17 @@ An ablation study demonstrates that removing either the joint time--frequency sc
 \label{sec:intro}
 
 Music information retrieval (MIR) operates at two levels: symbolic and auditory \cite{downie2003mir}.
-By resting on a notation system, the symbolic level facilitates the comparison of musical notes in terms of quantitative attributes, such as duration, pitch, and intensity at the source.
+By relying on a notation system, the symbolic level allows the comparison of musical notes in terms of quantitative attributes, such as duration, pitch, and intensity at the source.
 Timbre, in contrast, is a qualitative attribute of music, and is thus not reducible to a one-dimensional axis \cite{siedenburg2019chapter}.
 As a result, symbolic representations describe timbre indirectly, either via visuotactile metaphors (\eg{} bright, rough, and so forth \cite{faure1996icmpc}) or via an instrumental playing technique (\eg{} bowed or plucked \cite{kostka2016book}).
 
 Despite their widespread use, purely linguistic references to timbre fail to convey the intention of the composer.
 On the one hand, adjectives such as \emph{bright} or \emph{rough} are prone to misunderstanding, as they do not prescribe any musical gesture that is capable of achieving them \cite{antoine2018isma}.
-On the other hand, the sole mention of a playing technique does not determine any intended effect; as a result, it does not generalize to the entire instrumentarium \cite{kolozali2011ismir}.
+On the other hand, the sole mention of a playing technique does not specify its effect in terms of auditory perception.
 For instance, although the term \emph{breathy} alludes to a playing technique that is peculiar to wind instruments, a cellist may accomplish a seemingly breathy timbre by bowing near the fingerboard, i.e., \emph{sul tasto} in the classical terminology.
+Yet, such acoustical similarity at the scale of the entire instrumentarium is not directly reflected by the semantic similarity between playing technique denominations; and discovering it requires musical expertise \cite{kolozali2011ismir}.
 
-Although a graphemic study of playing techniques in music has research potential in music information retrieval \cite{calvo2020acm}, the prospect of modeling timbre perception necessarily exceeds the symbolic domain.
+Although a notation-based study of playing techniques in music has research potential in music information retrieval \cite{calvo2020acm}, the prospect of modeling timbre perception necessarily exceeds the symbolic domain.
 Instead, it involves a cognitive process which arises from the subjective experience of listening \cite{erickson1975book}.
 The task of simulating this cognitive process amounts to the design of a multidimensional feature space wherein some distance function evaluates arbitrary pairs of stimuli.
 Rather than merely discriminating instruments as mutually exclusive categories, this function must reflect a consensus of quantitative judgments of acoustic dissimilarity, all other parameters---duration, pitch, and intensity---being equal \cite{thoret2018jasa}.

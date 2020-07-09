@@ -239,7 +239,7 @@ An ablation study demonstrates that removing either the joint time--frequency sc
 Music information retrieval (MIR) operates at two levels: symbolic and auditory \cite{downie2003mir}.
 By relying on a notation system, the symbolic level allows the comparison of musical notes in terms of quantitative attributes, such as duration, pitch, and intensity at the source.
 Timbre, in contrast, is a qualitative attribute of music, and is thus not reducible to a one-dimensional axis \cite{siedenburg2019chapter}.
-As a result, symbolic representations describe timbre indirectly, either via visuotactile metaphors (\eg{} bright, rough, and so forth \cite{faure1996icmpc}) or via an instrumental playing technique (\eg{} bowed or plucked \cite{kostka2016book}).
+As a result, symbolic representations describe timbre indirectly, either via visuotactile metaphors (\eg{} bright, rough, and so forth \cite{faure1996icmpc}) or via an instrumental playing technique (\eg{} bowed or plucked) \cite{lostanlen2018extended}.
 
 Despite their widespread use, purely linguistic references to timbre fail to convey the intention of the composer.
 On the one hand, adjectives such as \emph{bright} or \emph{rough} are prone to misunderstanding, as they do not prescribe any musical gesture that is capable of achieving them \cite{antoine2018isma}.
@@ -249,35 +249,40 @@ Yet, such acoustical similarity at the scale of the entire instrumentarium is no
 
 Although a notation-based study of playing techniques in music has research potential in music information retrieval \cite{calvo2020acm}, the prospect of modeling timbre perception necessarily exceeds the symbolic domain.
 Instead, it involves a cognitive process which arises from the subjective experience of listening \cite{erickson1975book}.
-The task of simulating this cognitive process amounts to the design of a multidimensional feature space wherein some distance function evaluates arbitrary pairs of stimuli.
-Rather than merely discriminating instruments as mutually exclusive categories, this function must reflect a consensus of quantitative judgments of acoustic dissimilarity, all other parameters---duration, pitch, and intensity---being equal \cite{thoret2018jasa}.
+The simulation of this cognitive process amounts to the design of a multidimensional feature space wherein some distance function evaluates pairs of stimuli.
+Rather than merely discriminating instruments as mutually exclusive categories, this function must reflect judgments of acoustic dissimilarity, all other parameters---duration, pitch, and intensity---being equal \cite{thoret2018jasa}.
 
 Behind the overarching challenge of coming up with a robust predictive model for listening behaviors in humans, the main practical application of timbre similarity retrieval lies in the emerging topic of computer-assisted orchestration \cite{maresz2013cmr}.
-In such context, the composer queries the software with an arbitrary audio signal; the outcome of this query is an instrumental audio sample, alongside textual attributes of playing technique.
-Thus, following the aesthetic tradition of spectralism in contemporary music creation, the computer serves as a bridge from the auditory level to the symbolic level, \ie{} from a potentially infinite realm of timbral sensations to a musical score of priorly specified range \cite{caetano2019swarm}.
+In such context, the composer queries the software with an arbitrary audio signal.
+The outcome is another audio signal which is selected from a database of instrumental samples and perceptually similar to the query.
+The advantage of this search is that, unlike the query, the retrieved sound is precisely encoded in terms of duration, pitch, intensity, instrument, and playing technique.
+Thus, following the aesthetic tradition of spectralism in contemporary music creation, the computer serves as a bridge from the auditory level to the symbolic level, \ie{} from a potentially infinite realm of timbral sensations to a musical score of predefined range \cite{caetano2019swarm}.
 
 \subsection*{Goal}
-This article proposes a machine listening system which computes the dissimilarity in timbre between any two audio samples.
+This article proposes a machine listening system which computes the dissimilarity in timbre between two audio samples.
 Crucially, this dissimilarity is not evaluated in terms of acoustic tags, but in terms of \emph{ad hoc} clusters, as defined by a human consensus of auditory judgments.
 Our system consists of two stages: unsupervised feature extraction and supervised metric learning.
-The feature extraction stage is a nonlinear map which relies on the joint time--frequency scattering transform \cite{anden2015mlsp}, followed by per-feature Gaussianization \cite{lostanlen2018jasmp}.
+The feature extraction stage is a nonlinear map which relies on the joint time--frequency scattering transform \cite{anden2015mlsp,anden2019tsp}, followed by per-feature Gaussianization \cite{lostanlen2018jasmp}.
 It encodes patterns of spectrotemporal modulation in the acoustic query while offering numerical guarantees of stability to local deformations \cite{anden2012scattering}.
 The metric learning stage is a linear map, optimized via large-margin nearest neighbors (LMNN) \cite{weinberger2009distance}.
-It recombines scattering coefficients so as to fit a training set of human judgments \cite{mcadams1995psychres}, which may either stem from the perceptual idiosyncracies of a single subject or from an intersubjective consensus.
+It reweights scattering coefficients so that pairwise distances between samples more accurately reflect human judgments on a training set.
+These human judgments may be sourced from a single subject or the intersubjective consensus of multiple subjects \cite{mcadams1995psychres}.
 
-Figure \ref{fig:pipeline} summarizes our experimental protocol: it illustrates how visual annotations (top) can inform feature extraction (center) to produce a nearest-neighbor search engine which is consistent with timbre similarity judgments (bottom).
+Figure \ref{fig:pipeline} summarizes our experimental protocol: it illustrates how visual annotations (top) can inform feature extraction (center) to produce a nearest-neighbor search engine which is consistent with human judgments of timbre similarity (bottom).
 
 
 \subsection*{Contributions}
-This article gathers three contributions. % TODO: speak in terms of "intersection" of themes rather than novel contributions?
-First, our model encompasses a broad range of extended playing techniques, well beyond the so-called ``ordinary'' mode of acoustic production \cite{lostanlen2018extended}.
+The main contribution of this article can be formulated as the intersection between three topics.
+To the best of our knowledge, prior literature has addressed these topics separately, but never in combination.
+
+First, our model encompasses a broad range of extended playing techniques, well beyond the so-called ``ordinary'' mode of acoustic production.
 Specifically, we fit pairwise judgments for 78 different techniques arising from 16 instruments, some of which include removable timbre-altering devices such as mutes.
+
 Secondly, we purposefully disregard the playing technique metadata underlying each audio sample during the training phase of our model.
 In other words, we rely on listeners, not performers, to define and evaluate the task at hand.
-A comprehensive ablation study of our system demonstrates that all design choices presented hereafter benefit the retrieval precision of our system.
-Thirdly, we supplement our quantitative benchmark with some visualizations of time--frequency scattering coefficients in the rate--scale domain, for various typical samples of realistic instrumental playing techniques.
-These visualizations confirm the theoretical predictions of previous research \cite{anden2019tsp}, which were founded on simple synthetic sounds such as exponential chirps.
-They are also in line with visualizations of the modulation power spectrum in auditory neurophysiology \cite{patil2012ploscompbiol}, while offering an accelerated algorithm for scalable feature extraction.
+
+Thirdly, we supplement our quantitative benchmark with visualizations of time--frequency scattering coefficients in the rate--scale domain for various typical samples of instrumental playing techniques.
+These visualizations are in line with visualizations of the modulation power spectrum in auditory neurophysiology \cite{patil2012ploscompbiol}, while offering an accelerated algorithm for scalable feature extraction.
 
 \subsection*{Outline}
 The \lnameref{sec:related-work} section reviews recent research in the computational modeling of musical timbre.
@@ -292,9 +297,8 @@ The \lnameref{sec:conclusion} summarizes the implications of our findings for fu
 
 Timbre involves multiple time scales in conjunction, from a few microseconds for an attack transient to several seconds for a sustained tone.
 Therefore, computational models of timbre perception must summarize acoustic information over a long analysis window, typically amounting to $10^{4}$ digital audio samples or more \cite{joder2009taslp}.
-Mapping this input to a feature space in which distances denote timbral dissimilarities requires a data-driven stage of dimensionality reduction.
-In this respect, the scientific literature exhibits a methodological divide as regards the collection of human-annotated data \cite{siedenburg2016jnmr}.
-
+Mapping this input to a feature space in which distances denote timbral dissimilarity requires a data-driven stage of dimensionality reduction.
+In this respect, the scientific literature exhibits a methodological divide as regards the collection of human-annotated data \cite{siedenburg2016jnmr}: while the field of music information retrieval (MIR) encodes timbre under the form of ``audio tags'', music psychology measures timbre similarity directly from pairwise judgments.
 
 \subsection*{Timbre modeling in music information retrieval (MIR)}
 On the one hand, most publications in music information retrieval cast timbre modeling as an audio classification problem  \cite{martin1998asa,brown1999jasa,eronen2000icassp,herrera2003jnmr,wieczorkowska2003jiis,livshin2004dafx,krishna2004icassp,kaminskyj2005jiis,benetos2006icassp,bhalke2016jiis}.
@@ -303,38 +307,40 @@ Because such tags often belong to the metadata of music releases, the process of
 Although scraping user-generated content from online music platforms may not always reflect the true instrumentation with perfect accuracy, it offers a scalable and ecologically valid insight onto the acoustic underpinnings of musical timbre.
 
 Furthermore, supplementing user-generated content with the outcome of a crowdsourced annotation campaign allows an explicit verification of instrument tags.
-For instance, the Open-MIC dataset \cite{humphrey2018ismir}, maintained by the Community for Open and Sustainable Music Information Research (COSMIR) \cite{mcfee2016ismir}, comprises a vast corpus of 20k polyphonic music recordings spanning 20 instruments as a derivative of the Free Music Archive (FMA) dataset \cite{defferrard2017ismir}.
-Another example is the Medley-solos-DB dataset \cite{lostanlen2016ismir}, which comprises 21k monophonic excerpts from 8 instruments as a derivative of the MedleyDB dataset of multitrack music \cite{bittner2014ismir}.
+For instance, the Open-MIC dataset \cite{humphrey2018ismir}, maintained by the Community for Open and Sustainable Music Information Research (COSMIR) \cite{mcfee2016ismir}, comprises a vast corpus of 20k polyphonic music recordings spanning 20 instruments as a derivative of the Free Music Archive (FMA) dataset \cite{defferrard2017ismir}. % \ja wants 20k, 21k.
+Another example is the Medley-solos-DB dataset \cite{lostanlen2016ismir}, which comprises 21k monophonic excerpts from eight instruments as a derivative of the MedleyDB dataset of multitrack music \cite{bittner2014ismir}.
 
-Over the past decade, the availability of large digital audio collections, together with the democratization of high-performance computing on dedicated hardware, has spurred the development of deep learning architectures, and notably deep convolutional networks, in music instrument recognition \cite{mcfee2015ismir,pons2017eusipco,gururani2018ismir}.
-Notwithstanding the growing accuracy of these architectures in the large data regime, it remains unclear how to extend them from musical instrument recognition to playing technique recognition, where labeled samples are considerably scarcer \cite{loureiro2004ismir}.
+Over the past decade, the availability of large digital audio collections, together with the democratization of high-performance computing on dedicated hardware, has spurred the development of deep learning architectures in music instrument recognition \cite{mcfee2015ismir,pons2017eusipco,gururani2018ismir}.
+Notwithstanding the growing accuracy of these architectures in the large-scale data regime, it remains unclear how to extend them from musical instrument recognition to playing technique recognition, where labeled samples are considerably more scarce \cite{loureiro2004ismir}.
 We refer to \cite{han2017taslp} for a recent review of the state of the art in this domain.
 
 \subsection*{Timbre modeling in music cognition research}
 On the other hand, the field of music psychology investigates timbre with the aim of discovering its physiological and behavioral foundations \cite{mcadams2009chapter}.
 In this setting, prior knowledge, however accurate, of instrumentation does not suffice to conduct a study.
 Rather, each excerpt must be played back to multiple human listeners.
-Yet, collecting subjective responses to acoustic stimuli is a tedious and unscalable procedure, therefore restricting the size of the musical corpus under study.
-Such restriction hampers the applicability of iterative algorithms for representation learning, such as stochastic gradient descent in deep neural networks.
-Nevertheless, while training artificial neurons is prone to statistical overfitting, advanced methods in electrophysiology allow to observe the firing patterns of biological neurons in the presence of controlled stimuli.
-This observation, originally carried out on the ferret, has led to a comprehensive mapping of the primary auditory cortex in terms of its spectrotemporal receptive fields (STRFs) \cite{depireux2001jneur}, thus yielding a useful form of inductive bias for downstream machine listening applications.
+Yet, collecting subjective responses to acoustic stimuli is a tedious and unscalable procedure, which restricts the size of the musical corpus under study.
+These small corpus sizes hampers the applicability of optimization algorithms for representation learning, such as stochastic gradient descent in deep neural networks.
 
-The STRF of a neuron is a function of time and frequency which represents the optimal predictor of its post-stimulus time histogram (PSTH) during exposure to a diverse range of auditory stimuli \cite{aertsen1981biolcyb}.
+While training artificial neurons is prone to statistical overfitting, advanced methods in electrophysiology allow to observe the firing patterns of biological neurons in the presence of controlled stimuli.
+This observation, originally carried out on the ferret, has led to a comprehensive mapping of the primary auditory cortex in terms of its spectrotemporal receptive fields (STRFs) \cite{depireux2001jneur}.
+The STRF of a neuron is a function of time and frequency which represents the optimal predictor of its post-stimulus time histogram during exposure to a diverse range of auditory stimuli \cite{aertsen1981biolcyb}.
 The simplest method to compute it in practice is by reverse correlation, i.e.\ by averaging all stimuli that trigger an action potential \cite{deboer1968biomed}.
 Historically, STRFs were defined by their Wigner--Ville distribution \cite{flandrin1998book}, thereby sparing the choice of a tradeoff in time--frequency localization, but eliciting cross-term interferences \cite{eggermont1993hearing}.
 Since then, the STRF of a neuron was redefined as a spectrographic representation of its spike-triggered average \cite{klein2000compneur}.
+
 Although this new definition is necessarily tied to a choice of spectrogram parameters, it yields more interpretable patterns than a Wigner--Ville distribution.
-In particular, a substantial portion of spectrographic STRFs exhibits a ripple-like response around a given region $(t, \lambda)$ of the time--frequency domain \cite{theunissen2000jneur}.
+In particular, a substantial portion of spectrographic STRFs exhibit a ripple-like response around a given region $(t, \lambda)$ of the time--frequency domain \cite{theunissen2000jneur}.
 This response can be approximately described by a pair of scalar values: a temporal modulation rate $\alpha$ in Hertz and a frequential modulation rate $\beta$ in cycles per octave.
 
-Interestingly, both $\alpha$ and $\beta$ appear to be arranged in a geometric series and independent from the selected center time $t$ and center frequency $\lambda$.
-This observation has led auditory neuroscientists to formulate an idealized computational model for STRF, known as ``full cortical model'' \cite{chi2005jasa}, which densely covers the rate--scale domain $(\alpha, \beta)$.
+Interestingly, both $\alpha$ and $\beta$ appear to be arranged in a geometric series and independent from the center time $t$ and center frequency $\lambda$.
+This observation has led auditory neuroscientists to formulate an idealized computational model for STRF, known as the ``full cortical model'' \cite{chi2005jasa}, which densely covers the rate--scale domain $(\alpha, \beta)$ using geometric progressions.
+Because they do not require a data-driven training procedure, STRF yield a useful form of domain-specific knowledge for downstream machine listening applications, especially when the number of annotated samples is relatively small.
 
 
-\subsection*{Spectrotemporal receptive fields (STRF)}
+\subsection*{Spectrotemporal receptive fields (STRFs) as a feature extractor}
 Over recent years, several publications have employed the full cortical model as a feature extractor for a task of musical instrument classification, both in isolated recordings \cite{patil2012ploscompbiol} and in solo phrases \cite{patil2015eurasip}.
 These biologically inspired features outperform the state of the art, especially in the small data regime where deep learning is inapplicable.
-Furthermore, the confusion matrix of the full cortical model in the label space of musical instruments strongly correlates with the confusion matrix between a human listener and the ground truth.
+Furthermore, the confusion matrix of the full cortical model in the label space of musical instruments is strongly correlated with the confusion matrix between a human listener and the ground truth.
 Another appeal of the full cortical model is that the three-way tensor of frequency $\lambda$, rate $\alpha$, and scale $\beta$ can be segmented into contiguous regions of maximal perceptual relevance for each instrument \cite{thoret2016jasa}.
 This is unlike fully end-to-end learning architectures, whose post hoc interpretability requires advanced techniques for feature inversion \cite{mishra2018ismir}.
 Lastly, beyond the realm of supervised classification, a previous publication \cite{hemery2015frontiers} has shown that query-by-example search with STRFs allows to discriminate categories of environmental soundscapes, even after temporal integration and unsupervised dimensionality reduction.
@@ -342,7 +348,7 @@ Lastly, beyond the realm of supervised classification, a previous publication \c
 The reasons above make STRFs an appealing feature extractor for a perceptual description of timbral similarity across instrumental playing techniques.
 Nonetheless, current implementations of STRF suffer from a lack of scalability, which explains why they have found few applications in MIR thus far.
 Indeed, the full cortical model is usually computed via two-dimensional Fourier transforms over adjacent time--frequency regions, followed by averaging around specific rates and scales.
-On the contrary, joint time--frequency scattering offers a faster extraction of spectrotemporal modulations while preserving properties of differentiability \cite{andreux2020jmlr} and invertibility \cite{lostanlen2019dafx}.
+In contrast, joint time--frequency scattering offers a faster extraction of spectrotemporal modulations while preserving properties of differentiability \cite{andreux2020jmlr} and invertibility \cite{lostanlen2019dafx}.
 Such acceleration is made possible by discretizing the wavelet transforms involved in time--frequency scattering according to a multirate scheme, both along the time and the log-frequency variables \cite{anden2019tsp}.
 This multirate scheme also has the benefit of drawing an explicit connection between scattering networks and deep convolutional networks, as both involves numerous convolutions with small kernels, pointwise rectifying nonlinearities, and dyadic pooling operations \cite{mallat2016philtrans}.
 
@@ -745,7 +751,7 @@ Observe that the equation above is a limit case of $\mathbf{S_2}$ (Equation \ref
 As a result, $\mathbf{V}\boldsymbol{x}$ depends solely upon scale $\alpha$ and rate $\beta$.
 In the scientific literature on spectrotemporal receptive fields (STRF), the matrix $\mathbf{V}\boldsymbol{x}$ is called ``cortical output collapsed on the rate-scale axes'' \cite{elhilali2003speechcomm}.
 
-Previous publications on STRF have demonstrated the interest of visualizing the slice $\mathbf{V}\boldsymbol{x}$ in the case of speech \cite{bellur2015ciss}, lung sounds \cite{emmanouilidou2012embs}, and music \cite{patil2012ploscompbiol}.
+Previous publications on STRFs have demonstrated the interest of visualizing the slice $\mathbf{V}\boldsymbol{x}$ in the case of speech \cite{bellur2015ciss}, lung sounds \cite{emmanouilidou2012embs}, and music \cite{patil2012ploscompbiol}.
 However, the visualization of musical sounds has been restricted to some of most common playing techniques, i.e., piano played staccato and violin played pizzicato.
 Furthermore, prior publications on time--frequency scattering have displayed slices of $\mathbf{S_2}\boldsymbol{x}$ in the case of synthetic signals; but there is a gap in literature as regards the interpretability of the scale--rate domain in the case of real-world signals.
 

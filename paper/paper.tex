@@ -180,13 +180,13 @@
 
 \begin{abstract}
 Instrumental playing techniques such as vibratos, glissandos, and trills often denote musical expressivity, both in classical and folk contexts.
-However, most existing approaches to music similarity retrieval fail to describe timbre beyond the so-called ``ordinary'' technique; use instrument identity as a proxy for timbre quality; and do not allow for rapid customization to the perceptual idiosyncracies of a newcoming subject.
-In this article, we ask 31 human subjects to organize 78 isolated notes into an unconstrained number of timbre clusters.
+However, most existing approaches to music similarity retrieval fail to describe timbre beyond the so-called ``ordinary'' technique, use instrument identity as a proxy for timbre quality, and do not allow for customization to the perceptual idiosyncracies of a new subject.
+In this article, we ask 31 human subjects to organize 78 isolated notes into a set of timbre clusters.
 Analyzing their responses suggests that timbre perception operates within a more flexible taxonomy than those provided by instruments or playing techniques alone.
 In addition, we propose a machine listening model to recover the cluster graph of auditory similarities across instruments, mutes, and techniques.
-Our model relies on joint time--frequency scattering features to extract spectrotemporal modulations at multiple scales and rates.
-Furthermore, it minimizes triplet loss in the cluster graph by means of the large-margin nearest neighbor (LMNN) metric learning algorithm.
-Over a dataset of 9346 isolated notes, we report a state-of-the-art precision at rank five (P@5) of $99.0\%\pm 1$.
+Our model relies on joint time--frequency scattering features to extract spectrotemporal modulations as acoustic features.
+Furthermore, it minimizes triplet loss in the cluster graph by means of the large-margin nearest neighbor (LMNN) metric learning algorithm. % \ja: "what?". VL: leaving it as is. i think it's important to use the words "triplet loss" in the abstract
+Over a dataset of 9346 isolated notes, we report a state-of-the-art precision at rank five (P@5) of 99.0\%\pm 1.
 An ablation study demonstrates that removing either the joint time--frequency scattering transform or the metric learning algorithm noticeably degrades performance.
 \end{abstract}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

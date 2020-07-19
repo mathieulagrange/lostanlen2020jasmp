@@ -1061,7 +1061,7 @@ This gap in performance extends the findings of a previous publication \cite{los
 
 \subsection*{Is joint time--frequency scattering necessary?}
 
-Let us recall the full definition of joint time--frequency scattering (see \lnameref{sec:methods} section):
+Let us recall the full definition of second-order joint time--frequency scattering (see \lnameref{sec:methods} section):
 \begin{equation}
 \mathbf{S_2}\boldsymbol{x}(t,\lambda,\alpha,\beta) =
 \left(
@@ -1103,7 +1103,8 @@ Previous publications have successfully applied separable time--frequency scatte
 
 In comparison with its joint counterpart, separable time--frequency scattering contains about half as many coefficients.
 This is because the temporal wavelet transform with $\boldsymbol{\psi}_\alpha$ and the frequential wavelet transform with $\boldsymbol{\psi}_\beta$ are separated by an operation of complex modulus.
-Hence, $\boldsymbol{\psi}_\beta$ operates on a real-valued input, and flipping the sign of the scale variable $\beta$ is no longer necessary.
+Hence, $\boldsymbol{\psi}_\beta$ operates on a real-valued input.
+Because separable time--frequency scattering cannot distinguish ascending chirps from descending chirps, flipping the sign of the scale variable $\beta$ is no longer necessary.
 Moreover, separable time--frequency scattering has a lower algorithmic complexity than joint time--frequency scattering.
 Indeed, in Equation \ref{eq:separable-scattering}, the frequential wavelet transform with $\boldsymbol{\psi}_{\beta}$ operates on a tensor whose time axis is subsampled at a fixed rate $T^{-1}$, thus allowing vectorized computations.
 Conversely, in Equation \ref{eq:joint-scattering}, the frequential wavelet transform must operate on a multiresolution input, whose sample rate varies  depending on $\alpha$: it ranges between $T^{-1}$ and the sample rate of $\boldsymbol{x}$ itself.

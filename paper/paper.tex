@@ -1027,24 +1027,24 @@ This observation suggests that the increase in performance afforded by the state
 \subsection*{Is the dataset large enough for evaluation? Is the system overfitting?}
 First of all, it is worth noting that the presented AP@5 figure of $99.0\% \pm 1$ does not abide to a conventional training set vs. test set paradigm, as is most often done in machine learning research.
 Rather, the LMNN algorithm is trained on all available samples ($N^{\prime}=9346$ isolated notes) with the ``consensus'' cluster graph as training objective ($\mathcal{G}=\mathcal{G}_0$).
-Then, it is evaluated on the same samples with individual cluster graphs as ground truth ($\mathcal{G}=\mathcal{G}_k$ for $k\geq1$). %\ja wants to delete this "for k>=1" clause
+Then, it is evaluated on the same samples with individual cluster graphs as ground truth ($\mathcal{G}=\mathcal{G}_k$ for $k\geq1$).
 The reason behind this choice is that, in the context of computer-assisted orchestration, the collection of audio samples has a fixed size, as it is shipped alongside the software itself.
 This is the case, for example, of Orchidea,\footnote{Link to Orchidea software and OrchideaSOL dataset: \url{www.orch-idea.org}} which comes paired with its own version of SOL, named OrchideaSOL \cite{cella2020icmc}.
-Henceforth, our main goal was to evaluate the generalization ability of our metric learning algorithm beyond the restricted set of samples for which human annotations are directly available ($N=78$, see \lnameref{sec:data-collection} section); that is, beyond one pitch class (middle C) and one intensity level (\emph{mf}).
+Henceforth, our main goal was to evaluate the generalization ability of our metric learning algorithm beyond the restricted set of samples for which human annotations are directly available (see \lnameref{sec:data-collection} section); that is, beyond one pitch class (middle C) and one intensity level (\emph{mf}).
 
 Despite this caveat, we may adopt a ``query-by-example'' (QbE) paradigm by  partitioning the database and audio samples in half ($\frac{1}{2}N^{\prime}=4673$), training the LMNN algorithm on the first half, and querying it with samples from the other half.
-In this evaluation framework, our system reaches a P@5 of $\textbf{96.2\%} \pm 2$.
-Interestingly, querying the system with samples from the training set leads to a P@5 of $\textbf{96.5\%} \pm 2$, i.e., roughly on par with the test set.
+In this evaluation framework, our system reaches an AP@5 of $\textbf{96.2\%} \pm 2$.
+Interestingly, querying the system with samples from the training set leads to an AP@5 of $\textbf{96.5\%} \pm 2$, i.e., roughly on par with the test set.
 Thus, it appears that the gap in performance between the evaluation presented in the \lnameref{sec:results} section ($99.0\%\pm 1$) and query-by-example evaluation ($96.2\% \pm 2$) is primarily attributable to a reduction of the size of training set by half, whereas statistical overfitting of the training set with respect to the test set likely plays a minor role.
 
 %ML: as the learned layer is relatively thin
 
 \subsection*{Is metric learning necessary?}
-Replacing the large-margin nearest neighbors (LMNN) metric learning algorithm by linear discriminant analysis (LDA) leads to a P@5 of $\textbf{76.6}\% \pm 11$.
-Moreover, we evaluate the nearest neighbor algorithm $\mathbf{\Phi}$ in the absence of any metric learning at all.
+Replacing the LMNN metric learning algorithm by linear discriminant analysis (LDA) leads to a P@5 of $\textbf{76.6}\% \pm 11$.
+Moreover, we evaluate the nearest neighbor algorithm $\mathbf{\Phi}$ in the absence of any metric learning at all. % \ja wants to elaborate
 This corresponds to using a Euclidean distance to compare scattering coefficients, i.e., to set $\mathbf{L}$ to the identity matrix.
-Note that the runtime complexity of Euclidean nearest-neighbor search is identical to LMNN search.
-Over our cohort of $K=31$ subjects, we report a precision at rank five (P@5) of $\textbf{92.9\%} \pm 3$, which is noticeably worse than the best performing system.
+Note that the runtime complexity of Euclidean nearest-neighbor search is identical to LMNN search. % \ja wants to delete this sentence
+We report an average precision at rank five (AP@5) of $\textbf{92.9\%} \pm 3$, which is noticeably worse than the best performing system.
 This gap in performance demonstrates the importance of complementing unsupervised feature extraction by supervised metric learning in the design  of computational models for timbre similarity between instrumental playing techniques.
 
 \subsection*{How important is the amount of temporal context $T$?}

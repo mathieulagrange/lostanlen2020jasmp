@@ -717,7 +717,7 @@ Given an input waveform $\boldsymbol{x}$, we denote by $\mathbf{S}\boldsymbol{x}
 %\end{equation}
 %where the notation $\Vert \boldsymbol{x} \Vert^2$ indicates the squared Euclidean norm, $\Vert \boldsymbol{x} \Vert_{\infty}$ indicates the supremum norm over $\mathbb{R}$, and $\boldsymbol{\dot{\tau}}$ is the derivative of the diffeomorphism $\boldsymbol{\tau}$.
 %In the equation above, the scalar $\kappa_{\mathbf{S}}$ plays the role of a Lipschitz constant: it depends exclusively on the design choices underlying the scattering operator $\mathbf{S}$ (\eg{} the quality factor $Q$), yet remains independent of the input signal $\boldsymbol{x}$ as well as the diffeomorphism $\boldsymbol{\tau}$ yielding $\boldsymbol{y} = (\boldsymbol{\tau}\circ\boldsymbol{x})$.
-%In other words, the Euclidean distance between the scattering transform of $\boldsymbol{x}$ and a deformed version of the same signal is bounded from above by the maximal extent of such deformation.
+%In other words, the Euclidean distance between the scattering transform of $\boldsymbol{x}$ and a deformed version of the same signal is bounded from above by the maximal extent of such a deformation.
 %
 %Although the inequality in Equation \ref{eq:lipschitz} was originally formulated for temporal scattering, it recursively generalizes to multivariable scattering operators \cite{oyallon2014iclr}, including joint time--frequency scattering.
 %In this context, the appeal behind joint time--frequency scattering is that the deformation $\boldsymbol{\tau}$ may be defined in the scalogram domain $\mathbf{U_1}\boldsymbol{x}$, instead of being constrained to the time domain $\boldsymbol{x}$.
@@ -767,25 +767,26 @@ Similarly to the violin (Figure \ref{fig:violin-scattering}), we observe that pe
 Likewise, impulsive flute sounds such as sforzando (Figure \ref{fig:flute-scattering} d), key click (e), and vibrato (f) create ridges in the scale--rate domain of varying cutoff rates $\alpha$.
 We distribute the implementation of these figures as part of the MATLAB library \emph{scattering.m}, which is released under the MIT license\footnote{Link to download the \emph{scattering.m} library: \url{https://github.com/lostanlen/scattering.m}}.
 
+
 \subsection*{Median-based logarithmic compression and affine standardization}
 \label{sec:gaussianization}
 
-It stems from the above that comparing Euclidean distances in the feature space of time--frequency scattering coefficients may serve as a computationally efficient surrogate for comparing Wasserstein distances in the scalogram, without need for solving an optimal transport problem.
-However, this surrogate is only valid if the underlying transport plan $\boldsymbol{\tau}$ is relatively small  in terms of supremum norm (see Equation \ref{eq:lipschitz}).
-This assumption may be true for certain local deformation of the time-frequency domain, \eg{} causing a pitch shift or a change in vibrato rate while leaving the instrument unchanged \cite{anden2012scattering}.
-However, it does not suffice in order to represent timbre similarity across multiple instruments and playing techniques.
-Indeed, the perception of timbre for extended playing techniques often involves long-range interactions in the time--frequency domain, which are not amenable to a local elastic deformation \cite{lostanlen2018extended}.
+%It follows from the above that comparing Euclidean distances in the feature space of time--frequency scattering coefficients may serve as a computationally efficient surrogate for comparing Wasserstein distances in the scalogram, without need for solving an optimal transport problem.
+%However, this surrogate is only valid if the underlying transport plan $\boldsymbol{\tau}$ is relatively small  in terms of supremum norm (see Equation \ref{eq:lipschitz}).
+%This assumption may be true for certain local deformation of the time-frequency domain, \eg{} causing a pitch shift or a change in vibrato rate while leaving the instrument unchanged \cite{anden2012scattering}.
+%However, it does not suffice in order to represent timbre similarity across multiple instruments and playing techniques.
+%Indeed, the perception of timbre for extended playing techniques often involves long-range interactions in the time--frequency domain, which are not amenable to a local elastic deformation \cite{lostanlen2018extended}.
 
-To address this issue, we apply a metric learning algorithm, named large-margin nearest neighbors (LMNN), whose goal is to reweight and recombine scattering paths $p$ such that certain factors of variability in feature space $\mathbf{S}$ are enhanced while others are discarded.
-Before training this algorithm, we apply a pointwise nonlinear transformation on averaged joint time-frequency scattering coefficients. The role of this transformation, which is adapted to the dataset in an unsupervised way, is to Gaussianize the histogram of activations of each scattering path $p$.
-
-We consider a collection $\mathcal{X}$ of $N$ waveforms, numbered arbitrarily from $\boldsymbol{x}_1$ to $\boldsymbol{x}_N$. For every path $p$ in the joint time--frequency scattering transform operator $\mathbf{S}$, we measure the median value taken by the average response of $\mathbf{S}\boldsymbol{x}_n$ across all samples $n$ from $1$ to $N$:
+%To address this issue, we apply a metric learning algorithm, named large-margin nearest neighbors (LMNN), whose goal is to reweight and recombine scattering paths $p$ such that certain factors of variability in feature space $\mathbf{S}$ are enhanced while others are discarded.
+Now, we apply a pointwise nonlinear transformation on averaged joint time-frequency scattering coefficients.
+The role of this transformation, which is adapted to the dataset in an unsupervised way, is to Gaussianize the histogram of amplitudes of each scattering path $p$.
+We consider a collection $\mathcal{X}$ of $N$ waveforms $\boldsymbol{x}_1,\ldots,\boldsymbol{x}_N$. For every path $p$ in the joint time--frequency scattering transform operator $\mathbf{S}$, we average the response of each scattering coefficient $\mathbf{S}\boldsymbol{x}_n$ over time and take its median value across all samples $n$ from $1$ to $N$:
 \begin{equation}
 \boldsymbol{\mu}(p) =
 \median_{1\leq n \leq N}
 \int_{\mathbb{R}} \mathbf{S}\boldsymbol{x}_n(t, p) \;\mathrm{d}t.
 \end{equation}
-If the collection is split between a training set and a test set (see \lnameref{sec:discussion} section), we compute $\boldsymbol{\mu}$ on the training set only, and re-apply it as a constant value on the test set.
+If the collection is split between a training set and a test set (see \lnameref{sec:discussion} section), we compute $\boldsymbol{\mu}$ on the training set only.
 Then, to match a decibel-like perception of loudness, we apply the following adaptive transformation, which composes a median-based renormalization and a logarithmic compression:
 \begin{equation}
 \mathbf{\widetilde{S}}\boldsymbol{x}_n (p) =
@@ -793,14 +794,14 @@ Then, to match a decibel-like perception of loudness, we apply the following ada
 1 +
 \dfrac{
 \int_\mathbb{R} \mathbf{S}\boldsymbol{x}_n (t, p) \;\mathrm{d}t
-}{\varepsilon \times \boldsymbol{\mu}(p)}
+}{\varepsilon\boldsymbol{\mu}(p)}
 \right)
 \label{eq:S_tilde}
 \end{equation}
 where $\varepsilon$ is a predefined constant.
-The offset of $1$ before the application of the pointwise logarithm ensures that the transformation is nonexpansive in the sense of Lipschitzian maps.
-Furthermore, a previous publication has shown empirically that Equation \ref{eq:S_tilde} brings, on environmental audio recordings, the histogram of $\mathbf{\widetilde{S}}\boldsymbol{x}_n (p)$ closer to a statistical Gaussianization of every feature $p$ \cite{lostanlen2018jasmp}.
-Since then, this finding has been confirmed in the case of musical sounds \cite{lostanlen2018extended}.
+The offset of one before the application of the pointwise logarithm ensures that the transformation is nonexpansive in the sense of Lipschitzian maps.
+On a dataset of environmental audio recordings, a previous publication has shown empirically that Equation \ref{eq:S_tilde} brings the histogram of $\mathbf{\widetilde{S}}\boldsymbol{x}_n (p)$ closer to a Gaussian distribution \cite{lostanlen2018jasmp}.
+Since then, this finding has also been confirmed in the case of musical sounds \cite{lostanlen2018extended}.
 
 Lastly, we standardize every feature $\mathbf{\widetilde{S}}\boldsymbol{x}_n$ to null mean and unit variance, across the dataset $\mathcal{X} = \{\boldsymbol{x}_1 \ldots \boldsymbol{x}_N\}$, independently for each scattering path $p$.
 Again, if $\mathcal{X}$ is split between training and test sets, we measure means and variances over the training set only and propagate them as constants to the test set.
@@ -816,8 +817,7 @@ Given another sample $\boldsymbol{y}$ in $\mathcal{X}$, $\boldsymbol{y}$ is simi
 Because $\mathcal{G}$ is a disjoint union of complete graphs, this relation is symmetric: $\boldsymbol{x} \in \mathcal{G}(\boldsymbol{y})$ is equivalent to $\boldsymbol{y} \in \mathcal{G}(\boldsymbol{x})$.
 
 In our protocol, $\boldsymbol{x}$ contains the sound of an isolated musical note and the cluster graph $\mathcal{G}$ encodes auditory similarities within the dataset $\mathcal{X}$.
-Moreover, we take $\mathcal{G}$ to be the equal to the ``consensus'' cluster graph $\mathcal{G}_0$, i.e., arising from the partition of a hypergraph $\mathcal{H}$ which contains the judgments of all $K=31$ subjects from our perceptual study (see \lnameref{sec:data-collection} section).
-%write on multiple subjects?
+Moreover, we take $\mathcal{G}$ to be the equal to the ``consensus'' cluster graph $\mathcal{G}_0$, i.e., arising from the partition of a hypergraph $\mathcal{H}$ which contains the judgments of all $K$ subjects from our perceptual study (see \lnameref{sec:data-collection} section).
 
 %Furthermore, let us denote by $\mathcal{Y}_1 (\boldsymbol{x}) = \mathcal{X} \backslash \lbrace \boldsymbol{x} \rbrace$ the dataset of $(N-1)$ audio samples obtained from $\mathcal{X}$ after subtracting the singleton $\{\boldsymbol{x}\}$.
 

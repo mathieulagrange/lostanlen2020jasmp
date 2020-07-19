@@ -373,22 +373,23 @@ We refer to \cite{wu2018taslp} and \cite{pearce2019appliedsciences} for reviews 
 
 \subsection*{Dataset}
 We consider a list of 16 instruments: violin (Vn), viola (Va), cello (Vc), contrabass (Cb), concert harp (Hp), Spanish guitar (Gtr), accordion (Acc), flute (Fl), soprano clarinet (BbCl), alto saxophone (ASax), oboe (Ob), bassoon (Bn), trumpet in C (TpC), French horn (Hn), tenor trombone (TTbn), and bass tuba (BBTb).
-Among this list, the former six are strings, the next six are woodwind, and the last four are brass.
+Among this list, the first six are strings, the next six are woodwind, and the last four are brass.
 Some of these instruments may be temporarily equipped with timbre-altering mutes, such as a rubber sordina on the bridge of a violin or an aluminium ``wah-wah'', also known as \emph{harmon}, inside in the bell of a trumpet.
-Once augmented with mutes, the list of 16 instruments grows up to 33.
+Once augmented with mutes, the list of 16 instruments grows to 33.
 Furthermore, every instrument, whether equipped with a mute or not, affords a panel of playing techniques ranging in size between 11 (for the accordion) and 41 (for the bass tuba).
 In the rest of this paper, we abbreviate instrument--mute--technique by means of the acronym ``IMT''.
 One example of IMT is \texttt{TpC+S-ord}, \ie{} trumpet in C with a straight mute played in the ordinary technique.
-Another example of IMT is \texttt{Vn-pont}, \ie{} violin without any mute played in the \emph{sul ponticello} (bowing near the bridge) technique.
+Another example of IMT is \texttt{Vn-pont}, \ie{} violin without any mute played in the \emph{sul ponticello} technique (bowing near the bridge).
 
-Performers can play each IMT at various pitches, according to a tessitura that depends on the instrument but not on the choice of mute.
+Performers can play each IMT at various pitches according to the tessitura of their instrument.
+This tessitura may depend on the choice of playing technique but is independent of the choice of mute.
 Among the 16 instruments in this study, the two instruments with widest and narrowest tessituras, in their respective ordinary techniques, are the accordion (81 semitones) and the trumpet in C (32 semitones) respectively.
 Lastly, each IMT may be played at up to five intensity dynamics, ranging from quietest to loudest as: pianissimo (\emph{pp}), piano (\emph{p}), mezzo forte (\emph{mf}), forte (\emph{f}), and fortissimo (\emph{ff}).
-However, the resort to a non-ordinary playing technique may restrict both the tessitura and the dynamics range of the instrument--mute pair under consideration.
+The resort to a non-ordinary playing technique may restrict both the tessitura and the dynamics range of the instrument--mute pair under consideration.
 For example, the pitch of pedal tones in brass instruments is tied to the fundamental mode of the bore, \ie{} usually $\mathsf{B}\musFlat$ or $\mathsf{F}$.
 Likewise, the intensity of key clicks in the oboe is necessarily \emph{pp}, while the intensity of snap pizzicato \emph{\`a la Bart\'ok} in plucked strings is necessarily \emph{ff}.
 
-In summary, audio signals from isolated musical notes may vary across three categorical variables (instrument, mute, and technique) and two continuous variables (intensity and pitch).
+In summary, audio signals from isolated musical notes may vary across three categorical variables (instrument, mute, and technique) and two quantitative variables (intensity and pitch).
 The Studio On Line dataset (SOL), recorded at Ircam in 1998, offers a joint sampling of these variables.
 The version of SOL that we use throughout this paper, named ``0.9 HQ'', amounts to 25444 audio signals in total.
 Beyond playing techniques, we should note that SOL erases other factors of acoustic variability, such as identity of performer, identity of instrument manufacturer, audio acquisition equipment, and room response characteristics; which are all restricted to singletons.

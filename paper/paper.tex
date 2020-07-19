@@ -348,9 +348,11 @@ Lastly, beyond the realm of supervised classification, a previous publication \c
 The reasons above make STRFs an appealing feature extractor for a perceptual description of timbral similarity across instrumental playing techniques.
 Nonetheless, current implementations of STRF suffer from a lack of scalability, which explains why they have found few applications in MIR thus far.
 Indeed, the full cortical model is usually computed via two-dimensional Fourier transforms over adjacent time--frequency regions, followed by averaging around specific rates and scales.
+This approach requires a uniform discretization of the scalogram, and thus an oversampling of the lower-frequency subbands to the Nyquist frequency of the original signal.
 In contrast, joint time--frequency scattering offers a faster extraction of spectrotemporal modulations while preserving properties of differentiability \cite{andreux2020jmlr} and invertibility \cite{lostanlen2019dafx}.
 Such acceleration is made possible by discretizing the wavelet transforms involved in time--frequency scattering according to a multirate scheme, both along the time and the log-frequency variables \cite{anden2019tsp}.
-This multirate scheme also has the benefit of drawing an explicit connection between scattering networks and deep convolutional networks, as both involves numerous convolutions with small kernels, pointwise rectifying nonlinearities, and dyadic pooling operations \cite{mallat2016philtrans}.
+In this multirate scheme, every subband is discretized at its critical sample rate, i.e., in proportion to its center frequency.
+As a by-product, the multirate approach draws an explicit connection between scattering networks and deep convolutional networks, because both involves numerous convolutions with small kernels, pointwise rectifying nonlinearities, and dyadic pooling operations \cite{mallat2016philtrans}.
 
 Moreover, a quantitative benchmark over Medley-solos-DB has demonstrated that joint time--frequency scattering, unlike purely temporal scattering, outperforms deep convolutional networks in supervised musical instrument classification, even in a relatively large data regime with 500 to 5k samples per class \cite{anden2019tsp}.
 However, it remains to be seen whether joint time--frequency scattering is capable of fine-grained auditory categorization, involving variability in instrument, mute, and playing technique.

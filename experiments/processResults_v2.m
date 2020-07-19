@@ -1,6 +1,6 @@
 addpath('libs/export_fig')
 clear all
-captions = {'Proposed', 'train/test validation', 'randomized features', 'lda', 'no learning', 'reduce T to 25ms', 'separable scattering', 'mfcc', 'mfcc monomials'};
+captions = {'Proposed', 'train/test validation', 'random features', 'LDA', 'no learning', 'reduce T to 25ms', 'separable scattering', 'MFCC', 'MFCC monomials'};
 ind = 1;
 
 iaInd = 2;
@@ -50,6 +50,7 @@ axis([-log10(custom_xticks(end)) -log10(custom_xticks(1)) 1.5 9.5])
 hold off;
 
 set(gcf, 'Color', 'None')
+colormap(hsv());
 savefig('../paper/figures/ablationStudyNoRand.fig')
 export_fig('../paper/figures/ablationStudyNoRand.png', '-transparent')
 

@@ -1114,13 +1114,13 @@ In particular, a previous publication has shown that frequency-dependent time sh
 %For this reason, separable time--frequency scattering coefficients can only serve to recognize periodic modulations (e.g. vibrato), but joint time--frequency scattering is required to recognize pitch evolution-based techniques (PETs, e.g. glissando) \cite{wang2020icassp}.
 The same observation was made by \cite{schadler2015jasa} in the case of joint and separable Gabor filterbank features (GBFB), which bear some resemblance with joint and separable time--frequency scattering coefficients respectively.
 
-Over our cohort of $K=31$ subjects, separable time--frequency scattering achieves a precision at rank five (P@5) of $\textbf{91.9\%} \pm 4$. This figure is noticeably worse than joint time--frequency scattering ($99.0\% \pm 1$), all other things being equal.
+Over our cohort of $K=31$ subjects, separable time--frequency scattering achieves a precision at rank five (P@5) of $\textbf{91.9\%} \pm 4$. This figure is noticeably worse than joint time--frequency scattering ($\textbf{99.0}\% \pm 1$), all other things being equal.
 This gap in performance, together with the theory of spectrotemporal receptive fields (STRF) in auditory neuroscience (see \lnameref{sec:related-work} section), demonstrates the importance of joint spectrotemporal modulations in the modeling of timbre similarity across instrumental playing techniques.
 
 
 \subsection*{What is the baseline performance?}
 Lastly, we train a baseline system in which joint time--frequency scattering coefficients are replaced by mel-frequency cepstral coefficients (MFCC).
-Specifically, we extract a 40-band mel-frequency spectrogram by means of the RASTAMAT library; apply the pointwise logarithm; and compute a discrete cosine transform (DCT) over the mel-frequency axis\footnote{Link to RASTAMAT library: \url{http://www.ee.columbia.edu/~dpwe/resources/matlab/rastamat}}.
+Specifically, we extract a 40-band mel-frequency spectrogram by means of the RASTAMAT library; apply the pointwise logarithm; and compute a discrete cosine transform (DCT) over the mel-frequency axis.\footnote{Link to RASTAMAT library: \url{http://www.ee.columbia.edu/~dpwe/resources/matlab/rastamat}}
 This operation results in a 40-dimensional feature vector over frames of duration $T=\SI{25}{\milli\second}$.
 Over our cohort of $K=31$ subjects, we report a precision at rank five (P@5) of $\textbf{81.8\%} \pm 7$.
 
@@ -1131,7 +1131,6 @@ We construct the following Gram matrix:
 \mathbf{G} \boldsymbol{x}(\alpha, \beta) =
 \int_0^{+\infty}
 \mathrm{MFCC}(\boldsymbol{x})(t, \alpha)
-\times
 \mathrm{MFCC}(\boldsymbol{x})(t, \beta)
 \;\mathrm{d}t,
 \end{equation}
@@ -1157,7 +1156,7 @@ Therefore, it appears that the gap in performance between MFCC ($81.8\%\pm 7$) a
 
 We see from the ablation study conducted above that each step of the proposed model is necessary for its satisfactory performance.
 Among other things, it indicates the joint time--frequency scattering transform itself should not be used directly for similarity comparisons, but is best augmented by a learned stage.
-This explains the relative success over such models \cite{lostanlen2018jasmp,lostanlen2018extended} over others where distances on raw scattering coefficients were used for judging audio similarity.
+This explains the relative success of such models \cite{lostanlen2018jasmp,lostanlen2018extended} over others where distances on raw scattering coefficients were used for judging audio similarity.
 
 On the other hand, we note that the complexity of the learned model does not have to be high.
 Indeed, for this task, a linear model on the scattering coefficients is sufficient.

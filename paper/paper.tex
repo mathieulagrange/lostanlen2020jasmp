@@ -939,13 +939,13 @@ This is a form of semi-supervised label propagation: from a limited amount of hu
 \subsection*{Evaluation metric}
 
 Let us denote by $\boldsymbol{x}_1, \ldots, \boldsymbol{x}_{{N}^{\prime}}$ the $N^{\prime}$ audio samples associated with our annotated dataset after semi-supervised label propagation.
-Given a sample $n\leq N^{\prime}$ and a human subject $k\leq K$, we denote by $\mathcal{G}_k$ the cluster graph associated to the subject $k$, and by $\mathcal{G}_k (n)$ the cluster to which the sample $\boldsymbol{x}_{n}$ belongs.
+Given a sample $n$ and a human subject $k$, we denote by $\mathcal{G}_k$ the cluster graph associated to the subject $k$, and by $\mathcal{G}_k (n)$ the cluster to which the sample $\boldsymbol{x}_{n}$ belongs.
 Our machine listening system takes the waveform $\boldsymbol{x}_{n}$ as input and returns a ranked list of nearest neighbors: $\mathbf{\Phi}_1 (\boldsymbol{x}_n)$, $\mathbf{\Phi}_2 (\boldsymbol{x}_n)$, $\mathbf{\Phi}_3 (\boldsymbol{x}_n)$, and so forth.
 
 In the context of browsing an audio collection by timbre similarity, $\boldsymbol{x}_n$ is a user-defined query while the function $\mathbf{\Phi}$ plays the role of a search engine.
 We consider the first retrieved sample, $\mathbf{\Phi}_1 (\boldsymbol{x}_n)$, to be relevant to user $k$ if and only if it belongs to the same cluster as $\boldsymbol{x}_n$ in the cluster graph $\mathcal{G}_k$; hence the Boolean condition $\mathbf{\Phi}_{1}(\boldsymbol{x}_{n}) \in \mathcal{G}_k (n)$.
 Likewise, the second retrieved sample is relevant if and only if $\mathbf{\Phi}_{2}(\boldsymbol{x}_{n}) \in \mathcal{G}_k (n)$.
-To evaluate $\mathbf{\Phi}$ on the query $\boldsymbol{x}_n$, we measure the relevance of all nearest neighbors $\mathbf{\Phi}_r (\boldsymbol{x}_n)$ up to some fixed rank $R$, and average the result:
+To evaluate $\mathbf{\Phi}$ on the query $\boldsymbol{x}_n$, we measure the relevance of all nearest neighbors $\mathbf{\Phi}_r (\boldsymbol{x}_n)$ up to some fixed rank $R$ and average the result:
 \begin{equation}
 p_{\mathbf{\Phi}}(n, k, R) =
     \dfrac{1}{R}
@@ -957,10 +957,10 @@ p_{\mathbf{\Phi}}(n, k, R) =
         \mathcal{G}_k (n)
     \big).
 \end{equation}
-In the equation above, the function $\mathds{1}$ converts Booleans to integers, i.e., $\mathds{1}(b)$ equals $1$ if $b$ is true and return $0$ if $b$ is false.
+In the equation above, the indicator function $\mathds{1}$ converts Booleans to integers, i.e., $\mathds{1}(b)$ returns one if $b$ is true and return zero if $b$ is false.
 Thus, the function $p_{\mathbf{\Phi}}$ takes fractional values between $0$ and $1$, which are typically expressed in percentage points.
 
-The precision at rank $R$ of the system $\mathbf{\Phi}$ is defined as the average value taken by the function $p_{\mathbf{\Phi}}$, for constant $R$, over the entire corpus of $N^{\prime}=9346$ audio samples:
+The precision at rank $R$ of the system $\mathbf{\Phi}$ is defined as the average value taken by the function $p_{\mathbf{\Phi}}$ over the entire corpus of $N^{\prime}$ audio samples:
 \begin{equation}
 \mathrm{P}_{\mathbf{\Phi}}(k, R) =
 \dfrac{1}{N^{\prime}}
@@ -975,21 +975,21 @@ Lastly, the ``average precision at rank $R$'' (henceforth, AP@$R$) is the averag
 \sum_{k=1}^{K}
 \mathrm{P}_{\mathbf{\Phi}}(k, R)
 \end{equation}
-It appears from the above that an effective system $\mathbf{\Phi}$ should retrieve sounds whose IMT triplets are similar according to all of the $K=31$ cluster graphs $\mathcal{G}_1 \ldots \mathcal{G}_K$.
+It appears from the above that an effective system $\mathbf{\Phi}$ should retrieve sounds whose IMT triplets are similar according to all of the $K$ cluster graphs $\mathcal{G}_1 \ldots \mathcal{G}_K$.
 
-In the rest of this paper, we set the constant $R$ to $5$.
+In the rest of this paper, we set $R$ to $5$.
 This is in accordance with the protocol of \cite{lostanlen2018extended}, in which the authors trained a metric learning algorithm on the SOL dataset to search for similar instruments and playing techniques, yet without the intervention of a human subject.
-Moreover, note that the value $R=5$ typically reflects the number of virtual panels simultaneously on display in a software environment for computer-assisted orchestration.
+%Moreover, note that the value $R=5$ typically reflects the number of virtual panels simultaneously on display in a software environment for computer-assisted orchestration.
 
 
 \subsection*{Best performing system}
-Our topline system comprises five computational blocks:
+Our best performing system comprises five computational blocks:
 \begin{enumerate}
-\item Joint time--frequency scattering up to a maximal time scale of $T=$\SI{1000}{\milli\second},
+\item Joint time--frequency scattering up to a maximal time scale of $T=$ \SI{1000}{\milli\second},
 \item Temporal averaging at the scale of the whole musical note,
-\item Median-based logarithmic compression \cite[Equation 1]{lostanlen2018extended},
-\item Affine standardization so that each feature has null mean and unit variance,
-\item Nearest-neighbor search according to priorly learned non-Euclidean metric.
+\item median-based logarithmic compression,
+\item affine standardization so that each feature has zero mean and unit variance, and
+\item nearest-neighbor search according to priorly learned non-Euclidean metric.
 \end{enumerate}
 Note that the non-Euclidean metric is learned via large-margin nearest neighbors (LMNN, see \lnameref{sec:methods} section) on the ``consensus'' cluster graph $\mathcal{G}_0$.
 Therefore, the system $\mathbf{\Phi}$ performs timbre similarity retrieval in a user-agnostic way, and can serve as a convenient default algorithm for newcoming users.

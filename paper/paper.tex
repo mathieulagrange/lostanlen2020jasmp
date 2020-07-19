@@ -604,11 +604,12 @@ Then, we define a two-dimensional Morlet wavelet $\boldsymbol{\Psi}$ of the form
 \label{eq:Psi}
 \end{equation}
 taking two real variables $t$ and $u$ as input.
+In the rest of this paper, we shall refer to $\boldsymbol{\Psi}$ as a time--frequency wavelet.
 The former is the time variable while the latter is the base-two logarithm of frequency: $u = \log_2 \lambda$.
 Note that $u$ roughly corresponds to the human perception of relative pitch \cite{lostanlen2020icassp}.
 
 We choose the Gaussian width $\sigma_{\Psi}$ in Equation \ref{eq:Psi} such that the quality factor of the Morlet wavelet $\Psi$ is equal to one, both over the time dimension and over the log-frequency dimension.
-Furthermore, the corrective term $\kappa_{\Psi}$ ensures that $\boldsymbol{\Psi}$ has a null average over $\mathbb{R}^2$, similarly to Equation \ref{eq:psi}.
+Furthermore, the corrective term $\kappa_{\Psi}$ ensures that $\boldsymbol{\Psi}$ has a zero average over $\mathbb{R}^2$, similarly to Equation \ref{eq:psi}.
 From $\mathbf{\Psi}$, we define a two-dimensional wavelet filterbank of the form:
 \begin{equation}
 \mathbf{\Psi}_{\alpha,\beta} : (t, u) \longmapsto
@@ -616,11 +617,11 @@ From $\mathbf{\Psi}$, we define a two-dimensional wavelet filterbank of the form
 \end{equation}
 In the equation above, $\alpha$ is a temporal modulation rate and $\beta$ is a temporal modulation scale, following the terminology of spectrotemporal receptive fields (STRF, see \lnameref{sec:related-work} section).
 While $\alpha$ is measured in Hertz and is strictly positive, $\beta$ is measured in cycles per octaves and may take positive as well as negative values.
-Both $\alpha$ and $\beta$ are discretized by geometric progressions of common ratio equal to $2$.
+Both $\alpha$ and $\beta$ are discretized by geometric progressions of common ratio equal to two.
 Furthermore, the edge case $\beta=0$ corresponds to $\mathbf{\Psi}_{\alpha,\beta}$ being a Gaussian low-pass filter over the log-frequency dimension, while remaining a Morlet band-pass filter of center frequency $\alpha$ over the time dimension.
 We denote this low-pass filter by $\boldsymbol{\phi}_F$ and set its width to $F=2$ octaves.
 
-Then, we convolve the scalogram $\mathbf{U_1}$ with all time--frequency wavelets $\mathbf{\Psi}_{\alpha,\beta}$ and apply the complex modulus, yielding the four-way tensor
+We now convolve the scalogram $\mathbf{U_1}$ with time--frequency wavelets $\mathbf{\Psi}_{\alpha,\beta}$ and apply the complex modulus, yielding the four-way tensor
 \begin{align}
 \mathbf{U_2}\boldsymbol{x} (t, \lambda, \alpha, \beta)
 =&
@@ -659,14 +660,15 @@ We define the joint time--frequency scattering coefficients of the signal $\bold
 \;\mathrm{d}t^\prime \, \mathrm{d}u^\prime,
 \label{eq:S2}
 \end{align}
-where the symbol $\otimes$ denotes an outer product between two vectors.
+where the symbol $\otimes$ denotes the outer product over time and log-frequency.
 In the equation above, the sample rate of time $t$ is proportional to $T^{-1}$ and the sample rate of log-frequency $u=\log_2 \lambda$ is proportional to $F^{-1}$.
 Furthermore, the rate $\alpha$ spans along a geometric progression ranging from $T^{-1}$ to $\lambda/Q$.
 In the following, we set the time constant to $T=\SI{1000}{\milli\second}$ unless specified otherwise.
 
-The tensor $\mathbf{S_2}$ bears a strong resemblance with the idealized response of a spectrotemporal receptive field (STRF) at the rate $\alpha$ and the scale $\beta$.
-Nevertheless, in comparison with the representation known as ``full cortical model'' \cite{patil2012ploscompbiol}, joint time--frequency scattering enjoys a thirty-fold reduction in dimensionality while covering a time span that is four times larger (1000 ms) and an acoustic bandwidth that is also four times larger (0--16 kHz).
+The tensor $\mathbf{S_2}$ bears a strong resemblance with the idealized response of an STRF at the rate $\alpha$ and the scale $\beta$.
+Nevertheless, in comparison with the ``full cortical model'' \cite{patil2012ploscompbiol}, joint time--frequency scattering enjoys a thirty-fold reduction in dimensionality while covering a time span that is four times larger (1000 ms) and an acoustic bandwidth that is also four times larger (0--16 kHz).
 This is due to the multirate discretization scheme applied throughout the application of wavelet convolutions and pointwise modulus nonlinearities.
+% \ja says "where does this number come from"? Answer: from the Patil paper vs the scattering.m implementation
 
 In addition to second-order scattering coefficients (Equation \ref{eq:S2}), we compute joint time--frequency scattering at the first order by convolving the scalogram $\mathbf{U_1 \boldsymbol{x}}$ (Equation \ref{eq:U1}) with the low-pass filter $\boldsymbol{\phi}_T$ over the time dimension, with wavelets $\boldsymbol{\psi}_{\beta}$ ($\beta \geq0$) over the log-frequency dimension, and by applying the complex modulus:
 \begin{align}

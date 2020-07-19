@@ -870,7 +870,7 @@ The definition of $\mathcal{E}_{\textrm{push}}$ is:
 \Big),
 \end{equation}
 where the function $\rho : u \mapsto \max (0, u)$ denotes the activation function of the rectified linear unit (ReLU), also known as hinge loss.
-The cost function described in the equation above is known in deep learning as ``triplet loss'', and has recently been applied to train large-vocabulary audio classifiers in an unsupervised way \cite{jansen2018icassp}.
+The cost function described in the equation above is known in deep learning as ``triplet loss'' and has recently been applied to train large-vocabulary audio classifiers in an unsupervised way \cite{jansen2018icassp}.
 We refer to \cite{bellet2015book} for a review of the state of the art in metric learning.
 
 
@@ -920,25 +920,25 @@ We refer to \cite{bellet2015book} for a review of the state of the art in metric
 
 The previous section described our methods for extracting spectrotemporal modulations in audio signals, as well as learning a non-Euclidean similarity metric between them.
 We now turn to apply these methods to the problem of allocating isolated musical notes to clusters of some timbre similarity graph $\mathcal{G}$.
-In practice, for training purposes, the cluster graph $\mathcal{G}$ stems from the consensus of $K=31$ users of the Cyberlioz web application, which was described in the \lnameref{sec:data-collection} section ($\mathcal{G}=\mathcal{G}_0$).
+In practice, for training purposes, the cluster graph $\mathcal{G}$ represents the consensus of $K=31$ users of the Cyberlioz web application, which was described in the \lnameref{sec:data-collection} section ($\mathcal{G}=\mathcal{G}_0$).
 However, for evaluation purposes, this cluster graph corresponds to the subjective preferences of a single user $k\geq 1$, in which case we take $\mathcal{G}=\mathcal{G}_k$.
 
 
 \subsection*{Semi-supervised label propagation}
 
-In order to suit the practical needs of contemporary music composers, computer-assisted orchestration must withdraw from a diverse realm of instruments and techniques.
+In order to suit the practical needs of contemporary music composers, computer-assisted orchestration must draw from a diverse realm of instruments and techniques.
 Therefore, whereas our data collection procedure for timbre similarity judgments focused on a single pitch (middle C) and a single intensity level (\emph{mf}), we formulate our machine listening experiment on an expanded dataset of audio samples, containing variations in pitch and dynamics.
 
 Given an audio stimulus $\boldsymbol{x}_n$ from our perceptual study, we seek its position in the cluster graph $\mathcal{G}_0$.
 Then, we identify its instrument--mute--technique (IMT) triplet, scrape for audio samples in SOL matching this triplet, and assign them all to the same cluster as the original audio stimulus.
 We repeat the same procedure for all $N=78$ nodes in $\mathcal{G}_0$, resulting in $N^\prime = 9346$ samples in total.
-This is a form of semi-supervised label propagation: from a limited amount of human annotation, we curate a relatively large subset of SOL (roughly one third of the entire dataset, i.e., $25444$ samples) for which the notion of timbre is perceptually encoded as a discrete category.
+This is a form of semi-supervised label propagation: from a limited amount of human annotation, we curate a relatively large subset of SOL, amounting to about one third of the entire dataset ($9346$ out of $25444$ samples).
 
 
 
 \subsection*{Evaluation metric}
 
-Let us denote by $\boldsymbol{x}_1 \ldots \boldsymbol{x}_{{N}^{\prime}}$ the $N^{\prime}=9346$ audio samples associated to our annotated dataset, after semi-supervised label propagation (see subsection above).
+Let us denote by $\boldsymbol{x}_1, \ldots, \boldsymbol{x}_{{N}^{\prime}}$ the $N^{\prime}$ audio samples associated with our annotated dataset after semi-supervised label propagation.
 Given a sample $n\leq N^{\prime}$ and a human subject $k\leq K$, we denote by $\mathcal{G}_k$ the cluster graph associated to the subject $k$, and by $\mathcal{G}_k (n)$ the cluster to which the sample $\boldsymbol{x}_{n}$ belongs.
 Our machine listening system takes the waveform $\boldsymbol{x}_{n}$ as input and returns a ranked list of nearest neighbors: $\mathbf{\Phi}_1 (\boldsymbol{x}_n)$, $\mathbf{\Phi}_2 (\boldsymbol{x}_n)$, $\mathbf{\Phi}_3 (\boldsymbol{x}_n)$, and so forth.
 

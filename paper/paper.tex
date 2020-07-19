@@ -143,7 +143,7 @@
   \cny{France}
 }
 \address[id=ccm]{%
-  \orgname{Center for Computational Mathematics, Flatiron Institute},
+  \orgname{Department of Mathematics, KTH and Center for Computational Mathematics, Flatiron Institute},
   \street{162 5th Avenue},
   \city{New York, NY 10010},
   \cny{USA}
@@ -1172,14 +1172,14 @@ Indeed, reducing the window size to $25~\mathrm{ms}$ means that we lose a great 
 The success of the above system in identifying timbral similarities has immediate applications in browsing music databases.
 These are typically organized based on instrumental and playing techniques taxonomies, with additional keywords offering a more flexible organization.
 Accessing the sounds in these databases therefore requires some knowledge of the taxonomy and keywords used.
-Furthermore, the user needs to have some idea of the particular IPT they are searching for.
+Furthermore, the user needs to have some idea of the particular playing technique they are searching for.
 
 As an alternative, content-based searches allow the user to identify sounds based on similarity to some given query sound.
-This query-by-example approach provides an opportunity to search for sounds without having a specific instrument of PT in mind, yielding a wider range of available sounds.
+This query-by-example approach provides an opportunity to search for sounds without having a specific instrument of playing technique in mind, yielding a wider range of available sounds.
 A composer with access to such a system would therefore be able to draw on a more diverse palette of musical timbre.
 
 The computational model proposed in this work is well suited to such a query-by-example task.
-We have shown that it is able to approximate well the timbral judgments of a wide range of subjects included in our study.
+We have shown that it is able to adequately approximate the timbral judgments of a wide range of subjects included in our study.
 Not only that, but the system can be easily retrained to approximate an individual user's timbre perception by having that user perform the clustering task on the reduced set of $78$ IPTs and running the LMNN training step on those clustering assignments.
 This model can then be applied to new data, or, alternatively, be retrained with these new examples if the existing model proves unsatisfactory.
 
@@ -1189,7 +1189,7 @@ While this has the advantage of simplifying the interpretation of the results, t
 This also makes applications such as \emph{query-by-humming} difficult, since we cannot guarantee that the timbral similarity measure is accurate for such sounds.
 
 That being said, the above model is general enough to encompass a wide variety of recordings, not just instrumental sounds.
-Indeed, we have strong assumptions that the tools used (scattering transforms and LMNN weighting matrices) do not depend on the type of sound being processed. Though, future work should demonstrate that they work for more general classes of sounds.
+Indeed, we have strong assumptions that the tools used (scattering transforms and LMNN weighting matrices) do not depend on the type of sound being processed. Future work will demonstrate that they work for more general classes of sounds.
 To extend the model, it is only necessary to retrain the LMNN weighting matrix by supplying it with new cluster assignments.
 These can again be obtained by performing a new clustering experiment with one or more human subjects.
 

@@ -812,7 +812,7 @@ With a slight abuse of notation, we still denote by $\mathbf{\widetilde{S}}\bold
 \subsection*{Metric learning with large-margin nearest neighbors (LMNN)}
 Let $\boldsymbol{x}$ some arbitrary audio sample in the dataset $\mathcal{X}$.
 Let $\mathcal{G}$ a cluster graph with $N = \card \mathcal{X}$ vertices and $C$ clusters in total.
-We denote by $\mathcal{G}(\boldsymbol{x})$ the cluster index to which the sample $\boldsymbol{x}$ belongs.
+We denote by $\mathcal{G}(\boldsymbol{x})$ the cluster to which the sample $\boldsymbol{x}$ belongs.
 Given another sample $\boldsymbol{y}$ in $\mathcal{X}$, $\boldsymbol{y}$ is similar to $\boldsymbol{x}$ if and only if belongs to the cluster $\mathcal{G}(\boldsymbol{x})$.
 Because $\mathcal{G}$ is a disjoint union of complete graphs, this relation is symmetric: $\boldsymbol{x} \in \mathcal{G}(\boldsymbol{y})$ is equivalent to $\boldsymbol{y} \in \mathcal{G}(\boldsymbol{x})$.
 
@@ -823,10 +823,10 @@ Moreover, we take $\mathcal{G}$ to be the equal to the ``consensus'' cluster gra
 
 We denote by $\mathbf{\widetilde{S}}\boldsymbol{x}$ the feature vector of joint time--frequency scattering resulting from $\boldsymbol{x}$.
 This vector includes both first-order and second-order scattering coefficients, after median-based logarithmic compression and affine standardization (see subsections above).
-Furthermore, we denote by $\mathcal{Y}_R (\boldsymbol{x})$ the list of $R$ nearest neighbors to $\mathbf{\widetilde{S}}\boldsymbol{x}$ in the feature space of joint time--frequency scattering coefficients, according to the Euclidean metric.
+Furthermore, we denote by $\mathcal{Y}_R (\boldsymbol{x})$ the list of $R$ nearest neighbors to $\mathbf{\widetilde{S}}\boldsymbol{x}$ in the feature space of joint time--frequency scattering coefficients according to the Euclidean metric.
 Unlike cluster similarity, this relationship is not symmetric: $\boldsymbol{y}\in\mathcal{Y}_R (\boldsymbol{x})$ does not necessarily imply $\boldsymbol{x}\in\mathcal{Y}_R (\boldsymbol{y})$.
-Note that the dependency of $\mathcal{Y}_R (\boldsymbol{x})$ upon the operator $\mathbf{S}$ is left implicit.
-In all of the following, we set the constant $R$ to $5$; this is in accordance with our chosen evaluation metric, i.e., average precision at rank 5 (AP@5, see \lnameref{sec:results} section).
+Note that the dependency of $\mathcal{Y}_R (\boldsymbol{x})$ upon the operator $\mathbf{S}$ is left implicit. % \ja wants to delete this sentence
+In all of the following, we set the constant $R$ to $5$; this is in accordance with our chosen evaluation metric, average precision at rank 5 (AP@5, see \lnameref{sec:results} section).
 
 Let $P$ be the number of scattering paths in the operator $\mathbf{S}$. The large-margin nearest neighbor (LMNN) algorithm learns a matrix $\mathbf{L}$ with $P$ rows and $P$ columns by minimizing an error function of the form:
 \begin{equation}
@@ -843,11 +843,10 @@ The definition of $\mathcal{E}_{\textrm{pull}}$ is:
 \mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{x} - \mathbf{L}\mathbf{\widetilde{S}}\boldsymbol{y}
 \big\Vert^2,
 \end{equation}
-Crucially, in the feature space of time--frequency scattering coefficients, the Euclidean neighborhood $\mathcal{Y}_R (\boldsymbol{x})$ corresponds to a Wasserstein neighborhood in the scalogram domain (see previous subsection).
 Note that the error term $\mathcal{E}_\textrm{pull}$ is unsupervised, in the sense that it does not depend on the cluster assignments of $\boldsymbol{x}$ and $\boldsymbol{y}$ in $\mathcal{G}$.
 
 While the the term $\mathcal{E}_{\textrm{pull}}$ operates on pairs of samples, the term $\mathcal{E}_{\textrm{push}}$, operates on triplets $(\boldsymbol{x}, \boldsymbol{y}, \boldsymbol{z})\in\mathcal{X}^3$.
-The first sample, $\boldsymbol{x}$, is known as an ``anchor''.
+The first sample, $\boldsymbol{x}$, is known as an ``anchor.''
 The second sample, $\boldsymbol{y}$, is known as a ``positive'', and is assumed to belong to the Euclidean neighborhood of the anchor: $\boldsymbol{y} \in \mathcal{Y}_R (\boldsymbol{x})$.
 The third sample, $\boldsymbol{z}$, is known as a ``negative'', and is assumed to belong to a different similarity cluster as the anchor: $\boldsymbol{z}\not\in\mathcal{G}(\boldsymbol{x})$.
 The term $\mathcal{E}_{\textrm{push}}$ penalizes $\mathbf{L}$ unless the positive-to-anchor distance is smaller than the negative-to-anchor distance by a margin of at least $1$.

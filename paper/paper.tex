@@ -354,13 +354,13 @@ Such acceleration is made possible by discretizing the wavelet transforms involv
 In this multirate scheme, every subband is discretized at its critical sample rate, i.e., in proportion to its center frequency.
 As a by-product, the multirate approach draws an explicit connection between scattering networks and deep convolutional networks, because both involves numerous convolutions with small kernels, pointwise rectifying nonlinearities, and pooling operations \cite{mallat2016philtrans}.
 
-Moreover, a quantitative benchmark over Medley-solos-DB has demonstrated that joint time--frequency scattering, unlike purely temporal scattering, outperforms deep convolutional networks in supervised musical instrument classification, even in a relatively large data regime with 500 to 5k samples per class \cite{anden2019tsp}.
+Moreover, a quantitative benchmark over Medley-solos-DB has demonstrated that joint time--frequency scattering, unlike purely temporal scattering, outperforms deep convolutional networks in supervised musical instrument classification, even in a relatively large data regime with 500 to 5k samples per class \cite{anden2019tsp}. % \ja wants 5,000
 However, it remains to be seen whether joint time--frequency scattering is capable of fine-grained auditory categorization, involving variability in instrument, mute, and playing technique.
 In addition, previous publications on joint time--frequency scattering lack a human-centric evaluation, independently from any classification task.
 
 \subsection*{Claim of originality}
 The contributions of this paper strive to fill the gap in scholarship between MIR and music cognition approaches to timbre, in the context of computer-assisted spectralist orchestration with extended playing techniques.
-From the standpoint of MIR, the model presented here offers a tractable and generic multidimensional representation for timbre similarity, alongside formal guarantees of robustness to elastic deformations in the time--frequency domain.
+From the standpoint of MIR, the model presented here offers an efficient and generic multidimensional representation for timbre similarity, alongside formal guarantees of robustness to elastic deformations in the time--frequency domain.
 Conversely, from the standpoint of music cognition, our model offers a scalable and biologically plausible surrogate for stimulus-based collection of acoustic dissimilarity judgments, with the potential of being readily tailored to subjective preferences.
 
 

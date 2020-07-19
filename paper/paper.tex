@@ -475,20 +475,22 @@ This remark emphasizes the potential of our similarity learning method as a cust
 Before addressing the question of modeling timbre in the audio domain, we conduct an exploratory study on the structure of similarity judgments themselves.
 Specifically, given a corpus of IMT samples, we ask whether human listeners tend to cluster these samples by instrument.
 To answer this question, we derive from the consensus clustering graph $\mathcal{G}_0$ an instrument-wise similarity matrix $\mathbf{A}_{\mathcal{I}}$ whose rows and columns are defined on the finite set $\mathcal{I}$ of instruments.
-For every instrument--instrument pair $(i,j)$, we set the value of $\mathbf{A}_{\mathcal{I}}$ at row $i$ and column $j$ equal to the number of edges in $\mathcal{G}_0$ connecting IMTs from instruments $i$ and $j$, renormalized by the number of IMT samples from either instrument $i$ or instrument $j$:
+For every instrument--instrument pair $(i,j)$, we set the value of $\mathbf{A}_{\mathcal{I}}$ at row $i$ and column $j$ equal to the number of edges in $\mathcal{G}_0$ connecting IMTs from instruments $i$ and $j$, renormalized by the number of IMT samples from either instrument $i$ or instrument $j$.
+
+Let us denote the existence of an edge in $\mathcal{G}_0$ connecting two IMT samples $m$ and $n$ by the binary relation $m \overset{\mathcal{G}_0}{\sim} n$.
+The mathematical definition of the matrix $\mathbf{A}_{\mathcal{I}}$ is:
 \begin{equation}
 \mathbf{A}_{\mathcal{I}}(i,j) = \dfrac{
-2\,\Card \big\{ (m, n) \,\vert\, \mathrm{Instrument}(m)=i ; \mathrm{Instrument}(n)=j ; m \overset{\mathcal{G}_0}{\sim} n \big\}
+\,\Card \big\{ (m, n) \,\vert\, \mathrm{Instrument}(m)=i ; \mathrm{Instrument}(n)=j ; m \overset{\mathcal{G}_0}{\sim} n \big\}
 }{
 \Card \big\{n \,\vert\, \mathrm{Instrument}(n) \in \{ i, j \} \big\}
 }.
 \label{eq:instrument-similarity}
 \end{equation}
 
-Then, we run Ward's method to cluster instruments in $\mathcal{I}$ according to the similarity matrix $\mathbf{A}_{\mathcal{I}}$.
-This method yields a permutation $\sigma_{\mathcal{I}}: \mathcal{I} \rightarrow \mathcal{I}$ of the rows and columns in $\mathbf{A}_{\mathcal{I}}$.
-Intuitively, for every instrument--instrument pair $(i, j) \in \mathcal{I}^2$, the distance $\vert \sigma_{\mathcal{I}}(i) - \sigma_{\mathcal{I}}(j) \vert$ after permutation is small if and only if the similarity $\mathbf{A}_{\mathcal{I}}(i, j)$ is large.
-Figure \ref{fig:consensusVsI} displays the rearranged similarity matrix $\widetilde{\mathbf{A}}_{\mathcal{I}} : (i,j)\in \mathcal{I}^2 \mapsto \mathbf{A}_{\mathcal{I}}(\sigma_{\mathcal{I}}^{-1}(i), \sigma_{\mathcal{I}}^{-1}(j))$ as a result of such agglomerative hierarchical clustering procedure.
+Then, we run Ward's method \cite{ward1963jasa} to cluster instruments in $\mathcal{I}$ according to the similarity matrix $\mathbf{A}_{\mathcal{I}}$.
+This method yields a permutation $\sigma_{\mathcal{I}}: \mathcal{I} \rightarrow \mathcal{I}$ of the rows and columns in $\mathbf{A}_{\mathcal{I}}$ such that the distance $\vert \sigma_{\mathcal{I}}(i) - \sigma_{\mathcal{I}}(j) \vert$ after permutation is small if and only if the similarity $\mathbf{A}_{\mathcal{I}}(i, j)$ is large.
+Figure \ref{fig:consensusVsI} displays the rearranged similarity matrix $\widetilde{\mathbf{A}}_{\mathcal{I}} : (i,j)\in \mathcal{I}^2 \mapsto \mathbf{A}_{\mathcal{I}}(\sigma_{\mathcal{I}}^{-1}(i), \sigma_{\mathcal{I}}^{-1}(j))$ as a result of such agglomerative hierarchical clustering procedure. % \ja wants to remove this equation
 
 Interestingly, the matrix $\widetilde{\mathbf{A}}_{\mathcal{I}}$ exhibits a block diagonal structure, which roughly reflects the classical taxonomy of musical instruments: four woodwinds (BbCl, Fl, ASax, Ob) are clustered together, followed by a cluster containing one woodwind (Bn) and four brass (BBTb, Hn, TTbn, and TpC), followed by a cluster of all strings (Cb, Va, Vn, Vc, Gtr, Hp).
 Furthermore, the largest cross-instrument similarity arises for the only pair of purely plucked instruments, namely, harp and guitar.
@@ -496,23 +498,19 @@ Furthermore, the largest cross-instrument similarity arises for the only pair of
 
 \subsection*{Inter-technique similarity}
 From the consensus clustering graph $\mathcal{G}_0$, we also derive a technique-wise similarity matrix $\mathbf{A}_{\mathcal{T}}$ whose rows and columns are defined on the finite set $\mathcal{T}$ of playing techniques.
-We define the similarity between any two playing techniques $u$ and $v$ in $\mathcal{T}$ as the following ratio of set cardinals:
+As for $\mathbf{A}_{\mathcal{I}}$, we define the similarity between any two playing techniques $u$ and $v$ in $\mathcal{T}$ as the following ratio of set cardinalities:
 \begin{equation}
 \mathbf{A}_{\mathcal{T}}(u,v) = \dfrac{
 2\,\Card \big\{ (m, n) \,\vert\, \mathrm{Technique}(m)=u ; \mathrm{Technique}(n)=v ; m \overset{\mathcal{G}_0}{\sim} n \big\}
 }{
 \Card \big\{n \,\vert\, \mathrm{Technique}(n) \in \{ u, v \} \big\}
-},
+}.
 \label{eq:technique-similarity}
 \end{equation}
-alike the definition of $\mathbf{A}_{\mathcal{I}}$.
 Again, we run Ward's method to cluster playing techniques in $\mathcal{T}$ according to their similarity $\mathbf{A}_{\mathcal{T}}$.
-Figure \ref{fig:consensusVsPt} displays the rearranged similarity matrix $\widetilde{\mathbf{A}}_{\mathcal{T}} : (u,v)\in \mathcal{T}^2 \mapsto \mathbf{A}_{\mathcal{T}}(\sigma_{\mathcal{T}}^{-1}(u), \sigma_{\mathcal{T}}^{-1}(v))$ as a result of such agglomerative hierarchical clustering procedure.
+Figure \ref{fig:consensusVsPt} displays the rearranged similarity matrix $\widetilde{\mathbf{A}}_{\mathcal{T}} : (u,v)\in \mathcal{T}^2 \mapsto \mathbf{A}_{\mathcal{T}}(\sigma_{\mathcal{T}}^{-1}(u), \sigma_{\mathcal{T}}^{-1}(v))$.
 
-Contrary to inter-instrument similarity (Figure \ref{fig:consensusVsI}), inter-technique similarity does not exhibit a clear segregation of instrument families.
-For example, the first two rows in $\widetilde{\mathbf{A}}_{\mathcal{T}}$ correspond to a oboe sample (\texttt{Ob-blow-no-reed-C4}, \ie{} blowing without the reed) and a cello sample (\texttt{Vc-legno-tratto-C4-mf-1c}, \ie{} drawing the wooden part of the bow across the string) respectively, despite the fact that the oboe is a woodwind instrument whereas the cello is a string instrument.
-
-More generally, even though the block diagonal structure of the matrix $\widetilde{\mathbf{A}}_{\mathcal{T}}$ is less prevalent than in $\widetilde{\mathbf{A}}_{\mathcal{I}}$, playing technique clusters appear to transcend instrument categories.
+The block diagonal structure of the matrix $\widetilde{\mathbf{A}}_{\mathcal{T}}$ is less salient than in $\widetilde{\mathbf{A}}_{\mathcal{I}}$.
 Nevertheless, these clusters correspond to some basic attributes of qualitative timbre: by and large, the top-left region of the matrix contains sustained sounds whereas the bottom-right region contains percussive sounds.
 Interestingly, the ordinary technique (\texttt{ord}) appears at the center of the matrix, \ie{} at the intersection between sustained sounds and percussive sounds.
 This is because the notion of ``ordinariness'' does not prescribe the same gesture for all instruments: \eg{} an ordinary guitar sound is expected to be percussive whereas an ordinary flute sound is expected to be sustained.

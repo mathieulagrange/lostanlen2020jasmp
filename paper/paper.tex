@@ -670,7 +670,7 @@ Nevertheless, in comparison with the ``full cortical model'' \cite{patil2012plos
 This is due to the multirate discretization scheme applied throughout the application of wavelet convolutions and pointwise modulus nonlinearities.
 % \ja says "where does this number come from"? Answer: from the Patil paper vs the scattering.m implementation
 
-In addition to second-order scattering coefficients (Equation \ref{eq:S2}), we compute joint time--frequency scattering at the first order by convolving the scalogram $\mathbf{U_1 \boldsymbol{x}}$ (Equation \ref{eq:U1}) with the low-pass filter $\boldsymbol{\phi}_T$ over the time dimension, with wavelets $\boldsymbol{\psi}_{\beta}$ ($\beta \geq0$) over the log-frequency dimension, and by applying the complex modulus:
+In addition to second-order scattering coefficients (Equation \ref{eq:S2}), we compute joint time--frequency scattering at the first order by convolving the scalogram $\mathbf{U_1 \boldsymbol{x}}$ (Equation \ref{eq:U1}) with the low-pass filter $\boldsymbol{\phi}_T$ over the time dimension with wavelets $\boldsymbol{\psi}_{\beta}$ ($\beta \geq0$) over the log-frequency dimension, and by applying the complex modulus:
 \begin{align}
 \mathbf{S_1}\boldsymbol{x}(t, \lambda, \alpha=0, \beta) &=
 \big\vert
@@ -691,11 +691,11 @@ In addition to second-order scattering coefficients (Equation \ref{eq:S2}), we c
 where the time constant $T$ is the same as in Equation $\ref{eq:S2}$, \ie{} $T=\SI{1000}{\milli\second}$ by default.
 
 Over the time variable, we set the modulation rate $\alpha$ of $\mathbf{S_1}$ to zero in the equation above.
-Conversely, over the log-frequency variable, the edge case $\beta=0$ corresponds to replacing the wavelet $\boldsymbol{\psi}_{\beta}$ by the low-pass filter $\boldsymbol{\psi}_F$, comparably to Equation $\ref{eq:Psi}$.
+Conversely, over the log-frequency variable, the edge case $\beta=0$ corresponds to replacing the wavelet $\boldsymbol{\psi}_{\beta}$ by the low-pass filter $\boldsymbol{\phi}_F$.
 We refer to \cite{anden2019tsp} for more details on the implementation of joint time--frequency scattering.
 
-We adopt the multiindex notation $p = (\lambda, \alpha, \beta)$ as a shorthand for the tuple of frequency, rate, and scale.
-The tuple $p$ is known as a scattering path (see \cite{mallat2012cpam}), and may apply to index both first-order ($\mathbf{S_1}$) or second-order ($\mathbf{S_2}$) coefficients.
+We adopt the multi-index notation $p = (\lambda, \alpha, \beta)$ as a shorthand for the tuple of frequency, rate, and scale.
+The tuple $p$ is known as a scattering path (see \cite{mallat2012cpam}), and may apply to index both first-order ($\mathbf{S_1}$) and second-order ($\mathbf{S_2}$) coefficients.
 Given an input waveform $\boldsymbol{x}$, we denote by $\mathbf{S}\boldsymbol{x}$ the feature vector resulting from the concatenation of $\mathbf{S_1}\boldsymbol{x}$ and $\mathbf{S_2}\boldsymbol{x}$:
 \begin{equation}
 \mathbf{S}\boldsymbol{x}\big(t, p=(\lambda, \alpha, \beta)\big)
@@ -706,22 +706,22 @@ Given an input waveform $\boldsymbol{x}$, we denote by $\mathbf{S}\boldsymbol{x}
 \end{array}\right.
 \end{equation}
 
-An important theorem by Mallat \cite{mallat2012cpam} states that, if $\boldsymbol{y}$ can be obtained from $\boldsymbol{x}$ via the action of some differentiable elastic deformation $\boldsymbol{\tau} \in \mathrm{Diff}(\mathbb{R})$, then the Euclidean norm between $\mathbf{S}\boldsymbol{x}$ and $\mathbf{S}\boldsymbol{y} = \mathbf{S}(\boldsymbol{\tau}\circ\boldsymbol{x})$ can be bounded as follows:
-\begin{equation}
-\big\Vert \mathbf{S}\boldsymbol{x} - \mathbf{S}(\boldsymbol{\tau}\circ\boldsymbol{x}) \big\Vert^2
-\leq
-\kappa_{\mathbf{S}} \times
-\Vert \boldsymbol{x} \Vert^2 \times
-\Vert \boldsymbol{\dot{\tau}} \Vert_{\infty},
-\label{eq:lipschitz}
-\end{equation}
-where the notation $\Vert \boldsymbol{x} \Vert^2$ indicates the squared Euclidean norm, $\Vert \boldsymbol{x} \Vert_{\infty}$ indicates the supremum norm over $\mathbb{R}$, and $\boldsymbol{\dot{\tau}}$ is the derivative of the diffeomorphism $\boldsymbol{\tau}$.
-In the equation above, the scalar $\kappa_{\mathbf{S}}$ plays the role of a Lipschitz constant: it depends exclusively on the design choices underlying the scattering operator $\mathbf{S}$ (\eg{} the quality factor $Q$), yet remains independent of the input signal $\boldsymbol{x}$ as well as the diffeomorphism $\boldsymbol{\tau}$ yielding $\boldsymbol{y} = (\boldsymbol{\tau}\circ\boldsymbol{x})$.
-In other words, the Euclidean distance between the scattering transform of $\boldsymbol{x}$ and a deformed version of the same signal is bounded from above by the maximal extent of such deformation.
-
-Although the inequality in Equation \ref{eq:lipschitz} was originally formulated for temporal scattering, it recursively generalizes to multivariable scattering operators \cite{oyallon2014iclr}, including joint time--frequency scattering.
-In this context, the appeal behind joint time--frequency scattering is that the deformation $\boldsymbol{\tau}$ may be defined in the scalogram domain $\mathbf{U_1}\boldsymbol{x}$, instead of being constrained to the time domain $\boldsymbol{x}$.
-Therefore, joint time--frequency scattering coefficients linearize and disentangle small elastic deformations in the time--frequency domain, and represent them activations from a dictionary of multiscale spectrotemporal modulations $\boldsymbol{\Psi}_{\alpha, \beta}$.
+%An important theorem by Mallat \cite{mallat2012cpam} states that, if $\boldsymbol{y}$ can be obtained from $\boldsymbol{x}$ via the action of some differentiable elastic deformation $\boldsymbol{\tau} \in \mathrm{Diff}(\mathbb{R})$, then the Euclidean norm between $\mathbf{S}\boldsymbol{x}$ and $\mathbf{S}\boldsymbol{y} = \mathbf{S}(\boldsymbol{x}\circ\boldsymbol{\tau})$ can be bounded as follows:
+%\begin{equation}
+%\big\Vert \mathbf{S}\boldsymbol{x} - \mathbf{S}(\boldsymbol{\tau}\circ\boldsymbol{x}) \big\Vert^2
+%\leq
+%\kappa_{\mathbf{S}} \times
+%\Vert \boldsymbol{x} \Vert^2 \times
+%\Vert \boldsymbol{\dot{\tau}} \Vert_{\infty},
+%\label{eq:lipschitz}
+%\end{equation}
+%where the notation $\Vert \boldsymbol{x} \Vert^2$ indicates the squared Euclidean norm, $\Vert \boldsymbol{x} \Vert_{\infty}$ indicates the supremum norm over $\mathbb{R}$, and $\boldsymbol{\dot{\tau}}$ is the derivative of the diffeomorphism $\boldsymbol{\tau}$.
+%In the equation above, the scalar $\kappa_{\mathbf{S}}$ plays the role of a Lipschitz constant: it depends exclusively on the design choices underlying the scattering operator $\mathbf{S}$ (\eg{} the quality factor $Q$), yet remains independent of the input signal $\boldsymbol{x}$ as well as the diffeomorphism $\boldsymbol{\tau}$ yielding $\boldsymbol{y} = (\boldsymbol{\tau}\circ\boldsymbol{x})$.
+%In other words, the Euclidean distance between the scattering transform of $\boldsymbol{x}$ and a deformed version of the same signal is bounded from above by the maximal extent of such deformation.
+%
+%Although the inequality in Equation \ref{eq:lipschitz} was originally formulated for temporal scattering, it recursively generalizes to multivariable scattering operators \cite{oyallon2014iclr}, including joint time--frequency scattering.
+%In this context, the appeal behind joint time--frequency scattering is that the deformation $\boldsymbol{\tau}$ may be defined in the scalogram domain $\mathbf{U_1}\boldsymbol{x}$, instead of being constrained to the time domain $\boldsymbol{x}$.
+%Therefore, joint time--frequency scattering coefficients linearize and disentangle small elastic deformations in the time--frequency domain, and represent them activations from a dictionary of multiscale spectrotemporal modulations $\boldsymbol{\Psi}_{\alpha, \beta}$.
 
 
 

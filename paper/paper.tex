@@ -391,34 +391,33 @@ Likewise, the intensity of key clicks in the oboe is necessarily \emph{pp}, whil
 
 In summary, audio signals from isolated musical notes may vary across three categorical variables (instrument, mute, and technique) and two quantitative variables (intensity and pitch).
 The Studio On Line dataset (SOL), recorded at Ircam in 1998, offers a joint sampling of these variables.
-The version of SOL that we use throughout this paper, named ``0.9 HQ'', amounts to 25444 audio signals in total.
-Beyond playing techniques, we should note that SOL erases other factors of acoustic variability, such as identity of performer, identity of instrument manufacturer, audio acquisition equipment, and room response characteristics; which are all restricted to singletons.
-Addressing these factors of variability is besides the scope of this paper, which focuses on the influence of playing technique.
-Despite this deliberate restriction, the size of the SOL dataset remains impractically large for collecting human similarity judgments.
+The version of SOL that we use throughout this paper, named ``0.9 HQ'', amounts to a total of 25444 audio signals.
+Beyond playing techniques, we should note that SOL erases other factors of acoustic variability, such as identity of performer, identity of instrument manufacturer, audio acquisition equipment, and room response characteristics, which are all restricted to singletons.
+Addressing these factors of variability is beyond the scope of this paper, which focuses on the influence of playing technique.
+Despite this restriction, the SOL dataset remains impractically large for collecting human similarity judgments.
 Our protocol addresses this problem by means of three complementary approaches: disentanglement of factors, expert pre-screening, and the use of an efficient annotation interface.
 
 \subsection*{Disentanglement of factors}
 First, we purposefully disentangle categorical variables (IMTs) from continuous variables (pitch and intensity) in the SOL dataset.
 Indeed, under first approximation, the perception of timbre is invariant to pitch and intensity.
-Therefore, we select auditory stimuli according to a reference pitch and a reference intensity; in our case, middle C (\ie{} $\mathsf{C_4}$) and \emph{mf}.
+Therefore, we select auditory stimuli according to a reference pitch and a reference intensity; in our case, middle C ($\mathrm{C_4}$) and \emph{mf}.
 After this selection, every IMT triplet contains a single acoustic exemplar, regarded as canonical in the following.
 The number of canonical stimuli for the entire SOL dataset is equal to 235.
-We should note, however, that the proposed pitch--intensity cannot be strictly enforced across all IMTs.
+We should note, however, that the proposed pitch and intensity cannot be strictly enforced across all IMTs.
 Indeed, as explained above, a fraction of IMTs can only be achieved at restricted values of pitch and intensity parameters, \eg{} pedal tones or key clicks.
-Therefore, at a small cost of consistency, we only enforce the pitch--intensity reference (\ie{} C4 and \emph{mf}) when practically feasible, and fall back to other pitches and intensities if necessary.
+Therefore, at a small cost of consistency, we only enforce the pitch--intensity reference (\ie{} $\mathrm{C_4}$ and \emph{mf}) when practically feasible, and fall back to other pitches and intensities if necessary.
 
 
 \subsection*{Expert pre-screening}
 Secondly, we reduce the number of IMTs in our study by focusing on those which are deemed to be most relevant.
 Here, we define the relevance of an IMT as the possibility of imitating it by means of another IMT from a different instrument.
-One example of such imitation is the acoustic similarity between slap tonguing in reed instruments and a snap pizzicato in strings instruments.
-To collect perceptual ratings of relevance, we recruited two professors in music composition at the Paris Conservatoire (CNSMDP), and explicitly gave them our definition of relevance.
+One example of such imitation is the acoustic similarity between slap tonguing in reed instruments and a snap pizzicato in string instruments.
+To collect perceptual ratings of relevance, we recruited two professors in music composition at the Paris Conservatory (CNSMDP\footnote{CNSMDP: Conservatoire National Sup\'erieur de Musique et de Danse de Paris. Official website: \url{https://www.conservatoiredeparis.fr}}).
 Each of them inspected the entire corpus of $235$ IMTs and annotated them in terms of relevance according to a Likert scale with seven ticks.
-In this Likert scale, the value 1 (least relevant) denotes that the IMT under consideration has a timbre that is idiosyncratic of the instrument, and that therefore, it is unlikely that humans will pair it with IMTs from other instruments.
+In this Likert scale, the value 1 (least relevant) denotes that the IMT under consideration has a timbre that is idiosyncratic, and that therefore, it is unlikely that humans will pair it with other IMTs.
 Conversely, the value 7 (most relevant) denotes that the IMT under consideration bears a strong similarity with some other IMT from the corpus.
 
-Once both experts completed their annotation, we ranked all 235 IMTs by decreasing average relevance score.
-Then, we retained all IMTs whose average score was judged equal to 3 or higher, thus resulting in a shortlist of $N=78$ IMTs (see Tables 1 and 2 in the Appendix).
+Once both experts completed their annotations, we retained all IMTs whose average score was judged equal to 3 or higher, thus resulting in a shortlist of $N=78$ IMTs (see Tables 1 and 2 in the Appendix).
 It is worth noting that, according to both experts, the timbre of the accordion was judged too idiosyncratic to be relevant for this experiment, regardless of playing technique.
 Indeed, the accordion is the only instrument in the aforementioned list of
 instrument to have free reeds, keyboard-based actuation, or handheld airflow.

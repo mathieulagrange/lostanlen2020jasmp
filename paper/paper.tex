@@ -984,26 +984,28 @@ This is in accordance with the protocol of \cite{lostanlen2018extended}, in whic
 
 \subsection*{Best performing system}
 Our best performing system comprises five computational blocks:
+
 \begin{enumerate}
 \item Joint time--frequency scattering up to a maximal time scale of $T=$ \SI{1000}{\milli\second},
 \item Temporal averaging at the scale of the whole musical note,
-\item median-based logarithmic compression,
-\item affine standardization so that each feature has zero mean and unit variance, and
-\item nearest-neighbor search according to priorly learned non-Euclidean metric.
+\item Median-based logarithmic compression,
+\item Affine standardization so that each feature has zero mean and unit variance, and
+\item Nearest-neighbor search according to priorly learned non-Euclidean metric.
 \end{enumerate}
-Note that the non-Euclidean metric is learned via large-margin nearest neighbors (LMNN, see \lnameref{sec:methods} section) on the ``consensus'' cluster graph $\mathcal{G}_0$.
+
+Note that the non-Euclidean metric is learned via LMNN (see \lnameref{sec:methods} section) on the ``consensus'' cluster graph $\mathcal{G}_0$.
 Therefore, the system $\mathbf{\Phi}$ performs timbre similarity retrieval in a user-agnostic way, and can serve as a convenient default algorithm for newcoming users.
 That being said, it is conceivable to replicate the five-stage protocol above on the cluster graph $\mathcal{G}_k$ of a specific user $k$, instead of the cluster graph $\mathcal{G}_0$.
-This operation would lead to a new configuration of the search engine $\mathbf{\Phi}$ that is better tailored to the perceptual idiosyncrasy of user $k$ in terms of timbre similarity, in comparison with the default setting $\mathcal{G}_0$.
+This operation would lead to a new configuration of the search engine $\mathbf{\Phi}$ that is better tailored to the perceptual idiosyncrasy of user $k$ in terms of timbre similarity.
 
-For composers to personalize their search engine $\mathbf{\Phi}$, the quid pro quo is to define manually a cluster graph among $N=78$ audio samples, by means of the Cyberlioz annotation interface (see \lnameref{sec:data-collection} section).
+Composers may personalize their search engine $\mathbf{\Phi}$ by manually defining a cluster graph via the Cyberlioz interface (see \lnameref{sec:data-collection} section).
 This preliminary annotation lasts $30$ to $60$ minutes, which is relatively short in comparison with the duration of the $N^\prime = 9346$ audio samples in $\mathcal{G}_k$ after label propagation: i.e., roughly three hours of audio.
 
 Within the default setting ($\mathcal{G}=\mathcal{G}_0$), our system $\mathbf{\Phi}$ achieves an average precision at rank five (AP@5) of $\textbf{99.0\%}$, with a standard deviation across $K=31$ subjects of the order of $1\%$.
 This favorable result suggests that joint time--frequency scattering provides a useful feature map for learning similarities between instrumental playing techniques.
 In doing so, it is in line with a recent publication \cite{wang2020icassp}, in which the authors successfully trained a supervised classifier on joint time--frequency scattering features in order to detect and classify playing techniques from the Chinese bamboo flute \emph{(dizi)}.
 However, the originality of our work is that $\mathbf{\Phi}$ relies purely on auditory information (i.e., timbre similarity judgments), and does not require any supervision from the symbolic domain.
-In particular, it does not assume the ``metadata'' (instrument, mute, technique, pitch, dynamics, and so forth) of any musical sample $\boldsymbol{x}_n$ to be observable, in part or in full, at training time.
+In particular, it does not assume the metadata (instrument, mute, technique, pitch, dynamics, and so forth) of any musical sample $\boldsymbol{x}_n$ to be observable, in part or in full, at training time.
 
 
 
@@ -1011,22 +1013,23 @@ In particular, it does not assume the ``metadata'' (instrument, mute, technique,
 \label{sec:discussion}
 
 The previous section described our dataset of audio samples with diverse instruments, mutes, and playing techniques, as well as the method we adopt to evaluate a given system for timbre similarity retrieval.
-Over a cohort of $K=31$ subjects, we reported a precision at rank five (P@5) of $99.0\% \pm 1$.
+Over a cohort of $K=31$ subjects, we reported an average precision at rank five (AP@5) of $99.0\% \pm 1$.
 We now turn to alter certain key choices in the design of the above-described computational blocks, and discuss their respective impacts on downstream performance.
 
 Figure \ref{fig:ablation} summarizes our results.
-Interestingly, the system $\boldsymbol{\Phi}$ is not only best on average, but also best for every subject in the cohort: altering any design choice in $\boldsymbol{\Phi}$ (see subsections below) results in a P@5 below $\mathrm{P}_{\mathbf{\Phi}}(k, R)$ for every $k$.
-Borrowing from the terminology of welfare economics, $\boldsymbol{\Phi}$ can be said to be uniquely Pareto-efficient.
+Interestingly, the system $\boldsymbol{\Phi}$ is not only best on average, but also best for every subject in the cohort.
+Specifically, replacing $\boldsymbol{\Phi}$ by a simpler model $\boldsymbol{\Phi}^{\prime}$ (see subsections below for examples of such models) results in $\mathrm{P}_{\mathbf{\Phi^\prime}}(k, 5) < \mathrm{P}_{\mathbf{\Phi}}(k, 5)$ for every $k$.
+Borrowing from the terminology of welfare economics, $\boldsymbol{\Phi}$ can be said to be uniquely Pareto-efficient \cite{black2012dictionary}.
 This observation suggests that the increase in performance afforded by the state-of-the-art model with respect to the baseline does not come at the detriment of user fairness.
 %Results of this ablation study is summarized in Figure , where performance achieved for each reference clustering is depicted by a losange whose color is chosen arbitrarily but consistently across conditions. It appears that the ranking over testing conditions is not strongly modified,  which demonstrate that for all conditions the reference clusterings which are hard to model (depicted by blue losanges) are hard to model for each conditions whereas the reference clusterings which are easier to model (depicted by yellow losanges) are easier to model for each conditions.
 
 
 \subsection*{Is the dataset large enough for evaluation? Is the system overfitting?}
-First of all, it is worth noting that the presented P@5 figure of $99.0\% \pm 1$ does not abide to a conventional training set vs. test set paradigm, as is most often done in machine learning research.
+First of all, it is worth noting that the presented AP@5 figure of $99.0\% \pm 1$ does not abide to a conventional training set vs. test set paradigm, as is most often done in machine learning research.
 Rather, the LMNN algorithm is trained on all available samples ($N^{\prime}=9346$ isolated notes) with the ``consensus'' cluster graph as training objective ($\mathcal{G}=\mathcal{G}_0$).
-Then, it is evaluated on the same samples with individual cluster graphs as ground truth ($\mathcal{G}=\mathcal{G}_k$ for $k\geq1$).
+Then, it is evaluated on the same samples with individual cluster graphs as ground truth ($\mathcal{G}=\mathcal{G}_k$ for $k\geq1$). %\ja wants to delete this "for k>=1" clause
 The reason behind this choice is that, in the context of computer-assisted orchestration, the collection of audio samples has a fixed size, as it is shipped alongside the software itself.
-This is the case, for example, of Orchidea\footnote{Link to Orchidea software and OrchideaSOL dataset: \url{www.orch-idea.org}}, which comes paired with its own version of SOL, named OrchideaSOL \cite{cella2020icmc}.
+This is the case, for example, of Orchidea,\footnote{Link to Orchidea software and OrchideaSOL dataset: \url{www.orch-idea.org}} which comes paired with its own version of SOL, named OrchideaSOL \cite{cella2020icmc}.
 Henceforth, our main goal was to evaluate the generalization ability of our metric learning algorithm beyond the restricted set of samples for which human annotations are directly available ($N=78$, see \lnameref{sec:data-collection} section); that is, beyond one pitch class (middle C) and one intensity level (\emph{mf}).
 
 Despite this caveat, we may adopt a ``query-by-example'' (QbE) paradigm by  partitioning the database and audio samples in half ($\frac{1}{2}N^{\prime}=4673$), training the LMNN algorithm on the first half, and querying it with samples from the other half.

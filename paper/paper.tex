@@ -352,7 +352,7 @@ This approach requires a uniform discretization of the scalogram, and thus an ov
 In contrast, joint time--frequency scattering offers a faster extraction of spectrotemporal modulations while preserving properties of differentiability \cite{andreux2020jmlr} and invertibility \cite{lostanlen2019dafx}.
 Such acceleration is made possible by discretizing the wavelet transforms involved in time--frequency scattering according to a multirate scheme, both along the time and the log-frequency variables \cite{anden2019tsp}.
 In this multirate scheme, every subband is discretized at its critical sample rate, i.e., in proportion to its center frequency.
-As a by-product, the multirate approach draws an explicit connection between scattering networks and deep convolutional networks, because both involves numerous convolutions with small kernels, pointwise rectifying nonlinearities, and dyadic pooling operations \cite{mallat2016philtrans}.
+As a by-product, the multirate approach draws an explicit connection between scattering networks and deep convolutional networks, because both involves numerous convolutions with small kernels, pointwise rectifying nonlinearities, and pooling operations \cite{mallat2016philtrans}.
 
 Moreover, a quantitative benchmark over Medley-solos-DB has demonstrated that joint time--frequency scattering, unlike purely temporal scattering, outperforms deep convolutional networks in supervised musical instrument classification, even in a relatively large data regime with 500 to 5k samples per class \cite{anden2019tsp}.
 However, it remains to be seen whether joint time--frequency scattering is capable of fine-grained auditory categorization, involving variability in instrument, mute, and playing technique.

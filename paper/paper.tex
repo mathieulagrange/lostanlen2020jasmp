@@ -517,14 +517,9 @@ This is because the notion of ``ordinariness'' does not prescribe the same gestu
 
 \section*{\nmu Methods}
 \label{sec:methods}
-The previous section described our protocol for collecting timbral similarity judgments between instrumental playing techniques at scale.
-In this section, we aim to recover these similarity judgments from digital audio recording, according to a paradigm of supervised metric learning.
-To this end, we present a new machine listening system, composing joint time--frequency scattering and large-margin nearest neighbors (LMNN).
-
-%Following the above discussed matters, we propose a ranking system that is based on a processing pipeline made of two main components, see Figure \ref{fig:pipeline}.
-%The first component maps the audio signal of the query and the items of the database into a high-dimensional timbre space using the scattering transform.
-%The second component warps this timbre space by taking into account perceptual judgments represented as a consensus clustering of the items in the dataset, as presented in the \nameref{sec:data-collection} section.
-%This warping, or reweighting, of the space is performed using LMNN.
+The previous section described our protocol for collecting timbral similarity judgments between instrumental playing techniques.
+In this section, we aim to recover these similarity judgments from digital audio recordings according to a paradigm of supervised metric learning.
+To this end, we present a machine listening system composing joint time--frequency scattering and large-margin nearest neighbors (LMNN).
 
 
 \subsection*{Joint time--frequency scattering transform}
@@ -567,21 +562,21 @@ To this end, we present a new machine listening system, composing joint time--fr
 %They have also enjoyed success in several audio classification and similarity retrieval tasks \cite{anden2011multiscale,anden2014tsp,anden2019tsp,lostanlen2018jasmp,lostanlen2018extended}.
 
 
-Let $\boldsymbol{\psi} \in \mathbf{L}^2(\mathbb{R}, \mathbb{C})$ a Hilbert-analytic filter with null average, unit dimensionless center frequency, and an equivalent rectangular bandwidth (ERB) equal to $1/Q$.
+Let $\boldsymbol{\psi} \in \mathbf{L}^2(\mathbb{R}, \mathbb{C})$ a complex-valued filter with zero average, dimensionless center frequency equal to one, and an equivalent rectangular bandwidth (ERB) equal to $1/Q$.
 We define a constant-$Q$ wavelet filterbank as the family $\boldsymbol{\psi}_{\lambda} : t \mapsto \lambda \boldsymbol{\psi}(\lambda t)$.
 Each wavelet $\boldsymbol{\psi}_{\lambda}$ has a center frequency of $\lambda$, an ERB of $\lambda/Q$, and an effective receptive field of $(2\pi Q/\lambda)$ in the time domain.
 In practice, we define $\boldsymbol{\psi}$ as a Morlet wavelet:
 \begin{equation}
 \boldsymbol{\psi}:t \longmapsto \exp\left(-\dfrac{t^2}{2\sigma_{\psi}^2}\right)
-\big[ \exp\left(2\pi \mathrm{i}t\right) - \kappa_{\psi} \big],
+\big( \exp\left(2\pi \mathrm{i}t\right) - \kappa_{\psi} \big),
 \label{eq:psi}
 \end{equation}
-where the Gaussian width $\sigma_{\psi}$ grows in proportion with the quality factor $Q$ and the corrective term $\kappa_{\psi}$ ensures that $\boldsymbol{\psi}$ has a null average over $\mathbb{R}$.
+where the Gaussian width $\sigma_{\psi}$ grows in proportion with the quality factor $Q$ and the corrective term $\kappa_{\psi}$ ensures that $\boldsymbol{\psi}$ has a zero average.
 Moreover, we discretize the frequency variable $\lambda$ according to a geometric progression of common ratio $2^{\frac{1}{Q}}$.
 Thus, the base-two logarithm of center frequency, denoted by $\log_2 \lambda$, follows an arithmetic progression.
 We set the constant quality factor of the wavelet filterbank $(\boldsymbol{\psi}_\lambda)_\lambda$ to $Q=12$, thus matching twelve-tone equal temperament in music.
 
-Convolving the wavelets in this filterbank with an input waveform $\boldsymbol{x}\in\mathbf{L}^2(\mathbb{R})$, followed by an application of the pointwise complex modulus, yields the wavelet scalogram
+Convolving the wavelets in this filterbank with an input waveform $\boldsymbol{x}\in\mathbf{L}^2(\mathbb{R})$, followed by an application of the pointwise complex modulus yields the wavelet scalogram
 \begin{equation}
 \mathbf{U_1}\boldsymbol{x}(t,\lambda) =
 \big\vert
@@ -600,19 +595,19 @@ Convolving the wavelets in this filterbank with an input waveform $\boldsymbol{x
 \right\vert,
 \label{eq:U1}
 \end{equation}
-which is discretized according to a dyadic multirate scheme, similarly to the constant-$Q$ transform of \cite{schorkhuber2010smc}.
+which is discretized similarly to the constant-$Q$ transform of \cite{schorkhuber2010smc}.
 Then, we define a two-dimensional Morlet wavelet $\boldsymbol{\Psi}$ of the form
 \begin{equation}
 \Psi : (t, u) \longmapsto
 \exp\left(-\dfrac{t^2+u^2}{2\sigma_{\Psi}^2}\right)
-\Big[ \exp\big(2\pi \mathrm{i} (t + u)\big) - \kappa_{\Psi} \Big],
+\Big( \exp\big(2\pi \mathrm{i} (t + u)\big) - \kappa_{\Psi} \Big),
 \label{eq:Psi}
 \end{equation}
 taking two real variables $t$ and $u$ as input.
 The former is the time variable while the latter is the base-two logarithm of frequency: $u = \log_2 \lambda$.
 Note that $u$ roughly corresponds to the human perception of relative pitch \cite{lostanlen2020icassp}.
 
-We choose the Gaussian width $\sigma_{\Psi}$ in Equation \ref{eq:Psi} such that the quality factor of the Morlet wavelet $\Psi$ is equal to $1$, both over the time dimension and over the log-frequency dimension.
+We choose the Gaussian width $\sigma_{\Psi}$ in Equation \ref{eq:Psi} such that the quality factor of the Morlet wavelet $\Psi$ is equal to one, both over the time dimension and over the log-frequency dimension.
 Furthermore, the corrective term $\kappa_{\Psi}$ ensures that $\boldsymbol{\Psi}$ has a null average over $\mathbb{R}^2$, similarly to Equation \ref{eq:psi}.
 From $\mathbf{\Psi}$, we define a two-dimensional wavelet filterbank of the form:
 \begin{equation}

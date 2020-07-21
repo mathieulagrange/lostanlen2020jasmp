@@ -501,13 +501,13 @@ From the consensus clustering graph $\mathcal{G}_0$, we also derive a technique-
 As for $\mathbf{A}_{\mathcal{I}}$, we define the similarity between any two playing techniques $u$ and $v$ in $\mathcal{T}$ as the following ratio of set cardinalities:
 \begin{equation}
 \mathbf{A}_{\mathcal{T}}(u,v) = \dfrac{
-2\,\Card \big\{ (m, n) \,\vert\, \mathrm{Technique}(m)=u ; \mathrm{Technique}(n)=v ; m \overset{\mathcal{G}_0}{\sim} n \big\}
+\,\Card \big\{ (m, n) \,\vert\, \mathrm{Technique}(m)=u ; \mathrm{Technique}(n)=v ; m \overset{\mathcal{G}_0}{\sim} n \big\}
 }{
 \Card \big\{n \,\vert\, \mathrm{Technique}(n) \in \{ u, v \} \big\}
 }.
 \label{eq:technique-similarity}
 \end{equation}
-\ml{why 2 ?}
+%\ml{why 2 ?} \vl: fixed
 Again, we run Ward's method to cluster playing techniques in $\mathcal{T}$ according to their similarity $\mathbf{A}_{\mathcal{T}}$.
 Figure \ref{fig:consensusVsPt} displays the rearranged similarity matrix $\widetilde{\mathbf{A}}_{\mathcal{T}} : (u,v)\in \mathcal{T}^2 \mapsto \mathbf{A}_{\mathcal{T}}(\sigma_{\mathcal{T}}^{-1}(u), \sigma_{\mathcal{T}}^{-1}(v))$.
 

@@ -298,7 +298,7 @@ The \lnameref{sec:conclusion} summarizes the implications of our findings for fu
 Timbre involves multiple time scales in conjunction, from a few microseconds for an attack transient to several seconds for a sustained tone.
 Therefore, computational models of timbre perception must summarize acoustic information over a long analysis window, typically amounting to $10^{4}$ digital audio samples or more \cite{joder2009taslp}.
 Mapping this input to a feature space in which distances denote timbral dissimilarity requires a data-driven stage of dimensionality reduction.
-In this respect, the scientific literature exhibits a methodological divide as regards the collection of human-annotated data \cite{siedenburg2016jnmr}: while the field of music information retrieval (MIR) encodes timbre under the form of ``audio tags'', music psychology measures timbre similarity directly from pairwise judgments.
+In this respect, the scientific literature exhibits a methodological divide as regards the collection of human-annotated data \cite{siedenburg2016jnmr}: while the field of MIR mostly encodes timbre under the form of ``audio tags'', music psychology mostly measures timbre similarity directly from pairwise \ml{similarity} judgments.
 
 \subsection*{Timbre modeling in music information retrieval (MIR)}
 On the one hand, most publications in music information retrieval cast timbre modeling as an audio classification problem  \cite{martin1998asa,brown1999jasa,eronen2000icassp,herrera2003jnmr,wieczorkowska2003jiis,livshin2004dafx,krishna2004icassp,kaminskyj2005jiis,benetos2006icassp,bhalke2016jiis}.
@@ -507,6 +507,7 @@ As for $\mathbf{A}_{\mathcal{I}}$, we define the similarity between any two play
 }.
 \label{eq:technique-similarity}
 \end{equation}
+\ml{why 2 ?}
 Again, we run Ward's method to cluster playing techniques in $\mathcal{T}$ according to their similarity $\mathbf{A}_{\mathcal{T}}$.
 Figure \ref{fig:consensusVsPt} displays the rearranged similarity matrix $\widetilde{\mathbf{A}}_{\mathcal{T}} : (u,v)\in \mathcal{T}^2 \mapsto \mathbf{A}_{\mathcal{T}}(\sigma_{\mathcal{T}}^{-1}(u), \sigma_{\mathcal{T}}^{-1}(v))$.
 
@@ -920,7 +921,7 @@ We refer to \cite{bellet2015book} for a review of the state of the art in metric
 
 The previous section described our methods for extracting spectrotemporal modulations in audio signals, as well as learning a non-Euclidean similarity metric between them.
 We now turn to apply these methods to the problem of allocating isolated musical notes to clusters of some timbre similarity graph $\mathcal{G}$.
-In practice, for training purposes, the cluster graph $\mathcal{G}$ represents the consensus of $K=31$ users of the Cyberlioz web application, which was described in the \lnameref{sec:data-collection} section ($\mathcal{G}=\mathcal{G}_0$).
+In practice, for training purposes, the cluster graph $\mathcal{G}$ represents the consensus of the $K=31$ clustering provided by the users interacting with the Cyberlioz web application, which was described in the \lnameref{sec:data-collection} section ($\mathcal{G}=\mathcal{G}_0$).
 However, for evaluation purposes, this cluster graph corresponds to the subjective preferences of a single user $k\geq 1$, in which case we take $\mathcal{G}=\mathcal{G}_k$.
 
 
@@ -932,7 +933,7 @@ Therefore, whereas our data collection procedure for timbre similarity judgments
 Given an audio stimulus $\boldsymbol{x}_n$ from our perceptual study, we seek its position in the cluster graph $\mathcal{G}_0$.
 Then, we identify its instrument--mute--technique (IMT) triplet, scrape for audio samples in SOL matching this triplet, and assign them all to the same cluster as the original audio stimulus.
 We repeat the same procedure for all $N=78$ nodes in $\mathcal{G}_0$, resulting in $N^\prime = 9346$ samples in total.
-This is a form of semi-supervised label propagation: from a limited amount of human annotation, we curate a relatively large subset of SOL, amounting to about one third of the entire dataset ($9346$ out of $25444$ samples).
+This is a form of semi-supervised label propagation: from a limited amount of human annotation in order to curate a relatively large subset of SOL, amounting to about one third of the entire dataset ($9346$ out of $25444$ samples).
 
 
 
@@ -1189,7 +1190,7 @@ While this has the advantage of simplifying the interpretation of the results, t
 This also makes applications such as \emph{query-by-humming} difficult, since we cannot guarantee that the timbral similarity measure is accurate for such sounds.
 
 That being said, the above model is general enough to encompass a wide variety of recordings, not just instrumental sounds.
-Indeed, we have strong assumptions that the tools used (scattering transforms and LMNN weighting matrices) do not depend on the type of sound being processed. Future work will demonstrate that they work for more general classes of sounds.
+Indeed, we have strong assumptions that the tools used (scattering transforms and LMNN weighting matrices) do not depend on the type of sound being processed. \ml{Future work will demonstrate that they work for more general classes of sounds}.
 To extend the model, it is only necessary to retrain the LMNN weighting matrix by supplying it with new cluster assignments.
 These can again be obtained by performing a new clustering experiment with one or more human subjects.
 

@@ -17,7 +17,7 @@
 % \def\includegraphic[#1]{}
 % \def\includegraphics[#1]{}
 
-\graphicspath{{figures/}{figures/violin_scattering}{figures/flute_scattering}{./}}
+\graphicspath{{figures/}{figures/violin_scattering/}{figures/flute_scattering/}{./}}
 %%% Put your definitions there:
 \startlocaldefs
 
@@ -192,7 +192,7 @@ Analyzing their responses suggests that timbre perception operates within a more
 In addition, we propose a machine listening model to recover the cluster graph of auditory similarities across instruments, mutes, and techniques.
 Our model relies on joint time--frequency scattering features to extract spectrotemporal modulations as acoustic features.
 Furthermore, it minimizes triplet loss in the cluster graph by means of the large-margin nearest neighbor (LMNN) metric learning algorithm. % \ja: "what?". VL: leaving it as is. i think it's important to use the words "triplet loss" in the abstract
-Over a dataset of 9346 isolated notes, we report a state-of-the-art precision at rank five (P@5) of $\mathsf{99.0\%\pm1}$.
+Over a dataset of 9346 isolated notes, we report a state-of-the-art average precision at rank five (AP@5) of $\mathsf{99.0\%\pm1}$.
 An ablation study demonstrates that removing either the joint time--frequency scattering transform or the metric learning algorithm noticeably degrades performance.
 \end{abstract}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -526,7 +526,7 @@ This is because the notion of ``ordinariness'' does not prescribe the same gestu
 \label{sec:methods}
 The previous section described our protocol for collecting timbral similarity judgments between instrumental playing techniques.
 In this section, we aim to recover these similarity judgments from digital audio recordings according to a paradigm of supervised metric learning.
-To this end, we present a machine listening system composing joint time--frequency scattering and large-margin nearest neighbors (LMNN).
+To this end, we present a machine listening system composing joint time--frequency scattering and LMNN.
 
 
 \subsection*{Joint time--frequency scattering transform}
@@ -749,7 +749,7 @@ In accordance with their protocol, we compute the following matrix:
 
 Observe that the equation above is a limit case of $\mathbf{S_2}$ (Equation \ref{eq:S2}) in which the constants $T$ and $F$ tend towards infinity.
 As a result, $\mathbf{V}\boldsymbol{x}$ depends solely upon scale $\alpha$ and rate $\beta$.
-In the scientific literature on spectrotemporal receptive fields (STRF), the matrix $\mathbf{V}\boldsymbol{x}$ is called ``cortical output collapsed on the rate-scale axes'' \cite{elhilali2003speechcomm}.
+In the scientific literature on STRF, the matrix $\mathbf{V}\boldsymbol{x}$ is called ``cortical output collapsed on the rate-scale axes'' \cite{elhilali2003speechcomm}.
 
 Previous publications on STRFs have demonstrated the interest of visualizing the slice $\mathbf{V}\boldsymbol{x}$ in the case of speech \cite{bellur2015ciss}, lung sounds \cite{emmanouilidou2012embs}, and music \cite{patil2012ploscompbiol}.
 However, the visualization of musical sounds has been restricted to some of most common playing techniques, i.e., piano played staccato and violin played pizzicato.
@@ -835,7 +835,7 @@ Unlike cluster similarity, this relationship is not symmetric: $\boldsymbol{y}\i
 Note that the dependency of $\mathcal{Y}_R (\boldsymbol{x})$ upon the operator $\mathbf{S}$ is left implicit. % \ja wants to delete this sentence
 In all of the following, we set the constant $R$ to $5$; this is in accordance with our chosen evaluation metric, average precision at rank 5 (AP@5, see \lnameref{sec:results} section).
 
-Let $P$ be the number of scattering paths in the operator $\mathbf{S}$. The large-margin nearest neighbor (LMNN) algorithm learns a matrix $\mathbf{L}$ with $P$ rows and $P$ columns by minimizing an error function of the form:
+Let $P$ be the number of scattering paths in the operator $\mathbf{S}$. The LMNN algorithm learns a matrix $\mathbf{L}$ with $P$ rows and $P$ columns by minimizing an error function of the form:
 \begin{equation}
 \mathcal{E}(\mathbf{L}) = \frac{1}{2} \mathcal{E}_{\textrm{pull}} (\mathbf{L}) + \frac{1}{2} \mathcal{E}_{\textrm{push}} (\mathbf{L})
 \end{equation}
@@ -937,7 +937,7 @@ In order to suit the practical needs of contemporary music composers, computer-a
 Therefore, whereas our data collection procedure for timbre similarity judgments focused on a single pitch (middle C) and a single intensity level (\emph{mf}), we formulate our machine listening experiment on an expanded dataset of audio samples, containing variations in pitch and dynamics.
 
 Given an audio stimulus $\boldsymbol{x}_n$ from our perceptual study, we seek its position in the cluster graph $\mathcal{G}_0$.
-Then, we identify its instrument--mute--technique (IMT) triplet, scrape for audio samples in SOL matching this triplet, and assign them all to the same cluster as the original audio stimulus.
+Then, we identify its IMT triplet, scrape for audio samples in SOL matching this triplet, and assign them all to the same cluster as the original audio stimulus.
 We repeat the same procedure for all $N=78$ nodes in $\mathcal{G}_0$, resulting in $N^\prime = 9346$ samples in total.
 This is a form of semi-supervised label propagation: from a limited amount of human annotation, we curate a relatively large subset of SOL, amounting to about one third of the entire dataset ($9346$ out of $25444$ samples). % \vl: ?
 
@@ -1047,7 +1047,7 @@ Thus, it appears that the gap in performance between the evaluation presented in
 %ML: as the learned layer is relatively thin
 
 \subsection*{Is metric learning necessary?}
-Replacing the LMNN metric learning algorithm by linear discriminant analysis (LDA) leads to a P@5 of $\textbf{76.6}\% \pm 11$.
+Replacing the LMNN metric learning algorithm by linear discriminant analysis (LDA) leads to an AP@5 of $\textbf{76.6}\% \pm 11$.
 Moreover, we evaluate the nearest neighbor algorithm $\mathbf{\Phi}$ in the absence of any metric learning at all. % \ja wants to elaborate
 This corresponds to using a Euclidean distance to compare scattering coefficients, i.e., to set $\mathbf{L}$ to the identity matrix.
 Note that the runtime complexity of Euclidean nearest-neighbor search is identical to LMNN search. % \ja wants to delete this sentence
@@ -1062,7 +1062,7 @@ This value is considerably larger than the frame size of purely spectral feature
 Indeed, the frame size of spectral features for machine listening is typically set to $T=\SI{23}{\milli\second}$, i.e., $2^{10}=1024$ samples at a sampling rate of $\SI{44,1}{\kilo\hertz}$.
 
 As a point of comparison, we set the maximum time scale of joint time--frequency scattering coefficients to $T=\SI{25}{\milli\second}$, hence a $40$-fold reduction in context size.
-Over our cohort of $K=31$ subjects, we report a precision at rank five (P@5) of $\textbf{90.9\%} \pm 4$, which is noticeably worse than the best performing system.
+Over our cohort of $K=31$ subjects, we report an AP@5 of $\textbf{90.9\%} \pm 4$, which is noticeably worse than the best performing system.
 This gap in performance extends the findings of a previous publication \cite{lostanlen2018extended}, which reported that metric learning with temporal scattering coefficients tends to improve with growing values of $T$, until reaching a plateau of performance around $T\sim\SI{500}{\milli\second}$.
 
 
@@ -1121,17 +1121,17 @@ In particular, a previous publication has shown that frequency-dependent time sh
 %For this reason, separable time--frequency scattering coefficients can only serve to recognize periodic modulations (e.g. vibrato), but joint time--frequency scattering is required to recognize pitch evolution-based techniques (PETs, e.g. glissando) \cite{wang2020icassp}.
 The same observation was made by \cite{schadler2015jasa} in the case of joint and separable Gabor filterbank features (GBFB), which bear some resemblance with joint and separable time--frequency scattering coefficients respectively.
 
-Over our cohort of $K=31$ subjects, separable time--frequency scattering achieves a precision at rank five (P@5) of $\textbf{91.9\%} \pm 4$. This figure is noticeably worse than joint time--frequency scattering ($\textbf{99.0}\% \pm 1$), all other things being equal.
-This gap in performance, together with the theory of spectrotemporal receptive fields (STRF) in auditory neuroscience (see \lnameref{sec:related-work} section), demonstrates the importance of joint spectrotemporal modulations in the modeling of timbre similarity across instrumental playing techniques.
+Over our cohort of $K=31$ subjects, separable time--frequency scattering achieves n AP@5 of $\textbf{91.9\%} \pm 4$. This figure is noticeably worse than joint time--frequency scattering ($\textbf{99.0}\% \pm 1$), all other things being equal.
+This gap in performance, together with the theory of STRFs in auditory neuroscience (see \lnameref{sec:related-work} section), demonstrates the importance of joint spectrotemporal modulations in the modeling of timbre similarity across instrumental playing techniques.
 
 
 \subsection*{What is the baseline performance?}
-Lastly, we train a baseline system in which joint time--frequency scattering coefficients are replaced by mel-frequency cepstral coefficients (MFCC).
+Lastly, we train a baseline system in which joint time--frequency scattering coefficients are replaced by MFCCs.
 Specifically, we extract a 40-band mel-frequency spectrogram by means of the RASTAMAT library; apply the pointwise logarithm; and compute a discrete cosine transform (DCT) over the mel-frequency axis.\footnote{Link to RASTAMAT library: \url{http://www.ee.columbia.edu/~dpwe/resources/matlab/rastamat}}
 This operation results in a 40-dimensional feature vector over frames of duration $T=\SI{25}{\milli\second}$.
-Over our cohort of $K=31$ subjects, we report a precision at rank five (P@5) of $\textbf{81.8\%} \pm 7$.
+Over our cohort of $K=31$ subjects, we report an AP@5 of $\textbf{81.8\%} \pm 7$.
 
-Arguably, this figure is not directly comparable with our best performing system (P@5 of $99.0\%\pm 1$), due to the mismatch in dimensionality between MFCC and joint time--frequency scattering coefficients.
+Arguably, this figure is not directly comparable with our best performing system (AP@5 of $99.0\%\pm 1$), due to the mismatch in dimensionality between MFCC and joint time--frequency scattering coefficients.
 In order to clarify the role of feature dimensionality in our computational pipeline, we apply a feature engineering technique involving multiplicative combinations of MFCC.
 We construct the following Gram matrix:
 \begin{equation}
@@ -1148,7 +1148,7 @@ This dimension is of the same order of magnitude as the dimension of our joint t
 
 Training the LMNN algorithm on this 840-dimensional representation is analogous to a ``kernel trick'' in support vector machines \cite{chang2010jmlr}.
 In our case, the implicit similarity kernel is a homogeneous quadratic kernel.
-Despite this increase in representational power, we obtain a P@5 of $81.5\% \pm 7$, i.e. essentially the same as MFCC under a linear kernel.
+Despite this increase in representational power, we obtain an AP@5 of $81.5\% \pm 7$, i.e. essentially the same as MFCC under a linear kernel.
 Therefore, it appears that the gap in performance between MFCC ($81.8\%\pm 7$) and joint time--frequency scattering ($99.0\% \pm 1$) is primarily attributable to the multiscale extraction of joint spectrotemporal modulations, whereas high-dimensional embedding likely plays a minor role.
 
 %In order to quantify the importance of the information carried by the feature set in the final performance, the numerical values of the features are replaced with random numbers sampled from a uniform distribution.
@@ -1229,18 +1229,86 @@ An approach not based on clustering would also have to replace the LMNN algorith
 
 \begin{backmatter}
 
-\section*{\nmu Competing interests}
+\section*{Abbreviations}
+
+\begin{itemize}
+  \item AP@5: average precision at rank 5
+  \item CNSMDP: conservatoire national sup\'erieur de musique et de danse de Paris
+  \item COSMIR: community for open and sustainable music information research
+  \item DCT: discrete cosine transform
+  \item FMA: free music archive
+  \item GBFB: Gabor filterbank features
+  \item IMT: instrument--mute--technique
+  \item LMNN: large-margin nearest neighbor
+  \item MFCC: mel-frequency cepstral coefficients
+  \item MIR: music information retrieval
+  \item P@5: precision at rank five
+  \item ReLU: rectified linear unit
+  \item STRF: spectrotemporal receptive fields
+  \item SOL: studio On Line dataset
+\end{itemize}
+
+\subsection*{Musical instruments}
+
+\begin{itemize}
+  \item Vn: violin,
+  \item Va: viola,
+  \item Vc: celloVc,
+  \item Cb: contrabass,
+  \item Hp: concert harp,
+  \item Gtr: Spanish guitar,
+  \item Acc: accordion,
+  \item Fl: flute,
+  \item BbCl: soprano clarinet,
+  \item ASax: alto saxophone,
+  \item Ob: oboe,
+  \item Bn: bassoon,
+  \item TpC: trumpet in C,
+  \item Hn: French horn,
+  \item TTbn: tenor trombone,
+  \item BBTb: bass tuba.
+\end{itemize}
+
+\subsection*{Musical nuances}
+
+\begin{itemize}
+  \item \emph{pp}: pianissimo,
+  \item \emph{p}: piano,
+  \item \emph{mf}: mezzo forte,
+  \item \emph{f}: forte,
+  \item \emph{ff}: fortissimo.
+\end{itemize}
+
+
+\section*{Declarations}
+
+\subsection*{\nmu Availability of data and materials}
+
+The processing code, the cyberlioz interface and an anonimized version of the  perceptual judgments gathered using this interface are available at the companion website: \url{https://github.com/mathieulagrange/lostanlen2020jasmp}.
+
+The SOL dataset is available online: \url{https://forum.ircam.fr/projects/detail/fullsol}
+
+\subsection*{\nmu Competing interests}
   The authors declare that they have no competing interests.
 
 %\section*{\nmu Author's contributions}
 %    Text for this section \ldots
 
-\section*{\nmu Acknowledgment}
+\subsection*{\nmu Funding}
+This work is partially supported by the Paris sciences et lettres (PSL) TICEL project.
 This work is partially supported by the European Research Council (ERC) award 320959 (InvariantClass).
 This work is partially supported by the National Science Foundation (NSF) award 1633259 (BIRDVOX).
-The Flatiron Institute is a division of the Simons Foundation.
+This work is partially supported by the Flatiron Institute, a division of the Simons Foundation.
+
+\subsection*{\nmu Acknowledgments}
+
 We wish to thank Philippe Brandeis, \'{E}tienne Graindorge, St\'{e}phane Mallat, Adrien Mamou-Mani, and Yan Maresz for contributing to the TICEL research project.
 We also wish to thank the students of the Paris Conservatory and all anonymous participants to our study.
+
+\subsection*{Authors' contributions}
+
+VL provided guidance in the design of the computational experiments and was a major contributor in writing the manuscript. GEH conducted part of the computational experiments. MR designed and implemented the listening tests. GL designed the listening tests and provided guidance in the design of the computational experiments. JA provided guidance in the design of the computational experiments, participated to the data analysis and  to the writing of the manuscript. ML designed and conducted the computational experiments, the data analysis and participated to the writing of the paper.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                  The Bibliography                       %%
@@ -1256,9 +1324,6 @@ We also wish to thank the students of the Paris Conservatory and all anonymous p
 %%  in the online Instructions for Authors.                %%
 %%                                                         %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% \bibliographystyle{bmc-mathphys}
-% \bibliography{bib}
 
 %% BioMed_Central_Bib_Style_v1.01
 

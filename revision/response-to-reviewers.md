@@ -8,4 +8,5 @@
 * We have replaced "Let G a graph" by "Let G be a graph", and likewise in other instances of the same construct.
 * We have replaced the adverb "priorly" by "previously".
 * Regarding the frame duration of 23 milliseconds in MFCC, we have cited the foundational papers of Brown (JASA 1999) and Eronen and Klapuri (ICASSP 2000) to back our claim.
+* We have replaced the words "satisfactory performance" by "high performance".
 * 

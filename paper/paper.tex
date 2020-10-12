@@ -807,7 +807,22 @@ Then, to match a decibel-like perception of loudness, we apply the following ada
 \label{eq:S_tilde}
 \end{equation}
 where $\varepsilon$ is a predefined constant.
-The offset of one before the application of the pointwise logarithm ensures that the transformation is nonexpansive in the sense of Lipschitzian maps.
+The offset of one before the application of the pointwise logarithm ensures that the transformation is nonexpansive in the sense of Lipschitzian maps: there exists a constant $c$ such that
+\begin{equation}
+\big \Vert
+\mathbf{\widetilde{S}}\boldsymbol{x}_m
+-
+\mathbf{\widetilde{S}}\boldsymbol{x}_{n}
+\big \Vert
+\leq
+c
+\big \Vert
+\mathbf{S}\boldsymbol{x}_m
+-
+\mathbf{S}\boldsymbol{x}_{n}
+\big \Vert
+\end{equation}
+for every pair of samples $(\boldsymbol{x}_m, \boldsymbol{x}_n)$.
 On a dataset of environmental audio recordings, a previous publication has shown empirically that Equation \ref{eq:S_tilde} brings the histogram of $\mathbf{\widetilde{S}}\boldsymbol{x}_n (p)$ closer to a Gaussian distribution \cite{lostanlen2018jasmp}.
 Since then, this finding has also been confirmed in the case of musical sounds \cite{lostanlen2018extended}.
 

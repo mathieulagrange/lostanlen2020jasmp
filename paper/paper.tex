@@ -282,7 +282,7 @@ Figure \ref{fig:pipeline} summarizes our experimental protocol: it illustrates h
 The main contribution of this article can be formulated as the intersection between three topics.
 To the best of our knowledge, prior literature has addressed these topics separately, but never in combination.
 
-First, our model encompasses a broad range of extended playing techniques, well beyond the so-called ``ordinary'' mode of acoustic production.
+First, our dataset encompasses a broad range of extended playing techniques, well beyond the so-called ``ordinary'' mode of acoustic production.
 Specifically, we fit pairwise judgments for 78 different techniques arising from 16 instruments, some of which include removable timbre-altering devices such as mutes.
 
 Secondly, we purposefully disregard the playing technique metadata underlying each audio sample during the training phase of our model.
@@ -303,7 +303,7 @@ The \lnameref{sec:conclusion} summarizes the implications of our findings for fu
 \label{sec:related-work}
 
 Timbre involves multiple time scales in conjunction, from a few microseconds for an attack transient to several seconds for a sustained tone.
-Therefore, computational models of timbre perception must summarize acoustic information over a long analysis window, typically amounting to $10^{4}$ digital audio samples or more \cite{joder2009taslp}.
+Therefore, computational models of timbre perception must summarize acoustic information over a long analysis window \cite{joder2009taslp}.
 Mapping this input to a feature space in which distances denote timbral dissimilarity requires a data-driven stage of dimensionality reduction.
 In this respect, the scientific literature exhibits a methodological divide as regards the collection of human-annotated data \cite{siedenburg2016jnmr}: while the field of MIR mostly encodes timbre under the form of ``audio tags'', music psychology mostly measures timbre similarity directly from pairwise similarity judgments.
 

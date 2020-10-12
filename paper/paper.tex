@@ -1077,7 +1077,7 @@ This gap in performance demonstrates the importance of complementing unsupervise
 Our best performing system operates with joint time--frequency scattering coefficients as spectrotemporal modulation features.
 These features are extracted within a temporal context of duration equal to $T=\SI{1000}{\milli\second}$.
 This value is considerably larger than the frame size of purely spectral features, such as spectral centroid, spectral flux, or mel-frequency cepstral coefficients (MFCC).
-Indeed, the frame size of spectral features for machine listening is typically set to $T=\SI{23}{\milli\second}$, i.e., $2^{10}=1024$ samples at a sampling rate of $\SI{44,1}{\kilo\hertz}$.
+Indeed, the frame size of spectral features for machine listening is typically set to $T=\SI{23}{\milli\second}$, i.e., $2^{10}=1024$ samples at a sampling rate of $\SI{44,1}{\kilo\hertz}$ \cite{brown1999jasa,eronen2000icassp}.
 
 As a point of comparison, we set the maximum time scale of joint time--frequency scattering coefficients to $T=\SI{25}{\milli\second}$, hence a $40$-fold reduction in context size.
 Over our cohort of $K=31$ subjects, we report an AP@5 of $\textbf{90.9\%} \pm 4$, which is noticeably worse than the best performing system.

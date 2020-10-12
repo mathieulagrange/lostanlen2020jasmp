@@ -570,7 +570,7 @@ To this end, we present a machine listening system composing joint time--frequen
 %They have also enjoyed success in several audio classification and similarity retrieval tasks \cite{anden2011multiscale,anden2014tsp,anden2019tsp,lostanlen2018jasmp,lostanlen2018extended}.
 
 
-Let $\boldsymbol{\psi} \in \mathbf{L}^2(\mathbb{R}, \mathbb{C})$ a complex-valued filter with zero average, dimensionless center frequency equal to one, and an equivalent rectangular bandwidth (ERB) equal to $1/Q$.
+Let $\boldsymbol{\psi} \in \mathbf{L}^2(\mathbb{R}, \mathbb{C})$ be a complex-valued filter with zero average, dimensionless center frequency equal to one, and an equivalent rectangular bandwidth (ERB) equal to $1/Q$.
 We define a constant-$Q$ wavelet filterbank as the family $\boldsymbol{\psi}_{\lambda} : t \mapsto \lambda \boldsymbol{\psi}(\lambda t)$.
 Each wavelet $\boldsymbol{\psi}_{\lambda}$ has a center frequency of $\lambda$, an ERB of $\lambda/Q$, and an effective receptive field of $(2\pi Q/\lambda)$ in the time domain.
 In practice, we define $\boldsymbol{\psi}$ as a Morlet wavelet:
@@ -833,8 +833,8 @@ With a slight abuse of notation, we still denote by $\mathbf{\widetilde{S}}\bold
 
 
 \subsection*{Metric learning with large-margin nearest neighbors (LMNN)}
-Let $\boldsymbol{x}$ some arbitrary audio sample in the dataset $\mathcal{X}$.
-Let $\mathcal{G}$ a cluster graph with $N = \card \mathcal{X}$ vertices and $C$ clusters in total.
+Let $\boldsymbol{x}$ be some arbitrary audio sample in the dataset $\mathcal{X}$.
+Let $\mathcal{G}$ be a cluster graph with $N = \card \mathcal{X}$ vertices and $C$ clusters in total.
 We denote by $\mathcal{G}(\boldsymbol{x})$ the cluster to which the sample $\boldsymbol{x}$ belongs.
 Given another sample $\boldsymbol{y}$ in $\mathcal{X}$, $\boldsymbol{y}$ is similar to $\boldsymbol{x}$ if and only if belongs to the cluster $\mathcal{G}(\boldsymbol{x})$.
 Because $\mathcal{G}$ is a disjoint union of complete graphs, this relation is symmetric: $\boldsymbol{x} \in \mathcal{G}(\boldsymbol{y})$ is equivalent to $\boldsymbol{y} \in \mathcal{G}(\boldsymbol{x})$.
@@ -1015,7 +1015,7 @@ Our best performing system comprises five computational blocks:
 \item Temporal averaging at the scale of the whole musical note,
 \item Median-based logarithmic compression,
 \item Affine standardization so that each feature has zero mean and unit variance, and
-\item Nearest-neighbor search according to priorly learned non-Euclidean metric.
+\item Nearest-neighbor search according to previously learned non-Euclidean metric.
 \end{enumerate}
 
 Note that the non-Euclidean metric is learned via LMNN (see \lnameref{sec:methods} section) on the ``consensus'' cluster graph $\mathcal{G}_0$.

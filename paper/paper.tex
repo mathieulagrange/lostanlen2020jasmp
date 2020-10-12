@@ -252,7 +252,7 @@ Despite their widespread use, purely linguistic references to timbre fail to con
 On the one hand, adjectives such as \emph{bright} or \emph{rough} are prone to misunderstanding, as they do not prescribe any musical gesture that is capable of achieving them \cite{antoine2018isma}.
 On the other hand, the sole mention of a playing technique does not specify its effect in terms of auditory perception.
 For instance, although the term \emph{breathy} alludes to a playing technique that is peculiar to wind instruments, a cellist may accomplish a seemingly breathy timbre by bowing near the fingerboard, i.e., \emph{sul tasto} in the classical terminology.
-Yet, such acoustical similarity at the scale of the entire instrumentarium is not directly reflected by the semantic similarity between playing technique denominations; and discovering it requires musical expertise \cite{kolozali2011ismir}.
+Yet, in a diverse instrumentarium, the semantic similarity between playing technique denominations does not reflect such acoustical similarity \cite{kolozali2011ismir}.
 
 Although a notation-based study of playing techniques in music has research potential in music information retrieval \cite{calvo2020acm}, the prospect of modeling timbre perception necessarily exceeds the symbolic domain.
 Instead, it involves a cognitive process which arises from the subjective experience of listening \cite{erickson1975book}.
@@ -937,10 +937,12 @@ However, for evaluation purposes, this cluster graph corresponds to the subjecti
 In order to suit the practical needs of contemporary music composers, computer-assisted orchestration must draw from a diverse realm of instruments and techniques.
 Therefore, whereas our data collection procedure for timbre similarity judgments focused on a single pitch (middle C) and a single intensity level (\emph{mf}), we formulate our machine listening experiment on an expanded dataset of audio samples, containing variations in pitch and dynamics.
 
+
+
 Given an audio stimulus $\boldsymbol{x}_n$ from our perceptual study, we seek its position in the cluster graph $\mathcal{G}_0$.
 Then, we identify its IMT triplet, scrape for audio samples in SOL matching this triplet, and assign them all to the same cluster as the original audio stimulus.
 We repeat the same procedure for all $N=78$ nodes in $\mathcal{G}_0$, resulting in $N^\prime = 9346$ samples in total.
-This is a form of semi-supervised label propagation: from a limited amount of human annotation, we curate a relatively large subset of SOL, amounting to about one third of the entire dataset ($9346$ out of $25444$ samples). % \vl: ?
+This is a form of semi-supervised label propagation: from a limited amount of human annotation, we curate a relatively large subset of SOL, amounting to about one third of the entire dataset ($9346$ out of $25444$ samples).
 
 
 

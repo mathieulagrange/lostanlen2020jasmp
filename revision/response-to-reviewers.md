@@ -1,3 +1,4 @@
+* We have restructured the paper. Specifically, we have renamed "Contributions" to "Approach" ; we have deleted the "Outline" and "Claim of originality" sections; 
 * We have added "audio similarity" to the list of keywords.
 * We have rephrased the second paragraphs in the Introduction.
 * We have replaced "model" by "dataset" in the second paragraph of the Contributions section.

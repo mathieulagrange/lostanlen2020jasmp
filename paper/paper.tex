@@ -371,7 +371,7 @@ However, it remains to be seen whether joint time--frequency scattering is capab
 In addition, previous publications on joint time--frequency scattering lack a human-centric evaluation, independently from any classification task.
 
 
-\section*{\nmu Data collection}
+\section*{\nmu Perceptual data collection}
 \label{sec:data-collection}
 
 The philharmonic orchestra encompasses four families of instruments: strings, woodwinds, brass, and percussion.
@@ -476,54 +476,7 @@ Intuitively, hypergraph partitioning optimizes a tradeoff between two objectives
 While the graphs $\mathcal{G}_1, \ldots, \mathcal{G}_K$ encode the subjective similarity judgments of participants $1$ to $K$, the graph $\mathcal{G}_0$ represents a form of consensual judgment that is shared across all participants while discarding intersubjective variability.
 Although the rest of our paper focuses on the consensus $\mathcal{G}_0$, it is worth pointing out that the same technical framework could apply to a single subject $k$, or to a subgroup of the $K=31$ subjects.
 This remark emphasizes the potential of our similarity learning method as a customizable tool for visualizing and extrapolating the timbre similarity space of a new subject.
-
-\subsection*{Inter-instrument similarity}
-
-Before addressing the question of modeling timbre in the audio domain, we conduct an exploratory study on the structure of similarity judgments themselves.
-Specifically, given a corpus of IMT samples, we ask whether human listeners tend to cluster these samples by instrument.
-To answer this question, we derive from the consensus clustering graph $\mathcal{G}_0$ an instrument-wise similarity matrix $\mathbf{A}_{\mathcal{I}}$ whose rows and columns are defined on the finite set $\mathcal{I}$ of instruments.
-For every instrument--instrument pair $(i,j)$, we set the value of $\mathbf{A}_{\mathcal{I}}$ at row $i$ and column $j$ equal to the number of edges in $\mathcal{G}_0$ connecting IMTs from instruments $i$ and $j$, renormalized by the number of IMT samples from either instrument $i$ or instrument $j$.
-
-Let us denote the existence of an edge in $\mathcal{G}_0$ connecting two IMT samples $m$ and $n$ by the binary relation $m \overset{\mathcal{G}_0}{\sim} n$.
-The mathematical definition of the matrix $\mathbf{A}_{\mathcal{I}}$ is:
-\begin{equation}
-\mathbf{A}_{\mathcal{I}}(i,j) = \dfrac{
-\,\Card \big\{ (m, n) \,\vert\, \mathrm{Instrument}(m)=i ; \mathrm{Instrument}(n)=j ; m \overset{\mathcal{G}_0}{\sim} n \big\}
-}{
-\Card \big\{n \,\vert\, \mathrm{Instrument}(n) \in \{ i, j \} \big\}
-}.
-\label{eq:instrument-similarity}
-\end{equation}
-
-Then, we run Ward's method \cite{ward1963jasa} to cluster instruments in $\mathcal{I}$ according to the similarity matrix $\mathbf{A}_{\mathcal{I}}$.
-This method yields a permutation $\sigma_{\mathcal{I}}: \mathcal{I} \rightarrow \mathcal{I}$ of the rows and columns in $\mathbf{A}_{\mathcal{I}}$ such that the distance $\vert \sigma_{\mathcal{I}}(i) - \sigma_{\mathcal{I}}(j) \vert$ after permutation is small if and only if the similarity $\mathbf{A}_{\mathcal{I}}(i, j)$ is large.
-Figure \ref{fig:consensusVsI} displays the rearranged similarity matrix $\widetilde{\mathbf{A}}_{\mathcal{I}} : (i,j)\in \mathcal{I}^2 \mapsto \mathbf{A}_{\mathcal{I}}(\sigma_{\mathcal{I}}^{-1}(i), \sigma_{\mathcal{I}}^{-1}(j))$ as a result of such agglomerative hierarchical clustering procedure. % \ja wants to remove this equation
-
-Interestingly, the matrix $\widetilde{\mathbf{A}}_{\mathcal{I}}$ exhibits a block diagonal structure, which roughly reflects the classical taxonomy of musical instruments: four woodwinds (BbCl, Fl, ASax, Ob) are clustered together, followed by a cluster containing one woodwind (Bn) and four brass (BBTb, Hn, TTbn, and TpC), followed by a cluster of all strings (Cb, Va, Vn, Vc, Gtr, Hp).
-Furthermore, the largest cross-instrument similarity arises for the only pair of purely plucked instruments, namely, harp and guitar.
-
-
-\subsection*{Inter-technique similarity}
-From the consensus clustering graph $\mathcal{G}_0$, we also derive a technique-wise similarity matrix $\mathbf{A}_{\mathcal{T}}$ whose rows and columns are defined on the finite set $\mathcal{T}$ of playing techniques.
-As for $\mathbf{A}_{\mathcal{I}}$, we define the similarity between any two playing techniques $u$ and $v$ in $\mathcal{T}$ as the following ratio of set cardinalities:
-\begin{equation}
-\mathbf{A}_{\mathcal{T}}(u,v) = \dfrac{
-\,\Card \big\{ (m, n) \,\vert\, \mathrm{Technique}(m)=u ; \mathrm{Technique}(n)=v ; m \overset{\mathcal{G}_0}{\sim} n \big\}
-}{
-\Card \big\{n \,\vert\, \mathrm{Technique}(n) \in \{ u, v \} \big\}
-}.
-\label{eq:technique-similarity}
-\end{equation}
-%\ml{why 2 ?} \vl: fixed
-Again, we run Ward's method to cluster playing techniques in $\mathcal{T}$ according to their similarity $\mathbf{A}_{\mathcal{T}}$.
-Figure \ref{fig:consensusVsPt} displays the rearranged similarity matrix $\widetilde{\mathbf{A}}_{\mathcal{T}} : (u,v)\in \mathcal{T}^2 \mapsto \mathbf{A}_{\mathcal{T}}(\sigma_{\mathcal{T}}^{-1}(u), \sigma_{\mathcal{T}}^{-1}(v))$.
-
-The block diagonal structure of the matrix $\widetilde{\mathbf{A}}_{\mathcal{T}}$ is less salient than in $\widetilde{\mathbf{A}}_{\mathcal{I}}$.
-Nevertheless, these clusters correspond to some basic attributes of qualitative timbre: by and large, the top-left region of the matrix contains sustained sounds whereas the bottom-right region contains percussive sounds.
-Interestingly, the ordinary technique (\texttt{ord}) appears at the center of the matrix, \ie{} at the intersection between sustained sounds and percussive sounds.
-This is because the notion of ``ordinariness'' does not prescribe the same gesture for all instruments: \eg{} an ordinary guitar sound is expected to be percussive whereas an ordinary flute sound is expected to be sustained.
-
-\section*{\nmu Methods}
+\section*{\nmu Machine listening methods}
 \label{sec:methods}
 The previous section described our protocol for collecting timbral similarity judgments between instrumental playing techniques.
 In this section, we aim to recover these similarity judgments from digital audio recordings according to a paradigm of supervised metric learning.
@@ -751,7 +704,7 @@ We consider a collection $\mathcal{X}$ of $N$ waveforms $\boldsymbol{x}_1,\ldots
 \median_{1\leq n \leq N}
 \int_{\mathbb{R}} \mathbf{S}\boldsymbol{x}_n(t, p) \;\mathrm{d}t.
 \end{equation}
-If the collection is split between a training set and a test set (see \lnameref{sec:discussion} section), we compute $\boldsymbol{\mu}$ on the training set only.
+If the collection is split between a training set and a test set (see \lnameref{sec:results} section), we compute $\boldsymbol{\mu}$ on the training set only.
 Then, to match a decibel-like perception of loudness, we apply the following adaptive transformation, which composes a median-based renormalization and a logarithmic compression:
 \begin{equation}
 \mathbf{\widetilde{S}}\boldsymbol{x}_n (p) =
@@ -966,6 +919,53 @@ However, for evaluation purposes, this cluster graph corresponds to the subjecti
 
 
 
+\subsection*{Inter-instrument similarity}
+
+Before addressing the question of modeling timbre in the audio domain, we conduct an exploratory study on the structure of similarity judgments themselves.
+Specifically, given a corpus of IMT samples, we ask whether human listeners tend to cluster these samples by instrument.
+To answer this question, we derive from the consensus clustering graph $\mathcal{G}_0$ an instrument-wise similarity matrix $\mathbf{A}_{\mathcal{I}}$ whose rows and columns are defined on the finite set $\mathcal{I}$ of instruments.
+For every instrument--instrument pair $(i,j)$, we set the value of $\mathbf{A}_{\mathcal{I}}$ at row $i$ and column $j$ equal to the number of edges in $\mathcal{G}_0$ connecting IMTs from instruments $i$ and $j$, renormalized by the number of IMT samples from either instrument $i$ or instrument $j$.
+
+Let us denote the existence of an edge in $\mathcal{G}_0$ connecting two IMT samples $m$ and $n$ by the binary relation $m \overset{\mathcal{G}_0}{\sim} n$.
+The mathematical definition of the matrix $\mathbf{A}_{\mathcal{I}}$ is:
+\begin{equation}
+\mathbf{A}_{\mathcal{I}}(i,j) = \dfrac{
+\,\Card \big\{ (m, n) \,\vert\, \mathrm{Instrument}(m)=i ; \mathrm{Instrument}(n)=j ; m \overset{\mathcal{G}_0}{\sim} n \big\}
+}{
+\Card \big\{n \,\vert\, \mathrm{Instrument}(n) \in \{ i, j \} \big\}
+}.
+\label{eq:instrument-similarity}
+\end{equation}
+
+Then, we run Ward's method \cite{ward1963jasa} to cluster instruments in $\mathcal{I}$ according to the similarity matrix $\mathbf{A}_{\mathcal{I}}$.
+This method yields a permutation $\sigma_{\mathcal{I}}: \mathcal{I} \rightarrow \mathcal{I}$ of the rows and columns in $\mathbf{A}_{\mathcal{I}}$ such that the distance $\vert \sigma_{\mathcal{I}}(i) - \sigma_{\mathcal{I}}(j) \vert$ after permutation is small if and only if the similarity $\mathbf{A}_{\mathcal{I}}(i, j)$ is large.
+Figure \ref{fig:consensusVsI} displays the rearranged similarity matrix $\widetilde{\mathbf{A}}_{\mathcal{I}} : (i,j)\in \mathcal{I}^2 \mapsto \mathbf{A}_{\mathcal{I}}(\sigma_{\mathcal{I}}^{-1}(i), \sigma_{\mathcal{I}}^{-1}(j))$ as a result of such agglomerative hierarchical clustering procedure. % \ja wants to remove this equation
+
+Interestingly, the matrix $\widetilde{\mathbf{A}}_{\mathcal{I}}$ exhibits a block diagonal structure, which roughly reflects the classical taxonomy of musical instruments: four woodwinds (BbCl, Fl, ASax, Ob) are clustered together, followed by a cluster containing one woodwind (Bn) and four brass (BBTb, Hn, TTbn, and TpC), followed by a cluster of all strings (Cb, Va, Vn, Vc, Gtr, Hp).
+Furthermore, the largest cross-instrument similarity arises for the only pair of purely plucked instruments, namely, harp and guitar.
+
+
+\subsection*{Inter-technique similarity}
+From the consensus clustering graph $\mathcal{G}_0$, we also derive a technique-wise similarity matrix $\mathbf{A}_{\mathcal{T}}$ whose rows and columns are defined on the finite set $\mathcal{T}$ of playing techniques.
+As for $\mathbf{A}_{\mathcal{I}}$, we define the similarity between any two playing techniques $u$ and $v$ in $\mathcal{T}$ as the following ratio of set cardinalities:
+\begin{equation}
+\mathbf{A}_{\mathcal{T}}(u,v) = \dfrac{
+\,\Card \big\{ (m, n) \,\vert\, \mathrm{Technique}(m)=u ; \mathrm{Technique}(n)=v ; m \overset{\mathcal{G}_0}{\sim} n \big\}
+}{
+\Card \big\{n \,\vert\, \mathrm{Technique}(n) \in \{ u, v \} \big\}
+}.
+\label{eq:technique-similarity}
+\end{equation}
+%\ml{why 2 ?} \vl: fixed
+Again, we run Ward's method to cluster playing techniques in $\mathcal{T}$ according to their similarity $\mathbf{A}_{\mathcal{T}}$.
+Figure \ref{fig:consensusVsPt} displays the rearranged similarity matrix $\widetilde{\mathbf{A}}_{\mathcal{T}} : (u,v)\in \mathcal{T}^2 \mapsto \mathbf{A}_{\mathcal{T}}(\sigma_{\mathcal{T}}^{-1}(u), \sigma_{\mathcal{T}}^{-1}(v))$.
+
+The block diagonal structure of the matrix $\widetilde{\mathbf{A}}_{\mathcal{T}}$ is less salient than in $\widetilde{\mathbf{A}}_{\mathcal{I}}$.
+Nevertheless, these clusters correspond to some basic attributes of qualitative timbre: by and large, the top-left region of the matrix contains sustained sounds whereas the bottom-right region contains percussive sounds.
+Interestingly, the ordinary technique (\texttt{ord}) appears at the center of the matrix, \ie{} at the intersection between sustained sounds and percussive sounds.
+This is because the notion of ``ordinariness'' does not prescribe the same gesture for all instruments: \eg{} an ordinary guitar sound is expected to be percussive whereas an ordinary flute sound is expected to be sustained.
+
+
 \subsection*{Best performing system}
 Our best performing system comprises five computational blocks:
 
@@ -1037,13 +1037,7 @@ We distribute the implementation of these figures as part of the MATLAB library 
 
 
 
-
-
-\section*{\nmu Discussion}
-\label{sec:discussion}
-
-The previous section described our dataset of audio samples with diverse instruments, mutes, and playing techniques, as well as the method we adopt to evaluate a given system for timbre similarity retrieval.
-Over a cohort of $K=31$ subjects, we reported an average precision at rank five (AP@5) of $99.0\% \pm 1$.
+\subsection*{Ablation study}
 We now turn to alter certain key choices in the design of the above-described computational blocks, and discuss their respective impacts on downstream performance.
 
 Figure \ref{fig:ablation} summarizes our results.
@@ -1054,7 +1048,7 @@ This observation suggests that the increase in performance afforded by the state
 %Results of this ablation study is summarized in Figure , where performance achieved for each reference clustering is depicted by a losange whose color is chosen arbitrarily but consistently across conditions. It appears that the ranking over testing conditions is not strongly modified,  which demonstrate that for all conditions the reference clusterings which are hard to model (depicted by blue losanges) are hard to model for each conditions whereas the reference clusterings which are easier to model (depicted by yellow losanges) are easier to model for each conditions.
 
 
-\subsection*{Is the dataset large enough for evaluation? Is the system overfitting?}
+\subsection*{Role of dataset size}
 First of all, it is worth noting that the presented AP@5 figure of $99.0\% \pm 1$ does not abide to a conventional training set vs. test set paradigm, as is most often done in machine learning research.
 Rather, the LMNN algorithm is trained on all available samples ($N^{\prime}=9346$ isolated notes) with the ``consensus'' cluster graph as training objective ($\mathcal{G}=\mathcal{G}_0$).
 Then, it is evaluated on the same samples with individual cluster graphs as ground truth ($\mathcal{G}=\mathcal{G}_k$ for $k\geq1$).
@@ -1069,7 +1063,8 @@ Thus, it appears that the gap in performance between the evaluation presented in
 
 %ML: as the learned layer is relatively thin
 
-\subsection*{Is metric learning necessary?}
+
+\subsection*{Role of metric learning}
 Replacing the LMNN metric learning algorithm by linear discriminant analysis (LDA) leads to an AP@5 of $\textbf{76.6}\% \pm 11$.
 Moreover, we evaluate the nearest neighbor algorithm $\mathbf{\Phi}$ in the absence of any metric learning at all. % \ja wants to elaborate
 This corresponds to using a Euclidean distance to compare scattering coefficients, i.e., to set $\mathbf{L}$ to the identity matrix.
@@ -1077,7 +1072,7 @@ Note that the runtime complexity of Euclidean nearest-neighbor search is identic
 We report an average precision at rank five (AP@5) of $\textbf{92.9\%} \pm 3$, which is noticeably worse than the best performing system.
 This gap in performance demonstrates the importance of complementing unsupervised feature extraction by supervised metric learning in the design  of computational models for timbre similarity between instrumental playing techniques.
 
-\subsection*{How important is the amount of temporal context $T$?}
+\subsection*{Role of temporal context $T$}
 
 Our best performing system operates with joint time--frequency scattering coefficients as spectrotemporal modulation features.
 These features are extracted within a temporal context of duration equal to $T=\SI{1000}{\milli\second}$.
@@ -1089,7 +1084,7 @@ Over our cohort of $K=31$ subjects, we report an AP@5 of $\textbf{90.9\%} \pm 4$
 This gap in performance extends the findings of a previous publication \cite{lostanlen2018extended}, which reported that metric learning with temporal scattering coefficients tends to improve with growing values of $T$, until reaching a plateau of performance around $T\sim\SI{500}{\milli\second}$.
 
 
-\subsection*{Is joint time--frequency scattering necessary?}
+\subsection*{Role of joint time--frequency scattering}
 
 Let us recall the full definition of second-order joint time--frequency scattering (see \lnameref{sec:methods} section):
 \begin{equation}
@@ -1148,7 +1143,7 @@ Over our cohort of $K=31$ subjects, separable time--frequency scattering achieve
 This gap in performance, together with the theory of STRFs in auditory neuroscience (see \lnameref{sec:related-work} section), demonstrates the importance of joint spectrotemporal modulations in the modeling of timbre similarity across instrumental playing techniques.
 
 
-\subsection*{What is the baseline performance?}
+\subsection*{Comparison with mel--frequency cepstral coefficients (MFCC) baseline}
 Lastly, we train a baseline system in which joint time--frequency scattering coefficients are replaced by MFCCs.
 Specifically, we extract a 40-band mel-frequency spectrogram by means of the RASTAMAT library; apply the pointwise logarithm; and compute a discrete cosine transform (DCT) over the mel-frequency axis.\footnote{Link to RASTAMAT library: \url{http://www.ee.columbia.edu/~dpwe/resources/matlab/rastamat}}
 This operation results in a 40-dimensional feature vector over frames of duration $T=\SI{25}{\milli\second}$.

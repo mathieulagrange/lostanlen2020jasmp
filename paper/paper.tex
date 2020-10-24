@@ -266,7 +266,8 @@ The advantage of this search is that, unlike the query, the retrieved sound is p
 Thus, following the aesthetic tradition of spectralism in contemporary music creation, the computer serves as a bridge from the auditory level to the symbolic level, \ie{} from a potentially infinite realm of timbral sensations to a musical score of predefined range \cite{caetano2019swarm}.
 
 \subsection*{Goal}
-This article proposes a machine listening system which computes the dissimilarity in timbre between two audio samples.
+This article proposes a machine listening system which computes the dissimilarity in timbre between two audio samples.\footnote{
+For the sake of research reproducibility, the source code for the experimental protocol of this paper is available online, alongside anonymized data from human subjects:  \url{https://github.com/mathieulagrange/lostanlen2020jasmp}}
 Crucially, this dissimilarity is not evaluated in terms of acoustic tags, but in terms of \emph{ad hoc} clusters, as defined by a human consensus of auditory judgments.
 Our system consists of two stages: unsupervised feature extraction and supervised metric learning.
 The feature extraction stage is a nonlinear map which relies on the joint time--frequency scattering transform \cite{anden2015mlsp,anden2019tsp}, followed by per-feature Gaussianization \cite{lostanlen2018jasmp}.
@@ -291,13 +292,16 @@ In other words, we rely on listeners, not performers, to define and evaluate the
 Thirdly, we supplement our quantitative benchmark with visualizations of time--frequency scattering coefficients in the rate--scale domain for various typical samples of instrumental playing techniques.
 These visualizations are in line with visualizations of the modulation power spectrum in auditory neurophysiology \cite{patil2012ploscompbiol}, while offering an accelerated algorithm for scalable feature extraction.
 
-\subsection*{Outline}
-The \lnameref{sec:related-work} section reviews recent research in the computational modeling of musical timbre.
-The \lnameref{sec:data-collection} section describes our computer--human interface for annotating auditory similarities across playing techniques.
-The \lnameref{sec:methods} section presents the technical components of our machine listening system, namely joint time--frequency scattering and large-margin nearest neighbors.
-The \lnameref{sec:results} section describes our experimental benchmark.
-The \lnameref{sec:discussion} section conducts an ablation study of our best performing system.
-The \lnameref{sec:conclusion} summarizes the implications of our findings for future research in music information retrieval.\footnote{For the sake of research reproducibility, the source code for the experimental protocol of this paper is available online, alongside anonymized data from human subjects:  \url{https://github.com/mathieulagrange/lostanlen2020jasmp}}
+From the standpoint of MIR, the model presented here offers an efficient and generic multidimensional representation for timbre similarity, alongside theoretical guarantees of robustness to elastic deformations in the time--frequency domain.
+Conversely, from the standpoint of music cognition, our model offers a scalable and biologically plausible surrogate for stimulus-based collection of acoustic dissimilarity judgments, which is readily tailored to subjective preferences.
+
+%\subsection*{Outline}
+%The \lnameref{sec:related-work} section reviews recent research in the computational modeling of musical timbre.
+%The \lnameref{sec:data-collection} section describes our computer--human interface for annotating auditory similarities across playing techniques.
+%The \lnameref{sec:methods} section presents the technical components of our machine listening system, namely joint time--frequency scattering and large-margin nearest neighbors.
+%The \lnameref{sec:results} section describes our experimental benchmark.
+%The \lnameref{sec:discussion} section conducts an ablation study of our best performing system.
+%The \lnameref{sec:conclusion} summarizes the implications of our findings for future research in music information retrieval.
 
 \section*{\nmu Related work}
 \label{sec:related-work}

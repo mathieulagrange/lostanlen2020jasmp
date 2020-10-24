@@ -732,49 +732,6 @@ Given an input waveform $\boldsymbol{x}$, we denote by $\mathbf{S}\boldsymbol{x}
 
 
 
-\subsection*{Visualization}
-\label{sec:visualization}
-
-At the second order, joint time--frequency scattering coefficients depend upon four variables: time $t$, log-frequency $\lambda$, temporal modulation rate $\alpha$ in Hertz, and frequential modulation rate $\beta$ in cycles per octave.
-From a data visualization standpoint, rendering the four-dimensional tensor $\mathbf{S_2}\boldsymbol{x}(t, \lambda, \alpha, \beta)$ is impossible.
-To address this limitation, a recent publication has projected this tensor into a two-dimensional ``slice'', thus yielding an image raster \cite{anden2019tsp}.
-In accordance with their protocol, we compute the following matrix:
-
-\begin{equation}
-\mathbf{V}\boldsymbol{x}(\alpha, \beta) =
-\iint_{\mathbb{R}^2}
-\mathbf{U_2}\boldsymbol{x}(t - t^\prime, \log \lambda - u^\prime)
-\;\mathrm{d}t^\prime \, \mathrm{d}u^\prime,
-\end{equation}
-
-Observe that the equation above is a limit case of $\mathbf{S_2}$ (Equation \ref{eq:S2}) in which the constants $T$ and $F$ tend towards infinity.
-As a result, $\mathbf{V}\boldsymbol{x}$ depends solely upon scale $\alpha$ and rate $\beta$.
-In the scientific literature on STRF, the matrix $\mathbf{V}\boldsymbol{x}$ is called ``cortical output collapsed on the rate-scale axes'' \cite{elhilali2003speechcomm}.
-
-Previous publications on STRFs have demonstrated the interest of visualizing the slice $\mathbf{V}\boldsymbol{x}$ in the case of speech \cite{bellur2015ciss}, lung sounds \cite{emmanouilidou2012embs}, and music \cite{patil2012ploscompbiol}.
-However, the visualization of musical sounds has been restricted to some of most common playing techniques, i.e., piano played staccato and violin played pizzicato.
-Furthermore, prior publications on time--frequency scattering have displayed slices of $\mathbf{S_2}\boldsymbol{x}$ in the case of synthetic signals; but there is a gap in literature as regards the interpretability of the scale--rate domain in the case of real-world signals.
-
-To remedy this gap, we select twelve isolated notes from the SOL dataset from two instruments: violin (Figure \ref{fig:violin-scattering}) and flute (Figure \ref{fig:flute-scattering}).
-By and large, we find that joint time--frequency scattering produces comparable patterns in the scale--rate domain as the ``cortical output'' of the STRF.
-For example, Figure \ref{fig:violin-scattering} (a) shows that a violin note played in the \emph{ordinario} technique has a local energy maximum at the rate $\alpha = \SI{6}{\hertz}$.
-A visual inspection of $\mathbf{U_1}$ demonstrates that this rate coincides with the rate of vibrato of the left hand in the violin note.
-As seen in Figure \ref{fig:violin-scattering} (b), this local energy maximum is absent when the playing technique is denoted as \emph{nonvibrato}.
-Furthermore, Figure \ref{fig:violin-scattering} (c) shows that the local energy maximum is displaced to a higher rate ($\alpha = \SI{12}{\hertz}$) when the vibrato is replaced by a tremolo.
-
-The visual interpretation of playing techniques in terms of their joint time--frequency scattering coefficients is not restricted to periodic modulation, such as vibrato or tremolo: rather, it also encompasses the analysis of attack transients.
-Figures \ref{fig:violin-scattering} (d), (e), and (f) show the matrix $\mathbf{V}\boldsymbol{x}$ for three instances of impulsive violin sounds: sforzando, pizzicato, and staccato respectively.
-These three techniques create ridges in the scale--rate domain $(\alpha, \beta)$, where the cutoff rate $\alpha$ is lowest with sforzando and highest with staccato.
-These variations in cutoff rate coincide with perceptual variations in ``hardness'', i.e. impulsivity, of the violin sound.
-Moreover, in the case of staccato, we observe a slight asymmetry in the frequential scale parameter $\beta$.
-This asymmetry could be due to the fact that higher-order harmonics decay faster than the fundamental, thus yielding a triangular shape in the time--frequency domain.
-
-Figure \ref{fig:flute-scattering} shows six playing techniques of the flute.
-Similarly to the violin (Figure \ref{fig:violin-scattering}), we observe that periodic modulations, such as a trill (Figure \ref{fig:flute-scattering} b) or a beating tone (c), cause local energy maxima whose rate $\alpha$ is physically interpretable.
-Likewise, impulsive flute sounds such as sforzando (Figure \ref{fig:flute-scattering} d), key click (e), and vibrato (f) create ridges in the scale--rate domain of varying cutoff rates $\alpha$.
-We distribute the implementation of these figures as part of the MATLAB library \emph{scattering.m}, which is released under the MIT license\footnote{Link to download the \emph{scattering.m} library: \url{https://github.com/lostanlen/scattering.m}}.
-
-
 \subsection*{Median-based logarithmic compression and affine standardization}
 \label{sec:gaussianization}
 
@@ -937,15 +894,6 @@ We refer to \cite{bellet2015book} for a review of the state of the art in metric
 %\end{equation}
 
 
-\section*{\nmu Results}
-\label{sec:results}
-
-The previous section described our methods for extracting spectrotemporal modulations in audio signals, as well as learning a non-Euclidean similarity metric between them.
-We now turn to apply these methods to the problem of allocating isolated musical notes to clusters of some timbre similarity graph $\mathcal{G}$.
-In practice, for training purposes, the cluster graph $\mathcal{G}$ represents the consensus of the $K=31$ clustering provided by the users interacting with the Cyberlioz web application, which was described in the \lnameref{sec:data-collection} section ($\mathcal{G}=\mathcal{G}_0$).
-However, for evaluation purposes, this cluster graph corresponds to the subjective preferences of a single user $k\geq 1$, in which case we take $\mathcal{G}=\mathcal{G}_k$.
-
-
 \subsection*{Semi-supervised label propagation}
 
 In order to suit the practical needs of contemporary music composers, computer-assisted orchestration must draw from a diverse realm of instruments and techniques.
@@ -1006,6 +954,17 @@ This is in accordance with the protocol of \cite{lostanlen2018extended}, in whic
 %Moreover, note that the value $R=5$ typically reflects the number of virtual panels simultaneously on display in a software environment for computer-assisted orchestration.
 
 
+
+\section*{\nmu Results}
+\label{sec:results}
+
+The previous section described our methods for extracting spectrotemporal modulations in audio signals, as well as learning a non-Euclidean similarity metric between them.
+We now turn to apply these methods to the problem of allocating isolated musical notes to clusters of some timbre similarity graph $\mathcal{G}$.
+In practice, for training purposes, the cluster graph $\mathcal{G}$ represents the consensus of the $K=31$ clustering provided by the users interacting with the Cyberlioz web application, which was described in the \lnameref{sec:data-collection} section ($\mathcal{G}=\mathcal{G}_0$).
+However, for evaluation purposes, this cluster graph corresponds to the subjective preferences of a single user $k\geq 1$, in which case we take $\mathcal{G}=\mathcal{G}_k$.
+
+
+
 \subsection*{Best performing system}
 Our best performing system comprises five computational blocks:
 
@@ -1030,6 +989,52 @@ This favorable result suggests that joint time--frequency scattering provides a 
 In doing so, it is in line with a recent publication \cite{wang2020icassp}, in which the authors successfully trained a supervised classifier on joint time--frequency scattering features in order to detect and classify playing techniques from the Chinese bamboo flute \emph{(dizi)}.
 However, the originality of our work is that $\mathbf{\Phi}$ relies purely on auditory information (i.e., timbre similarity judgments), and does not require any supervision from the symbolic domain.
 In particular, it does not assume the metadata (instrument, mute, technique, pitch, dynamics, and so forth) of any musical sample $\boldsymbol{x}_n$ to be observable, in part or in full, at training time.
+
+
+
+\subsection*{Visualization of joint--time frequency scattering coefficients}
+\label{sec:visualization}
+
+At the second order, joint time--frequency scattering coefficients depend upon four variables: time $t$, log-frequency $\lambda$, temporal modulation rate $\alpha$ in Hertz, and frequential modulation rate $\beta$ in cycles per octave.
+From a data visualization standpoint, rendering the four-dimensional tensor $\mathbf{S_2}\boldsymbol{x}(t, \lambda, \alpha, \beta)$ is impossible.
+To address this limitation, a recent publication has projected this tensor into a two-dimensional ``slice'', thus yielding an image raster \cite{anden2019tsp}.
+In accordance with their protocol, we compute the following matrix:
+
+\begin{equation}
+\mathbf{V}\boldsymbol{x}(\alpha, \beta) =
+\iint_{\mathbb{R}^2}
+\mathbf{U_2}\boldsymbol{x}(t - t^\prime, \log \lambda - u^\prime)
+\;\mathrm{d}t^\prime \, \mathrm{d}u^\prime,
+\end{equation}
+
+Observe that the equation above is a limit case of $\mathbf{S_2}$ (Equation \ref{eq:S2}) in which the constants $T$ and $F$ tend towards infinity.
+As a result, $\mathbf{V}\boldsymbol{x}$ depends solely upon scale $\alpha$ and rate $\beta$.
+In the scientific literature on STRF, the matrix $\mathbf{V}\boldsymbol{x}$ is called ``cortical output collapsed on the rate-scale axes'' \cite{elhilali2003speechcomm}.
+
+Previous publications on STRFs have demonstrated the interest of visualizing the slice $\mathbf{V}\boldsymbol{x}$ in the case of speech \cite{bellur2015ciss}, lung sounds \cite{emmanouilidou2012embs}, and music \cite{patil2012ploscompbiol}.
+However, the visualization of musical sounds has been restricted to some of most common playing techniques, i.e., piano played staccato and violin played pizzicato.
+Furthermore, prior publications on time--frequency scattering have displayed slices of $\mathbf{S_2}\boldsymbol{x}$ in the case of synthetic signals; but there is a gap in literature as regards the interpretability of the scale--rate domain in the case of real-world signals.
+
+To remedy this gap, we select twelve isolated notes from the SOL dataset from two instruments: violin (Figure \ref{fig:violin-scattering}) and flute (Figure \ref{fig:flute-scattering}).
+By and large, we find that joint time--frequency scattering produces comparable patterns in the scale--rate domain as the ``cortical output'' of the STRF.
+For example, Figure \ref{fig:violin-scattering} (a) shows that a violin note played in the \emph{ordinario} technique has a local energy maximum at the rate $\alpha = \SI{6}{\hertz}$.
+A visual inspection of $\mathbf{U_1}$ demonstrates that this rate coincides with the rate of vibrato of the left hand in the violin note.
+As seen in Figure \ref{fig:violin-scattering} (b), this local energy maximum is absent when the playing technique is denoted as \emph{nonvibrato}.
+Furthermore, Figure \ref{fig:violin-scattering} (c) shows that the local energy maximum is displaced to a higher rate ($\alpha = \SI{12}{\hertz}$) when the vibrato is replaced by a tremolo.
+
+The visual interpretation of playing techniques in terms of their joint time--frequency scattering coefficients is not restricted to periodic modulation, such as vibrato or tremolo: rather, it also encompasses the analysis of attack transients.
+Figures \ref{fig:violin-scattering} (d), (e), and (f) show the matrix $\mathbf{V}\boldsymbol{x}$ for three instances of impulsive violin sounds: sforzando, pizzicato, and staccato respectively.
+These three techniques create ridges in the scale--rate domain $(\alpha, \beta)$, where the cutoff rate $\alpha$ is lowest with sforzando and highest with staccato.
+These variations in cutoff rate coincide with perceptual variations in ``hardness'', i.e. impulsivity, of the violin sound.
+Moreover, in the case of staccato, we observe a slight asymmetry in the frequential scale parameter $\beta$.
+This asymmetry could be due to the fact that higher-order harmonics decay faster than the fundamental, thus yielding a triangular shape in the time--frequency domain.
+
+Figure \ref{fig:flute-scattering} shows six playing techniques of the flute.
+Similarly to the violin (Figure \ref{fig:violin-scattering}), we observe that periodic modulations, such as a trill (Figure \ref{fig:flute-scattering} b) or a beating tone (c), cause local energy maxima whose rate $\alpha$ is physically interpretable.
+Likewise, impulsive flute sounds such as sforzando (Figure \ref{fig:flute-scattering} d), key click (e), and vibrato (f) create ridges in the scale--rate domain of varying cutoff rates $\alpha$.
+We distribute the implementation of these figures as part of the MATLAB library \emph{scattering.m}, which is released under the MIT license\footnote{Link to download the \emph{scattering.m} library: \url{https://github.com/lostanlen/scattering.m}}.
+
+
 
 
 

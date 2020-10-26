@@ -312,7 +312,7 @@ Therefore, computational models of timbre perception must summarize acoustic inf
 Mapping this input to a feature space in which distances denote timbral dissimilarity requires a data-driven stage of dimensionality reduction.
 In this respect, the scientific literature exhibits a methodological divide as regards the collection of human-annotated data \cite{siedenburg2016jnmr}: while the field of MIR mostly encodes timbre under the form of ``audio tags'', music psychology mostly measures timbre similarity directly from pairwise similarity judgments.
 
-\subsection*{Timbre modeling in music information retrieval (MIR)}
+\subsection*{Automatic classification of musical instruments and playing techniques}
 On the one hand, most publications in music information retrieval cast timbre modeling as an audio classification problem  \cite{martin1998asa,brown1999jasa,eronen2000icassp,herrera2003jnmr,wieczorkowska2003jiis,livshin2004dafx,krishna2004icassp,kaminskyj2005jiis,benetos2006icassp,bhalke2016jiis}.
 In this context, the instrumentation of each musical excerpt serves as an unstructured set of ``audio tags,'' encoded as binary outputs within some predefined label space.
 Because such tags often belong to the metadata of music releases, the process of curating a training set for musical instrument classification requires little or no human intervention.
@@ -326,7 +326,8 @@ Over the past decade, the availability of large digital audio collections, toget
 Notwithstanding the growing accuracy of these architectures in the large-scale data regime, it remains unclear how to extend them from musical instrument recognition to playing technique recognition, where labeled samples are considerably more scarce \cite{loureiro2004ismir}.
 We refer to \cite{han2017taslp} for a recent review of the state of the art in this domain.
 
-\subsection*{Timbre modeling in music cognition research}
+
+\subsection*{Spectrotemporal receptive fields (STRF) in music cognition}
 On the other hand, the field of music psychology investigates timbre with the aim of discovering its physiological and behavioral foundations \cite{mcadams2009chapter}.
 In this setting, prior knowledge of instrumentation, however accurate, does not suffice to conduct a study on timbre perception.
 Rather, each excerpt must be played back to multiple human listeners.

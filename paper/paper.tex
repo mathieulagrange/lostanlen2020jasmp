@@ -187,7 +187,7 @@
 \begin{abstract}
 Instrumental playing techniques such as vibratos, glissandos, and trills often denote musical expressivity, both in classical and folk contexts.
 However, most existing approaches to music similarity retrieval fail to describe timbre beyond the so-called ``ordinary'' technique, use instrument identity as a proxy for timbre quality, and do not allow for customization to the perceptual idiosyncrasies of a new subject.
-In this article, we ask 31 human subjects to organize 78 isolated notes into a set of timbre clusters.
+In this article, we ask 31 human participants to organize 78 isolated notes into a set of timbre clusters.
 Analyzing their responses suggests that timbre perception operates within a more flexible taxonomy than those provided by instruments or playing techniques alone.
 In addition, we propose a machine listening model to recover the cluster graph of auditory similarities across instruments, mutes, and techniques.
 Our model relies on joint time--frequency scattering features to extract spectrotemporal modulations as acoustic features.
@@ -274,7 +274,7 @@ The feature extraction stage is a nonlinear map which relies on the joint time--
 It encodes patterns of spectrotemporal modulation in the acoustic query while offering numerical guarantees of stability to local deformations \cite{anden2012scattering}.
 The metric learning stage is a linear map, optimized via large-margin nearest neighbors (LMNN) \cite{weinberger2009distance}.
 It reweights scattering coefficients so that pairwise distances between samples more accurately reflect human judgments on a training set.
-These human judgments may be sourced from a single subject or the intersubjective consensus of multiple subjects \cite{mcadams1995psychres}.
+These human judgments may be sourced from a single subject or the intersubjective consensus of multiple participants \cite{mcadams1995psychres}.
 
 Figure \ref{fig:pipeline} summarizes our experimental protocol: it illustrates how visual annotations (top) can inform feature extraction (center) to produce a nearest-neighbor search engine which is consistent with human judgments of timbre similarity (bottom).
 
@@ -453,7 +453,10 @@ In May and June 2016, we recruited volunteers to use Cyberlioz on their own comp
 To this end, we publicized this study on the internal mailing list of students at CNSMDP, as well as two international mailing lists for research in music audio processing: AUDITORY  and ISMIR Community.\footnote{
 For more information about these mailing lists, please visit:
 \url{http://www.auditory.org/} and \url{http://ismir.net/}}
-Within two months, $K=31$ subjects accessed Cyberlioz and completed the task.
+Within two months, $K=31$ participants accessed Cyberlioz and completed the task.
+We did not collect personal information on the age, gender, nor musical background of participants.
+
+
 
 \subsection*{Hypergraph partitioning}
 Once the data collection campaign was complete, we analyzed the color assignments of each subject $k$ and converted them into a cluster graph $\mathcal{G}_k$, where the integer $k$ is an anonymized subject index, ranging between $1$ and $K$.
@@ -462,20 +465,22 @@ In $\mathcal{G}_k$, an edge connects any two vertices $m$ and $n$ if the corresp
 Otherwise, there is no edge connecting $m$ and $n$.
 Thus, $\mathcal{G}_k$ contains as many connected components as the number of similarity clusters for the subject $k$, \ie{} the number of distinct colors on the Cyberlioz interface in the response of $k$.
 
+For a particular subject $k$, let us denote by $C_k$ the number of clusters in the graph $\mathcal{G}_k$.
+Figure \ref{fig:cluster-histograms} (a) shows the histogram of $C_k$ across the cohort of $K=31$ participants.
+We observe that the number of clusters varies between $3$ and $19$ with a median value of $10$.
+Accordingly, the number of samples belonging to a cluster varies between $1$ (the most frequent value) and $50$, as shown in Figure \ref{fig:cluster-histograms} (b).
 %Only the clustering given by the subjects using the color labels is considered to estimate the spontaneous judgments of similarity among \ipt. The spatial organization of the dots representing the \ipt could provide information about the similarity, but this would implicitly enforce the fact that the timbral similarity space is two dimensional. We therefore now only study the properties of the clusterings performed by the subject prior to converting them into an overall similarity matrix.
 
-We aggregate the similarity judgments from all $K$ subjects by embedding them into a hypergraph $\mathcal{H}$, that is, a graph whose edges may connect three or more vertices at once.
+We aggregate the similarity judgments from all $K$ participants by embedding them into a hypergraph $\mathcal{H}$, that is, a graph whose edges may connect three or more vertices at once.
 Specifically, $\mathcal{H}$ contains $N$ vertices, each representing an IMT; and each ``hyperedge'' in $\mathcal{H}$ corresponds to some connected component in one of the graphs $\mathcal{G}_1, \ldots, \mathcal{G}_K$.
 Then, we convert the hypergraph $\mathcal{H}$ back into a conventional graph $\mathcal{G}_0$ by means of a combinatorial optimization algorithm known as hypergraph partitioning \cite{kernighan1970efficient}.
 
-For a particular subject $k$, let us denote by $C_k$ the number of clusters in the graph $\mathcal{G}_k$.
-Across all $K=31$ subjects, $C_k$ varies between $3$ and $19$, with a median value of $10$.
-To construct $\mathcal{G}_0$, we select a number of clusters that is equal to the maximal value of the $C_k$'s; that is,$C_0 = 19$.
+To construct $\mathcal{G}_0$, we select a number of clusters that is equal to the maximal value of the $C_k$'s; that is, $C_0 = 19$.
 Then, we run hypergraph partitioning on $\mathcal{H}$ to assign each vertex $i$ to one of the $C_0$ clusters in $\mathcal{G}_0$.
 Intuitively, hypergraph partitioning optimizes a tradeoff between two objectives: first, balancing the size of all clusters in terms of their respective numbers of vertices; and secondly, keeping most hyperedges enclosed within as few distinct clusters as possible \cite{han1997scalable,strehl2002cluster}.
 
 While the graphs $\mathcal{G}_1, \ldots, \mathcal{G}_K$ encode the subjective similarity judgments of participants $1$ to $K$, the graph $\mathcal{G}_0$ represents a form of consensual judgment that is shared across all participants while discarding intersubjective variability.
-Although the rest of our paper focuses on the consensus $\mathcal{G}_0$, it is worth pointing out that the same technical framework could apply to a single subject $k$, or to a subgroup of the $K=31$ subjects.
+Although the rest of our paper focuses on the consensus $\mathcal{G}_0$, it is worth pointing out that the same technical framework could apply to a single subject $k$, or to a subgroup of the $K=31$ participants.
 This remark emphasizes the potential of our similarity learning method as a customizable tool for visualizing and extrapolating the timbre similarity space of a new subject.
 \section*{\nmu Machine listening methods}
 \label{sec:methods}
@@ -751,7 +756,7 @@ Given another sample $\boldsymbol{y}$ in $\mathcal{X}$, $\boldsymbol{y}$ is simi
 Because $\mathcal{G}$ is a disjoint union of complete graphs, this relation is symmetric: $\boldsymbol{x} \in \mathcal{G}(\boldsymbol{y})$ is equivalent to $\boldsymbol{y} \in \mathcal{G}(\boldsymbol{x})$.
 
 In our protocol, $\boldsymbol{x}$ contains the sound of an isolated musical note and the cluster graph $\mathcal{G}$ encodes auditory similarities within the dataset $\mathcal{X}$.
-Moreover, we take $\mathcal{G}$ to be the equal to the ``consensus'' cluster graph $\mathcal{G}_0$, i.e., arising from the partition of a hypergraph $\mathcal{H}$ which contains the judgments of all $K$ subjects from our perceptual study (see \lnameref{sec:data-collection} section).
+Moreover, we take $\mathcal{G}$ to be the equal to the ``consensus'' cluster graph $\mathcal{G}_0$, i.e., arising from the partition of a hypergraph $\mathcal{H}$ which contains the judgments of all $K$ participants from our perceptual study (see \lnameref{sec:data-collection} section).
 
 %Furthermore, let us denote by $\mathcal{Y}_1 (\boldsymbol{x}) = \mathcal{X} \backslash \lbrace \boldsymbol{x} \rbrace$ the dataset of $(N-1)$ audio samples obtained from $\mathcal{X}$ after subtracting the singleton $\{\boldsymbol{x}\}$.
 
@@ -895,7 +900,7 @@ The precision at rank $R$ of the system $\mathbf{\Phi}$ is defined as the averag
 p_{\mathbf{\Phi}}(n, k, R)
 \end{equation}
 
-Lastly, the ``average precision at rank $R$'' (henceforth, AP@$R$) is the average value of $\mathrm{P}_{\mathbf{\Phi}}$, for constant $R$, across all $K=31$ subjects from our perceptual study:
+Lastly, the ``average precision at rank $R$'' (henceforth, AP@$R$) is the average value of $\mathrm{P}_{\mathbf{\Phi}}$, for constant $R$, across all $K=31$ participants from our perceptual study:
 \begin{equation}
 \mathrm{AP}_{\mathbf{\Phi}}(R) =
 \dfrac{1}{K}
@@ -938,7 +943,7 @@ This operation would lead to a new configuration of the search engine $\mathbf{\
 Composers may personalize their search engine $\mathbf{\Phi}$ by manually defining a cluster graph via the Cyberlioz interface (see \lnameref{sec:data-collection} section).
 This preliminary annotation lasts $30$ to $60$ minutes, which is relatively short in comparison with the duration of the $N^\prime = 9346$ audio samples in $\mathcal{G}_k$ after label propagation: i.e., roughly three hours of audio.
 
-Within the default setting ($\mathcal{G}=\mathcal{G}_0$), our system $\mathbf{\Phi}$ achieves an average precision at rank five (AP@5) of $\textbf{99.0\%}$, with a standard deviation across $K=31$ subjects of the order of $1\%$.
+Within the default setting ($\mathcal{G}=\mathcal{G}_0$), our system $\mathbf{\Phi}$ achieves an average precision at rank five (AP@5) of $\textbf{99.0\%}$, with a standard deviation across $K=31$ participants of the order of $1\%$.
 This favorable result suggests that joint time--frequency scattering provides a useful feature map for learning similarities between instrumental playing techniques.
 In doing so, it is in line with a recent publication \cite{wang2020icassp}, in which the authors successfully trained a supervised classifier on joint time--frequency scattering features in order to detect and classify playing techniques from the Chinese bamboo flute \emph{(dizi)}.
 However, the originality of our work is that $\mathbf{\Phi}$ relies purely on auditory information (i.e., timbre similarity judgments), and does not require any supervision from the symbolic domain.
@@ -1033,7 +1038,7 @@ This value is considerably larger than the frame size of purely spectral feature
 Indeed, the frame size of spectral features for machine listening is typically set to $T=\SI{23}{\milli\second}$, i.e., $2^{10}=1024$ samples at a sampling rate of $\SI{44,1}{\kilo\hertz}$ \cite{brown1999jasa,eronen2000icassp}.
 
 As a point of comparison, we set the maximum time scale of joint time--frequency scattering coefficients to $T=\SI{25}{\milli\second}$, hence a $40$-fold reduction in context size.
-Over our cohort of $K=31$ subjects, we report an AP@5 of $\textbf{90.9\%} \pm 4$, which is noticeably worse than the best performing system.
+Over our cohort of $K=31$ participants, we report an AP@5 of $\textbf{90.9\%} \pm 4$, which is noticeably worse than the best performing system.
 This gap in performance extends the findings of a previous publication \cite{lostanlen2018extended}, which reported that metric learning with temporal scattering coefficients tends to improve with growing values of $T$, until reaching a plateau of performance around $T\sim\SI{500}{\milli\second}$.
 
 
@@ -1092,7 +1097,7 @@ In particular, a previous publication has shown that frequency-dependent time sh
 %For this reason, separable time--frequency scattering coefficients can only serve to recognize periodic modulations (e.g. vibrato), but joint time--frequency scattering is required to recognize pitch evolution-based techniques (PETs, e.g. glissando) \cite{wang2020icassp}.
 The same observation was made by \cite{schadler2015jasa} in the case of joint and separable Gabor filterbank features (GBFB), which bear some resemblance with joint and separable time--frequency scattering coefficients respectively.
 
-Over our cohort of $K=31$ subjects, separable time--frequency scattering achieves n AP@5 of $\textbf{91.9\%} \pm 4$. This figure is noticeably worse than joint time--frequency scattering ($\textbf{99.0}\% \pm 1$), all other things being equal.
+Over our cohort of $K=31$ participants, separable time--frequency scattering achieves n AP@5 of $\textbf{91.9\%} \pm 4$. This figure is noticeably worse than joint time--frequency scattering ($\textbf{99.0}\% \pm 1$), all other things being equal.
 This gap in performance, together with the theory of STRFs in auditory neuroscience (see \lnameref{sec:related-work} section), demonstrates the importance of joint spectrotemporal modulations in the modeling of timbre similarity across instrumental playing techniques.
 
 
@@ -1100,7 +1105,7 @@ This gap in performance, together with the theory of STRFs in auditory neuroscie
 Lastly, we train a baseline system in which joint time--frequency scattering coefficients are replaced by MFCCs.
 Specifically, we extract a 40-band mel-frequency spectrogram by means of the RASTAMAT library; apply the pointwise logarithm; and compute a discrete cosine transform (DCT) over the mel-frequency axis.\footnote{Link to RASTAMAT library: \url{http://www.ee.columbia.edu/~dpwe/resources/matlab/rastamat}}
 This operation results in a 40-dimensional feature vector over frames of duration $T=\SI{25}{\milli\second}$.
-Over our cohort of $K=31$ subjects, we report an AP@5 of $\textbf{81.8\%} \pm 7$.
+Over our cohort of $K=31$ participants, we report an AP@5 of $\textbf{81.8\%} \pm 7$.
 
 Arguably, this figure is not directly comparable with our best performing system (AP@5 of $99.0\%\pm 1$), due to the mismatch in dimensionality between MFCC and joint time--frequency scattering coefficients.
 In order to clarify the role of feature dimensionality in our computational pipeline, we apply a feature engineering technique involving multiplicative combinations of MFCC.
@@ -1157,7 +1162,7 @@ This query-by-example approach provides an opportunity to search for sounds with
 A composer with access to such a system would therefore be able to draw on a more diverse palette of musical timbre.
 
 The computational model proposed in this work is well suited to such a query-by-example task.
-We have shown that it is able to adequately approximate the timbral judgments of a wide range of subjects included in our study.
+We have shown that it is able to adequately approximate the timbral judgments of a wide range of participants included in our study.
 Not only that, but the system can be easily retrained to approximate an individual user's timbre perception by having that user perform the clustering task on the reduced set of $78$ IPTs and running the LMNN training step on those clustering assignments.
 This model can then be applied to new data, or, alternatively, be retrained with these new examples if the existing model proves unsatisfactory.
 
@@ -1174,7 +1179,7 @@ These can again be obtained by performing a new clustering experiment with one o
 Another aspect is the granularity of the similarity judgments.
 In the above method, we have used \emph{hard} clustering assignments to build our model.
 A more nuanced similarity judgment would ask users to rate the similarity of a pair of IPTs on a more graduated scale, which would yield a finer, or \emph{soft}, assignment.
-This however, comes with additional difficulties in providing a consistent scale across subjects, but could be feasible if the goal is to only adapt the timbral space to a single individual.
+This however, comes with additional difficulties in providing a consistent scale across participants, but could be feasible if the goal is to only adapt the timbral space to a single individual.
 An approach not based on clustering would also have to replace the LMNN algorithm with one that accounts for such soft assignments.
 
 %ML: recaler ici la out of database query}
@@ -1507,6 +1512,24 @@ VL provided guidance in the design of the computational experiments and was a ma
 \includegraphics[width=0.9\textwidth]{lostanlen2020jasmp_fig1_v4.pdf}
 \caption{\csentence{Overview of the proposed approach.} See \lnameref{sec:intro} for details.}
 \label{fig:pipeline}
+\end{figure}
+
+
+\begin{figure}
+\center
+\begin{tabular}{cc}
+  (a) & (b) \\
+  \includegraphics[
+  	width = 0.47\textwidth, trim = 10mm 0 5mm 0, clip]
+	  {nbc.png} &
+  \includegraphics[
+    width = 0.47\textwidth, trim = 10mm 0 5mm 0, clip]
+      {sbc.png}
+\end{tabular}
+\caption{\csentence{Intersubjective}.
+Histogram of the number of clusters (a) and the size of the clusters (b) defined by the $31$ subjects. %% TODO UPDATE
+See \lnameref{sec:data-collection} for details.}
+\label{fig:cluster-histograms}
 \end{figure}
 
 \begin{figure}

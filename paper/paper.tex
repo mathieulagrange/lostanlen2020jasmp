@@ -458,7 +458,8 @@ Within two months, $K=31$ participants accessed Cyberlioz and completed the task
 We did not collect personal information on the age, sex, nor musical background of participants.
 This is because the goal of our perceptual study is to build a consensus of similarity judgments, rather than to compare demographic subgroups.
 We note that the relatively small size of our cohort ($K=31$) lacks the statistical power to carry out such a comparison.
-In particular, we leave the important question of the effect of musical training on the  as future work.
+In particular, we leave the important question of the effect of musical training on the perception of auditory similarities between playing techniques as future work.
+% TODO revise the paragraph above
 
 \subsection*{Hypergraph partitioning}
 Once the data collection campaign was complete, we analyzed the color assignments of each subject $k$ and converted them into a cluster graph $\mathcal{G}_k$, where the integer $k$ is an anonymized subject index, ranging between $1$ and $K$.
@@ -860,8 +861,6 @@ We refer to \cite{bellet2015book} for a review of the state of the art in metric
 
 In order to suit the practical needs of contemporary music composers, computer-assisted orchestration must draw from a diverse realm of instruments and techniques.
 Therefore, whereas our data collection procedure for timbre similarity judgments focused on a single pitch (middle C) and a single intensity level (\emph{mf}), we formulate our machine listening experiment on an expanded dataset of audio samples, containing variations in pitch and dynamics.
-
-
 
 Given an audio stimulus $\boldsymbol{x}_n$ from our perceptual study, we seek its position in the cluster graph $\mathcal{G}_0$.
 Then, we identify its IMT triplet, scrape for audio samples in SOL matching this triplet, and assign them all to the same cluster as the original audio stimulus.

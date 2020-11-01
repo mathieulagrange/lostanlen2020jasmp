@@ -329,8 +329,7 @@ We refer to \cite{han2017taslp} for a recent review of the state of the art in t
 
 \subsection*{Spectrotemporal receptive fields (STRF) in music cognition}
 On the other hand, the field of music psychology investigates timbre with the aim of discovering its physiological and behavioral foundations \cite{mcadams2009chapter}.
-In this setting, prior knowledge of instrumentation, however accurate, does not suffice to conduct a study on timbre perception.
-Rather, each excerpt must be played back to multiple human listeners.
+In this setting, prior knowledge of instrumentation, however accurate, does not suffice to conduct a study on timbre perception: rather, the timbre perception relies on an interplay of acoustic and categorical information \cite{siedenburg2016frontiers}.
 Yet, collecting subjective responses to acoustic stimuli is a tedious and unscalable procedure, which restricts the size of the musical corpus under study.
 These small corpus sizes hampers the applicability of optimization algorithms for representation learning, such as stochastic gradient descent in deep neural networks.
 
@@ -437,18 +436,21 @@ The need for such an interface arises from the unscalability of Likert scales in
 Assuming that similarity is a symmetric quantity, collecting a dense matrix of continuously valued ratings of similarity among a dataset of $N$ items would require $\frac{1}{2}(N^2-N)$ Likert scales.
 In the case of $N=78$ IMTs, the task would amount to about 3k horizontal sliders, \ie{} several hours of cumbersome work for the human annotator. % \ja wants 3,000
 
-Engaging as many participants as possible in our study called for a more streamlined form of human--computer interaction, even if it sacrificed the availability of quantitative ratings.
+Engaging as many participants as possible in our study called for a more streamlined form of human--computer interaction, even if it sacrificed the availability of continuously valued ratings.
 To this end, we implemented a web application, named Cyberlioz, in which the user can spontaneously listen and arrange sounds into clusters of timbre similarity.\footnote{The Web application for efficient audio annotation, as well as the raw anonymized responses of all 31 participants to our study, is available at: \url{https://soundthings.org/research/cyberlioz/}}
 The name Cyberlioz is a portmanteau between the prefix cyber- and the French composer Hector Berlioz.
 The choice is by no means coincidental: Berlioz is famous for having, in his \emph{Treatise on Orchestration} (1844), shed a particular focus on the role of timbre as a parameter for musical expression.
-
 
 Cyberlioz consists of a square panel on which is displayed a collection of circular grey dots, each of them corresponding to one of the IMTs, and initially distributed uniformly at random.
 Hovering the screen pointer onto each dot results in a playback of a representative audio sample of this IMT, \ie{} $\mathrm{C}_4$ and \emph{mf} in most cases. Furthermore, each dot can be freely placed on the screen by clicking, dragging, and dropping.
 Lastly, the user can assign a color to each dot among a palette of 20 hues.
 The goal of the Cyberlioz interface is to form clusters of timbre similarity between IMTs, expressed by sameness of color.
 
-In comparison with a traditional web-based form, Cyberlioz offers a more intuitive and playful user experience, while limiting the acquisition of similarity judgments to a moderate duration of $30$ to $60$ minutes for each participant.
+Cyberlioz implements a data collection procedure known as ``free sorting''. In comparison with the direct collection of timbre dissimilarity ratings, free sorting is more efficient yet less accurate \cite{giordano2011multivariate}. We refer to \cite{elliott2013jasa} for an example protocol in which timbre similarity judgments rely on stimuli pairs rather than on a free sorting task.
+
+In comparison with Web-based forms, Cyberlioz offers a more intuitive and playful user experience, while limiting the acquisition of similarity judgments to a moderate duration of $30$ to $60$ minutes for each participant.
+Another advantage of Cyberlioz is that it allows to present all stimuli at once rather than according to a randomized sequence.
+
 In May and June 2016, we recruited volunteers to use Cyberlioz on their own computers, via a web browser, and equipped with a pair of earphones.
 To this end, we publicized this study on the internal mailing list of students at CNSMDP, as well as two international mailing lists for research in music audio processing: AUDITORY  and ISMIR Community.\footnote{
 For more information about these mailing lists, please visit:
@@ -873,7 +875,7 @@ Previous studies on real-world musical sounds have confirmed that listeners are 
 Since then, another study has shown that trained musicians can identify the similarity within pairs of notes from two instruments (horn and bassoon) spanning a range of $2.5$ octave with an accuracy of $80\%$ \cite{steele2006musicperception}.
 In comparison, nonmusicians has great difficulty identifying whether two notes were produced by the same instrument or not when the notes were separated by one octave.
 Thus, the influence of pitch on timbre perception appears to depend upon musical training.
-With this important caveat in mind, we leave as future work the question of disentangling the effect of pitch and musical training in the modeling of auditory similarities between instrumental playing techniques.
+With this important caveat in mind, we leave as future work the question of disentangling the effects of pitch and musical training in the modeling of auditory similarities between instrumental playing techniques.
 
 \subsection*{Evaluation metric}
 
@@ -1148,7 +1150,7 @@ We see from the ablation study conducted above that each step of the proposed mo
 Among other things, it indicates the joint time--frequency scattering transform itself should not be used directly for similarity comparisons, but is best augmented by a learned stage.
 This explains the relative success of such models \cite{lostanlen2018jasmp,lostanlen2018extended} over others where distances on raw scattering coefficients were used for judging audio similarity.
 
-On the other hand, we note that the complexity of the learned model does not have to be high.
+On the other hand, we note that the complexity of the learned model does not need to be high.
 Indeed, for this task, a linear model on the scattering coefficients is sufficient.
 There is no need for deep networks with large numbers of parameters to accurately represent the similarity information.
 In other words, the scattering transform parametrizes the signal structure in a way that many relevant quantities (such as timbre similarity) can be extracted through a simple linear mapping.
@@ -1533,7 +1535,7 @@ VL provided guidance in the design of the computational experiments and was a ma
     width = 0.47\textwidth, trim = 10mm 0 5mm 0, clip]
       {sbc.png}
 \end{tabular}
-\caption{\csentence{Intersubjective}.
+\caption{\csentence{Inter-subject variability}.
 Histogram of the number of clusters (a) and the size of the clusters (b) defined by the $31$ subjects. %% TODO UPDATE
 See \lnameref{sec:data-collection} for details.}
 \label{fig:cluster-histograms}

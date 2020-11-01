@@ -867,7 +867,13 @@ Then, we identify its IMT triplet, scrape for audio samples in SOL matching this
 We repeat the same procedure for all $N=78$ nodes in $\mathcal{G}_0$, resulting in $N^\prime = 9346$ samples in total.
 This is a form of semi-supervised label propagation: from a limited amount of human annotation, we curate a relatively large subset of SOL, amounting to about one third of the entire dataset ($9346$ out of $25444$ samples).
 
-
+Underlying our label propagation procedure is the assumption that the perception of timbre is fully invariant to frequency transposition as well as changes in dynamics.
+This assumption coincides with the commonplace definition of timbre as an autonomous parameter of musical sound.
+Previous studies on real-world musical sounds have confirmed that listeners are able to ignore salient pitch differences while rating timbre similarity \cite{handel2001musicperception,marozeau2003dependency}, insofar as these differences do not exceed one octave.
+Since then, another study has shown that trained musicians can identify the similarity within pairs of notes from two instruments (horn and bassoon) spanning a range of $2.5$ octave with an accuracy of $80\%$ \cite{steele2006musicperception}.
+In comparison, nonmusicians has great difficulty identifying whether two notes were produced by the same instrument or not when the notes were separated by one octave.
+Thus, the influence of pitch on timbre perception appears to depend upon musical training.
+With this important caveat in mind, we leave as future work the question of disentangling the effect of pitch and musical training in the modeling of auditory similarities between instrumental playing techniques.
 
 \subsection*{Evaluation metric}
 

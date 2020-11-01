@@ -251,7 +251,7 @@ As a result, symbolic representations describe timbre indirectly, either via vis
 Despite their widespread use, purely linguistic references to timbre fail to convey the intention of the composer.
 On the one hand, adjectives such as \emph{bright} or \emph{rough} are prone to misunderstanding, as they do not prescribe any musical gesture that is capable of achieving them \cite{antoine2018isma}.
 On the other hand, the sole mention of a playing technique does not specify its effect in terms of auditory perception.
-For instance, although the term \emph{breathy} alludes to a playing technique that is peculiar to wind instruments, a cellist may accomplish a seemingly breathy timbre by bowing near the fingerboard, i.e., \emph{sul tasto} in the classical terminology.
+For instance, although the term \emph{breathy} alludes to a playing technique that is specific to wind instruments, a cellist may accomplish a seemingly breathy timbre by bowing near the fingerboard, i.e., \emph{sul tasto} in the classical terminology.
 Yet, in a diverse instrumentarium, the semantic similarity between playing technique denominations does not reflect such acoustical similarity \cite{kolozali2011ismir}.
 
 Although a notation-based study of playing techniques in music has research potential in music information retrieval \cite{calvo2020acm}, the prospect of modeling timbre perception necessarily exceeds the symbolic domain.
@@ -319,7 +319,7 @@ Because such tags often belong to the metadata of music releases, the process of
 Although scraping user-generated content from online music platforms may not always reflect the true instrumentation with perfect accuracy, it offers a scalable and ecologically valid insight onto the acoustic underpinnings of musical timbre.
 
 Furthermore, supplementing user-generated content with the outcome of a crowdsourced annotation campaign allows an explicit verification of instrument tags.
-For instance, the Open-MIC dataset \cite{humphrey2018ismir}, maintained by the Community for Open and Sustainable Music Information Research (COSMIR) \cite{mcfee2016ismir}, comprises a vast corpus of 20k polyphonic music recordings spanning 20 instruments as a derivative of the Free Music Archive (FMA) dataset \cite{defferrard2017ismir}. % \ja wants 20k, 21k.
+For instance, the Open-MIC dataset \cite{humphrey2018ismir}, maintained by the Community for Open and Sustainable Music Information Research (COSMIR) \cite{mcfee2016ismir}, comprises a vast corpus of 20k polyphonic music excerpts spanning 20 instruments as a derivative of the Free Music Archive (FMA) dataset \cite{defferrard2017ismir}. % \ja wants 20k, 21k.
 Another example is the Medley-solos-DB dataset \cite{lostanlen2016ismir}, which comprises 21k monophonic excerpts from eight instruments as a derivative of the MedleyDB dataset of multitrack music \cite{bittner2014ismir}.
 
 Over the past decade, the availability of large digital audio collections, together with the democratization of high-performance computing on dedicated hardware, has spurred the development of deep learning architectures in music instrument recognition \cite{mcfee2015ismir,pons2017eusipco,gururani2018ismir}.
@@ -331,7 +331,7 @@ We refer to \cite{han2017taslp} for a recent review of the state of the art in t
 On the other hand, the field of music psychology investigates timbre with the aim of discovering its physiological and behavioral foundations \cite{mcadams2009chapter}.
 In this setting, prior knowledge of instrumentation, however accurate, does not suffice to conduct a study on timbre perception: rather, the timbre perception relies on an interplay of acoustic and categorical information \cite{siedenburg2016frontiers}.
 Yet, collecting subjective responses to acoustic stimuli is a tedious and unscalable procedure, which restricts the size of the musical corpus under study.
-These small corpus sizes hampers the applicability of optimization algorithms for representation learning, such as stochastic gradient descent in deep neural networks.
+These small corpus sizes hamper the applicability of optimization algorithms for representation learning, such as stochastic gradient descent in deep neural networks.
 
 While training artificial neurons is prone to statistical overfitting, advanced methods in electrophysiology allow to observe the firing patterns of biological neurons in the presence of controlled stimuli.
 This observation, originally carried out on the ferret, has led to a comprehensive mapping of the primary auditory cortex in terms of its spectrotemporal receptive fields (STRFs) \cite{depireux2001jneur}.
@@ -588,7 +588,7 @@ From $\mathbf{\Psi}$, we define a two-dimensional wavelet filterbank of the form
 \mathbf{\Psi}_{\alpha,\beta} : (t, u) \longmapsto
 \alpha \, \beta \, \mathbf{\Psi}(\alpha t, \beta u).
 \end{equation}
-In the equation above, $\alpha$ is a temporal modulation rate and $\beta$ is a temporal modulation scale, following the terminology of spectrotemporal receptive fields (STRF, see \lnameref{sec:related-work} section).
+In the equation above, $\alpha$ is a temporal modulation rate and $\beta$ is a frequential modulation scale, following the terminology of spectrotemporal receptive fields (STRF, see \lnameref{sec:related-work} section).
 While $\alpha$ is measured in Hertz and is strictly positive, $\beta$ is measured in cycles per octaves and may take positive as well as negative values.
 Both $\alpha$ and $\beta$ are discretized by geometric progressions of common ratio equal to two.
 Furthermore, the edge case $\beta=0$ corresponds to $\mathbf{\Psi}_{\alpha,\beta}$ being a Gaussian low-pass filter over the log-frequency dimension, while remaining a Morlet band-pass filter of center frequency $\alpha$ over the time dimension.
@@ -790,7 +790,7 @@ The definition of $\mathcal{E}_{\textrm{pull}}$ is:
 \end{equation}
 Note that the error term $\mathcal{E}_\textrm{pull}$ is unsupervised, in the sense that it does not depend on the cluster assignments of $\boldsymbol{x}$ and $\boldsymbol{y}$ in $\mathcal{G}$.
 
-While the the term $\mathcal{E}_{\textrm{pull}}$ operates on pairs of samples, the term $\mathcal{E}_{\textrm{push}}$, operates on triplets $(\boldsymbol{x}, \boldsymbol{y}, \boldsymbol{z})\in\mathcal{X}^3$.
+While the term $\mathcal{E}_{\textrm{pull}}$ operates on pairs of samples, the term $\mathcal{E}_{\textrm{push}}$, operates on triplets $(\boldsymbol{x}, \boldsymbol{y}, \boldsymbol{z})\in\mathcal{X}^3$.
 The first sample, $\boldsymbol{x}$, is known as an ``anchor.''
 The second sample, $\boldsymbol{y}$, is known as a ``positive'', and is assumed to belong to the Euclidean neighborhood of the anchor: $\boldsymbol{y} \in \mathcal{Y}_R (\boldsymbol{x})$.
 The third sample, $\boldsymbol{z}$, is known as a ``negative'', and is assumed to belong to a different similarity cluster as the anchor: $\boldsymbol{z}\not\in\mathcal{G}(\boldsymbol{x})$.
@@ -860,7 +860,7 @@ We refer to \cite{bellet2015book} for a review of the state of the art in metric
 %\end{equation}
 
 
-\subsection*{Semi-supervised label propagation}
+\subsection*{Extension to diverse pitches and dynamics}
 
 In order to suit the practical needs of contemporary music composers, computer-assisted orchestration must draw from a diverse realm of instruments and techniques.
 Therefore, whereas our data collection procedure for timbre similarity judgments focused on a single pitch (middle C) and a single intensity level (\emph{mf}), we formulate our machine listening experiment on an expanded dataset of audio samples, containing variations in pitch and dynamics.
@@ -868,9 +868,9 @@ Therefore, whereas our data collection procedure for timbre similarity judgments
 Given an audio stimulus $\boldsymbol{x}_n$ from our perceptual study, we seek its position in the cluster graph $\mathcal{G}_0$.
 Then, we identify its IMT triplet, scrape for audio samples in SOL matching this triplet, and assign them all to the same cluster as the original audio stimulus.
 We repeat the same procedure for all $N=78$ nodes in $\mathcal{G}_0$, resulting in $N^\prime = 9346$ samples in total.
-This is a form of semi-supervised label propagation: from a limited amount of human annotation, we curate a relatively large subset of SOL, amounting to about one third of the entire dataset ($9346$ out of $25444$ samples).
+Thus, from a limited amount of human annotation, we curate a relatively large subset of SOL, amounting to about one third of the entire dataset ($9346$ out of $25444$ samples).
 
-Underlying our label propagation procedure is the assumption that the perception of timbre is fully invariant to frequency transposition as well as changes in dynamics.
+In doing so, we assume that the perception of timbre is fully invariant to frequency transposition as well as changes in dynamics.
 This assumption coincides with the commonplace definition of timbre as an autonomous parameter of musical sound.
 Previous studies on real-world musical sounds have confirmed that listeners are able to ignore salient pitch differences while rating timbre similarity \cite{handel2001musicperception,marozeau2003dependency}, insofar as these differences do not exceed one octave.
 Since then, another study has shown that trained musicians can identify the similarity within pairs of notes from two instruments (horn and bassoon) spanning a range of $2.5$ octave with an accuracy of $80\%$ \cite{steele2006musicperception}.
@@ -880,7 +880,7 @@ With this important caveat in mind, we leave as future work the question of dise
 
 \subsection*{Evaluation metric}
 
-Let us denote by $\boldsymbol{x}_1, \ldots, \boldsymbol{x}_{{N}^{\prime}}$ the $N^{\prime}$ audio samples associated with our annotated dataset after semi-supervised label propagation.
+Let us denote by $\boldsymbol{x}_1, \ldots, \boldsymbol{x}_{{N}^{\prime}}$ the $N^{\prime}$ audio samples associated with our annotated dataset.
 Given a sample $n$ and a human subject $k$, we denote by $\mathcal{G}_k$ the cluster graph associated to the subject $k$, and by $\mathcal{G}_k (n)$ the cluster to which the sample $\boldsymbol{x}_{n}$ belongs.
 Our machine listening system takes the waveform $\boldsymbol{x}_{n}$ as input and returns a ranked list of nearest neighbors: $\mathbf{\Phi}_1 (\boldsymbol{x}_n)$, $\mathbf{\Phi}_2 (\boldsymbol{x}_n)$, $\mathbf{\Phi}_3 (\boldsymbol{x}_n)$, and so forth.
 
@@ -951,7 +951,7 @@ That being said, it is conceivable to replicate the five-stage protocol above on
 This operation would lead to a new configuration of the search engine $\mathbf{\Phi}$ that is better tailored to the perceptual idiosyncrasy of user $k$ in terms of timbre similarity.
 
 Composers may personalize their search engine $\mathbf{\Phi}$ by manually defining a cluster graph via the Cyberlioz interface (see \lnameref{sec:data-collection} section).
-This preliminary annotation lasts $30$ to $60$ minutes, which is relatively short in comparison with the duration of the $N^\prime = 9346$ audio samples in $\mathcal{G}_k$ after label propagation: i.e., roughly three hours of audio.
+This preliminary annotation lasts $30$ to $60$ minutes, which is relatively short in comparison with the duration of the $N^\prime = 9346$ audio samples in $\mathcal{G}_k$ after extension to all available pitches and dynamics: i.e., roughly three hours of audio.
 
 Within the default setting ($\mathcal{G}=\mathcal{G}_0$), our system $\mathbf{\Phi}$ achieves an average precision at rank five (AP@5) of $\textbf{99.0\%}$, with a standard deviation across $K=31$ participants of the order of $1\%$.
 This favorable result suggests that joint time--frequency scattering provides a useful feature map for learning similarities between instrumental playing techniques.

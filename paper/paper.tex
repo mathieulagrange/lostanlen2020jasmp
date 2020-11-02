@@ -268,6 +268,10 @@ The outcome is another audio signal which is selected from a database of instrum
 The advantage of this search is that, unlike the query, the retrieved sound is precisely encoded in terms of duration, pitch, intensity, instrument, and playing technique.
 Thus, following the aesthetic tradition of spectralism in contemporary music creation, the computer serves as a bridge from the auditory level to the symbolic level, \ie{} from a potentially infinite realm of timbral sensations to a musical score of predefined range \cite{caetano2019swarm}.
 
+Composers may personalize their search engine by manually defining a cluster graph via the Cyberlioz interface (see \lnameref{sec:data-collection} section).
+This preliminary annotation lasts $30$ to $60$ minutes, which is relatively short in comparison with the duration of the $N^\prime = 9346$ audio samples in the database: i.e., roughly three hours of audio.
+
+
 \subsection*{Goal}
 This article proposes a machine listening system which computes the dissimilarity in timbre between two audio samples.\footnote{
 For the sake of research reproducibility, the source code for the experimental protocol of this paper is available online, alongside anonymized data from human subjects:  \url{https://github.com/mathieulagrange/lostanlen2020jasmp}}
@@ -952,9 +956,6 @@ Note that the non-Euclidean metric is learned via LMNN (see \lnameref{sec:method
 Therefore, the system $\mathbf{\Phi}$ performs timbre similarity retrieval in a user-agnostic way, and can serve as a convenient default algorithm for newcoming users.
 That being said, it is conceivable to replicate the five-stage protocol above on the cluster graph $\mathcal{G}_k$ of a specific user $k$, instead of the cluster graph $\mathcal{G}_0$.
 This operation would lead to a new configuration of the search engine $\mathbf{\Phi}$ that is better tailored to the perceptual idiosyncrasy of user $k$ in terms of timbre similarity.
-
-Composers may personalize their search engine $\mathbf{\Phi}$ by manually defining a cluster graph via the Cyberlioz interface (see \lnameref{sec:data-collection} section).
-This preliminary annotation lasts $30$ to $60$ minutes, which is relatively short in comparison with the duration of the $N^\prime = 9346$ audio samples in $\mathcal{G}_k$ after extension to all available pitches and dynamics: i.e., roughly three hours of audio.
 
 Within the default setting ($\mathcal{G}=\mathcal{G}_0$), our system $\mathbf{\Phi}$ achieves an average precision at rank five (AP@5) of $\textbf{99.0\%}$, with a standard deviation across $K=31$ participants of the order of $1\%$.
 This favorable result suggests that joint time--frequency scattering provides a useful feature map for learning similarities between instrumental playing techniques.

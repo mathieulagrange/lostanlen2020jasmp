@@ -459,19 +459,21 @@ Cyberlioz implements a data collection procedure known as ``free sorting''. In c
 In comparison with web-based forms, Cyberlioz offers a more intuitive and playful user experience, while limiting the acquisition of similarity judgments to a moderate duration of $30$ to $60$ minutes for each participant.
 Another advantage of Cyberlioz is that it allows to present all stimuli at once rather than according to a randomized sequence.
 
-In May and June 2016, we recruited volunteers to use Cyberlioz on their own computers, via a web browser, and equipped with a pair of earphones.
-To this end, we publicized this study on the internal mailing list of students at CNSMDP, as well as two international mailing lists for research in music audio processing: AUDITORY  and ISMIR Community.\footnote{
+In May and June 2016, we recruited volunteers to use Cyberlioz on their own computers, via a web browser, and equipped with a pair of earphones. The subjects were asked to ‘cluster sounds into groups by assigning the same color to the corresponding dots according to how similar the sounds are’.
+
+We publicized this study on the internal mailing list of students at CNSMDP, as well as two international mailing lists for research in music audio processing: AUDITORY  and ISMIR Community.\footnote{
 For more information about these mailing lists, please visit:
 \url{http://www.auditory.org/} and \url{http://ismir.net/}}
 Within two months, $K=31$ participants accessed Cyberlioz and completed the task.
 
-We did not collect personal information on the age, sex, nor musical background of participants.
-This is because the goal of our perceptual study is to build a consensus of similarity judgments, rather than to compare demographic subgroups.
-We note that the relatively small size of our cohort ($K=31$) lacks the statistical power to carry out such a comparison.
+Personal information on the age, sex, nor musical background of participants is not collected, because the goal of our perceptual study is to build a consensus of similarity judgments, rather than to compare demographic subgroups.
+% We note that the relatively small size of our cohort ($K=31$) lacks the statistical power to carry out such a comparison.
+
 In particular, we leave the important question of the effect of musical training on the perception of auditory similarities between playing techniques as future work.
 % TODO revise the paragraph above
 
 \subsection*{Hypergraph partitioning}
+
 Once the data collection campaign was complete, we analyzed the color assignments of each subject $k$ and converted them into a cluster graph $\mathcal{G}_k$, where the integer $k$ is an anonymized subject index, ranging between $1$ and $K$.
 For a given $k$, the graph $\mathcal{G}_k$ contains $N$ vertices, each representing a different IMT in the corpus.
 In $\mathcal{G}_k$, an edge connects any two vertices $m$ and $n$ if the corresponding dots in Cyberlioz have the same color.
@@ -1660,7 +1662,7 @@ See \lnameref{sec:methods} section for details.}
 \begin{figure}[h!]
 \includegraphics[width=0.9\textwidth]{ablationStudy}
 \caption{\csentence{Impact of different processing architecture or protocol designs.} For each condition, the central mark indicates the median, and the bottom and top edges of the box indicate the 25th and 75th percentiles, respectively. The performance achieved for each reference clustering is depicted by a lozenge whose color is chosen arbitrarily but consistently across conditions.
-See \lnameref{sec:discussion} section for details.}
+See \lnameref{sec:results} section for details.}
 \label{fig:ablation}
 \end{figure}
 

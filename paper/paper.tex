@@ -299,7 +299,7 @@ In other words, we rely on listeners, not performers, to define and evaluate the
 Thirdly, we supplement our quantitative benchmark with visualizations of time--frequency scattering coefficients in the rate--scale domain for various typical samples of instrumental playing techniques.
 These visualizations are in line with visualizations of the modulation power spectrum in auditory neurophysiology \cite{patil2012ploscompbiol}, while offering an accelerated algorithm for scalable feature extraction.
 
-Out paper strives to fill the gap in scholarship between MIR and music cognition in the context of extended playing techniques.
+Our paper strives to fill the gap in scholarship between MIR and music cognition in the context of extended playing techniques.
 From the standpoint of MIR, the model presented here offers an efficient and generic multidimensional representation for timbre similarity, alongside theoretical guarantees of robustness to elastic deformations in the time--frequency domain.
 Conversely, from the standpoint of music cognition, our model offers a scalable and biologically plausible surrogate for stimulus-based collection of acoustic dissimilarity judgments, which is readily tailored to subjective preferences.
 
@@ -456,7 +456,7 @@ The goal of the Cyberlioz interface is to form clusters of timbre similarity bet
 
 Cyberlioz implements a data collection procedure known as ``free sorting''. In comparison with the direct collection of timbre dissimilarity ratings, free sorting is more efficient yet less accurate \cite{giordano2011multivariate}. We refer to \cite{elliott2013jasa} for an example protocol in which timbre similarity judgments rely on stimuli pairs rather than on a free sorting task.
 
-In comparison with Web-based forms, Cyberlioz offers a more intuitive and playful user experience, while limiting the acquisition of similarity judgments to a moderate duration of $30$ to $60$ minutes for each participant.
+In comparison with web-based forms, Cyberlioz offers a more intuitive and playful user experience, while limiting the acquisition of similarity judgments to a moderate duration of $30$ to $60$ minutes for each participant.
 Another advantage of Cyberlioz is that it allows to present all stimuli at once rather than according to a randomized sequence.
 
 In May and June 2016, we recruited volunteers to use Cyberlioz on their own computers, via a web browser, and equipped with a pair of earphones.
@@ -479,9 +479,9 @@ Otherwise, there is no edge connecting $m$ and $n$.
 Thus, $\mathcal{G}_k$ contains as many connected components as the number of similarity clusters for the subject $k$, \ie{} the number of distinct colors on the Cyberlioz interface in the response of $k$.
 
 For a particular subject $k$, let us denote by $C_k$ the number of clusters in the graph $\mathcal{G}_k$.
-Figure \ref{fig:cluster-histograms} (a) shows the histogram of $C_k$ across the cohort of $K=31$ participants.
+Figure \ref{fig:cluster-histograms}(a) shows the histogram of $C_k$ across the cohort of $K=31$ participants.
 We observe that the number of clusters varies between $3$ and $19$ with a median value of $10$.
-Accordingly, the number of samples belonging to a cluster varies between $1$ (the most frequent value) and $50$, as shown in Figure \ref{fig:cluster-histograms} (b).
+Accordingly, the number of samples belonging to a cluster varies between $1$ (the most frequent value) and $50$, as shown in Figure \ref{fig:cluster-histograms}(b).
 %Only the clustering given by the subjects using the color labels is considered to estimate the spontaneous judgments of similarity among \ipt. The spatial organization of the dots representing the \ipt could provide information about the similarity, but this would implicitly enforce the fact that the timbral similarity space is two dimensional. We therefore now only study the properties of the clusterings performed by the subject prior to converting them into an overall similarity matrix.
 
 We aggregate the similarity judgments from all $K$ participants by embedding them into a hypergraph $\mathcal{H}$, that is, a graph whose edges may connect three or more vertices at once.
@@ -882,7 +882,7 @@ Thus, from a limited amount of human annotation, we curate a relatively large su
 In doing so, we assume that the perception of timbre is fully invariant to frequency transposition as well as changes in dynamics.
 This assumption coincides with the commonplace definition of timbre as an autonomous parameter of musical sound.
 Previous studies on real-world musical sounds have confirmed that listeners are able to ignore salient pitch differences while rating timbre similarity \cite{handel2001musicperception,marozeau2003dependency}, insofar as these differences do not exceed one octave.
-Since then, another study has shown that trained musicians can identify the similarity within pairs of notes from two instruments (horn and bassoon) spanning a range of $2.5$ octave with an accuracy of $80\%$ \cite{steele2006musicperception}.
+Since then, another study has shown that trained musicians can identify the similarity within pairs of notes from two instruments (horn and bassoon) spanning a range of $2.5$ octaves with an accuracy of $80\%$ \cite{steele2006musicperception}.
 In comparison, nonmusicians has great difficulty identifying whether two notes were produced by the same instrument or not when the notes were separated by one octave.
 Thus, the influence of pitch on timbre perception appears to depend upon musical training.
 With this important caveat in mind, we leave as future work the question of disentangling the effects of pitch and musical training in the modeling of auditory similarities between instrumental playing techniques.
@@ -970,7 +970,7 @@ In particular, it does not assume the metadata (instrument, mute, technique, pit
 \subsection*{Visualization of joint--time frequency scattering coefficients}
 \label{sec:visualization}
 
-At the second order, joint time--frequency scattering coefficients depend upon four variables: time $t$, log-frequency $\lambda$, temporal modulation rate $\alpha$ in Hertz, and frequential modulation rate $\beta$ in cycles per octave.
+In the second order, joint time--frequency scattering coefficients depend upon four variables: time $t$, log-frequency $\lambda$, temporal modulation rate $\alpha$ in Hertz, and frequential modulation rate $\beta$ in cycles per octave.
 From a data visualization standpoint, rendering the four-dimensional tensor $\mathbf{S_2}\boldsymbol{x}(t, \lambda, \alpha, \beta)$ is impossible.
 To address this limitation, a recent publication has projected this tensor into a two-dimensional ``slice'', thus yielding an image raster \cite{anden2019tsp}.
 In accordance with their protocol, we compute the following matrix:
@@ -984,7 +984,7 @@ In accordance with their protocol, we compute the following matrix:
 
 Observe that the equation above is a limit case of $\mathbf{S_2}$ (Equation \ref{eq:S2}) in which the constants $T$ and $F$ tend towards infinity.
 As a result, $\mathbf{V}\boldsymbol{x}$ depends solely upon scale $\alpha$ and rate $\beta$.
-In the scientific literature on STRF, the matrix $\mathbf{V}\boldsymbol{x}$ is called ``cortical output collapsed on the rate-scale axes'' \cite{elhilali2003speechcomm}.
+In the scientific literature on STRF, the matrix $\mathbf{V}\boldsymbol{x}$ is known as the ``cortical output collapsed on the rate-scale axes'' \cite{elhilali2003speechcomm}.
 
 Previous publications on STRFs have demonstrated the interest of visualizing the slice $\mathbf{V}\boldsymbol{x}$ in the case of speech \cite{bellur2015ciss}, lung sounds \cite{emmanouilidou2012embs}, and music \cite{patil2012ploscompbiol}.
 However, the visualization of musical sounds has been restricted to some of most common playing techniques, i.e., piano played staccato and violin played pizzicato.
@@ -992,22 +992,22 @@ Furthermore, prior publications on time--frequency scattering have displayed sli
 
 To remedy this gap, we select twelve isolated notes from the SOL dataset from two instruments: violin (Figure \ref{fig:violin-scattering}) and flute (Figure \ref{fig:flute-scattering}).
 By and large, we find that joint time--frequency scattering produces comparable patterns in the scale--rate domain as the ``cortical output'' of the STRF.
-For example, Figure \ref{fig:violin-scattering} (a) shows that a violin note played in the \emph{ordinario} technique has a local energy maximum at the rate $\alpha = \SI{6}{\hertz}$.
+For example, Figure \ref{fig:violin-scattering}(a) shows that a violin note played in the \emph{ordinario} technique has a local energy maximum at the rate $\alpha = \SI{6}{\hertz}$.
 A visual inspection of $\mathbf{U_1}$ demonstrates that this rate coincides with the rate of vibrato of the left hand in the violin note.
-As seen in Figure \ref{fig:violin-scattering} (b), this local energy maximum is absent when the playing technique is denoted as \emph{nonvibrato}.
-Furthermore, Figure \ref{fig:violin-scattering} (c) shows that the local energy maximum is displaced to a higher rate ($\alpha = \SI{12}{\hertz}$) when the vibrato is replaced by a tremolo.
+As seen in Figure \ref{fig:violin-scattering}(b), this local energy maximum is absent when the playing technique is denoted as \emph{nonvibrato}.
+Furthermore, Figure \ref{fig:violin-scattering}(c) shows that the local energy maximum is displaced to a higher rate ($\alpha = \SI{12}{\hertz}$) when the vibrato is replaced by a tremolo.
 
 The visual interpretation of playing techniques in terms of their joint time--frequency scattering coefficients is not restricted to periodic modulation, such as vibrato or tremolo: rather, it also encompasses the analysis of attack transients.
-Figures \ref{fig:violin-scattering} (d), (e), and (f) show the matrix $\mathbf{V}\boldsymbol{x}$ for three instances of impulsive violin sounds: sforzando, pizzicato, and staccato respectively.
+Figures \ref{fig:violin-scattering}(d), (e), and (f) show the matrix $\mathbf{V}\boldsymbol{x}$ for three instances of impulsive violin sounds: sforzando, pizzicato, and staccato respectively.
 These three techniques create ridges in the scale--rate domain $(\alpha, \beta)$, where the cutoff rate $\alpha$ is lowest with sforzando and highest with staccato.
 These variations in cutoff rate coincide with perceptual variations in ``hardness'', i.e. impulsivity, of the violin sound.
 Moreover, in the case of staccato, we observe a slight asymmetry in the frequential scale parameter $\beta$.
 This asymmetry could be due to the fact that higher-order harmonics decay faster than the fundamental, thus yielding a triangular shape in the time--frequency domain.
 
 Figure \ref{fig:flute-scattering} shows six playing techniques of the flute.
-Similarly to the violin (Figure \ref{fig:violin-scattering}), we observe that periodic modulations, such as a trill (Figure \ref{fig:flute-scattering} b) or a beating tone (c), cause local energy maxima whose rate $\alpha$ is physically interpretable.
-Likewise, impulsive flute sounds such as sforzando (Figure \ref{fig:flute-scattering} d), key click (e), and vibrato (f) create ridges in the scale--rate domain of varying cutoff rates $\alpha$.
-We distribute the implementation of these figures as part of the MATLAB library \emph{scattering.m}, which is released under the MIT license\footnote{Link to download the \emph{scattering.m} library: \url{https://github.com/lostanlen/scattering.m}}.
+Similarly to the violin (Figure \ref{fig:violin-scattering}), we observe that periodic modulations, such as a trill (Figure \ref{fig:flute-scattering}(b)) or a beating tone (Figure \ref{fig:flute-scattering}(c)), cause local energy maxima whose rate $\alpha$ is physically interpretable.
+Likewise, impulsive flute sounds such as sforzando (Figure \ref{fig:flute-scattering}(d)), key click (Figure \ref{fig:flute-scattering}(e)), and vibrato (Figure \ref{fig:flute-scattering}(f)) create ridges in the scale--rate domain of varying cutoff rates $\alpha$.
+We distribute the implementation of these figures as part of the MATLAB library \emph{scattering.m}, which is released under the MIT license.\footnote{Link to download the \emph{scattering.m} library: \url{https://github.com/lostanlen/scattering.m}}
 
 
 
@@ -1054,7 +1054,7 @@ This gap in performance demonstrates the importance of complementing unsupervise
 
 Our best performing system operates with joint time--frequency scattering coefficients as spectrotemporal modulation features.
 These features are extracted within a temporal context of duration equal to $T=\SI{1000}{\milli\second}$.
-This value is considerably larger than the frame size of purely spectral features, such as spectral centroid, spectral flux, or mel-frequency cepstral coefficients (MFCC).
+This value is considerably larger than the frame size of purely spectral features, such as spectral centroid, spectral flux, or mel-frequency cepstral coefficients (MFCCs).
 Indeed, the frame size of spectral features for machine listening is typically set to $T=\SI{23}{\milli\second}$, i.e., $2^{10}=1024$ samples at a sampling rate of $\SI{44,1}{\kilo\hertz}$ \cite{brown1999jasa,eronen2000icassp}.
 
 As a point of comparison, we set the maximum time scale of joint time--frequency scattering coefficients to $T=\SI{25}{\milli\second}$, hence a $40$-fold reduction in context size.
@@ -1121,7 +1121,7 @@ Over our cohort of $K=31$ participants, separable time--frequency scattering ach
 This gap in performance, together with the theory of STRFs in auditory neuroscience (see \lnameref{sec:related-work} section), demonstrates the importance of joint spectrotemporal modulations in the modeling of timbre similarity across instrumental playing techniques.
 
 
-\subsection*{Comparison with mel--frequency cepstral coefficients (MFCC) baseline}
+\subsection*{Comparison with mel--frequency cepstral coefficient (MFCC) baseline}
 Lastly, we train a baseline system in which joint time--frequency scattering coefficients are replaced by MFCCs.
 Specifically, we extract a 40-band mel-frequency spectrogram by means of the RASTAMAT library; apply the pointwise logarithm; and compute a discrete cosine transform (DCT) over the mel-frequency axis.\footnote{Link to RASTAMAT library: \url{http://www.ee.columbia.edu/~dpwe/resources/matlab/rastamat}}
 This operation results in a 40-dimensional feature vector over frames of duration $T=\SI{25}{\milli\second}$.
